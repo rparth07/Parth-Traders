@@ -5,20 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Parth_Traders.Data
+namespace Parth_Traders.Data.DataModel
 {
     public class SuppliersDataModel
     {
         [Key]
-        public long SupplierID { get; set; }
+        public long SupplierId { get; set; }
 
         [Required]
         public string SupplierName { get; set; }
 
-        public string Address { get; set; }
+        public string SupplierAddress { get; set; }
 
         public string SupplierEmail { get; set; }
 
-        public string PhoneNumber { get; set; }
+        [Required]
+        public string SupplierPhoneNumber { get; set; }
     }
 }

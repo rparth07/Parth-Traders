@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Parth_Traders.Data
+namespace Parth_Traders.Data.DataModel
 {
     public class CategoryDataModel
     {

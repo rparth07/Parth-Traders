@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Parth_Traders.Data
+namespace Parth_Traders.Data.DataModel
 {
     public class CustomersDataModel
     {
@@ -15,14 +15,17 @@ namespace Parth_Traders.Data
         [Required]
         public string CustomerName { get; set; }
 
-        public string CustomerEmail { get; set; }
-
+        [Required]
         public DateTime CreatedDate { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string CustomerEmail { get; set; }
 
-        public string Address { get; set; }
+        [Required]
+        public string CustomerPhoneNumber { get; set; }
 
+        public string CustomerAddress { get; set; }
+
+        [Required]
         public PaymentType PaymentType { get; set; }
 
 

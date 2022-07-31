@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parth_Traders.Data
+namespace Parth_Traders.Data.DataModel
 {
     public class ProductsDataModel
     {
@@ -16,21 +17,25 @@ namespace Parth_Traders.Data
         public string ProductDescription { get; set; }
 
         [Required]
-        public long SupplierId { get; set; }
+        public virtual SuppliersDataModel SupplierData { get; set; }
 
         [Required]
-        public long CategoryId { get; set; }
+        public virtual CategoryDataModel CategoryData { get; set; }
 
+        [Required]
         public int QuantityPerUnit { get; set; }
 
+        [Required]
         public long UnitPrice { get; set; }
 
-        public long SingleQuantityMRP { get; set; }
+        [Required]
+        public long SinglePieceMRP { get; set; }
 
+        [Required]
         public long Discount { get; set; }
 
+        [Required]
         public long UnitsInStock { get; set; }
-
 
     }
 }
