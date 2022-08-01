@@ -55,7 +55,7 @@ namespace Parth_Traders.Data
             //optionsBuilder.EnableSensitiveDataLogging();
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=.;Database=Parth Traders; Integrated Security=true;");
+                optionsBuilder.UseSqlServer("server=PARTH\\SQLEXPRESS; Database=Parth Traders; Integrated Security=true;");
             }
         }
     }
