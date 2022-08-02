@@ -1,4 +1,4 @@
-﻿namespace Parth_Traders.Data
+﻿namespace Parth_Traders.Domain.Enums
 {
     public enum PaymentType
     {

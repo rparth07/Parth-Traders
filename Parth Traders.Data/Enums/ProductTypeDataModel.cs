@@ -1,6 +1,6 @@
 ﻿namespace Parth_Traders.Data
 {
-    public enum ProductType
+    public enum ProductTypeDataModel
     {
         Buff,
         Machine_tools,

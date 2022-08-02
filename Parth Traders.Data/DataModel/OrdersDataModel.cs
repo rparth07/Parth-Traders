@@ -17,7 +17,7 @@ namespace Parth_Traders.Data.DataModel
         public virtual CustomersDataModel CustomerData { get; set; }
         
         [Required]
-        public PaymentType PaymentType { get; set; }
+        public PaymentTypeDataModel PaymentType { get; set; }
         
         [Required]
         public DateTime  OrderDate { get; set; }

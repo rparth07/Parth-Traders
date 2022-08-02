@@ -12,7 +12,7 @@ namespace Parth_Traders.Data.DataModel
         public string ProductName { get; set; }
 
         [Required]
-        public ProductType ProductType { get; set; }
+        public ProductTypeDataModel ProductType { get; set; }
 
         public string ProductDescription { get; set; }
 

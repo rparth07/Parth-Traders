@@ -1,33 +1,26 @@
-﻿using System;
+﻿using Parth_Traders.Domain.Enums;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Parth_Traders.Data.DataModel
+namespace Parth_Traders.Domain.Entity
 {
-    public class CustomersDataModel
+    public class Customer
     {
-        [Key]
         public long CustomerId { get; set; }
 
-        [Required]
         public string CustomerName { get; set; }
 
-        [Required]
         public DateTime CreatedDate { get; set; }
 
         public string CustomerEmail { get; set; }
 
-        [Required]
         public string CustomerPhoneNumber { get; set; }
 
         public string CustomerAddress { get; set; }
 
-        [Required]
-        public PaymentTypeDataModel PaymentType { get; set; }
-
-
+        public PaymentType PaymentType { get; set; }
     }
 }
