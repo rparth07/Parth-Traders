@@ -28,6 +28,7 @@ namespace Parth_Traders.Data.DataModel
         [Required]
         public PaymentTypeDataModel PaymentType { get; set; }
 
+        public ICollection<OrdersDataModel> Orders { get; set; }
 
     }
 }

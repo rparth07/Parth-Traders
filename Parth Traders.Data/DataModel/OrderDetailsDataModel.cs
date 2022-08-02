@@ -14,9 +14,11 @@ namespace Parth_Traders.Data.DataModel
         public long OrderDetailId { get; set; }
 
         [Required]
+        [ForeignKey("OrderId")]
         public virtual OrdersDataModel OrdersData { get; set; }
 
         [Required]
+        [ForeignKey("ProductId")]
         public virtual ProductsDataModel ProductsData { get; set; } 
 
         [Required]

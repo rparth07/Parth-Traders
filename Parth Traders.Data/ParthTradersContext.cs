@@ -40,6 +40,10 @@ namespace Parth_Traders.Data
                 entity.HasIndex(e => e.CustomerPhoneNumber).IsUnique();
             });
 
+            modelBuilder.Entity<ProductsDataModel>(entity => {
+                entity.HasIndex(e => e.ProductName).IsUnique();
+            });
+
             modelBuilder.Entity<CategoryDataModel>(entity => {
                 entity.HasIndex(e => e.CategoryName).IsUnique();
             });

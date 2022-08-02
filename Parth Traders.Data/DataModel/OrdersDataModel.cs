@@ -14,7 +14,10 @@ namespace Parth_Traders.Data.DataModel
         public long OrderId { get; set; }
 
         [Required]
+        [ForeignKey("CustomerId")]
         public virtual CustomersDataModel CustomerData { get; set; }
+
+        public ICollection<OrderDetailsDataModel> OrderDetails { get; set; }    
         
         [Required]
         public PaymentTypeDataModel PaymentType { get; set; }

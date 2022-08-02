@@ -21,5 +21,7 @@ namespace Parth_Traders.Data.DataModel
 
         [Required]
         public string SupplierPhoneNumber { get; set; }
+
+        public ICollection<ProductsDataModel> Products { get; set; }
     }
 }
