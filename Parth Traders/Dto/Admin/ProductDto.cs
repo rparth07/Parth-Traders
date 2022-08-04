@@ -18,7 +18,7 @@ namespace Parth_Traders.Dto.Admin
         [Required]
         public virtual CategoryDto CategoryData { get; set; }
 
-        public ICollection<OrderDetailsDto> OrderDetails { get; set; }
+        public ICollection<OrderDetailDto> OrderDetails { get; set; }
 
         [Required]
         public int QuantityPerUnit { get; set; }

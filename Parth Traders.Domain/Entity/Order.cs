@@ -13,6 +13,8 @@ namespace Parth_Traders.Domain.Entity
 
         public virtual Customer CustomerData { get; set; }
 
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
         public PaymentType PaymentType { get; set; }
 
         public DateTime OrderDate { get; set; }

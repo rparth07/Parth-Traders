@@ -17,5 +17,8 @@ namespace Parth_Traders.Domain.Entity
         public string SupplierEmail { get; set; }
 
         public string SupplierPhoneNumber { get; set; }
+
+        public ICollection<Product> Products { get; set; }
+
     }
 }

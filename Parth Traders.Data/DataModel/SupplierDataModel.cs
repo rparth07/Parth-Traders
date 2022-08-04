@@ -24,4 +24,4 @@ namespace Parth_Traders.Data.DataModel
 
         public ICollection<ProductDataModel> Products { get; set; }
     }
-}
+}   

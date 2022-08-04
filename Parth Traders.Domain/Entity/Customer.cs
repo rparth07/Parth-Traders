@@ -22,5 +22,8 @@ namespace Parth_Traders.Domain.Entity
         public string CustomerAddress { get; set; }
 
         public PaymentType PaymentType { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
+
     }
 }

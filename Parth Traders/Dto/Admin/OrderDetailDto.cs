@@ -2,7 +2,7 @@
 
 namespace Parth_Traders.Dto.Admin
 {
-    public class OrderDetailsDto
+    public class OrderDetailDto
     {
         [Required]
         public virtual OrderDto OrdersData { get; set; }

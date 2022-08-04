@@ -22,6 +22,8 @@ namespace Parth_Traders.Domain.Entity
 
         public virtual Category CategoryData { get; set; }
 
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
         public int QuantityPerUnit { get; set; }
 
         public long UnitPrice { get; set; }
