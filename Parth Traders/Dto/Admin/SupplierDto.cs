@@ -14,7 +14,7 @@ namespace Parth_Traders.Dto.Admin
         [Required]
         public string SupplierPhoneNumber { get; set; }
 
-        public ICollection<ProductsDto> Products { get; set; }
+        public ICollection<ProductDto> Products { get; set; }
 
     }
 }

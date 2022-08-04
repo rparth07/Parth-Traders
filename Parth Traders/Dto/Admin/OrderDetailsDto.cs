@@ -5,10 +5,10 @@ namespace Parth_Traders.Dto.Admin
     public class OrderDetailsDto
     {
         [Required]
-        public virtual OrdersDto OrdersData { get; set; }
+        public virtual OrderDto OrdersData { get; set; }
 
         [Required]
-        public virtual ProductsDto ProductsData { get; set; }
+        public virtual ProductDto ProductsData { get; set; }
 
         [Required]
         public long Price { get; set; }

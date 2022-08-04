@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.DataModel
 {
-    public class CustomersDataModel
+    public class CustomerDataModel
     {
         [Key]
         public long CustomerId { get; set; }
@@ -28,7 +28,7 @@ namespace Parth_Traders.Data.DataModel
         [Required]
         public PaymentTypeDataModel PaymentType { get; set; }
 
-        public ICollection<OrdersDataModel> Orders { get; set; }
+        public ICollection<OrderDataModel> Orders { get; set; }
 
     }
 }

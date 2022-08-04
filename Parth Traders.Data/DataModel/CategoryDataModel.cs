@@ -17,6 +17,6 @@ namespace Parth_Traders.Data.DataModel
 
         public string CategoryDescription { get; set; }
 
-        public ICollection<ProductsDataModel> Products { get; set; }
+        public ICollection<ProductDataModel> Products { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Parth_Traders.Dto.Admin
 {
-    public class OrdersDto
+    public class OrderDto
     {
         [Required]
-        public virtual CustomersDto CustomerData { get; set; }
+        public virtual CustomerDto CustomerData { get; set; }
 
         public ICollection<OrderDetailsDto> OrderDetails { get; set; }
 

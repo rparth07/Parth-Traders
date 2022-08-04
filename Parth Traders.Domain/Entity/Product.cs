@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parth_Traders.Domain.Entity
 {
-    public class Products
+    public class Product
     {
 
         public long ProductId { get; set; }

@@ -1,24 +1,30 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parth_Traders.Dto.Admin
+namespace Parth_Traders.Data.DataModel
 {
-    public class ProductsDto
+    public class ProductDataModel
     {
+        [Key]
+        public long ProductId { get; set; }
+
         [Required]
         public string ProductName { get; set; }
 
         [Required]
-        public int ProductType { get; set; }
+        public ProductTypeDataModel ProductType { get; set; }
 
         public string ProductDescription { get; set; }
 
         [Required]
-        public virtual SupplierDto SupplierData { get; set; }
+        [ForeignKey("SupplierId")]
+        public virtual SupplierDataModel SupplierData { get; set; }
 
         [Required]
-        public virtual CategoryDto CategoryData { get; set; }
+        [ForeignKey("CategoryId")]
+        public virtual CategoryDataModel CategoryData { get; set; }
 
-        public ICollection<OrderDetailsDto> OrderDetails { get; set; }
+        public ICollection<OrderDetailDataModel> OrderDetails { get; set; }
 
         [Required]
         public int QuantityPerUnit { get; set; }
@@ -34,5 +40,6 @@ namespace Parth_Traders.Dto.Admin
 
         [Required]
         public long UnitsInStock { get; set; }
+
     }
 }

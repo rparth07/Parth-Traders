@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.DataModel
 {
-    public class OrderDetailsDataModel
+    public class OrderDetailDataModel
     {
         [Key]
         public long OrderDetailId { get; set; }
 
         [Required]
         [ForeignKey("OrderId")]
-        public virtual OrdersDataModel OrdersData { get; set; }
+        public virtual OrderDataModel OrdersData { get; set; }
 
         [Required]
         [ForeignKey("ProductId")]
-        public virtual ProductsDataModel ProductsData { get; set; } 
+        public virtual ProductDataModel ProductsData { get; set; } 
 
         [Required]
         public long Price { get; set; }

@@ -9,7 +9,7 @@ namespace Parth_Traders.Dto.Admin
 
         public string CategoryDescription { get; set; }
 
-        public ICollection<ProductsDto> Products { get; set; }
+        public ICollection<ProductDto> Products { get; set; }
 
     }
 }

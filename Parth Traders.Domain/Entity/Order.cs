@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parth_Traders.Domain.Entity
 {
-    public class Orders
+    public class Order
     {
         public long OrderId { get; set; }
 

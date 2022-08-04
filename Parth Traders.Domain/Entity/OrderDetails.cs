@@ -10,9 +10,9 @@ namespace Parth_Traders.Domain.Entity
     {
         public long OrderDetailId { get; set; }
 
-        public virtual Orders OrdersData { get; set; }
+        public virtual Order OrdersData { get; set; }
 
-        public virtual Products ProductsData { get; set; }
+        public virtual Product ProductsData { get; set; }
 
         public long Price { get; set; }
 

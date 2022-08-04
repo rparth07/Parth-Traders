@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.DataModel
 {
-    public class SuppliersDataModel
+    public class SupplierDataModel
     {
         [Key]
         public long SupplierId { get; set; }
@@ -22,6 +22,6 @@ namespace Parth_Traders.Data.DataModel
         [Required]
         public string SupplierPhoneNumber { get; set; }
 
-        public ICollection<ProductsDataModel> Products { get; set; }
+        public ICollection<ProductDataModel> Products { get; set; }
     }
 }

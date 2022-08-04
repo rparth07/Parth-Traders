@@ -2,7 +2,7 @@
 
 namespace Parth_Traders.Dto.Admin
 {
-    public class CustomersDto
+    public class CustomerDto
     {
         [Required]
         public string CustomerName { get; set; }
@@ -20,7 +20,7 @@ namespace Parth_Traders.Dto.Admin
         [Required]
         public int PaymentType { get; set; }
 
-        public ICollection<OrdersDto> Orders { get; set; }
+        public ICollection<OrderDto> Orders { get; set; }
 
     }
 }

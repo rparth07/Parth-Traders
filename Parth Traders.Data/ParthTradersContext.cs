@@ -10,17 +10,17 @@ namespace Parth_Traders.Data
 {
     public class ParthTradersContext : DbContext
     {
-        public DbSet<ProductsDataModel> Products { get; set; }
+        public DbSet<ProductDataModel> Products { get; set; }
 
-        public DbSet<CustomersDataModel> Customers { get; set; }
+        public DbSet<CustomerDataModel> Customers { get; set; }
 
         public DbSet<CategoryDataModel> Categories { get; set; }
 
-        public DbSet<OrdersDataModel> Orders { get; set; }  
+        public DbSet<OrderDataModel> Orders { get; set; }  
 
-        public DbSet<OrderDetailsDataModel> OrderDetails { get; set; }
+        public DbSet<OrderDetailDataModel> OrderDetails { get; set; }
 
-        public DbSet<SuppliersDataModel> Suppliers { get; set; }
+        public DbSet<SupplierDataModel> Suppliers { get; set; }
 
         public ParthTradersContext()
         {
@@ -35,12 +35,12 @@ namespace Parth_Traders.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<CustomersDataModel>(entity => {
+            modelBuilder.Entity<CustomerDataModel>(entity => {
                 entity.HasIndex(e => e.CustomerEmail).IsUnique();
                 entity.HasIndex(e => e.CustomerPhoneNumber).IsUnique();
             });
 
-            modelBuilder.Entity<ProductsDataModel>(entity => {
+            modelBuilder.Entity<ProductDataModel>(entity => {
                 entity.HasIndex(e => e.ProductName).IsUnique();
             });
 
@@ -48,7 +48,7 @@ namespace Parth_Traders.Data
                 entity.HasIndex(e => e.CategoryName).IsUnique();
             });
 
-            modelBuilder.Entity<SuppliersDataModel>(entity => {
+            modelBuilder.Entity<SupplierDataModel>(entity => {
                 entity.HasIndex(e => e.SupplierEmail).IsUnique();
                 entity.HasIndex(e => e.SupplierPhoneNumber).IsUnique();
             });
