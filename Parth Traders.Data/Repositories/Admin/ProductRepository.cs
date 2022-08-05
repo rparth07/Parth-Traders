@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Parth_Traders.Data.DataModel;
 using Parth_Traders.Domain.Entity;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.Repositories.Admin
 {
@@ -52,7 +48,11 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public Product GetProductByProductName(string productName)
         {
-            throw new NotImplementedException();
+            var prouctToReturn = _context.Products
+                .AsNoTracking()
+                .FirstOrDefault(_ => _.ProductName == productName);
+
+            return _mapper.Map<Product>(prouctToReturn);
         }
 
         public bool Save()
