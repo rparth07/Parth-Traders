@@ -11,6 +11,7 @@ namespace Parth_Traders.Service
         {
             _productRepository = productRepository;
         }
+
         public void AddAllProducts(IEnumerable<Product> productsToAdd)
         {
             throw new NotImplementedException();
@@ -34,12 +35,21 @@ namespace Parth_Traders.Service
 
         public void DeleteProduct(string productName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var productFromRepo = _productRepository.GetProductByProductName(productName);
+                _productRepository.DeleteProduct(productFromRepo);
+                _productRepository.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Product not found!");
+            }
         }
 
         public List<Product> GetAllProducts()
         {
-            throw new NotImplementedException();
+            return _productRepository.GetAllProducts();
         }
 
         public Product GetProductByProductName(string productName)

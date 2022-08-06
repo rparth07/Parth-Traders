@@ -7,7 +7,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers
 {
     [ApiController]
-    [Route("API/Admin/Product")]
+    [Route("API/admin/products")]
     public class ProductController : ControllerBase
     {
         public readonly IProductService _productService;
@@ -40,5 +40,18 @@ namespace Parth_Traders.Controllers
             return Ok(productFromRepo);
         }
 
+        [HttpGet]
+        public IActionResult GetAllProducts()
+        {
+            var prodcuts = _mapper.Map<List<Product>>(_productService.GetAllProducts());
+            return Ok(prodcuts);
+        }
+
+        [HttpDelete("{productName}")]
+        public IActionResult DeleteProduct(string productName)
+        {
+            _productService.DeleteProduct(productName);
+            return NoContent();
+        }
     }
 }

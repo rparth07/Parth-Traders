@@ -14,7 +14,7 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces
         Product GetProductByProductName(string productName);
         List<Product> GetAllProducts();
         void UpdateProduct(Product productId);
-        void DeleteProduct(string productName);
+        void DeleteProduct(Product productToDelete);
         bool Save();
         void Dispose();
     }

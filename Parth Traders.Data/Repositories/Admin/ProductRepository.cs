@@ -31,19 +31,28 @@ namespace Parth_Traders.Data.Repositories.Admin
             throw new NotImplementedException();
         }
 
-        public void DeleteProduct(string productName)
+        public void DeleteProduct(Product productFromRepo)
         {
-            throw new NotImplementedException();
-        }
+            var productData = _mapper.Map<ProductDataModel>(productFromRepo);
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+            var productToDelete = _context.Products
+                .Where(_ => _.ProductId == productData.ProductId)
+                .FirstOrDefault();
+
+            _context.OrderDetails.RemoveRange(productToDelete.OrderDetails);
+            _context.Products.Remove(productToDelete);
+
         }
 
         public List<Product> GetAllProducts()
         {
-            throw new NotImplementedException();
+            var products = _context.Products
+                .Include("SupplierData")
+                .Include("CategoryData")
+                .Include("OrderDetails")
+                .ToList();
+
+            return _mapper.Map<List<Product>>(products);
         }
 
         public Product GetProductByProductName(string productName)
@@ -55,14 +64,28 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<Product>(prouctToReturn);
         }
 
-        public bool Save()
+        public void UpdateProduct(Product productId)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateProduct(Product productId)
+        public bool Save()
         {
-            throw new NotImplementedException();
+            return (_context.SaveChanges() >= 0);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // dispose resources when needed
+            }
         }
     }
 }
