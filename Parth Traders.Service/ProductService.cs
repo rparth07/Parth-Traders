@@ -4,6 +4,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Service
 {
+    //TODO: Need to create exception file and use it in catch
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
@@ -14,7 +15,15 @@ namespace Parth_Traders.Service
 
         public void AddAllProducts(IEnumerable<Product> productsToAdd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _productRepository.AddAllProducts(productsToAdd);
+                _productRepository.Save();
+            } 
+            catch(Exception ex)
+            {
+                new Exception("Bad Request");
+            }
         }
 
         public Product AddProduct(Product productToAdd)

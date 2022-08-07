@@ -28,7 +28,9 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public void AddAllProducts(IEnumerable<Product> productsToAdd)
         {
-            throw new NotImplementedException();
+            var productList = _mapper.Map<List<ProductDataModel>>(productsToAdd);
+
+            _context.Products.AddRange(productList);
         }
 
         public void DeleteProduct(Product productFromRepo)

@@ -33,6 +33,17 @@ namespace Parth_Traders.Controllers
                 productToReturn);
         }
 
+        [HttpPost, DisableRequestSizeLimit]
+        public IActionResult AddAllProducts()
+        {
+            IFormFile? file = Request.Form.Files[0];
+            //TODO:Need to Add logic to parse file and get list of productsToAdd
+            List<ProductDto> productsToAdd = new List<ProductDto>();
+            _productService.AddAllProducts(_mapper.Map<List<Product>>(productsToAdd));
+            
+            return Ok(productsToAdd);
+        }
+
         [HttpGet("{productName}", Name = "GetProduct")]
         public IActionResult GetProduct(string productName)
         {
@@ -42,7 +53,7 @@ namespace Parth_Traders.Controllers
 
         [HttpGet]
         public IActionResult GetAllProducts()
-        {
+            {
             var prodcuts = _mapper.Map<List<Product>>(_productService.GetAllProducts());
             return Ok(prodcuts);
         }
