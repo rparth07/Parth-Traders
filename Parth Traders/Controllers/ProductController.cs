@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.Domain.Entity;
 using Parth_Traders.Dto.Admin;
@@ -54,7 +55,7 @@ namespace Parth_Traders.Controllers
         [HttpGet]
         public IActionResult GetAllProducts()
             {
-            var prodcuts = _mapper.Map<List<Product>>(_productService.GetAllProducts());
+            var prodcuts = _mapper.Map<List<ProductDto>>(_productService.GetAllProducts());
             return Ok(prodcuts);
         }
 
@@ -63,6 +64,28 @@ namespace Parth_Traders.Controllers
         {
             _productService.DeleteProduct(productName);
             return NoContent();
+        }
+
+        [HttpPost("productId")]
+        public IActionResult UpdateProduct(
+            string productName,
+            JsonPatchDocument<ProductDto> patchDocument)
+        {
+            var productToUpdateFromRepo = _productService.GetProductByProductName(productName);
+
+            var productToPatch = _mapper.Map<ProductDto>(productToUpdateFromRepo);
+
+            patchDocument.ApplyTo(productToPatch, ModelState);
+
+            if (!TryValidateModel(productToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(productToPatch, productToUpdateFromRepo);
+            _productService.UpdateProduct(productToUpdateFromRepo);
+
+            return Ok(productToUpdateFromRepo);
         }
     }
 }

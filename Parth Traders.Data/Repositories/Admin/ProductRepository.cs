@@ -66,9 +66,18 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<Product>(prouctToReturn);
         }
 
-        public void UpdateProduct(Product productId)
+        public void UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            var productDataModel = _mapper.Map<ProductDataModel>(product);
+
+            ProductDataModel productToUpdate = 
+                _context.Products.FirstOrDefault(_ => _.ProductName == product.ProductName);
+
+            productDataModel.ProductId = productToUpdate.ProductId;
+
+            _context.Products.Update(productDataModel);
+
+            Save();
         }
 
         public bool Save()

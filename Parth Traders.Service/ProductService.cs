@@ -68,9 +68,9 @@ namespace Parth_Traders.Service
             return productToReturn;
         }
 
-        public void UpdateProduct(Product productId)
+        public void UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            _productRepository.UpdateProduct(product);
         }
     }
 }
