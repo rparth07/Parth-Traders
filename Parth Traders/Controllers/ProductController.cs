@@ -25,7 +25,8 @@ namespace Parth_Traders.Controllers
         [Consumes("application/json")]
         public IActionResult AddProduct(ProductDto product)
         {
-            Product addedProduct = _productService.AddProduct(_mapper.Map<Product>(product));
+            Product addedProduct = _productService
+                .AddProduct(_mapper.Map<Product>(product));
 
             ProductDto productToReturn = _mapper.Map<ProductDto>(addedProduct);
 
@@ -54,7 +55,7 @@ namespace Parth_Traders.Controllers
 
         [HttpGet]
         public IActionResult GetAllProducts()
-            {
+        {
             var prodcuts = _mapper.Map<List<ProductDto>>(_productService.GetAllProducts());
             return Ok(prodcuts);
         }
