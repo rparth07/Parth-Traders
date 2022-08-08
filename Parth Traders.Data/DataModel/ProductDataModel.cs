@@ -16,10 +16,12 @@ namespace Parth_Traders.Data.DataModel
 
         public string ProductDescription { get; set; }
 
+        public long SupplierId { get; set; }
         [Required]
         [ForeignKey("SupplierId")]
         public virtual SupplierDataModel SupplierData { get; set; }
 
+        public long CategoryId { get; set; }
         [Required]
         [ForeignKey("CategoryId")]
         public virtual CategoryDataModel CategoryData { get; set; }
