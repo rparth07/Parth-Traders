@@ -1,9 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CsvHelper.Configuration.Attributes;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Parth_Traders.Dto.Admin
 {
     public class ProductDto
     {
+        public ProductDto()
+        {
+            OrderDetails = new List<OrderDetailDto>();
+        }
+
         [Required]
         public string ProductName { get; set; }
 
@@ -13,10 +20,10 @@ namespace Parth_Traders.Dto.Admin
         public string ProductDescription { get; set; }
 
         [Required]
-        public virtual SupplierDto SupplierData { get; set; }
+        public string SupplierName { get; set; }
 
         [Required]
-        public virtual CategoryDto CategoryData { get; set; }
+        public string CategoryName { get; set; }
 
         public ICollection<OrderDetailDto> OrderDetails { get; set; }
 

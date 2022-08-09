@@ -9,7 +9,10 @@ namespace Parth_Traders.Domain.Entity
 {
     public class Product
     {
-
+        public Product()
+        {
+            OrderDetails = new List<OrderDetail>();
+        }
         public long ProductId { get; set; }
 
         public string ProductName { get; set; }

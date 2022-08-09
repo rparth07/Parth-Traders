@@ -1,4 +1,5 @@
 ﻿using Parth_Traders.Domain.Entity;
+using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
@@ -8,9 +9,15 @@ namespace Parth_Traders.Service
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly ISupplierRepository _supplierRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        public ProductService(IProductRepository productRepository,
+                              ISupplierRepository supplierRepository,
+                              ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _supplierRepository = supplierRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public void AddAllProducts(IEnumerable<Product> productsToAdd)
@@ -30,6 +37,8 @@ namespace Parth_Traders.Service
         {
             try
             {
+                productToAdd.CategoryData = _categoryRepository
+                    .GetCategoryByName(productToAdd.CategoryData.CategoryName);
                 _productRepository.AddProduct(productToAdd);
                 _productRepository.Save();
             }

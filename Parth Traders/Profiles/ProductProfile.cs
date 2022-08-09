@@ -9,7 +9,12 @@ namespace Parth_Traders.Profiles
         public ProductProfile()
         {
             CreateMap<Product, ProductDto>();
-            CreateMap<ProductDto, Product>();
+            CreateMap<ProductDto, Product>()
+                .ForPath(dest => dest.SupplierData.SupplierName,
+                    opt => opt.MapFrom(src => src.SupplierName))
+                .ForPath
+                (dest => dest.CategoryData.CategoryName,
+                    opt => opt.MapFrom(src => src.CategoryName));
         }
     }
 }
