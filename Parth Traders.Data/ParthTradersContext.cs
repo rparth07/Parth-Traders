@@ -49,6 +49,7 @@ namespace Parth_Traders.Data
             });
 
             modelBuilder.Entity<SupplierDataModel>(entity => {
+                entity.HasIndex(e => e.SupplierName).IsUnique();
                 entity.HasIndex(e => e.SupplierEmail).IsUnique();
                 entity.HasIndex(e => e.SupplierPhoneNumber).IsUnique();
             });

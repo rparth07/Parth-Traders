@@ -11,7 +11,7 @@ namespace Parth_Traders.Domain.Entity
     {
         public Product()
         {
-            OrderDetails = new List<OrderDetail>();
+            order = new List<OrderDetail>();
         }
         public long ProductId { get; set; }
 

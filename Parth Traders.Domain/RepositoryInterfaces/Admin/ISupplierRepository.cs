@@ -12,6 +12,7 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.Admin
         void AddSupplier(Supplier supplierToAdd);
         void AddSupppliers(List<Supplier> suppliersToAdd);
         Supplier GetSupplierById(int id);
+        Supplier GetSupplierByName(string supplierName);
         List<Supplier> GetAllSuppliers();
         void UpdateSuppplier(Supplier supplierToUpdate);
         void DeleteSupplier(Supplier supplierToRemove);

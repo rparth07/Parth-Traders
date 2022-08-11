@@ -12,9 +12,12 @@ namespace Parth_Traders.Controllers
     public class ProductController : ControllerBase
     {
         public readonly IProductService _productService;
+        private readonly IProductHelperService _productHelperService;
         public readonly IMapper _mapper;
-        public ProductController(IProductService productService, IMapper mapper)
+        public ProductController(IProductService productService, IProductHelperService productHelperService, IMapper mapper)
         {
+            _productHelperService = productHelperService ?? 
+                throw  new ArgumentException(nameof(productHelperService));
             _productService = productService ?? 
                 throw new ArgumentNullException(nameof(productService));
             _mapper = mapper ??
@@ -23,10 +26,16 @@ namespace Parth_Traders.Controllers
 
         [HttpPost]
         [Consumes("application/json")]
-        public IActionResult AddProduct(ProductDto product)
+        public IActionResult AddProduct(ProductDto productForCreation)
         {
+            var product = _mapper.Map<Product>(productForCreation);
+
+            var productToAdd = _productHelperService.MapProductPropertiesToProduct(product,
+                                                                productForCreation.SupplierName,
+                                                                productForCreation.CategoryName);
+
             Product addedProduct = _productService
-                .AddProduct(_mapper.Map<Product>(product));
+                .AddProduct(productToAdd);
 
             ProductDto productToReturn = _mapper.Map<ProductDto>(addedProduct);
 
