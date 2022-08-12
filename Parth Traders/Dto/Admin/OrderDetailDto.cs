@@ -8,7 +8,7 @@ namespace Parth_Traders.Dto.Admin
         public virtual OrderDto OrdersData { get; set; }
 
         [Required]
-        public virtual ProductDto ProductsData { get; set; }
+        public string ProductName { get; set; }
 
         [Required]
         public long Price { get; set; }

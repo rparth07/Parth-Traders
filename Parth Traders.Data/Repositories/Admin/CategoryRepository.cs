@@ -24,49 +24,18 @@ namespace Parth_Traders.Data.Repositories.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddCategories(List<Category> categoriesToAdd)
+        public void AddCategory(Category category)
         {
-            var categoriesDataToAdd = _mapper.Map<List<CategoryDataModel>>(categoriesToAdd);
+            var categoryToAdd = _mapper.Map<CategoryDataModel>(category);
 
-            _context.Categories.AddRange(categoriesDataToAdd);
+            _context.Categories.Add(categoryToAdd);
         }
 
-        public void AddCategory(Category categoryToAdd)
+        public void AddCategories(List<Category> categories)
         {
-            var categoryDataToAdd = _mapper.Map<CategoryDataModel>(categoryToAdd);
+            var categoryListToAdd = _mapper.Map<List<CategoryDataModel>>(categories);
 
-            _context.Categories.Add(categoryDataToAdd);
-        }
-
-        public void DeleteCategory(Category categoryToRemove)
-        {
-            var categoryData = _mapper.Map<CategoryDataModel>(categoryToRemove);
-
-            var categoryToDelete = _context.Categories
-                .FirstOrDefault(_ => _.CategoryId == categoryData.CategoryId);
-
-            //need to revisit to find should I need to delete orderDetails as,
-            //deleting in deleteProduct API and then delete product or directly delete.
-            _context.Products.RemoveRange(categoryToDelete.Products);
-            _context.Categories.Remove(categoryToDelete);
-        }
-
-        public List<Category> GetAllCategories()
-        {
-            var categories = _context.Categories
-                .Include("Products")
-                .ToList();
-
-            return _mapper.Map<List<Category>>(categories);
-        }
-
-        public Category GetCategory(int id)
-        {
-            var category = _context.Categories
-                .AsNoTracking()
-                .FirstOrDefault(_ => _.CategoryId == id);
-
-            return _mapper.Map<Category>(category);
+            _context.Categories.AddRange(categoryListToAdd);
         }
 
         public Category GetCategoryByName(string categoryName)
@@ -78,16 +47,45 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<Category>(category);
         }
 
+        public Category GetCategoryById(int id)
+        {
+            var category = _context.Categories
+                .AsNoTracking()
+                .FirstOrDefault(_ => _.CategoryId == id);
+
+            return _mapper.Map<Category>(category);
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            var categories = _context.Categories
+                .Include("Products")
+                .ToList();
+
+            return _mapper.Map<List<Category>>(categories);
+        }
+
         public void UpdateCategory(Category category)
         {
-            var categoryDataModel = _mapper.Map<CategoryDataModel>(category);
+            var categoryToUpdate = _mapper.Map<CategoryDataModel>(category);
 
-            var categoryToUpdate = _context.Categories
-                .FirstOrDefault(_ => _.CategoryName == category.CategoryName);
+            categoryToUpdate.CategoryId = _context.Categories
+                .FirstOrDefault(_ => _.CategoryName == category.CategoryName).CategoryId;
 
             _context.Categories.Update(categoryToUpdate);
             
             Save();
+        }
+
+        public void DeleteCategory(Category category)
+        {
+            var categoryToDelete = _context.Categories
+                .FirstOrDefault(_ => _.CategoryName == category.CategoryName);
+
+            //need to revisit to find should I need to delete orderDetails as,
+            //deleting in deleteProduct API and then delete product or directly delete.
+            _context.Products.RemoveRange(categoryToDelete.Products);
+            _context.Categories.Remove(categoryToDelete);
         }
 
         public bool Save()

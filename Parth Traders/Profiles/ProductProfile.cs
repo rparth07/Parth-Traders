@@ -8,7 +8,13 @@ namespace Parth_Traders.Profiles
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.SupplierName,
+                    opt => opt.MapFrom(src => src.SupplierData.SupplierName))
+                .ForMember(dest => dest.CategoryName,
+                    opt => opt.MapFrom(src => src.CategoryData.CategoryName))
+                .ForMember(dest => dest.OrderDetails,
+                    opt => opt.MapFrom(src => src.OrderDetails));
             CreateMap<ProductDto, Product>()
                 .ForPath(dest => dest.SupplierData.SupplierName,
                     opt => opt.MapFrom(src => src.SupplierName))

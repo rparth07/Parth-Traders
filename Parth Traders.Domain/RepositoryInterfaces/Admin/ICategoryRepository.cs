@@ -11,7 +11,7 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.Admin
     {
         void AddCategory(Category categoryToAdd);
         void AddCategories(List<Category> categoriesToAdd);
-        Category GetCategory(int id);
+        Category GetCategoryById(int id);
         Category GetCategoryByName(string categoryName);
         List<Category> GetAllCategories();
         void UpdateCategory(Category category);

@@ -8,7 +8,9 @@ namespace Parth_Traders.Data.Profiles
     {
         public OrderDetailProfile()
         {
-            CreateMap<OrderDetail, OrderDetailDto>();
+            CreateMap<OrderDetail, OrderDetailDto>()
+                .ForMember(dest => dest.ProductName,
+                    opt => opt.MapFrom(src => src.ProductsData.ProductName));
             CreateMap<OrderDetailDto, OrderDetail>();
         }
     }

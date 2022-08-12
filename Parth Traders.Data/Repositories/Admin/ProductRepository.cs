@@ -19,41 +19,21 @@ namespace Parth_Traders.Data.Repositories.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddProduct(Product productToAdd)
+        public void AddProduct(Product product)
         {
-            var productDataToAdd = _mapper.Map<ProductDataModel>(productToAdd);
+            var productToAdd = _mapper.Map<ProductDataModel>(product);
 
-            _context.Products.Add(productDataToAdd);
+            productToAdd.SupplierId = productToAdd.SupplierData.SupplierId;
+            productToAdd.CategoryId = productToAdd.CategoryData.CategoryId;
+
+            _context.Products.Add(productToAdd);
         }
 
-        public void AddAllProducts(IEnumerable<Product> productsToAdd)
+        public void AddAllProducts(IEnumerable<Product> products)
         {
-            var productList = _mapper.Map<List<ProductDataModel>>(productsToAdd);
+            var productListToAdd = _mapper.Map<List<ProductDataModel>>(products);
 
-            _context.Products.AddRange(productList);
-        }
-
-        public void DeleteProduct(Product productFromRepo)
-        {
-            var productData = _mapper.Map<ProductDataModel>(productFromRepo);
-
-            var productToDelete = _context.Products
-                .FirstOrDefault(_ => _.ProductId == productData.ProductId);
-
-            _context.OrderDetails.RemoveRange(productToDelete.OrderDetails);
-            _context.Products.Remove(productToDelete);
-
-        }
-
-        public List<Product> GetAllProducts()
-        {
-            var products = _context.Products
-                .Include("SupplierData")
-                .Include("CategoryData")
-                .Include("OrderDetails")
-                .ToList();
-
-            return _mapper.Map<List<Product>>(products);
+            _context.Products.AddRange(productListToAdd);
         }
 
         public Product GetProductByProductName(string productName)
@@ -68,18 +48,39 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<Product>(prouctToReturn);
         }
 
+        public List<Product> GetAllProducts()
+        {
+            var products = _context.Products
+                .Include("SupplierData")
+                .Include("CategoryData")
+                .Include("OrderDetails")
+                .Include("OrderData")
+                .Include("ProductData")
+                .Include("CustomerData")
+                .ToList();
+
+            return _mapper.Map<List<Product>>(products);
+        }
+
         public void UpdateProduct(Product product)
         {
-            var productDataModel = _mapper.Map<ProductDataModel>(product);
+            var productToUpdate = _mapper.Map<ProductDataModel>(product);
 
-            ProductDataModel productToUpdate = 
-                _context.Products.FirstOrDefault(_ => _.ProductName == product.ProductName);
+            productToUpdate.ProductId = _context.Products
+            .FirstOrDefault(_ => _.ProductName == product.ProductName).ProductId;
 
-            productDataModel.ProductId = productToUpdate.ProductId;
-
-            _context.Products.Update(productDataModel);
+            _context.Products.Update(productToUpdate);
 
             Save();
+        }
+
+        public void DeleteProduct(Product product)
+        {
+            var productToDelete = _context.Products
+                .FirstOrDefault(_ => _.ProductName == product.ProductName);
+
+            _context.OrderDetails.RemoveRange(productToDelete.OrderDetails);
+            _context.Products.Remove(productToDelete);
         }
 
         public bool Save()
