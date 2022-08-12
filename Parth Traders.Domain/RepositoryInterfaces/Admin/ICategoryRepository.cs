@@ -14,7 +14,9 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.Admin
         Category GetCategory(int id);
         Category GetCategoryByName(string categoryName);
         List<Category> GetAllCategories();
-        void UpdateCategory(Category categoryToUpdate);
+        void UpdateCategory(Category category);
         void DeleteCategory(Category categoryToRemove);
+        bool Save();
+        void Dispose();
     }
 }

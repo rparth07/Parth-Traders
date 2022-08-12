@@ -38,8 +38,7 @@ namespace Parth_Traders.Data.Repositories.Admin
             var productData = _mapper.Map<ProductDataModel>(productFromRepo);
 
             var productToDelete = _context.Products
-                .Where(_ => _.ProductId == productData.ProductId)
-                .FirstOrDefault();
+                .FirstOrDefault(_ => _.ProductId == productData.ProductId);
 
             _context.OrderDetails.RemoveRange(productToDelete.OrderDetails);
             _context.Products.Remove(productToDelete);
@@ -61,6 +60,9 @@ namespace Parth_Traders.Data.Repositories.Admin
         {
             var prouctToReturn = _context.Products
                 .AsNoTracking()
+                .Include("SupplierData")
+                .Include("CategoryData")
+                .Include("OrderDetails")
                 .FirstOrDefault(_ => _.ProductName == productName);
 
             return _mapper.Map<Product>(prouctToReturn);

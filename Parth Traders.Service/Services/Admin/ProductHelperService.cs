@@ -23,8 +23,8 @@ namespace Parth_Traders.Service.Services.Admin
 
         public Product MapProductPropertiesToProduct(Product product, string supplierName, string categoryName)
         {
-            product.SupplierData = _supplierRepository
-                .GetSupplierByName(supplierName);
+            //product.SupplierData = _supplierRepository
+              //  .GetSupplierByName(supplierName);
 
             product.CategoryData = _categoryRepository
                     .GetCategoryByName(categoryName);

@@ -66,7 +66,10 @@ namespace Parth_Traders.Service.Admin
         public Product GetProductByProductName(string productName)
         {
             var productToReturn = _productRepository.GetProductByProductName(productName);
-
+            if(productToReturn == null)
+            {
+                throw new Exception("product not found!");
+            }
             return productToReturn;
         }
 
