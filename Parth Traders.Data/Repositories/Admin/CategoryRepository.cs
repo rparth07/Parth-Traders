@@ -41,6 +41,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         public Category GetCategoryByName(string categoryName)
         {
             var category = _context.Categories
+                .Include("Products")
                 .AsNoTracking()
                 .FirstOrDefault(_ => _.CategoryName == categoryName);
 
@@ -50,6 +51,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         public Category GetCategoryById(int id)
         {
             var category = _context.Categories
+                .Include("Products")
                 .AsNoTracking()
                 .FirstOrDefault(_ => _.CategoryId == id);
 
@@ -79,8 +81,7 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public void DeleteCategory(Category category)
         {
-            var categoryToDelete = _context.Categories
-                .FirstOrDefault(_ => _.CategoryName == category.CategoryName);
+            var categoryToDelete = _mapper.Map<CategoryDataModel>(category);
 
             //need to revisit to find should I need to delete orderDetails as,
             //deleting in deleteProduct API and then delete product or directly delete.

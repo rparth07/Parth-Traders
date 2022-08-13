@@ -76,7 +76,8 @@ namespace Parth_Traders.Controllers
             return NoContent();
         }
 
-        [HttpPost("productId")]
+        [HttpPost("{productName}")]
+        [Consumes("application/json")]
         public IActionResult UpdateProduct(
             string productName,
             JsonPatchDocument<ProductDto> patchDocument)

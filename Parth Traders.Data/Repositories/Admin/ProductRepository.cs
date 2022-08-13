@@ -23,9 +23,6 @@ namespace Parth_Traders.Data.Repositories.Admin
         {
             var productToAdd = _mapper.Map<ProductDataModel>(product);
 
-            productToAdd.SupplierId = productToAdd.SupplierData.SupplierId;
-            productToAdd.CategoryId = productToAdd.CategoryData.CategoryId;
-
             _context.Products.Add(productToAdd);
         }
 
@@ -40,9 +37,10 @@ namespace Parth_Traders.Data.Repositories.Admin
         {
             var prouctToReturn = _context.Products
                 .AsNoTracking()
-                .Include("SupplierData")
-                .Include("CategoryData")
-                .Include("OrderDetails")
+                .Include(_ => _.SupplierData)
+                .Include(_ => _.CategoryData)
+                .Include(_ => _.OrderDetails).ThenInclude(_ => _.OrderData).ThenInclude(_ => _.CustomerData)
+                .Include(_ => _.OrderDetails)
                 .FirstOrDefault(_ => _.ProductName == productName);
 
             return _mapper.Map<Product>(prouctToReturn);
@@ -51,12 +49,10 @@ namespace Parth_Traders.Data.Repositories.Admin
         public List<Product> GetAllProducts()
         {
             var products = _context.Products
-                .Include("SupplierData")
-                .Include("CategoryData")
-                .Include("OrderDetails")
-                .Include("OrderData")
-                .Include("ProductData")
-                .Include("CustomerData")
+                .Include(_ => _.SupplierData)
+                .Include(_ => _.CategoryData)
+                .Include(_ => _.OrderDetails).ThenInclude(_ => _.OrderData).ThenInclude(_ => _.CustomerData)
+                .Include(_ => _.OrderDetails)
                 .ToList();
 
             return _mapper.Map<List<Product>>(products);
@@ -76,8 +72,7 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public void DeleteProduct(Product product)
         {
-            var productToDelete = _context.Products
-                .FirstOrDefault(_ => _.ProductName == product.ProductName);
+            var productToDelete = _mapper.Map<ProductDataModel>(product);
 
             _context.OrderDetails.RemoveRange(productToDelete.OrderDetails);
             _context.Products.Remove(productToDelete);

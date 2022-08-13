@@ -10,7 +10,9 @@ namespace Parth_Traders.Data.Profiles
         {
             CreateMap<OrderDetail, OrderDetailDto>()
                 .ForMember(dest => dest.ProductName,
-                    opt => opt.MapFrom(src => src.ProductsData.ProductName));
+                    opt => opt.MapFrom(src => src.ProductData.ProductName))
+                .ForMember(dest => dest.CustomerName,
+                    opt => opt.MapFrom(src => src.OrderData.CustomerData.CustomerName));
             CreateMap<OrderDetailDto, OrderDetail>();
         }
     }

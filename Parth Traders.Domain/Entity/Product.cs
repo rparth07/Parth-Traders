@@ -21,9 +21,9 @@ namespace Parth_Traders.Domain.Entity
 
         public string ProductDescription { get; set; }
 
-        public virtual Supplier SupplierData { get; set; }
+        public virtual Supplier Supplier { get; set; }
 
-        public virtual Category CategoryData { get; set; }
+        public virtual Category Category { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
 

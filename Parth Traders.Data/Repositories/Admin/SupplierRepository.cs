@@ -41,6 +41,8 @@ namespace Parth_Traders.Data.Repositories.Admin
         public Supplier GetSupplierById(int id)
         {
             var supplier = _context.Suppliers
+                .Include("Products")
+                .AsNoTracking()
                 .FirstOrDefault(_ => _.SupplierId == id);
 
             return _mapper.Map<Supplier>(supplier);
@@ -49,6 +51,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         public Supplier GetSupplierByName(string supplierName)
         {
             var supplier = _context.Suppliers
+                .Include("Products")
                 .AsNoTracking()
                 .FirstOrDefault(_ => _.SupplierName == supplierName);
 
@@ -58,7 +61,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         public List<Supplier> GetAllSuppliers()
         {
            var suppliers = _context.Suppliers
-                .Include("Products")
+                .AsNoTracking()
                 .ToList();
 
             return _mapper.Map<List<Supplier>>(suppliers);
@@ -79,8 +82,7 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public void DeleteSupplier(Supplier supplier)
         {
-            var supplierToDelete = _context.Suppliers
-                .FirstOrDefault(_ => _.SupplierName == supplier.SupplierName);
+            var supplierToDelete = _mapper.Map<SupplierDataModel>(supplier);
 
             _context.Products.RemoveRange(supplierToDelete.Products);
             _context.Suppliers.Remove(supplierToDelete);
