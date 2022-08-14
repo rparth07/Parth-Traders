@@ -13,7 +13,7 @@ namespace Parth_Traders.Service.Services.Admin.AdminInterfaces
         void AddAllProducts(IEnumerable<Product> productsToAdd);
         Product GetProductByProductName(string productName);
         List<Product> GetAllProducts();
-        public void UpdateProduct(Product product);
+        public void UpdateProduct(Product product, string productName);
         void DeleteProduct(string productName);
     }
 }

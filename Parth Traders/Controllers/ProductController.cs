@@ -80,23 +80,21 @@ namespace Parth_Traders.Controllers
         [Consumes("application/json")]
         public IActionResult UpdateProduct(
             string productName,
-            JsonPatchDocument<ProductDto> patchDocument)
+            ProductDto product)
         {
-            var productToUpdateFromRepo = _productService.GetProductByProductName(productName);
+            var productToUpdate = _mapper.Map<Product>(product);
 
-            var productToPatch = _mapper.Map<ProductDto>(productToUpdateFromRepo);
+            //patchDocument.ApplyTo(productToPatch, ModelState);
 
-            patchDocument.ApplyTo(productToPatch, ModelState);
-
-            if (!TryValidateModel(productToPatch))
+            /*if (!TryValidateModel(productToPatch))
             {
                 return ValidationProblem(ModelState);
-            }
+            }*/
 
-            _mapper.Map(productToPatch, productToUpdateFromRepo);
-            _productService.UpdateProduct(productToUpdateFromRepo);
+            //_mapper.Map(productToPatch, productToUpdateFromRepo);
+            _productService.UpdateProduct(productToUpdate, productName);
 
-            return Ok(productToUpdateFromRepo);
+            return Ok(product);
         }
     }
 }

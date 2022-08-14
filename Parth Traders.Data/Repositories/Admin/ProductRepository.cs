@@ -58,16 +58,30 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<List<Product>>(products);
         }
 
-        public void UpdateProduct(Product product)
+        public void UpdateProduct(Product product, string productName)
         {
-            var productToUpdate = _mapper.Map<ProductDataModel>(product);
+            //TODO:Need to update for supplierData, categoryData, orderDetails
+            var productToUpdate = GetProductByProductName(productName);
 
-            productToUpdate.ProductId = _context.Products
-            .FirstOrDefault(_ => _.ProductName == product.ProductName).ProductId;
-
-            _context.Products.Update(productToUpdate);
+            var updatedProduct = GetUpdatedProduct(productToUpdate, product);
+            _context.Products.Update(_mapper.Map<ProductDataModel>(updatedProduct));
 
             Save();
+        }
+
+        private Product GetUpdatedProduct(Product? productToUpdate,
+                                                   Product product)
+        {
+            productToUpdate.ProductName = product.ProductName;
+            productToUpdate.ProductType = product.ProductType;
+            productToUpdate.ProductDescription = product.ProductDescription;
+            productToUpdate.QuantityPerUnit = product.QuantityPerUnit;
+            productToUpdate.UnitPrice = product.UnitPrice;
+            productToUpdate.SinglePieceMRP = product.SinglePieceMRP;
+            productToUpdate.Discount = product.Discount;
+            productToUpdate.UnitsInStock = product.UnitsInStock;
+
+            return productToUpdate;
         }
 
         public void DeleteProduct(Product product)

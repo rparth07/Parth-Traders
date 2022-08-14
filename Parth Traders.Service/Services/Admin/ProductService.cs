@@ -73,9 +73,9 @@ namespace Parth_Traders.Service.Admin
             return productToReturn;
         }
 
-        public void UpdateProduct(Product product)
+        public void UpdateProduct(Product product, string productName)
         {
-            _productRepository.UpdateProduct(product);
+            _productRepository.UpdateProduct(product, productName);
         }
     }
 }
