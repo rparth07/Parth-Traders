@@ -24,7 +24,7 @@ namespace Parth_Traders.Service.Admin
             } 
             catch(Exception ex)
             {
-                new Exception("Bad Request");
+                throw new Exception($"Bad Request {ex}");
             }
         }
 

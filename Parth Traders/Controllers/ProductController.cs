@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Parth_Traders.CsvParserModel;
 using Parth_Traders.Domain.Entity;
 using Parth_Traders.Dto.Admin;
+using Parth_Traders.Helper;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Controllers
@@ -49,10 +51,19 @@ namespace Parth_Traders.Controllers
         {
             IFormFile? file = Request.Form.Files[0];
             //TODO:Need to Add logic to parse file and get list of productsToAdd
-            List<ProductDto> productsToAdd = new List<ProductDto>();
-            _productService.AddAllProducts(_mapper.Map<List<Product>>(productsToAdd));
+            List<ParsedProduct> parsedProducts = new ParsedProduct().ParseData(file);
+
+            List<Product> productsToAdd = parsedProducts.Select(parsedProduct =>
+            {
+                return _productHelperService
+                    .MapProductPropertiesToProduct(_mapper.Map<Product>(parsedProduct),
+                                                   parsedProduct.SupplierName,
+                                                   parsedProduct.CategoryName);
+            }).ToList();
+
+            _productService.AddAllProducts(productsToAdd);
             
-            return Ok(productsToAdd);
+            return Ok(parsedProducts);
         }
 
         [HttpGet("{productName}", Name = "GetProduct")]

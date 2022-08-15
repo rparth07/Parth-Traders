@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Parth_Traders.CsvParserModel;
 using Parth_Traders.Domain.Entity;
 using Parth_Traders.Dto.Admin;
 
@@ -21,6 +22,8 @@ namespace Parth_Traders.Profiles
                 .ForPath
                 (dest => dest.Category.CategoryName,
                     opt => opt.MapFrom(src => src.CategoryName));
+
+            CreateMap<ParsedProduct, Product>();
         }
     }
 }

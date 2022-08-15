@@ -60,28 +60,24 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public void UpdateProduct(Product product, string productName)
         {
-            //TODO:Need to update for supplierData, categoryData, orderDetails
-            var productToUpdate = GetProductByProductName(productName);
+            //TODO:For now, admin can not update category, supplier and orderDetails
+            var productFromRepo = GetProductByProductName(productName);
 
-            var updatedProduct = GetUpdatedProduct(productToUpdate, product);
-            _context.Products.Update(_mapper.Map<ProductDataModel>(updatedProduct));
+            var productToUpdate = FillRequiredInfo(productFromRepo, product);
+            _context.Products.Update(_mapper.Map<ProductDataModel>(productToUpdate));
 
             Save();
         }
 
-        private Product GetUpdatedProduct(Product? productToUpdate,
-                                                   Product product)
+        private Product FillRequiredInfo(Product? productFromRepo,
+                                          Product product)
         {
-            productToUpdate.ProductName = product.ProductName;
-            productToUpdate.ProductType = product.ProductType;
-            productToUpdate.ProductDescription = product.ProductDescription;
-            productToUpdate.QuantityPerUnit = product.QuantityPerUnit;
-            productToUpdate.UnitPrice = product.UnitPrice;
-            productToUpdate.SinglePieceMRP = product.SinglePieceMRP;
-            productToUpdate.Discount = product.Discount;
-            productToUpdate.UnitsInStock = product.UnitsInStock;
+            product.ProductId = productFromRepo.ProductId;
+            product.Category = productFromRepo.Category;
+            product.Supplier = productFromRepo.Supplier;
+            product.OrderDetails = productFromRepo.OrderDetails;
 
-            return productToUpdate;
+            return product;
         }
 
         public void DeleteProduct(Product product)
