@@ -61,9 +61,9 @@ namespace Parth_Traders.Controllers
                                                    parsedProduct.CategoryName);
             }).ToList();
 
-            _productService.AddAllProducts(productsToAdd);
+            var addedProducts = _productService.AddAllProducts(productsToAdd);
             
-            return Ok(parsedProducts);
+            return Ok(_mapper.Map<List<ProductDto>>(addedProducts));
         }
 
         [HttpGet("{productName}", Name = "GetProduct")]
@@ -76,8 +76,8 @@ namespace Parth_Traders.Controllers
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var prodcuts = _mapper.Map<List<ProductDto>>(_productService.GetAllProducts());
-            return Ok(prodcuts);
+            var products = _mapper.Map<List<ProductDto>>(_productService.GetAllProducts());
+            return Ok(products);
         }
 
         [HttpDelete("{productName}")]
@@ -95,14 +95,6 @@ namespace Parth_Traders.Controllers
         {
             var productToUpdate = _mapper.Map<Product>(product);
 
-            //patchDocument.ApplyTo(productToPatch, ModelState);
-
-            /*if (!TryValidateModel(productToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }*/
-
-            //_mapper.Map(productToPatch, productToUpdateFromRepo);
             _productService.UpdateProduct(productToUpdate, productName);
 
             return Ok(product);

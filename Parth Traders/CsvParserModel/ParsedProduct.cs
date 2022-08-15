@@ -1,5 +1,4 @@
 ﻿using CsvHelper.Configuration.Attributes;
-using Parth_Traders.Dto.Admin;
 
 namespace Parth_Traders.CsvParserModel
 {

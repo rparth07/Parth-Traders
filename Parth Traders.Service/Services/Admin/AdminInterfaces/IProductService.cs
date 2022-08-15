@@ -10,10 +10,10 @@ namespace Parth_Traders.Service.Services.Admin.AdminInterfaces
     public interface IProductService
     {
         Product AddProduct(Product productToAdd);
-        void AddAllProducts(IEnumerable<Product> productsToAdd);
+        List<Product> AddAllProducts(List<Product> productsToAdd);
         Product GetProductByProductName(string productName);
         List<Product> GetAllProducts();
-        public void UpdateProduct(Product product, string productName);
+        void UpdateProduct(Product product, string oldProductName);
         void DeleteProduct(string productName);
     }
 }

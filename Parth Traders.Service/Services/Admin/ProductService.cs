@@ -15,7 +15,7 @@ namespace Parth_Traders.Service.Admin
             _productRepository = productRepository;
         }
 
-        public void AddAllProducts(IEnumerable<Product> productsToAdd)
+        public List<Product> AddAllProducts(List<Product> productsToAdd)
         {
             try
             {
@@ -26,6 +26,8 @@ namespace Parth_Traders.Service.Admin
             {
                 throw new Exception($"Bad Request {ex}");
             }
+
+            return productsToAdd;
         }
 
         public Product AddProduct(Product productToAdd)
@@ -73,9 +75,9 @@ namespace Parth_Traders.Service.Admin
             return productToReturn;
         }
 
-        public void UpdateProduct(Product product, string productName)
+        public void UpdateProduct(Product product, string oldProductName)
         {
-            _productRepository.UpdateProduct(product, productName);
+            _productRepository.UpdateProduct(product, oldProductName);
         }
     }
 }

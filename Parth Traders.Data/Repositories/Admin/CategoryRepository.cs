@@ -31,7 +31,7 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Categories.Add(categoryToAdd);
         }
 
-        public void AddCategories(List<Category> categories)
+        public void AddAllCategories(List<Category> categories)
         {
             var categoryListToAdd = _mapper.Map<List<CategoryDataModel>>(categories);
 
@@ -48,7 +48,7 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<Category>(category);
         }
 
-        public Category GetCategoryById(int id)
+        public Category GetCategoryById(long id)
         {
             var category = _context.Categories
                 .Include("Products")
@@ -67,16 +67,24 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<List<Category>>(categories);
         }
 
-        public void UpdateCategory(Category category)
+        public void UpdateCategory(Category category, string oldCategoryName)
         {
-            var categoryToUpdate = _mapper.Map<CategoryDataModel>(category);
+            //TODO: admin can not update products.
+            var categoryFromRepo = GetCategoryByName(oldCategoryName);
 
-            categoryToUpdate.CategoryId = _context.Categories
-                .FirstOrDefault(_ => _.CategoryName == category.CategoryName).CategoryId;
+            var categoryToUpdate = FillRequiredInfo(categoryFromRepo, category);
 
-            _context.Categories.Update(categoryToUpdate);
+            _context.Categories.Update(_mapper.Map<CategoryDataModel>(categoryToUpdate));
             
             Save();
+        }
+
+        private static Category FillRequiredInfo(Category categoryFromRepo, Category category)
+        {
+            category.CategoryId = categoryFromRepo.CategoryId;
+            category.Products = categoryFromRepo.Products;
+
+            return category;
         }
 
         public void DeleteCategory(Category category)
