@@ -38,12 +38,12 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Suppliers.AddRange(supplierListToAdd);
         }
 
-        public Supplier GetSupplierById(int id)
+        public Supplier GetSupplierById(long supplierId)
         {
             var supplier = _context.Suppliers
                 .Include("Products")
                 .AsNoTracking()
-                .FirstOrDefault(_ => _.SupplierId == id);
+                .FirstOrDefault(_ => _.SupplierId == supplierId);
 
             return _mapper.Map<Supplier>(supplier);
         }

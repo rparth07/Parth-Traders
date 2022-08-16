@@ -26,14 +26,14 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Products.Add(productToAdd);
         }
 
-        public void AddAllProducts(IEnumerable<Product> products)
+        public void AddAllProducts(List<Product> products)
         {
             var productListToAdd = _mapper.Map<List<ProductDataModel>>(products);
 
             _context.Products.AddRange(productListToAdd);
         }
 
-        public Product GetProductByProductName(string productName)
+        public Product GetProductByName(string productName)
         {
             var prouctToReturn = _context.Products
                 .AsNoTracking()

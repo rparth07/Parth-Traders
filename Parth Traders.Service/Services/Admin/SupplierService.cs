@@ -69,9 +69,9 @@ namespace Parth_Traders.Service.Services.Admin
             return _supplierRepository.GetAllSuppliers();
         }
 
-        public Supplier GetSupplierById(int id)
+        public Supplier GetSupplierById(long supplierId)
         {
-            var supplierToReturn = _supplierRepository.GetSupplierById(id);
+            var supplierToReturn = _supplierRepository.GetSupplierById(supplierId);
             if (supplierToReturn == null)
             {
                 throw new Exception("Supplier not found!");

@@ -51,7 +51,7 @@ namespace Parth_Traders.Service.Admin
         {
             try
             {
-                var productFromRepo = _productRepository.GetProductByProductName(productName);
+                var productFromRepo = _productRepository.GetProductByName(productName);
                 _productRepository.DeleteProduct(productFromRepo);
                 _productRepository.Save();
             }
@@ -68,7 +68,7 @@ namespace Parth_Traders.Service.Admin
 
         public Product GetProductByProductName(string productName)
         {
-            var productToReturn = _productRepository.GetProductByProductName(productName);
+            var productToReturn = _productRepository.GetProductByName(productName);
             if(productToReturn == null)
             {
                 throw new Exception("product not found!");

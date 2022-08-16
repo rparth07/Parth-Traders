@@ -69,9 +69,9 @@ namespace Parth_Traders.Service.Services.Admin
             return _categoryRepository.GetAllCategories();
         }
 
-        public Category GetCategoryById(long id)
+        public Category GetCategoryById(long categoryId)
         {
-            var categoryToReturn = _categoryRepository.GetCategoryById(id);
+            var categoryToReturn = _categoryRepository.GetCategoryById(categoryId);
             if (categoryToReturn == null)
             {
                 throw new Exception("Category not found!");

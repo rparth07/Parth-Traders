@@ -10,8 +10,8 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces
     public interface IProductRepository
     {
         void AddProduct(Product productToAdd);
-        void AddAllProducts(IEnumerable<Product> productsToAdd);
-        Product GetProductByProductName(string productName);
+        void AddAllProducts(List<Product> productsToAdd);
+        Product GetProductByName(string productName);
         List<Product> GetAllProducts();
         void UpdateProduct(Product product);
         void DeleteProduct(Product productToDelete);

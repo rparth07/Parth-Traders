@@ -11,7 +11,7 @@ namespace Parth_Traders.Service.Services.Admin.AdminInterfaces
     {
         Category AddCategory(Category categoryToAdd);
         List<Category> AddAllCategories(List<Category> categoriesToAdd);
-        Category GetCategoryById(long id);
+        Category GetCategoryById(long categoryId);
         Category GetCategoryByName(string categoryName);
         List<Category> GetAllCategories();
         void UpdateCategory(Category updatedCategory, string oldCategoryName);

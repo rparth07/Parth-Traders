@@ -4,6 +4,12 @@ namespace Parth_Traders.Dto.Admin
 {
     public class CustomerDto
     {
+        public CustomerDto()
+        {
+            CreatedDate = DateTime.Now;
+            Orders = new List<OrderDto>();
+        }
+
         [Required]
         public string CustomerName { get; set; }
 
