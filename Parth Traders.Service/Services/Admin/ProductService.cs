@@ -75,9 +75,24 @@ namespace Parth_Traders.Service.Admin
             return productToReturn;
         }
 
-        public void UpdateProduct(Product product, string oldProductName)
+        public void UpdateProduct(Product updatedProduct, string oldProductName)
         {
-            _productRepository.UpdateProduct(product, oldProductName);
+            var productFromRepo = GetProductByProductName(oldProductName);
+            
+            _productRepository
+                .UpdateProduct(FillRequiredInfo(productFromRepo,updatedProduct));
         }
+
+        private static Product FillRequiredInfo(Product? productFromRepo,
+                                          Product product)
+        {
+            product.ProductId = productFromRepo.ProductId;
+            product.Category = productFromRepo.Category;
+            product.Supplier = productFromRepo.Supplier;
+            product.OrderDetails = productFromRepo.OrderDetails;
+
+            return product;
+        }
+
     }
 }

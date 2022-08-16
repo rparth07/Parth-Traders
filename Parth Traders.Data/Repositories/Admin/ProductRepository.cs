@@ -58,26 +58,12 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<List<Product>>(products);
         }
 
-        public void UpdateProduct(Product product, string oldProductName)
+        public void UpdateProduct(Product product)
         {
             //TODO:For now, admin can not update category, supplier and orderDetails
-            var productFromRepo = GetProductByProductName(oldProductName);
-
-            var productToUpdate = FillRequiredInfo(productFromRepo, product);
-            _context.Products.Update(_mapper.Map<ProductDataModel>(productToUpdate));
+            _context.Products.Update(_mapper.Map<ProductDataModel>(product));
 
             Save();
-        }
-
-        private static Product FillRequiredInfo(Product? productFromRepo,
-                                          Product product)
-        {
-            product.ProductId = productFromRepo.ProductId;
-            product.Category = productFromRepo.Category;
-            product.Supplier = productFromRepo.Supplier;
-            product.OrderDetails = productFromRepo.OrderDetails;
-
-            return product;
         }
 
         public void DeleteProduct(Product product)

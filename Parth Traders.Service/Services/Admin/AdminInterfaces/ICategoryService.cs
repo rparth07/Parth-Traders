@@ -14,7 +14,7 @@ namespace Parth_Traders.Service.Services.Admin.AdminInterfaces
         Category GetCategoryById(long id);
         Category GetCategoryByName(string categoryName);
         List<Category> GetAllCategories();
-        void UpdateCategory(Category category, string oldCategoryName);
+        void UpdateCategory(Category updatedCategory, string oldCategoryName);
         void DeleteCategory(string categoryName);
     }
 }

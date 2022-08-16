@@ -87,9 +87,20 @@ namespace Parth_Traders.Service.Services.Admin
             return categoryToReturn;
         }
 
-        public void UpdateCategory(Category category, string oldCategoryName)
+        public void UpdateCategory(Category updatedCategory, string oldCategoryName)
         {
-            _categoryRepository.UpdateCategory(category, oldCategoryName);
+            var categoryFromRepo = GetCategoryByName(oldCategoryName);
+            
+            _categoryRepository
+                .UpdateCategory(FillRequiredInfo(categoryFromRepo, updatedCategory));
+        }
+
+        private static Category FillRequiredInfo(Category categoryFromRepo, Category category)
+        {
+            category.CategoryId = categoryFromRepo.CategoryId;
+            category.Products = categoryFromRepo.Products;
+
+            return category;
         }
     }
 }

@@ -67,24 +67,12 @@ namespace Parth_Traders.Data.Repositories.Admin
             return _mapper.Map<List<Category>>(categories);
         }
 
-        public void UpdateCategory(Category category, string oldCategoryName)
+        public void UpdateCategory(Category category)
         {
             //TODO: admin can not update products.
-            var categoryFromRepo = GetCategoryByName(oldCategoryName);
-
-            var categoryToUpdate = FillRequiredInfo(categoryFromRepo, category);
-
-            _context.Categories.Update(_mapper.Map<CategoryDataModel>(categoryToUpdate));
+            _context.Categories.Update(_mapper.Map<CategoryDataModel>(category));
             
             Save();
-        }
-
-        private static Category FillRequiredInfo(Category categoryFromRepo, Category category)
-        {
-            category.CategoryId = categoryFromRepo.CategoryId;
-            category.Products = categoryFromRepo.Products;
-
-            return category;
         }
 
         public void DeleteCategory(Category category)
