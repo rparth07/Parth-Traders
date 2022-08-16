@@ -14,5 +14,8 @@ namespace Parth_Traders.Dto.Admin
 
         [Required]
         public DateTime OrderDate { get; set; }
+
+        [Required]
+        public long GrandTotal { get; set; }
     }
 }

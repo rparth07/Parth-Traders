@@ -20,7 +20,7 @@ namespace Parth_Traders.CsvParserModel
         public string CategoryName { get; set; }
 
         [Index(5)]
-        public int QuantityPerUnit { get; set; }
+        public int PiecesPerUnit { get; set; }
 
         [Index(6)]
         public long UnitPrice { get; set; }

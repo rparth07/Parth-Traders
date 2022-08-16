@@ -27,7 +27,7 @@ namespace Parth_Traders.Domain.Entity
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public int QuantityPerUnit { get; set; }
+        public int PiecesPerUnit { get; set; }
 
         public long UnitPrice { get; set; }
 

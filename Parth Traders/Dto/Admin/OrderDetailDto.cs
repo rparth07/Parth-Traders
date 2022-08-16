@@ -11,10 +11,10 @@ namespace Parth_Traders.Dto.Admin
         public string ProductName { get; set; }
 
         [Required]
-        public long Price { get; set; }
+        public long PricePerPiece { get; set; }
 
         [Required]
-        public long Quantity { get; set; }
+        public long QuantityPurchased { get; set; }
 
         [Required]
         public long Discount { get; set; }

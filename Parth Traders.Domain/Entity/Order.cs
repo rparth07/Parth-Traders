@@ -18,5 +18,7 @@ namespace Parth_Traders.Domain.Entity
         public PaymentType PaymentType { get; set; }
 
         public DateTime OrderDate { get; set; }
+
+        public long GrandTotal { get; set; }
     }
 }

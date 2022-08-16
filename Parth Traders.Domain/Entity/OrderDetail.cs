@@ -14,9 +14,9 @@ namespace Parth_Traders.Domain.Entity
 
         public virtual Product ProductData { get; set; }
 
-        public long Price { get; set; }
+        public long PricePerPiece { get; set; }
 
-        public long Quantity { get; set; }
+        public long QuantityPurchased { get; set; }
 
         public long Discount { get; set; }
 

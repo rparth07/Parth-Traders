@@ -26,5 +26,7 @@ namespace Parth_Traders.Data.DataModel
         [Required]
         public DateTime  OrderDate { get; set; }
 
+        [Required]
+        public long GrandTotal { get; set; }
     }
 }

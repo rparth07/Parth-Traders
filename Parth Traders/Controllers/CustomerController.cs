@@ -9,7 +9,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers
 {
     [ApiController]
-    [Route("API/admin/customers")]
+    [Route("API/customers")]
     public class CustomerController : ControllerBase
     {
         public readonly ICustomerService _customerService;

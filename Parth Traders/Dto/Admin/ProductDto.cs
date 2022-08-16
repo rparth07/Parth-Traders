@@ -28,7 +28,7 @@ namespace Parth_Traders.Dto.Admin
         public ICollection<OrderDetailDto> OrderDetails { get; set; }
 
         [Required]
-        public int QuantityPerUnit { get; set; }
+        public int PiecesPerUnit { get; set; }
 
         [Required]
         public long UnitPrice { get; set; }

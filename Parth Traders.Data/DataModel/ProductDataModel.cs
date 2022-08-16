@@ -29,10 +29,10 @@ namespace Parth_Traders.Data.DataModel
         public ICollection<OrderDetailDataModel> OrderDetails { get; set; }
 
         [Required]
-        public int QuantityPerUnit { get; set; }
+        public long UnitPrice { get; set; }
 
         [Required]
-        public long UnitPrice { get; set; }
+        public int PiecesPerUnit { get; set; }
 
         [Required]
         public long SinglePieceMRP { get; set; }

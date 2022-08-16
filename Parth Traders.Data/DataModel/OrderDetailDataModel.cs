@@ -24,10 +24,10 @@ namespace Parth_Traders.Data.DataModel
         public virtual ProductDataModel ProductData { get; set; } 
 
         [Required]
-        public long Price { get; set; }
+        public long PricePerPiece { get; set; }
 
         [Required]
-        public long Quantity { get; set; }
+        public long QuantityPurchased { get; set; }
 
         [Required]
         public long Discount { get; set; }
