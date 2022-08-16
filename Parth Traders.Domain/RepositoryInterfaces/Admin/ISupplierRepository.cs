@@ -10,11 +10,11 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.Admin
     public interface ISupplierRepository
     {
         void AddSupplier(Supplier supplierToAdd);
-        void AddSupppliers(List<Supplier> suppliersToAdd);
+        void AddAllSuppliers(List<Supplier> suppliersToAdd);
         Supplier GetSupplierById(int id);
         Supplier GetSupplierByName(string supplierName);
         List<Supplier> GetAllSuppliers();
-        void UpdateSuppplier(Supplier supplierToUpdate);
+        void UpdateSupplier(Supplier supplierToUpdate);
         void DeleteSupplier(Supplier supplierToRemove);
         bool Save();
         void Dispose();

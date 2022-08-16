@@ -12,7 +12,8 @@ namespace Parth_Traders.Service.Admin
        
         public ProductService(IProductRepository productRepository)
         {
-            _productRepository = productRepository;
+            _productRepository = productRepository ??
+                throw new ArgumentNullException(nameof(productRepository));
         }
 
         public List<Product> AddAllProducts(List<Product> productsToAdd)
@@ -84,7 +85,7 @@ namespace Parth_Traders.Service.Admin
         }
 
         private static Product FillRequiredInfo(Product? productFromRepo,
-                                          Product product)
+                                                Product product)
         {
             product.ProductId = productFromRepo.ProductId;
             product.Category = productFromRepo.Category;

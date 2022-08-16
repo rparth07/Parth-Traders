@@ -4,6 +4,11 @@ namespace Parth_Traders.Dto.Admin
 {
     public class SupplierDto
     {
+        public SupplierDto()
+        {
+            Products = new List<ProductDto>();
+        }
+
         [Required]
         public string SupplierName { get; set; }
 

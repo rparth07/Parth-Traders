@@ -15,8 +15,10 @@ namespace Parth_Traders.Service.Services.Admin
 
         public CategoryService(ICategoryRepository categoryRepository)
         {
-            _categoryRepository = categoryRepository;
+            _categoryRepository = categoryRepository ??
+                throw new ArgumentNullException(nameof(categoryRepository));
         }
+
         public List<Category> AddAllCategories(List<Category> categoriesToAdd)
         {
             try
@@ -95,7 +97,8 @@ namespace Parth_Traders.Service.Services.Admin
                 .UpdateCategory(FillRequiredInfo(categoryFromRepo, updatedCategory));
         }
 
-        private static Category FillRequiredInfo(Category categoryFromRepo, Category category)
+        private static Category FillRequiredInfo(Category categoryFromRepo,
+                                                 Category category)
         {
             category.CategoryId = categoryFromRepo.CategoryId;
             category.Products = categoryFromRepo.Products;

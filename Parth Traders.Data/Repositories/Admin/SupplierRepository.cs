@@ -31,7 +31,7 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Suppliers.Add(supplierToAdd);
         }
 
-        public void AddSupppliers(List<Supplier> suppliers)
+        public void AddAllSuppliers(List<Supplier> suppliers)
         {
             var supplierListToAdd = _mapper.Map<List<SupplierDataModel>>(suppliers);
 
@@ -61,19 +61,16 @@ namespace Parth_Traders.Data.Repositories.Admin
         public List<Supplier> GetAllSuppliers()
         {
            var suppliers = _context.Suppliers
+                .Include("Products")
                 .AsNoTracking()
                 .ToList();
 
             return _mapper.Map<List<Supplier>>(suppliers);
         }
 
-        public void UpdateSuppplier(Supplier supplier)
+        public void UpdateSupplier(Supplier supplier)
         {
             var supplierToUpdate = _mapper.Map<SupplierDataModel>(supplier);
-
-            supplierToUpdate.SupplierId = _context.Suppliers
-                .FirstOrDefault(_ => _.SupplierName == supplierToUpdate.SupplierName)
-                .SupplierId;
 
             _context.Suppliers.Update(supplierToUpdate);
 
