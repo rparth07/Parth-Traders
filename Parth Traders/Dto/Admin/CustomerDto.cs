@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Parth_Traders.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.Admin
 {
@@ -24,7 +25,7 @@ namespace Parth_Traders.Dto.Admin
         public string CustomerAddress { get; set; }
 
         [Required]
-        public int PaymentType { get; set; }
+        public PaymentType PaymentType { get; set; }
 
         public ICollection<OrderDto> Orders { get; set; }
 

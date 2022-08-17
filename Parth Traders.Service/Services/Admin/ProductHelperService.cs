@@ -17,8 +17,10 @@ namespace Parth_Traders.Service.Services.Admin
         public ProductHelperService(ISupplierRepository supplierRepository,
                                     ICategoryRepository categoryRepository)
         {
-            _supplierRepository = supplierRepository;
-            _categoryRepository = categoryRepository;
+            _supplierRepository = supplierRepository ??
+                throw new ArgumentNullException(nameof(supplierRepository));
+            _categoryRepository = categoryRepository ??
+                throw new ArgumentNullException(nameof(categoryRepository));
         }
 
         public Product MapProductPropertiesToProduct(Product product, string supplierName, string categoryName)

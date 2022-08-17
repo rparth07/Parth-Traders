@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parth_Traders.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Parth_Traders.Data.DataModel
         public string CustomerAddress { get; set; }
 
         [Required]
-        public PaymentTypeDataModel PaymentType { get; set; }
+        public PaymentType PaymentType { get; set; }
 
         public ICollection<OrderDataModel> Orders { get; set; }
 

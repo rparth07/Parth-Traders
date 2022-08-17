@@ -4,6 +4,15 @@ namespace Parth_Traders.Dto.Admin
 {
     public class OrderDetailDto
     {
+        public OrderDetailDto()
+        {
+            BillDate = DateTime.Now;
+        }
+
+        public long OrderDetailId { get; set; }
+
+        public long OrderId { get; set; }
+
         [Required]
         public string CustomerName { get; set; }
 

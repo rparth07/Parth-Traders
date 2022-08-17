@@ -8,8 +8,16 @@ namespace Parth_Traders.Data.Profiles
     {
         public OrderDetailProfile()
         {
-            CreateMap<OrderDetail, OrderDetailDataModel>();
-            CreateMap<OrderDetailDataModel, OrderDetail>();
+            CreateMap<OrderDetail, OrderDetailDataModel>()
+                .ForMember(dest => dest.OrderId,
+                    opt => opt.MapFrom(src => src.Order.OrderId))
+                .ForMember(dest => dest.ProductId,
+                    opt => opt.MapFrom(src => src.Product.ProductId));
+            CreateMap<OrderDetailDataModel, OrderDetail>()
+                .ForMember(dest => dest.Product,
+                    opt => opt.MapFrom(src => src.ProductData))
+                .ForMember(dest => dest.Order,
+                    opt => opt.MapFrom(src => src.OrderData));
         }
     }
 }

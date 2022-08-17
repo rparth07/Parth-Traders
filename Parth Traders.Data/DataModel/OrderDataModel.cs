@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parth_Traders.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,15 +19,19 @@ namespace Parth_Traders.Data.DataModel
         [ForeignKey("CustomerId")]
         public virtual CustomerDataModel CustomerData { get; set; }
 
+        [Required]
         public ICollection<OrderDetailDataModel> OrderDetails { get; set; }    
         
         [Required]
-        public PaymentTypeDataModel PaymentType { get; set; }
+        public PaymentType PaymentType { get; set; }
         
         [Required]
         public DateTime  OrderDate { get; set; }
 
         [Required]
         public long GrandTotal { get; set; }
+
+        [Required]
+        public OrderStatus OrderStatus { get; set; }
     }
 }

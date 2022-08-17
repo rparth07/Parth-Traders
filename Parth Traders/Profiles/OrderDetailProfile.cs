@@ -10,10 +10,16 @@ namespace Parth_Traders.Data.Profiles
         {
             CreateMap<OrderDetail, OrderDetailDto>()
                 .ForMember(dest => dest.ProductName,
-                    opt => opt.MapFrom(src => src.ProductData.ProductName))
+                    opt => opt.MapFrom(src => src.Product.ProductName))
+                .ForMember(dest => dest.OrderId,
+                    opt => opt.MapFrom(src => src.Order.OrderId))
                 .ForMember(dest => dest.CustomerName,
-                    opt => opt.MapFrom(src => src.OrderData.CustomerData.CustomerName));
-            CreateMap<OrderDetailDto, OrderDetail>();
+                    opt => opt.MapFrom(src => src.Order.Customer.CustomerName));
+            CreateMap<OrderDetailDto, OrderDetail>()
+                .ForPath(dest => dest.Order.Customer.CustomerName,
+                    opt => opt.MapFrom(src => src.CustomerName))
+                .ForPath(dest => dest.Product.ProductName,
+                    opt => opt.MapFrom(src => src.ProductName));
         }
     }
 }

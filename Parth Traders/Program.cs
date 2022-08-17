@@ -3,12 +3,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json.Serialization;
 using Parth_Traders.Data;
 using Parth_Traders.Data.Repositories.Admin;
+using Parth_Traders.Data.Repositories.User;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
+using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service;
 using Parth_Traders.Service.Admin;
 using Parth_Traders.Service.Services.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
+using Parth_Traders.Service.Services.User;
+using Parth_Traders.Service.Services.User.UserInterface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +39,13 @@ builder.Services.AddScoped<IProductHelperService, ProductHelperService>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+builder.Services.AddScoped<IOrderHelperService, OrderHelperService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

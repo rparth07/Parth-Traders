@@ -12,11 +12,11 @@ namespace Parth_Traders.Data.Profiles
                 .ForMember(dest => dest.SupplierId,
                     opt => opt.MapFrom(src => src.Supplier.SupplierId))
                 .ForMember(dest => dest.CategoryId,
-                    opt => opt.MapFrom(src => src.Category.CategoryId));
-                /*.ForMember(dest => dest.SupplierData,
+                    opt => opt.MapFrom(src => src.Category.CategoryId))
+                .ForMember(dest => dest.SupplierData,
                     opt => opt.MapFrom(src => src.Supplier))
                 .ForMember(dest => dest.CategoryData,
-                    opt => opt.MapFrom(src => src.Category));*/
+                    opt => opt.MapFrom(src => src.Category));
             CreateMap<ProductDataModel, Product>()
                 .ForMember(dest => dest.Supplier,
                     opt => opt.MapFrom(src => src.SupplierData))

@@ -11,14 +11,16 @@ namespace Parth_Traders.Domain.Entity
     {
         public long OrderId { get; set; }
 
-        public virtual Customer CustomerData { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
         public PaymentType PaymentType { get; set; }
 
         public DateTime OrderDate { get; set; }
 
         public long GrandTotal { get; set; }
+
+        public OrderStatus OrderStatus { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CsvHelper.Configuration.Attributes;
+using Parth_Traders.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,7 +16,7 @@ namespace Parth_Traders.Dto.Admin
         public string ProductName { get; set; }
 
         [Required]
-        public int ProductType { get; set; }
+        public ProductType ProductType { get; set; }
 
         public string ProductDescription { get; set; }
 

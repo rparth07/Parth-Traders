@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Parth_Traders.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Parth_Traders.Data.DataModel
@@ -12,7 +13,7 @@ namespace Parth_Traders.Data.DataModel
         public string ProductName { get; set; }
 
         [Required]
-        public ProductTypeDataModel ProductType { get; set; }
+        public ProductType ProductType { get; set; }
 
         public string ProductDescription { get; set; }
 
