@@ -1,11 +1,6 @@
-﻿using Parth_Traders.Domain.Entity;
+﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Service.Services.Admin
 {
@@ -17,21 +12,6 @@ namespace Parth_Traders.Service.Services.Admin
         {
             _categoryRepository = categoryRepository ??
                 throw new ArgumentNullException(nameof(categoryRepository));
-        }
-
-        public List<Category> AddAllCategories(List<Category> categoriesToAdd)
-        {
-            try
-            {
-                _categoryRepository.AddAllCategories(categoriesToAdd);
-                _categoryRepository.Save();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Bad Request {ex}");
-            }
-
-            return categoriesToAdd;
         }
 
         public Category AddCategory(Category categoryToAdd)
@@ -50,23 +30,19 @@ namespace Parth_Traders.Service.Services.Admin
             return categoryToAdd;
         }
 
-        public void DeleteCategory(string categoryName)
+        public List<Category> AddAllCategories(List<Category> categoriesToAdd)
         {
             try
             {
-                var categoryFromRepo = _categoryRepository.GetCategoryByName(categoryName);
-                _categoryRepository.DeleteCategory(categoryFromRepo);
+                _categoryRepository.AddAllCategories(categoriesToAdd);
                 _categoryRepository.Save();
             }
             catch (Exception ex)
             {
-                throw new Exception("Category not found!");
+                throw new Exception($"Bad Request {ex}");
             }
-        }
 
-        public List<Category> GetAllCategories()
-        {
-            return _categoryRepository.GetAllCategories();
+            return categoriesToAdd;
         }
 
         public Category GetCategoryById(long categoryId)
@@ -89,10 +65,15 @@ namespace Parth_Traders.Service.Services.Admin
             return categoryToReturn;
         }
 
+        public List<Category> GetAllCategories()
+        {
+            return _categoryRepository.GetAllCategories();
+        }
+
         public void UpdateCategory(Category updatedCategory, string oldCategoryName)
         {
             var categoryFromRepo = GetCategoryByName(oldCategoryName);
-            
+
             _categoryRepository
                 .UpdateCategory(FillRequiredInfo(categoryFromRepo, updatedCategory));
         }
@@ -104,6 +85,20 @@ namespace Parth_Traders.Service.Services.Admin
             category.Products = categoryFromRepo.Products;
 
             return category;
+        }
+
+        public void DeleteCategory(string categoryName)
+        {
+            try
+            {
+                var categoryFromRepo = _categoryRepository.GetCategoryByName(categoryName);
+                _categoryRepository.DeleteCategory(categoryFromRepo);
+                _categoryRepository.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Category not found!");
+            }
         }
     }
 }

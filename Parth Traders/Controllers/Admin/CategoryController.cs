@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Dto.Admin;
 using Parth_Traders.Helper;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
-namespace Parth_Traders.Controllers
+namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
     [Route("API/admin/categories")]
@@ -69,13 +68,6 @@ namespace Parth_Traders.Controllers
             return Ok(categories);
         }
 
-        [HttpDelete("{categoryName}")]
-        public IActionResult DeleteCategory(string categoryName)
-        {
-            _categoryService.DeleteCategory(categoryName);
-            return NoContent();
-        }
-
         [HttpPost("{categoryName}")]
         [Consumes("application/json")]
         public IActionResult UpdateCategory(
@@ -87,6 +79,13 @@ namespace Parth_Traders.Controllers
             _categoryService.UpdateCategory(categoryToUpdate, categoryName);
 
             return Ok(category);
+        }
+
+        [HttpDelete("{categoryName}")]
+        public IActionResult DeleteCategory(string categoryName)
+        {
+            _categoryService.DeleteCategory(categoryName);
+            return NoContent();
         }
     }
 }

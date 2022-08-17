@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Parth_Traders.CsvParserModel;
-using Parth_Traders.Domain.Entity;
-using Parth_Traders.Dto.Admin;
+using Parth_Traders.Domain.Entity.User;
+using Parth_Traders.Dto.User;
 
 namespace Parth_Traders.Data.Profiles
 {
@@ -9,9 +9,9 @@ namespace Parth_Traders.Data.Profiles
     {
         public CustomerProfile()
         {
-            CreateMap<Customer, CustomerDto>();
             CreateMap<CustomerDto, Customer>();
             CreateMap<ParsedCustomer, Customer>();
+            CreateMap<Customer, CustomerDto>();
         }
     }
 }

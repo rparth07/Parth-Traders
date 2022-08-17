@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
 
 namespace Parth_Traders.Data.Repositories.Admin
@@ -13,9 +13,9 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public ProductRepository(ParthTradersContext context, IMapper mapper)
         {
-            _context = context ?? 
+            _context = context ??
                 throw new ArgumentNullException(nameof(context));
-            _mapper = mapper ?? 
+            _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
 

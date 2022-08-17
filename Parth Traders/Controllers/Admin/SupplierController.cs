@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Dto.Admin;
 using Parth_Traders.Helper;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
-namespace Parth_Traders.Controllers
+namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
     [Route("API/admin/suppliers")]
@@ -68,13 +68,6 @@ namespace Parth_Traders.Controllers
             return Ok(suppliers);
         }
 
-        [HttpDelete("{supplierName}")]
-        public IActionResult DeleteSupplier(string supplierName)
-        {
-            _supplierService.DeleteSupplier(supplierName);
-            return NoContent();
-        }
-
         [HttpPost("{supplierName}")]
         [Consumes("application/json")]
         public IActionResult UpdateSupplier(
@@ -86,6 +79,13 @@ namespace Parth_Traders.Controllers
             _supplierService.UpdateSupplier(supplierToUpdate, supplierName);
 
             return Ok(supplier);
+        }
+
+        [HttpDelete("{supplierName}")]
+        public IActionResult DeleteSupplier(string supplierName)
+        {
+            _supplierService.DeleteSupplier(supplierName);
+            return NoContent();
         }
     }
 }

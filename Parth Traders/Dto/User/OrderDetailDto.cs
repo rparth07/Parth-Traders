@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parth_Traders.Dto.Admin
+namespace Parth_Traders.Dto.User
 {
     public class OrderDetailDto
     {

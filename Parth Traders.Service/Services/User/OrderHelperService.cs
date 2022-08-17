@@ -1,12 +1,7 @@
-﻿using Parth_Traders.Domain.Entity;
-using Parth_Traders.Domain.RepositoryInterfaces.Admin;
+﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
+using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service.Services.User.UserInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Service.Services.User
 {
@@ -18,7 +13,7 @@ namespace Parth_Traders.Service.Services.User
         public OrderHelperService(ICustomerRepository customerRepository,
                                   IProductRepository productRepository)
         {
-            _customerRepository = customerRepository ?? 
+            _customerRepository = customerRepository ??
                 throw new ArgumentNullException(nameof(customerRepository));
 
             _productRepository = productRepository ??
@@ -28,7 +23,7 @@ namespace Parth_Traders.Service.Services.User
         public Order MapOrderPropertiesToOrder(Order order)
         {
             order.Customer = _customerRepository.GetCustomerByName(order.Customer.CustomerName);
-            
+
             order.OrderDetails.ForEach(_ =>
             {
                 _.Product = _productRepository.GetProductByName(_.Product.ProductName);

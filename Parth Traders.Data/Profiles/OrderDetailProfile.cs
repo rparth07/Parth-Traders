@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.User;
+using Parth_Traders.Domain.Entity.User;
 
 namespace Parth_Traders.Data.Profiles
 {
@@ -13,6 +13,7 @@ namespace Parth_Traders.Data.Profiles
                     opt => opt.MapFrom(src => src.Order.OrderId))
                 .ForMember(dest => dest.ProductId,
                     opt => opt.MapFrom(src => src.Product.ProductId));
+
             CreateMap<OrderDetailDataModel, OrderDetail>()
                 .ForMember(dest => dest.Product,
                     opt => opt.MapFrom(src => src.ProductData))

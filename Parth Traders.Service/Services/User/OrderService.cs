@@ -1,34 +1,25 @@
-﻿using Parth_Traders.Domain.Entity;
+﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.Enums;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service.Services.User.UserInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Service.Services.User
 {
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IOrderDetailService _orderDetailService;
 
-        public OrderService(IOrderRepository orderRepository, IOrderDetailService orderDetailService)
+        public OrderService(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository ??
                 throw new ArgumentNullException(nameof(orderRepository));
-            
-            _orderDetailService = orderDetailService ??
-                throw new ArgumentNullException(nameof(orderDetailService));
         }
 
         public Order AddOrder(Order orderToAdd)
         {
             try
             {
-                var addedOrder = _orderRepository.AddOrder(orderToAdd);
+                _orderRepository.AddOrder(orderToAdd);
                 _orderRepository.Save();
             }
             catch (Exception ex)
@@ -40,18 +31,19 @@ namespace Parth_Traders.Service.Services.User
             return orderToAdd;
         }
 
-        public void DeleteOrder(long orderId)
+        public Order GetOrderById(long orderId)
         {
-            try
-            {
-                var orderToRemove = _orderRepository.GetOrderById(orderId);
-                _orderRepository.DeleteOrder(orderToRemove);
-                _orderRepository.Save();
-            }
-            catch (Exception ex)
+            var orderToReturn = _orderRepository.GetOrderById(orderId);
+            if (orderToReturn == null)
             {
                 throw new Exception("Order not found!");
             }
+            return orderToReturn;
+        }
+
+        public Order GetLatestOrderForCustomer(string customerName)
+        {
+            return _orderRepository.GetLatestOrderForCustomer(customerName);
         }
 
         public List<Order> GetAllOrdersForCustomer(string customerName)
@@ -63,7 +55,7 @@ namespace Parth_Traders.Service.Services.User
                                                              OrderStatus orderStatus)
         {
             var ordersToReturn = _orderRepository
-                .GetAllOrdersForCustomerWithStatus(customerName,orderStatus);
+                .GetAllOrdersForCustomerWithStatus(customerName, orderStatus);
             if (ordersToReturn == null)
             {
                 throw new Exception($"No orders found for {customerName} with {orderStatus}");
@@ -71,19 +63,18 @@ namespace Parth_Traders.Service.Services.User
             return ordersToReturn;
         }
 
-        public Order GetLatestOrderForCustomer(string customerName)
+        public void DeleteOrder(long orderId)
         {
-            return _orderRepository.GetLatestOrderForCustomer(customerName);
-        }
-
-        public Order GetOrderById(long orderId)
-        {
-            var orderToReturn = _orderRepository.GetOrderById(orderId);
-            if (orderToReturn == null)
+            try
+            {
+                var orderToRemove = _orderRepository.GetOrderById(orderId);
+                _orderRepository.CancelOrder(orderToRemove);
+                _orderRepository.Save();
+            }
+            catch (Exception ex)
             {
                 throw new Exception("Order not found!");
             }
-            return orderToReturn;
         }
     }
 }

@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parth_Traders.Domain.Entity
+namespace Parth_Traders.Data.DataModel.Admin
 {
-    public class Supplier
+    public class SupplierDataModel
     {
+        [Key]
         public long SupplierId { get; set; }
 
+        [Required]
         public string SupplierName { get; set; }
 
         public string SupplierAddress { get; set; }
 
         public string SupplierEmail { get; set; }
 
+        [Required]
         public string SupplierPhoneNumber { get; set; }
 
-        public ICollection<Product> Products { get; set; }
-
+        public ICollection<ProductDataModel> Products { get; set; }
     }
 }

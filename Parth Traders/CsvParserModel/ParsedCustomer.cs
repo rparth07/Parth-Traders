@@ -3,6 +3,7 @@ using CsvHelper.Configuration.Attributes;
 
 namespace Parth_Traders.CsvParserModel
 {
+    //TODO: 1.Admin API
     public class ParsedCustomer
     {
         [Index(0)]

@@ -1,7 +1,6 @@
-﻿using CsvHelper.Configuration.Attributes;
-using Parth_Traders.Domain.Enums;
+﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.Dto.User;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Parth_Traders.Dto.Admin
 {

@@ -1,11 +1,6 @@
-﻿using Parth_Traders.Domain.Entity;
+﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Service.Services.Admin
 {
@@ -23,15 +18,15 @@ namespace Parth_Traders.Service.Services.Admin
                 throw new ArgumentNullException(nameof(categoryRepository));
         }
 
-        public Product MapProductPropertiesToProduct(Product product, string supplierName, string categoryName)
+        public Product MapProductPropertiesToProduct(Product product)
         {
             product.Supplier = _supplierRepository
-                .GetSupplierByName(supplierName);
+                .GetSupplierByName(product.Supplier.SupplierName);
 
             product.Category = _categoryRepository
-                    .GetCategoryByName(categoryName);
+                    .GetCategoryByName(product.Category.CategoryName);
 
-            if(product.Category == null || 
+            if (product.Category == null ||
                product.Supplier == null)
             {
                 throw new Exception("Data is wrong!");

@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.User;
+using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.Repositories.User
 {
@@ -24,18 +19,18 @@ namespace Parth_Traders.Data.Repositories.User
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddAllOrderDetails(List<OrderDetail> orderDetails)
-        {
-            var orderDetailsToAdd = _mapper.Map<List<OrderDetailDataModel>>(orderDetails);
-
-            _context.OrderDetails.AddRange(orderDetailsToAdd);
-        }
-
         public void AddOrderDetail(OrderDetail orderDetail)
         {
             var orderDetailToAdd = _mapper.Map<OrderDetailDataModel>(orderDetail);
 
             _context.OrderDetails.Add(orderDetailToAdd);
+        }
+
+        public void AddAllOrderDetails(List<OrderDetail> orderDetails)
+        {
+            var orderDetailsToAdd = _mapper.Map<List<OrderDetailDataModel>>(orderDetails);
+
+            _context.OrderDetails.AddRange(orderDetailsToAdd);
         }
 
         public List<OrderDetail> GetOrderDetailsForOrderId(long orderId)

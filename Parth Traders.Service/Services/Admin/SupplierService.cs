@@ -1,11 +1,6 @@
-﻿using Parth_Traders.Domain.Entity;
+﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Service.Services.Admin
 {
@@ -50,25 +45,6 @@ namespace Parth_Traders.Service.Services.Admin
             return suppliersToAdd;
         }
 
-        public void DeleteSupplier(string supplierName)
-        {
-            try
-            {
-                var supplierFromRepo = _supplierRepository.GetSupplierByName(supplierName);
-                _supplierRepository.DeleteSupplier(supplierFromRepo);
-                _supplierRepository.Save();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Supplier not found!");
-            }
-        }
-
-        public List<Supplier> GetAllSuppliers()
-        {
-            return _supplierRepository.GetAllSuppliers();
-        }
-
         public Supplier GetSupplierById(long supplierId)
         {
             var supplierToReturn = _supplierRepository.GetSupplierById(supplierId);
@@ -89,6 +65,11 @@ namespace Parth_Traders.Service.Services.Admin
             return supplierToReturn;
         }
 
+        public List<Supplier> GetAllSuppliers()
+        {
+            return _supplierRepository.GetAllSuppliers();
+        }
+
         public void UpdateSupplier(Supplier updatedSupplier, string oldSupplierName)
         {
             var supplierFromRepo = GetSupplierByName(oldSupplierName);
@@ -104,6 +85,20 @@ namespace Parth_Traders.Service.Services.Admin
             supplier.Products = supplierFromRepo.Products;
 
             return supplier;
+        }
+
+        public void DeleteSupplier(string supplierName)
+        {
+            try
+            {
+                var supplierFromRepo = _supplierRepository.GetSupplierByName(supplierName);
+                _supplierRepository.DeleteSupplier(supplierFromRepo);
+                _supplierRepository.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Supplier not found!");
+            }
         }
     }
 }

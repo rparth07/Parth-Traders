@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.Repositories.Admin
 {
@@ -60,10 +55,10 @@ namespace Parth_Traders.Data.Repositories.Admin
 
         public List<Supplier> GetAllSuppliers()
         {
-           var suppliers = _context.Suppliers
-                .Include("Products")
-                .AsNoTracking()
-                .ToList();
+            var suppliers = _context.Suppliers
+                 .Include("Products")
+                 .AsNoTracking()
+                 .ToList();
 
             return _mapper.Map<List<Supplier>>(suppliers);
         }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Parth_Traders.Data.DataModel.Admin;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Parth_Traders.Data.DataModel
+namespace Parth_Traders.Data.DataModel.User
 {
     public class OrderDetailDataModel
     {
@@ -21,7 +17,7 @@ namespace Parth_Traders.Data.DataModel
         public long ProductId { get; set; }
         [Required]
         [ForeignKey("ProductId")]
-        public virtual ProductDataModel ProductData { get; set; } 
+        public virtual ProductDataModel ProductData { get; set; }
 
         [Required]
         public long PricePerPiece { get; set; }
@@ -36,6 +32,6 @@ namespace Parth_Traders.Data.DataModel
         public long Total { get; set; }
 
         [Required]
-        public DateTime BillDate { get; set; }  
+        public DateTime BillDate { get; set; }
     }
 }

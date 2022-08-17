@@ -1,13 +1,8 @@
-﻿using Parth_Traders.Domain.Entity;
-using Parth_Traders.Domain.RepositoryInterfaces.Admin;
-using Parth_Traders.Service.Services.Admin.AdminInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Parth_Traders.Domain.Entity.User;
+using Parth_Traders.Domain.RepositoryInterfaces.User;
+using Parth_Traders.Service.Services.User.UserInterface;
 
-namespace Parth_Traders.Service.Services.Admin
+namespace Parth_Traders.Service.Services.User
 {
     public class CustomerService : ICustomerService
     {
@@ -17,21 +12,6 @@ namespace Parth_Traders.Service.Services.Admin
         {
             _customerRepository = customerRepository ??
                 throw new ArgumentNullException(nameof(customerRepository));
-        }
-
-        public List<Customer> AddAllCustomers(List<Customer> customersToAdd)
-        {
-            try
-            {
-                _customerRepository.AddAllCustomers(customersToAdd);
-                _customerRepository.Save();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Bad Request {ex}");
-            }
-
-            return customersToAdd;
         }
 
         public Customer AddCustomer(Customer customerToAdd)
@@ -50,23 +30,19 @@ namespace Parth_Traders.Service.Services.Admin
             return customerToAdd;
         }
 
-        public void DeleteCustomer(string customerName)
+        public List<Customer> AddAllCustomers(List<Customer> customersToAdd)
         {
             try
             {
-                var customerFromRepo = _customerRepository.GetCustomerByName(customerName);
-                _customerRepository.DeleteCustomer(customerFromRepo);
+                _customerRepository.AddAllCustomers(customersToAdd);
                 _customerRepository.Save();
             }
             catch (Exception ex)
             {
-                throw new Exception("Customer not found!");
+                throw new Exception($"Bad Request {ex}");
             }
-        }
 
-        public List<Customer> GetAllCustomers()
-        {
-            return _customerRepository.GetAllCustomers();
+            return customersToAdd;
         }
 
         public Customer GetCustomerById(long customerId)
@@ -89,6 +65,11 @@ namespace Parth_Traders.Service.Services.Admin
             return customerToReturn;
         }
 
+        public List<Customer> GetAllCustomers()
+        {
+            return _customerRepository.GetAllCustomers();
+        }
+
         public void UpdateCustomer(Customer updatedCustomer, string oldCustomerName)
         {
             var customerFromRepo = GetCustomerByName(oldCustomerName);
@@ -105,6 +86,20 @@ namespace Parth_Traders.Service.Services.Admin
             customer.Orders = customerFromRepo.Orders;
 
             return customer;
+        }
+
+        public void DeleteCustomer(string customerName)
+        {
+            try
+            {
+                var customerFromRepo = _customerRepository.GetCustomerByName(customerName);
+                _customerRepository.DeleteCustomer(customerFromRepo);
+                _customerRepository.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Customer not found!");
+            }
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Dto.Admin;
 using Parth_Traders.Helper;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
-namespace Parth_Traders.Controllers
+namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
     [Route("API/admin/products")]
@@ -18,9 +17,9 @@ namespace Parth_Traders.Controllers
         public readonly IMapper _mapper;
         public ProductController(IProductService productService, IProductHelperService productHelperService, IMapper mapper)
         {
-            _productHelperService = productHelperService ?? 
-                throw  new ArgumentException(nameof(productHelperService));
-            _productService = productService ?? 
+            _productHelperService = productHelperService ??
+                throw new ArgumentException(nameof(productHelperService));
+            _productService = productService ??
                 throw new ArgumentNullException(nameof(productService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
@@ -32,9 +31,7 @@ namespace Parth_Traders.Controllers
         {
             var product = _mapper.Map<Product>(productForCreation);
 
-            var productToAdd = _productHelperService.MapProductPropertiesToProduct(product,
-                                                                productForCreation.SupplierName,
-                                                                productForCreation.CategoryName);
+            var productToAdd = _productHelperService.MapProductPropertiesToProduct(product);
 
             Product addedProduct = _productService
                 .AddProduct(productToAdd);
@@ -56,13 +53,11 @@ namespace Parth_Traders.Controllers
             List<Product> productsToAdd = parsedProducts.Select(parsedProduct =>
             {
                 return _productHelperService
-                    .MapProductPropertiesToProduct(_mapper.Map<Product>(parsedProduct),
-                                                   parsedProduct.SupplierName,
-                                                   parsedProduct.CategoryName);
+                    .MapProductPropertiesToProduct(_mapper.Map<Product>(parsedProduct));
             }).ToList();
 
             var addedProducts = _productService.AddAllProducts(productsToAdd);
-            
+
             return Ok(_mapper.Map<List<ProductDto>>(addedProducts));
         }
 
@@ -80,13 +75,6 @@ namespace Parth_Traders.Controllers
             return Ok(products);
         }
 
-        [HttpDelete("{productName}")]
-        public IActionResult DeleteProduct(string productName)
-        {
-            _productService.DeleteProduct(productName);
-            return NoContent();
-        }
-
         [HttpPost("{productName}")]
         [Consumes("application/json")]
         public IActionResult UpdateProduct(
@@ -98,6 +86,13 @@ namespace Parth_Traders.Controllers
             _productService.UpdateProduct(productToUpdate, productName);
 
             return Ok(product);
+        }
+
+        [HttpDelete("{productName}")]
+        public IActionResult DeleteProduct(string productName)
+        {
+            _productService.DeleteProduct(productName);
+            return NoContent();
         }
     }
 }

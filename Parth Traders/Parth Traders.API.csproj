@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\User\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Parth Traders.Data\Parth Traders.Data.csproj" />
     <ProjectReference Include="..\Parth Traders.Service\Parth Traders.Service.csproj" />
   </ItemGroup>

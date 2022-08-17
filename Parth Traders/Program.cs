@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json.Serialization;
 using Parth_Traders.Data;
 using Parth_Traders.Data.Repositories.Admin;
@@ -7,7 +6,6 @@ using Parth_Traders.Data.Repositories.User;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
-using Parth_Traders.Service;
 using Parth_Traders.Service.Admin;
 using Parth_Traders.Service.Services.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
@@ -19,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers()
-    .AddNewtonsoftJson(setupAction => {
+    .AddNewtonsoftJson(setupAction =>
+    {
         setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         setupAction.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     });
@@ -53,7 +52,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ParthTradersContext>();
 
 
-builder.Services.AddDbContext<ParthTradersContext>(options => {
+builder.Services.AddDbContext<ParthTradersContext>(options =>
+{
     options.UseSqlServer(
         @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Parth Traders");
 });

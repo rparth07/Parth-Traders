@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
-using Parth_Traders.Domain.RepositoryInterfaces.Admin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Parth_Traders.Data.DataModel.User;
+using Parth_Traders.Domain.Entity.User;
+using Parth_Traders.Domain.RepositoryInterfaces.User;
 
-namespace Parth_Traders.Data.Repositories.Admin
+namespace Parth_Traders.Data.Repositories.User
 {
     public class CustomerRepository : ICustomerRepository
     {
@@ -38,22 +33,22 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Customers.AddRange(customerListToAdd);
         }
 
-        public Customer GetCustomerByName(string customerName)
-        {
-            var customer = _context.Customers
-                .Include("Orders")
-                .AsNoTracking()
-                .FirstOrDefault(_ => _.CustomerName == customerName);
-
-            return _mapper.Map<Customer>(customer);
-        }
-
         public Customer GetCustomerById(long id)
         {
             var customer = _context.Customers
                 .Include("Orders")
                 .AsNoTracking()
                 .FirstOrDefault(_ => _.CustomerId == id);
+
+            return _mapper.Map<Customer>(customer);
+        }
+
+        public Customer GetCustomerByName(string customerName)
+        {
+            var customer = _context.Customers
+                .Include("Orders")
+                .AsNoTracking()
+                .FirstOrDefault(_ => _.CustomerName == customerName);
 
             return _mapper.Map<Customer>(customer);
         }

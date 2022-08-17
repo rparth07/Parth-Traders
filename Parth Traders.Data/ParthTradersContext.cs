@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Data.DataModel.User;
 
 namespace Parth_Traders.Data
 {
@@ -16,7 +12,7 @@ namespace Parth_Traders.Data
 
         public DbSet<CategoryDataModel> Categories { get; set; }
 
-        public DbSet<OrderDataModel> Orders { get; set; }  
+        public DbSet<OrderDataModel> Orders { get; set; }
 
         public DbSet<OrderDetailDataModel> OrderDetails { get; set; }
 
@@ -35,20 +31,24 @@ namespace Parth_Traders.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<CustomerDataModel>(entity => {
+            modelBuilder.Entity<CustomerDataModel>(entity =>
+            {
                 entity.HasIndex(e => e.CustomerEmail).IsUnique();
                 entity.HasIndex(e => e.CustomerPhoneNumber).IsUnique();
             });
 
-            modelBuilder.Entity<ProductDataModel>(entity => {
+            modelBuilder.Entity<ProductDataModel>(entity =>
+            {
                 entity.HasIndex(e => e.ProductName).IsUnique();
             });
 
-            modelBuilder.Entity<CategoryDataModel>(entity => {
+            modelBuilder.Entity<CategoryDataModel>(entity =>
+            {
                 entity.HasIndex(e => e.CategoryName).IsUnique();
             });
 
-            modelBuilder.Entity<SupplierDataModel>(entity => {
+            modelBuilder.Entity<SupplierDataModel>(entity =>
+            {
                 entity.HasIndex(e => e.SupplierName).IsUnique();
                 entity.HasIndex(e => e.SupplierEmail).IsUnique();
                 entity.HasIndex(e => e.SupplierPhoneNumber).IsUnique();

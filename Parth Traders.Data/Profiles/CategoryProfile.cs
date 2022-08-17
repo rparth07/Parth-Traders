@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Domain.Entity.Admin;
 
 namespace Parth_Traders.Data.Profiles
 {

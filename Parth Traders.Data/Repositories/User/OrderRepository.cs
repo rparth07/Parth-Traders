@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.User;
+using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.Enums;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
 
@@ -20,24 +20,35 @@ namespace Parth_Traders.Data.Repositories.User
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Order AddOrder(Order order)
+        public void AddOrder(Order order)
         {
             var orderToAdd = _mapper.Map<OrderDataModel>(order);
 
             _context.Orders.Add(orderToAdd);
-            
-            Save();
-
-            return GetLatestOrderForCustomer(order.Customer.CustomerName);
         }
 
-        public void DeleteOrder(Order order)
+        public Order GetOrderById(long orderId)
         {
-            var orderToRemove = _mapper.Map<OrderDataModel>(order);
+            var orderToReturn = _context.Orders
+                .Include("CustomerData")
+                .Include("OrderDetails.ProductData")
+                .AsNoTracking()
+                .FirstOrDefault(_ => _.OrderId == orderId);
 
-            orderToRemove.OrderStatus = OrderStatus.CanceledByCustomer;
+            return _mapper.Map<Order>(orderToReturn);
+        }
 
-            _context.Orders.Update(orderToRemove);
+        public Order GetLatestOrderForCustomer(string customerName)
+        {
+            var orderToReturn = _context.Orders
+                .Include("CustomerData")
+                .Include("OrderDetails.ProductData")
+                .AsNoTracking()
+                .Where(_ => _.CustomerData.CustomerName == customerName)
+                .OrderByDescending(_ => _.OrderDate)
+                .FirstOrDefault();
+
+            return _mapper.Map<Order>(orderToReturn);
         }
 
         public List<Order> GetAllOrdersForCustomer(string customerName)
@@ -64,28 +75,13 @@ namespace Parth_Traders.Data.Repositories.User
             return _mapper.Map<List<Order>>(ordersToReturn);
         }
 
-        public Order GetLatestOrderForCustomer(string customerName)
+        public void CancelOrder(Order order)
         {
-            var orderToReturn = _context.Orders
-                .Include("CustomerData")
-                .Include("OrderDetails.ProductData")
-                .AsNoTracking()
-                .Where(_ => _.CustomerData.CustomerName == customerName)
-                .OrderByDescending(_ => _.OrderDate)
-                .FirstOrDefault();
+            var orderToRemove = _mapper.Map<OrderDataModel>(order);
 
-            return _mapper.Map<Order>(orderToReturn);
-        }
+            orderToRemove.OrderStatus = OrderStatus.CanceledByCustomer;
 
-        public Order GetOrderById(long orderId)
-        {
-            var orderToReturn = _context.Orders
-                .Include("CustomerData")
-                .Include("OrderDetails.ProductData")
-                .AsNoTracking()
-                .FirstOrDefault(_ => _.OrderId == orderId);
-
-            return _mapper.Map<Order>(orderToReturn);
+            _context.Orders.Update(orderToRemove);
         }
 
         public bool Save()

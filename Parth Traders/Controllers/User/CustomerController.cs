@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
-using Parth_Traders.Domain.Entity;
-using Parth_Traders.Dto.Admin;
+using Parth_Traders.Domain.Entity.User;
+using Parth_Traders.Dto.User;
 using Parth_Traders.Helper;
-using Parth_Traders.Service.Services.Admin.AdminInterfaces;
+using Parth_Traders.Service.Services.User.UserInterface;
 
-namespace Parth_Traders.Controllers
+namespace Parth_Traders.Controllers.User
 {
     [ApiController]
     [Route("API/customers")]
@@ -40,6 +40,7 @@ namespace Parth_Traders.Controllers
                                   customerToReturn);
         }
 
+        //TODO: 1.Admin API
         [HttpPost, DisableRequestSizeLimit]
         public IActionResult AddAllCustomers()
         {
@@ -68,13 +69,6 @@ namespace Parth_Traders.Controllers
             return Ok(customers);
         }
 
-        [HttpDelete("{customerName}")]
-        public IActionResult DeleteCustomer(string customerName)
-        {
-            _customerService.DeleteCustomer(customerName);
-            return NoContent();
-        }
-
         [HttpPost("{customerName}")]
         [Consumes("application/json")]
         public IActionResult UpdateCustomer(
@@ -86,6 +80,13 @@ namespace Parth_Traders.Controllers
             _customerService.UpdateCustomer(customerToUpdate, customerName);
 
             return Ok(customer);
+        }
+
+        [HttpDelete("{customerName}")]
+        public IActionResult DeleteCustomer(string customerName)
+        {
+            _customerService.DeleteCustomer(customerName);
+            return NoContent();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Parth_Traders.Domain.Entity;
-using Parth_Traders.Dto.Admin;
+using Parth_Traders.Domain.Entity.User;
+using Parth_Traders.Dto.User;
 
 namespace Parth_Traders.Data.Profiles
 {
@@ -8,6 +8,12 @@ namespace Parth_Traders.Data.Profiles
     {
         public OrderDetailProfile()
         {
+            CreateMap<OrderDetailDto, OrderDetail>()
+                .ForPath(dest => dest.Order.Customer.CustomerName,
+                    opt => opt.MapFrom(src => src.CustomerName))
+                .ForPath(dest => dest.Product.ProductName,
+                    opt => opt.MapFrom(src => src.ProductName));
+
             CreateMap<OrderDetail, OrderDetailDto>()
                 .ForMember(dest => dest.ProductName,
                     opt => opt.MapFrom(src => src.Product.ProductName))
@@ -15,11 +21,6 @@ namespace Parth_Traders.Data.Profiles
                     opt => opt.MapFrom(src => src.Order.OrderId))
                 .ForMember(dest => dest.CustomerName,
                     opt => opt.MapFrom(src => src.Order.Customer.CustomerName));
-            CreateMap<OrderDetailDto, OrderDetail>()
-                .ForPath(dest => dest.Order.Customer.CustomerName,
-                    opt => opt.MapFrom(src => src.CustomerName))
-                .ForPath(dest => dest.Product.ProductName,
-                    opt => opt.MapFrom(src => src.ProductName));
         }
     }
 }

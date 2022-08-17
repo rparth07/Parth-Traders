@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.Enums;
-using Parth_Traders.Dto.Admin;
+using Parth_Traders.Dto.User;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Controllers.User
@@ -21,7 +21,7 @@ namespace Parth_Traders.Controllers.User
         {
             _orderService = orderService ??
                 throw new ArgumentNullException(nameof(orderService));
-            _orderHelperService = orderHelperService ?? 
+            _orderHelperService = orderHelperService ??
                 throw new ArgumentNullException(nameof(orderHelperService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
@@ -42,11 +42,20 @@ namespace Parth_Traders.Controllers.User
             return Ok(orderToReturn);
         }
 
-        [HttpDelete("{customerName}/{orderId}")]
-        public IActionResult DeleteOrder(long orderId)
+        [HttpGet("{customerName}/{orderId}", Name = "GetOrder")]
+        public IActionResult GetOrder(string customerName, long orderId)
         {
-            _orderService.DeleteOrder(orderId);
-            return NoContent();
+            OrderDto orderFromRepo = _mapper.Map<OrderDto>(_orderService.GetOrderById(orderId));
+            return Ok(orderFromRepo);
+        }
+
+        [HttpGet("{customerName}/latest")]
+        public IActionResult GetLatestOrderForCustomer(string customerName)
+        {
+            var order = _mapper.Map<OrderDto>(_orderService
+                .GetLatestOrderForCustomer(customerName));
+
+            return Ok(order);
         }
 
         [HttpGet("{customerName}")]
@@ -68,20 +77,11 @@ namespace Parth_Traders.Controllers.User
             return Ok(orders);
         }
 
-        [HttpGet("{customerName}/latest")]
-        public IActionResult GetLatestOrderForCustomer(string customerName)
+        [HttpDelete("{customerName}/{orderId}")]
+        public IActionResult DeleteOrder(long orderId)
         {
-            var order = _mapper.Map<OrderDto>(_orderService
-                .GetLatestOrderForCustomer(customerName));
-
-            return Ok(order);
-        }
-
-        [HttpGet("{customerName}/{orderId}", Name = "GetOrder")]
-        public IActionResult GetOrder(string customerName, long orderId)
-        {
-            OrderDto orderFromRepo = _mapper.Map<OrderDto>(_orderService.GetOrderById(orderId));
-            return Ok(orderFromRepo);
+            _orderService.DeleteOrder(orderId);
+            return NoContent();
         }
     }
 }

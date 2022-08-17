@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Parth_Traders.Data.DataModel;
-using Parth_Traders.Domain.Entity;
+using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.Repositories.Admin
 {
@@ -38,22 +33,22 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Categories.AddRange(categoryListToAdd);
         }
 
-        public Category GetCategoryByName(string categoryName)
-        {
-            var category = _context.Categories
-                .Include("Products")
-                .AsNoTracking()
-                .FirstOrDefault(_ => _.CategoryName == categoryName);
-
-            return _mapper.Map<Category>(category);
-        }
-
         public Category GetCategoryById(long id)
         {
             var category = _context.Categories
                 .Include("Products")
                 .AsNoTracking()
                 .FirstOrDefault(_ => _.CategoryId == id);
+
+            return _mapper.Map<Category>(category);
+        }
+
+        public Category GetCategoryByName(string categoryName)
+        {
+            var category = _context.Categories
+                .Include("Products")
+                .AsNoTracking()
+                .FirstOrDefault(_ => _.CategoryName == categoryName);
 
             return _mapper.Map<Category>(category);
         }
@@ -71,7 +66,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         {
             //TODO: admin can not update products.
             _context.Categories.Update(_mapper.Map<CategoryDataModel>(category));
-            
+
             Save();
         }
 

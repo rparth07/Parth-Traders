@@ -1,11 +1,6 @@
-﻿using Parth_Traders.Domain.Entity;
+﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service.Services.User.UserInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Service.Services.User
 {
@@ -17,22 +12,6 @@ namespace Parth_Traders.Service.Services.User
         {
             _orderDetailRepository = orderDetailRepository ??
                 throw new ArgumentNullException(nameof(orderDetailRepository));
-        }
-
-        public List<OrderDetail> AddAllOrderDetails(List<OrderDetail> orderDetailsToAdd)
-        {
-            try
-            {
-                _orderDetailRepository.AddAllOrderDetails(orderDetailsToAdd);
-                _orderDetailRepository.Save();
-            }
-            catch (Exception ex)
-            {
-                //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
-            }
-
-            return orderDetailsToAdd;
         }
 
         public OrderDetail AddOrderDetail(OrderDetail orderDetailToAdd)
@@ -49,6 +28,22 @@ namespace Parth_Traders.Service.Services.User
             }
 
             return orderDetailToAdd;
+        }
+
+        public List<OrderDetail> AddAllOrderDetails(List<OrderDetail> orderDetailsToAdd)
+        {
+            try
+            {
+                _orderDetailRepository.AddAllOrderDetails(orderDetailsToAdd);
+                _orderDetailRepository.Save();
+            }
+            catch (Exception ex)
+            {
+                //temp solution
+                throw new Exception($"Please enter data in correct format.{ex}");
+            }
+
+            return orderDetailsToAdd;
         }
 
         public List<OrderDetail> GetOrderDetailsForOrderId(long orderId)
