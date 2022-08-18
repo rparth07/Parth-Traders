@@ -12,11 +12,14 @@ namespace Parth_Traders.Profiles
             CreateMap<ProductDto, Product>()
                 .ForPath(dest => dest.Supplier.SupplierName,
                     opt => opt.MapFrom(src => src.SupplierName))
-                .ForPath
-                (dest => dest.Category.CategoryName,
+                .ForPath(dest => dest.Category.CategoryName,
                     opt => opt.MapFrom(src => src.CategoryName));
 
-            CreateMap<ParsedProduct, Product>();
+            CreateMap<ParsedProduct, Product>()
+                .ForPath(dest => dest.Supplier.SupplierName,
+                    opt => opt.MapFrom(src => src.SupplierName))
+                .ForPath(dest => dest.Category.CategoryName,
+                    opt => opt.MapFrom(src => src.CategoryName));
 
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.SupplierName,

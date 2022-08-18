@@ -26,7 +26,7 @@ namespace Parth_Traders.Service.Services.User
                 //temp solution
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
-
+            //TODO: Need to find a way to get addedOrderDetail, right now I am not using any method in this service.
             return orderDetailToAdd;
         }
 
@@ -43,7 +43,10 @@ namespace Parth_Traders.Service.Services.User
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
 
-            return orderDetailsToAdd;
+            List<OrderDetail> addedOrderDetails =
+                GetOrderDetailsForOrderId(orderDetailsToAdd.FirstOrDefault().Order.OrderId);
+
+            return addedOrderDetails;
         }
 
         public List<OrderDetail> GetOrderDetailsForOrderId(long orderId)

@@ -1,4 +1,5 @@
 ﻿using CsvHelper.Configuration.Attributes;
+using Parth_Traders.Domain.Enums;
 
 namespace Parth_Traders.CsvParserModel
 {
@@ -8,7 +9,7 @@ namespace Parth_Traders.CsvParserModel
         public string ProductName { get; set; }
 
         [Index(1)]
-        public int ProductType { get; set; }
+        public ProductType ProductType { get; set; }
 
         [Index(2)]
         public string ProductDescription { get; set; }

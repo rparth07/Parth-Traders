@@ -27,7 +27,7 @@ namespace Parth_Traders.Service.Services.Admin
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
 
-            return categoryToAdd;
+            return GetCategoryByName(categoryToAdd.CategoryName);
         }
 
         public List<Category> AddAllCategories(List<Category> categoriesToAdd)
@@ -42,7 +42,11 @@ namespace Parth_Traders.Service.Services.Admin
                 throw new Exception($"Bad Request {ex}");
             }
 
-            return categoriesToAdd;
+            List<Category> addedCategories = categoriesToAdd
+                .Select(_ => GetCategoryByName(_.CategoryName))
+                .ToList();
+
+            return addedCategories;
         }
 
         public Category GetCategoryById(long categoryId)
@@ -91,7 +95,8 @@ namespace Parth_Traders.Service.Services.Admin
         {
             try
             {
-                var categoryFromRepo = _categoryRepository.GetCategoryByName(categoryName);
+                var categoryFromRepo = GetCategoryByName(categoryName);
+
                 _categoryRepository.DeleteCategory(categoryFromRepo);
                 _categoryRepository.Save();
             }

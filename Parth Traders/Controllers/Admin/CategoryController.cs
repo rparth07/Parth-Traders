@@ -36,15 +36,15 @@ namespace Parth_Traders.Controllers.Admin
             CategoryDto categoryToReturn = _mapper.Map<CategoryDto>(addedCategory);
 
             return CreatedAtRoute("GetCategory",
-                                  new { categoryName = categoryToReturn.CategoryName },
-                                  categoryToReturn);
+                                      new { categoryName = categoryToReturn.CategoryName },
+                                      categoryToReturn);
         }
 
         [HttpPost, DisableRequestSizeLimit]
         public IActionResult AddAllCategories()
         {
             IFormFile? file = Request.Form.Files[0];
-            //TODO:Need to Add logic to parse file and get list of categoriesToAdd
+
             List<ParsedCategory> parsedcategories = new ParsedCategory().ParseData(file);
 
             var categoriesToAdd = _mapper.Map<List<Category>>(parsedcategories);
@@ -57,7 +57,8 @@ namespace Parth_Traders.Controllers.Admin
         [HttpGet("{categoryName}", Name = "GetCategory")]
         public IActionResult GetCategory(string categoryName)
         {
-            CategoryDto categoryFromRepo = _mapper.Map<CategoryDto>(_categoryService.GetCategoryByName(categoryName));
+            CategoryDto categoryFromRepo = _mapper.Map<CategoryDto>(_categoryService
+                .GetCategoryByName(categoryName));
             return Ok(categoryFromRepo);
         }
 

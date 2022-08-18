@@ -4,6 +4,10 @@ namespace Parth_Traders.Domain.Entity.User
 {
     public class Customer
     {
+        public Customer()
+        {
+            CreatedDate = DateTime.Now;
+        }
         public long CustomerId { get; set; }
 
         public string CustomerName { get; set; }

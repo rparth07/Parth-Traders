@@ -27,7 +27,7 @@ namespace Parth_Traders.Service.Services.Admin
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
 
-            return supplierToAdd;
+            return GetSupplierByName(supplierToAdd.SupplierName);
         }
 
         public List<Supplier> AddAllSuppliers(List<Supplier> suppliersToAdd)
@@ -42,7 +42,11 @@ namespace Parth_Traders.Service.Services.Admin
                 throw new Exception($"Bad Request {ex}");
             }
 
-            return suppliersToAdd;
+            List<Supplier> addedSuppliers = suppliersToAdd
+                .Select(_ => GetSupplierByName(_.SupplierName))
+                .ToList();
+
+            return addedSuppliers;
         }
 
         public Supplier GetSupplierById(long supplierId)
@@ -91,7 +95,7 @@ namespace Parth_Traders.Service.Services.Admin
         {
             try
             {
-                var supplierFromRepo = _supplierRepository.GetSupplierByName(supplierName);
+                var supplierFromRepo = GetSupplierByName(supplierName);
                 _supplierRepository.DeleteSupplier(supplierFromRepo);
                 _supplierRepository.Save();
             }

@@ -1,5 +1,6 @@
 ﻿
 using CsvHelper.Configuration.Attributes;
+using Parth_Traders.Domain.Enums;
 
 namespace Parth_Traders.CsvParserModel
 {
@@ -10,18 +11,15 @@ namespace Parth_Traders.CsvParserModel
         public string CustomerName { get; set; }
 
         [Index(1)]
-        public DateTime CreatedDate { get; set; }
-
-        [Index(2)]
         public string CustomerEmail { get; set; }
 
-        [Index(3)]
+        [Index(2)]
         public string CustomerPhoneNumber { get; set; }
 
-        [Index(4)]
+        [Index(3)]
         public string CustomerAddress { get; set; }
 
-        [Index(5)]
-        public int PaymentType { get; set; }
+        [Index(4)]
+        public PaymentType PaymentType { get; set; }
     }
 }

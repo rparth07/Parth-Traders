@@ -6,7 +6,7 @@ namespace Parth_Traders.Service.Services.Admin.AdminInterfaces
     {
         Product AddProduct(Product productToAdd);
         List<Product> AddAllProducts(List<Product> productsToAdd);
-        Product GetProductByProductName(string productName);
+        Product GetProductByName(string productName);
         List<Product> GetAllProducts();
         void UpdateProduct(Product updatedProduct, string oldProductName);
         void DeleteProduct(string productName);

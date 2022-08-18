@@ -11,6 +11,8 @@ namespace Parth_Traders.Dto.Admin
             OrderDetails = new List<OrderDetailDto>();
         }
 
+        public long ProductId { get; set; }
+
         [Required]
         public string ProductName { get; set; }
 

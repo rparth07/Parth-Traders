@@ -9,6 +9,8 @@ namespace Parth_Traders.Dto.Admin
             Products = new List<ProductDto>();
         }
 
+        public long SupplierId { get; set; }
+
         [Required]
         public string SupplierName { get; set; }
 

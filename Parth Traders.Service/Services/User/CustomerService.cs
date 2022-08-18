@@ -27,7 +27,7 @@ namespace Parth_Traders.Service.Services.User
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
 
-            return customerToAdd;
+            return GetCustomerByName(customerToAdd.CustomerName);
         }
 
         public List<Customer> AddAllCustomers(List<Customer> customersToAdd)
@@ -42,7 +42,11 @@ namespace Parth_Traders.Service.Services.User
                 throw new Exception($"Bad Request {ex}");
             }
 
-            return customersToAdd;
+            List<Customer> addedCustomers = customersToAdd
+                .Select(_ => GetCustomerByName(_.CustomerName))
+                .ToList();
+
+            return addedCustomers;
         }
 
         public Customer GetCustomerById(long customerId)
@@ -92,7 +96,7 @@ namespace Parth_Traders.Service.Services.User
         {
             try
             {
-                var customerFromRepo = _customerRepository.GetCustomerByName(customerName);
+                var customerFromRepo = GetCustomerByName(customerName);
                 _customerRepository.DeleteCustomer(customerFromRepo);
                 _customerRepository.Save();
             }

@@ -9,6 +9,8 @@ namespace Parth_Traders.Dto.Admin
             Products = new List<ProductDto>();
         }
 
+        public long CategoryId { get; set; }
+
         [Required]
         public string CategoryName { get; set; }
 

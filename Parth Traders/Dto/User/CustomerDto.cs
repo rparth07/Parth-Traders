@@ -11,6 +11,8 @@ namespace Parth_Traders.Dto.User
             Orders = new List<OrderDto>();
         }
 
+        public long CustomerId { get; set; }
+
         [Required]
         public string CustomerName { get; set; }
 

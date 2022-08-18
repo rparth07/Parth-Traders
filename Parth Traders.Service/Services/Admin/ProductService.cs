@@ -28,7 +28,7 @@ namespace Parth_Traders.Service.Admin
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
 
-            return productToAdd;
+            return GetProductByName(productToAdd.ProductName);
         }
 
         public List<Product> AddAllProducts(List<Product> productsToAdd)
@@ -43,10 +43,14 @@ namespace Parth_Traders.Service.Admin
                 throw new Exception($"Bad Request {ex}");
             }
 
-            return productsToAdd;
+            List<Product> addedproducts = productsToAdd
+                .Select(_ => GetProductByName(_.ProductName))
+                .ToList();
+
+            return addedproducts;
         }
 
-        public Product GetProductByProductName(string productName)
+        public Product GetProductByName(string productName)
         {
             var productToReturn = _productRepository.GetProductByName(productName);
             if (productToReturn == null)
@@ -63,7 +67,7 @@ namespace Parth_Traders.Service.Admin
 
         public void UpdateProduct(Product updatedProduct, string oldProductName)
         {
-            var productFromRepo = GetProductByProductName(oldProductName);
+            var productFromRepo = GetProductByName(oldProductName);
 
             _productRepository
                 .UpdateProduct(FillRequiredInfo(productFromRepo, updatedProduct));
@@ -84,7 +88,7 @@ namespace Parth_Traders.Service.Admin
         {
             try
             {
-                var productFromRepo = _productRepository.GetProductByName(productName);
+                var productFromRepo = GetProductByName(productName);
                 _productRepository.DeleteProduct(productFromRepo);
                 _productRepository.Save();
             }

@@ -28,7 +28,7 @@ namespace Parth_Traders.Service.Services.User
                 throw new Exception($"Please enter data in correct format.{ex}");
             }
 
-            return orderToAdd;
+            return GetLatestOrderForCustomer(orderToAdd.Customer.CustomerName);
         }
 
         public Order GetOrderById(long orderId)
@@ -63,11 +63,12 @@ namespace Parth_Traders.Service.Services.User
             return ordersToReturn;
         }
 
-        public void DeleteOrder(long orderId)
+        //TODO: need to refactor order details based on behavior of further implementation.
+        public void CancelOrder(long orderId)
         {
             try
             {
-                var orderToRemove = _orderRepository.GetOrderById(orderId);
+                var orderToRemove = GetOrderById(orderId);
                 _orderRepository.CancelOrder(orderToRemove);
                 _orderRepository.Save();
             }

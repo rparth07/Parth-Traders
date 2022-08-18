@@ -64,7 +64,7 @@ namespace Parth_Traders.Controllers.Admin
         [HttpGet("{productName}", Name = "GetProduct")]
         public IActionResult GetProduct(string productName)
         {
-            ProductDto productFromRepo = _mapper.Map<ProductDto>(_productService.GetProductByProductName(productName));
+            ProductDto productFromRepo = _mapper.Map<ProductDto>(_productService.GetProductByName(productName));
             return Ok(productFromRepo);
         }
 

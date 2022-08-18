@@ -10,6 +10,6 @@ namespace Parth_Traders.Service.Services.User.UserInterface
         Order GetLatestOrderForCustomer(string customerName);
         List<Order> GetAllOrdersForCustomer(string customerName);
         List<Order> GetAllOrdersForCustomerWithStatus(string customerName, OrderStatus orderStatus);
-        void DeleteOrder(long orderId);
+        void CancelOrder(long orderId);
     }
 }

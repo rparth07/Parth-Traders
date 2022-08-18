@@ -80,7 +80,7 @@ namespace Parth_Traders.Controllers.User
         [HttpDelete("{customerName}/{orderId}")]
         public IActionResult DeleteOrder(long orderId)
         {
-            _orderService.DeleteOrder(orderId);
+            _orderService.CancelOrder(orderId);
             return NoContent();
         }
     }
