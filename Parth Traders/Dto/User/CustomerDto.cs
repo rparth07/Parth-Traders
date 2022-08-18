@@ -1,8 +1,10 @@
 ﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.User
 {
+    [CustomerDataValidation]
     public class CustomerDto
     {
         public CustomerDto()

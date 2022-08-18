@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Parth_Traders.ValidationAttributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.Admin
 {
+    [CategoryDataValidation]
     public class CategoryDto
     {
         public CategoryDto()

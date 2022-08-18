@@ -1,9 +1,11 @@
 ﻿using Parth_Traders.Domain.Enums;
 using Parth_Traders.Dto.User;
+using Parth_Traders.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.Admin
 {
+    [ProductDataValidation]
     public class ProductDto
     {
         public ProductDto()
@@ -33,10 +35,10 @@ namespace Parth_Traders.Dto.Admin
         public int PiecesPerUnit { get; set; }
 
         [Required]
-        public long UnitPrice { get; set; }
+        public long SinglePieceMRP { get; set; }
 
         [Required]
-        public long SinglePieceMRP { get; set; }
+        public long UnitPrice { get; set; }
 
         [Required]
         public long Discount { get; set; }

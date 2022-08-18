@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Parth_Traders.ValidationAttributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.Admin
 {
+    [SupplierDataValidation]
     public class SupplierDto
     {
         public SupplierDto()
