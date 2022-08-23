@@ -1,5 +1,6 @@
 ﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Service.Admin
@@ -25,7 +26,7 @@ namespace Parth_Traders.Service.Admin
             catch (Exception ex)
             {
                 //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
+                throw new BadRequestException("Please enter data in correct format!");
             }
 
             return GetProductByName(productToAdd.ProductName);
@@ -40,7 +41,7 @@ namespace Parth_Traders.Service.Admin
             }
             catch (Exception ex)
             {
-                throw new Exception($"Bad Request {ex}");
+                throw new BadRequestException("One or more product data is in wrong format. Please enter data in correct format!");
             }
 
             List<Product> addedproducts = productsToAdd
@@ -55,7 +56,7 @@ namespace Parth_Traders.Service.Admin
             var productToReturn = _productRepository.GetProductByName(productName);
             if (productToReturn == null)
             {
-                throw new Exception("product not found!");
+                throw new NotFoundException("Please enter a valid product name!");
             }
             return productToReturn;
         }
@@ -94,7 +95,7 @@ namespace Parth_Traders.Service.Admin
             }
             catch (Exception ex)
             {
-                throw new Exception("Product not found!");
+                throw new NotFoundException("Please enter a valid product name!");
             }
         }
 

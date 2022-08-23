@@ -1,5 +1,6 @@
 ﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Service.Services.Admin
@@ -24,7 +25,7 @@ namespace Parth_Traders.Service.Services.Admin
             catch (Exception ex)
             {
                 //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
+                throw new BadRequestException("Please enter data in correct format!");
             }
 
             return GetSupplierByName(supplierToAdd.SupplierName);
@@ -39,7 +40,7 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                throw new Exception($"Bad Request {ex}");
+                throw new BadRequestException("One or more supplier data is in wrong format. Please enter data in correct format!");
             }
 
             List<Supplier> addedSuppliers = suppliersToAdd
@@ -54,7 +55,7 @@ namespace Parth_Traders.Service.Services.Admin
             var supplierToReturn = _supplierRepository.GetSupplierById(supplierId);
             if (supplierToReturn == null)
             {
-                throw new Exception("Supplier not found!");
+                throw new NotFoundException("Please enter a valid supplier id!");
             }
             return supplierToReturn;
         }
@@ -64,7 +65,7 @@ namespace Parth_Traders.Service.Services.Admin
             var supplierToReturn = _supplierRepository.GetSupplierByName(supplierName);
             if (supplierToReturn == null)
             {
-                throw new Exception("supplier not found!");
+                throw new NotFoundException("Please enter a valid supplier name!");
             }
             return supplierToReturn;
         }
@@ -101,7 +102,7 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                throw new Exception("Supplier not found!");
+                throw new NotFoundException("Please enter a valid supplier name!");
             }
         }
     }

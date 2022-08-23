@@ -7,6 +7,7 @@ using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service.Admin;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 using Parth_Traders.Service.Services.User;
@@ -50,6 +51,13 @@ builder.Services.AddScoped<IOrderHelperService, OrderHelperService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ParthTradersContext>();
+
+//Filter to handle exception
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add(new UserFriendlyExceptionFilterAttribute());
+});
+
 
 
 builder.Services.AddDbContext<ParthTradersContext>(options =>

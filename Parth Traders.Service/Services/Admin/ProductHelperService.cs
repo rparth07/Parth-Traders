@@ -1,5 +1,6 @@
 ﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Service.Services.Admin
@@ -29,7 +30,7 @@ namespace Parth_Traders.Service.Services.Admin
             if (product.Category == null ||
                product.Supplier == null)
             {
-                throw new Exception("Data is wrong!");
+                throw new BadRequestException("Please enter data in correct format!");
             }
 
             return product;

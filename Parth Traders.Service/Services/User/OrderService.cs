@@ -1,6 +1,7 @@
 ﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.Enums;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Service.Services.User
@@ -24,8 +25,7 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
+                throw new BadRequestException("Please enter data in correct format!");
             }
 
             return GetLatestOrderForCustomer(orderToAdd.Customer.CustomerName);
@@ -36,7 +36,7 @@ namespace Parth_Traders.Service.Services.User
             var orderToReturn = _orderRepository.GetOrderById(orderId);
             if (orderToReturn == null)
             {
-                throw new Exception("Order not found!");
+                throw new NotFoundException("Please enter a valid order id!");
             }
             return orderToReturn;
         }
@@ -58,7 +58,7 @@ namespace Parth_Traders.Service.Services.User
                 .GetAllOrdersForCustomerWithStatus(customerName, orderStatus);
             if (ordersToReturn == null)
             {
-                throw new Exception($"No orders found for {customerName} with {orderStatus}");
+                throw new BadRequestException($"No orders found for {customerName} with {orderStatus}");
             }
             return ordersToReturn;
         }
@@ -74,7 +74,7 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                throw new Exception("Order not found!");
+                throw new NotFoundException("Please enter a valid order id!");
             }
         }
     }

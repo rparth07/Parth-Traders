@@ -1,5 +1,6 @@
 ﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Service.Services.User
@@ -23,8 +24,7 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
+                throw new BadRequestException("Please enter data in correct format!");
             }
             //TODO: Need to find a way to get addedOrderDetail, right now I am not using any method in this service.
             return orderDetailToAdd;
@@ -39,8 +39,7 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
+                throw new BadRequestException("Please enter data in correct format!");
             }
 
             List<OrderDetail> addedOrderDetails =

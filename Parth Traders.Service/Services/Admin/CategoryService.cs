@@ -1,5 +1,6 @@
 ﻿using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
+using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Service.Services.Admin
@@ -23,8 +24,7 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                //temp solution
-                throw new Exception($"Please enter data in correct format.{ex}");
+                throw new BadRequestException("Please enter data in correct format!");
             }
 
             return GetCategoryByName(categoryToAdd.CategoryName);
@@ -39,7 +39,7 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                throw new Exception($"Bad Request {ex}");
+                throw new BadRequestException("One or more category data is in wrong format. Please enter data in correct format!");
             }
 
             List<Category> addedCategories = categoriesToAdd
@@ -54,7 +54,7 @@ namespace Parth_Traders.Service.Services.Admin
             var categoryToReturn = _categoryRepository.GetCategoryById(categoryId);
             if (categoryToReturn == null)
             {
-                throw new Exception("Category not found!");
+                throw new NotFoundException("Please enter a valid Id!");
             }
             return categoryToReturn;
         }
@@ -64,7 +64,7 @@ namespace Parth_Traders.Service.Services.Admin
             var categoryToReturn = _categoryRepository.GetCategoryByName(categoryName);
             if (categoryToReturn == null)
             {
-                throw new Exception("Category not found!");
+                throw new NotFoundException("Please enter a valid category name!");
             }
             return categoryToReturn;
         }
@@ -102,7 +102,7 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                throw new Exception("Category not found!");
+                throw new BadRequestException("Please enter a valid category name!");
             }
         }
     }
