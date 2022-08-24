@@ -5,7 +5,6 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 
 namespace Parth_Traders.Service.Admin
 {
-    //TODO: Need to create exception file and use it in catch
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
@@ -25,7 +24,6 @@ namespace Parth_Traders.Service.Admin
             }
             catch (Exception ex)
             {
-                //temp solution
                 throw new BadRequestException("Please enter data in correct format!");
             }
 

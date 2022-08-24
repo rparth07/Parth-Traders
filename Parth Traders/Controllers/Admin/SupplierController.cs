@@ -44,7 +44,6 @@ namespace Parth_Traders.Controllers.Admin
         public IActionResult AddAllSuppliers()
         {
             IFormFile? file = Request.Form.Files[0];
-            //TODO:Need to Add logic to parse file and get list of suppliersToAdd
             List<ParsedSupplier> parsedsuppliers = new ParsedSupplier().ParseData(file);
 
             var suppliersToAdd = _mapper.Map<List<Supplier>>(parsedsuppliers);

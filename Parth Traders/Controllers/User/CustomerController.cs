@@ -40,12 +40,13 @@ namespace Parth_Traders.Controllers.User
                                   customerToReturn);
         }
 
-        //TODO: 1.Admin API
+        //TODO: 1.Admin API - for case where admin need to add list of customer.
+        //                    for this case admin will use below API. But need 
+        //                    to change API route for below API.
         [HttpPost, DisableRequestSizeLimit]
         public IActionResult AddAllCustomers()
         {
             IFormFile? file = Request.Form.Files[0];
-            //TODO:Need to Add logic to parse file and get list of customersToAdd
             List<ParsedCustomer> parsedcustomers = new ParsedCustomer().ParseData(file);
 
             var customersToAdd = _mapper.Map<List<Customer>>(parsedcustomers);

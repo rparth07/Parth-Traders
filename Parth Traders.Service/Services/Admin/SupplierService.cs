@@ -24,7 +24,6 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                //temp solution
                 throw new BadRequestException("Please enter data in correct format!");
             }
 

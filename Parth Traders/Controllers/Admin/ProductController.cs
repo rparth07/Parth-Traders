@@ -47,7 +47,6 @@ namespace Parth_Traders.Controllers.Admin
         public IActionResult AddAllProducts()
         {
             IFormFile? file = Request.Form.Files[0];
-            //TODO:Need to Add logic to parse file and get list of productsToAdd
             List<ParsedProduct> parsedProducts = new ParsedProduct().ParseData(file);
 
             List<Product> productsToAdd = parsedProducts.Select(parsedProduct =>
