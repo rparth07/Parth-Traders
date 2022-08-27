@@ -1,0 +1,3 @@
+CustomerName,CustomerEmail,CustomerPhoneNumber,CustomerAddress,PaymentType
+Test customer 1,test@gmail.com,9178465238,Rajkot,General
+Test customer 2,test2@gmail.com,7894561230,Delhi,Month_end
