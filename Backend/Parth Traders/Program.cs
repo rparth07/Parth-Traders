@@ -58,8 +58,6 @@ builder.Services.AddMvc(options =>
     options.Filters.Add(new UserFriendlyExceptionFilterAttribute());
 });
 
-
-
 builder.Services.AddDbContext<ParthTradersContext>(options =>
 {
     options.UseSqlServer(
@@ -69,6 +67,14 @@ builder.Services.AddDbContext<ParthTradersContext>(options =>
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(builder =>
+{
+    //Need to refactore as this - .WithOrigins("https://localhost:4200")
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+});
 
 app.UseAuthorization();
 

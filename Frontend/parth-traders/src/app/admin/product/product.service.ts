@@ -11,21 +11,28 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   addProductCsvFile(form: FormData) {
-    this.http.post(DomainConstants.URL + 'Admin/Product', form).subscribe({
+    this.http.post(DomainConstants.URL + 'admin/products', form).subscribe({
       next: (value) => console.log(value),
       error: (err) => console.log(err),
     });
   }
 
   fetchProducts() {
-    return this.http
-      .get<Product[]>(DomainConstants.URL + 'Admin/Product')
-      .pipe();
+    var products = this.http.get<Product[]>(
+      DomainConstants.URL + 'admin/products'
+    );
+
+    products.subscribe({
+      next: (value) => console.log('value=', value),
+      error: (err) => console.log('err = ', err),
+    });
+
+    return products;
   }
 
   addProduct(product: Product) {
     this.http
-      .post<Product>(DomainConstants.URL + 'Admin/Product', product)
+      .post<Product>(DomainConstants.URL + 'admin/products', product)
       .subscribe({
         next: (value) => console.log(value),
         error: (err) => console.log(err),

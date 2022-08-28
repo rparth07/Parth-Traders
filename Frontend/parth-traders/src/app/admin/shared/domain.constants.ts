@@ -1,3 +1,3 @@
 export const DomainConstants = {
-  URL: 'http://localhost:5031/API/',
+  URL: 'https://localhost:5031/API/',
 };

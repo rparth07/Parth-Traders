@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, tap } from 'rxjs';
 import { AddProductComponent } from '../add-product/add-product.component';
-import { Product } from './product';
+import { Product, ProductType } from './product';
 import { ProductService } from './product.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { ProductService } from './product.service';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+  ProductType = ProductType;
   products$!: Observable<Product[]>;
   currentPageData$!: Observable<Product[]>;
 
