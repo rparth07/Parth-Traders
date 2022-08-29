@@ -8,16 +8,18 @@ import { AddProductComponent } from './admin/add-product/add-product.component';
 import { ProductComponent } from './admin/product/product.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
+import { HeaderComponent } from './admin/header/header.component';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AddProductComponent,
-    ProductComponent,
-    AdminComponent,
-    UserComponent,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
