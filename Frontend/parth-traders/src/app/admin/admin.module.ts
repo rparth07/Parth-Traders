@@ -9,8 +9,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserAnimationsModuleConfig } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,7 +18,6 @@ import { BrowserAnimationsModuleConfig } from '@angular/platform-browser/animati
     EnumConverterPipe,
   ],
   imports: [
-    //BrowserAnimationsModule.withConfig(config : BrowserAnimationsModuleConfig ),
     CommonModule,
     NgbModule,
     AdminRoutingModule,

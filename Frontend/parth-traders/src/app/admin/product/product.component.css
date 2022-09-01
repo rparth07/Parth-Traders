@@ -1,3 +1,7 @@
+.modal-container {
+  margin-top: 10rem;
+}
+
 .add-product {
   display: flex;
   justify-content: flex-end;

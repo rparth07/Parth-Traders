@@ -11,8 +11,11 @@ nav {
   width: 100%;
   position: sticky;
   top: 0;
-  z-index: 1;
-  box-shadow: #000 10px 10px 10px;
+  padding: 0;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  position: fixed;
+  border-bottom: 1px solid #e5e8eb;
 }
 
 #navbarSupportedContent {
@@ -46,6 +49,40 @@ nav {
   display: flex;
   white-space: nowrap;
   border-radius: 5px;
+}
+.home-header {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+.home-header nav > ul > li > a {
+  color: #fff;
+}
+.home-header nav > ul ul > li:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.home-header nav > ul ul > li:last-child {
+  border-radius: 0 0 10px 10px;
+}
+.main-banner .white_button:hover {
+  color: #fff !important;
+  border-color: #fff;
+}
+.home-header nav > ul.sf-js-enabled ul:after {
+  bottom: 100%;
+  left: 50px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 5px;
+  margin-left: -5px;
+}
+.home-header nav > ul > li.menu-item-has-children:hover {
+  box-shadow: 0px 0px 0px 0px #fff;
 }
 
 .navbar-nav li {
