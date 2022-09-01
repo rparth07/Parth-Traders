@@ -6,6 +6,11 @@ import { ProductComponent } from './product/product.component';
 import { HeaderComponent } from './header/header.component';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModuleConfig } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,7 +19,47 @@ import { AdminRoutingModule } from './admin-routing.module';
     ProductComponent,
     EnumConverterPipe,
   ],
-  imports: [CommonModule, NgbModule, AdminRoutingModule],
+  imports: [
+    //BrowserAnimationsModule.withConfig(config : BrowserAnimationsModuleConfig ),
+    CommonModule,
+    NgbModule,
+    AdminRoutingModule,
+    MatExpansionModule,
+    MatButtonModule,
+    MatNativeDateModule,
+    // MatAutocompleteModule,
+    // MatBadgeModule,
+    // MatBottomSheetModule,
+    // MatButtonToggleModule,
+    // MatCardModule,
+    // MatCheckboxModule,
+    // MatChipsModule,
+    // MatDatepickerModule,
+    // MatDialogModule,
+    // MatDividerModule,
+    // MatGridListModule,
+    // MatIconModule,
+    // MatInputModule,
+    // MatListModule,
+    // MatMenuModule,
+    // MatPaginatorModule,
+    // MatProgressBarModule,
+    // MatProgressSpinnerModule,
+    // MatRadioModule,
+    // MatRippleModule,
+    // MatSelectModule,
+    // MatSidenavModule,
+    // MatSliderModule,
+    // MatSlideToggleModule,
+    // MatSnackBarModule,
+    // MatSortModule,
+    // MatStepperModule,
+    // MatTableModule,
+    // MatTabsModule,
+    // MatToolbarModule,
+    // MatTooltipModule,
+    // MatTreeModule,
+  ],
   exports: [EnumConverterPipe, AdminComponent],
   bootstrap: [AdminComponent],
 })
