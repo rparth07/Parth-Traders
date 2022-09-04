@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbNavbar } from '@ng-bootstrap/ng-bootstrap';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,17 +7,14 @@ import { NgbNavbar } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  enableHeader: boolean = false;
+
   constructor() {
-    jQuery(window).scroll(function () {
-      if (window.pageYOffset >= 35) {
-        //remove home-header class
-        $('nav').removeClass('home-header');
-      } else {
-        //add home-header class
-        $('nav').addClass('home-header');
-      }
+    fromEvent(window, 'scroll').subscribe((event) => {
+      window.pageYOffset >= 35
+        ? (this.enableHeader = true)
+        : (this.enableHeader = false);
     });
   }
-
   ngOnInit(): void {}
 }

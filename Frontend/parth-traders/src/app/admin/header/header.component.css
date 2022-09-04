@@ -2,20 +2,18 @@
   --primary-color: #3a57e8;
 }
 
-body {
-  background-color: #72bdef21;
-}
-
-nav {
-  background-color: #ffffff;
+.nav {
   width: 100%;
-  position: sticky;
-  top: 0;
-  padding: 0;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
   z-index: 9999;
   position: fixed;
-  border-bottom: 1px solid #e5e8eb;
+  background: #fff;
+}
+
+.sticky-home-header {
+  top: 0;
+  box-shadow: 0 0 8px 2px rgb(0 0 0 / 20%);
+  z-index: 9999;
+  position: fixed;
 }
 
 #navbarSupportedContent {
@@ -50,23 +48,25 @@ nav {
   white-space: nowrap;
   border-radius: 5px;
 }
+
 .home-header {
   box-shadow: none !important;
   background: transparent !important;
+  top: 23px;
 }
+
 .home-header nav > ul > li > a {
   color: #fff;
 }
+
 .home-header nav > ul ul > li:first-child {
   border-radius: 10px 10px 0 0;
 }
+
 .home-header nav > ul ul > li:last-child {
   border-radius: 0 0 10px 10px;
 }
-.main-banner .white_button:hover {
-  color: #fff !important;
-  border-color: #fff;
-}
+
 .home-header nav > ul.sf-js-enabled ul:after {
   bottom: 100%;
   left: 50px;
@@ -81,6 +81,7 @@ nav {
   border-width: 5px;
   margin-left: -5px;
 }
+
 .home-header nav > ul > li.menu-item-has-children:hover {
   box-shadow: 0px 0px 0px 0px #fff;
 }

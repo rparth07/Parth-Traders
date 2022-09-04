@@ -1,5 +1,6 @@
 <nav
-  class="nav navbar navbar-expand-lg navbar-light iq-navbar pt-3 d-flex home-header"
+  class="nav navbar navbar-expand-lg navbar-light iq-navbar pt-3 d-flex"
+  [ngClass]="enableHeader ? 'sticky-home-header' : 'home-header'"
 >
   <div class="container d-flex">
     <a
