@@ -8,8 +8,8 @@ import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     AdminComponent,
@@ -21,9 +21,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CommonModule,
     NgbModule,
     AdminRoutingModule,
-    MatExpansionModule,
+    MatIconModule,
     MatButtonModule,
     MatNativeDateModule,
+    MatMenuModule,
     // MatAutocompleteModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
@@ -38,7 +39,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     // MatIconModule,
     // MatInputModule,
     // MatListModule,
-    // MatMenuModule,
     // MatPaginatorModule,
     // MatProgressBarModule,
     // MatProgressSpinnerModule,
