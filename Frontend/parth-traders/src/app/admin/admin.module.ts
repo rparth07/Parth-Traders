@@ -10,6 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [
     AdminComponent,
@@ -25,11 +28,12 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatNativeDateModule,
     MatMenuModule,
+    MatCardModule,
+    MatTableModule,
     // MatAutocompleteModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
     // MatButtonToggleModule,
-    // MatCardModule,
     // MatCheckboxModule,
     // MatChipsModule,
     // MatDatepickerModule,
@@ -51,7 +55,6 @@ import { MatMenuModule } from '@angular/material/menu';
     // MatSnackBarModule,
     // MatSortModule,
     // MatStepperModule,
-    // MatTableModule,
     // MatTabsModule,
     // MatToolbarModule,
     // MatTooltipModule,

@@ -1,160 +1,82 @@
 <div class="modal-container">
-  <div class="row ms-5 me-5 justify-content-around">
-    <div class="col-7 col-md-10 shadow card mb-5 rounded">
-      <div class="mx-2 mt-2">
-        <h2>Product</h2>
-        <div class="row justify-content-between">
-          <div class="col-2 col-md-2 pe-0">
-            <form class="d-flex form-inline search-box">
-              <input
-                id="search"
-                class="form-control"
-                type="search"
-                placeholder="Search..."
-                aria-label="Search"
-                autocomplete="off"
-              />
-              <button type="submit" id="searchButton">
-                <mat-icon
-                  aria-hidden="false"
-                  aria-label="search icon"
-                  fontIcon="search"
-                ></mat-icon>
-              </button>
-            </form>
-            <div class="suggestions scrollable"></div>
-          </div>
+  <div class="row justify-content-around">
+    <div class="col-7 col-md-10">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Product</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row justify-content-between">
+            <div class="col-2 col-md-2 pe-0">
+              <form class="d-flex form-inline search-box">
+                <input
+                  id="search"
+                  class="form-control"
+                  type="search"
+                  placeholder="Search..."
+                  aria-label="Search"
+                  autocomplete="off"
+                />
+                <button type="submit" id="searchButton">
+                  <mat-icon
+                    aria-hidden="false"
+                    aria-label="search icon"
+                    fontIcon="search"
+                  ></mat-icon>
+                </button>
+              </form>
+              <div class="suggestions scrollable"></div>
+            </div>
 
-          <div class="col-5 ps-0">
-            <div class="add-product">
-              <input
-                type="file"
-                id="fileLoader"
-                name="files"
-                title="Load File"
-                hidden
-                accept=".csv"
-                #fileUpload
-                (change)="addCsv($event)"
-              />
-              <button
-                id="add-product-file"
-                type="button"
-                class="btn text-light primary-color"
-                (click)="fileUpload.click()"
-              >
-                Add CSV
-              </button>
-              <button
-                type="button"
-                class="btn text-light primary-color"
-                id="add-product-btn"
-                (click)="openUpdateProductModal()"
-              >
-                Add Product
-              </button>
+            <div class="col-5 ps-0">
+              <div class="add-product">
+                <input
+                  type="file"
+                  id="fileLoader"
+                  name="files"
+                  title="Load File"
+                  hidden
+                  accept=".csv"
+                  #fileUpload
+                  (change)="addCsv($event)"
+                />
+                <button
+                  id="add-product-file"
+                  type="button"
+                  class="btn text-light primary-color"
+                  (click)="fileUpload.click()"
+                >
+                  Add CSV
+                </button>
+                <button
+                  type="button"
+                  class="btn text-light primary-color"
+                  id="add-product-btn"
+                  (click)="openUpdateProductModal()"
+                >
+                  Add Product
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="row justify-content-around">
-          <div class="col">
-            <table
-              id="myTable"
-              class="table table-hover mx-auto caption-top table-responsive-md table-responsive-sm"
+          <table mat-table [dataSource]="products" class="w-100 mt-2">
+            <ng-container
+              *ngFor="let column of columns"
+              [matColumnDef]="column.columnDef"
             >
-              <thead class="table-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col" class="table-header" data-name="name">
-                    Name
-                  </th>
-                  <th scope="col" class="table-header" data-name="product-type">
-                    Product Type
-                  </th>
-                  <th
-                    scope="col"
-                    class="table-header"
-                    data-name="product-description"
-                  >
-                    Product Description
-                  </th>
-                  <th
-                    scope="col"
-                    class="table-header"
-                    data-name="supplier-name"
-                  >
-                    Supplier Name
-                  </th>
-                  <th
-                    scope="col"
-                    class="table-header"
-                    data-name="category-name"
-                  >
-                    Category Name
-                  </th>
-                  <th
-                    scope="col"
-                    class="table-header"
-                    data-name="pieces-per-unit"
-                  >
-                    Pieces In 1 Unit
-                  </th>
-                  <th
-                    scope="col"
-                    class="table-header"
-                    data-name="single-piece-MRP"
-                  >
-                    Price For 1 Piece
-                  </th>
-                  <th scope="col" class="table-header" data-name="unit-price">
-                    Unit Price
-                  </th>
-                  <th scope="col" class="table-header" data-name="discount">
-                    Discount
-                  </th>
-                  <th
-                    scope="col"
-                    class="table-header"
-                    data-name="units-in-stocks"
-                  >
-                    Units Left In Stocks
-                  </th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ column.header }}
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ column.cell(row) }}
+              </td>
+            </ng-container>
 
-              <tbody id="productData">
-                <tr *ngFor="let product of products$ | async; let i = index">
-                  <th scope="col">
-                    {{ pageSize * selectedPageNumber + i + 1 }}
-                  </th>
-                  <td>{{ product.productName }}</td>
-                  <td>{{ ProductType[product.productType] }}</td>
-                  <td>{{ product.productDescription }}</td>
-                  <td>{{ product.supplierName }}</td>
-                  <td>{{ product.categoryName }}</td>
-                  <td>{{ product.piecesPerUnit }}</td>
-                  <td>{{ product.singlePieceMRP }}</td>
-                  <td>{{ product.unitPrice }}</td>
-                  <td>{{ product.discount }}</td>
-                  <td>{{ product.unitsInStock }}</td>
-                  <td>
-                    <a class="ms-2" (click)="openUpdateProductModal(product)"
-                      ><i class="material-icons">border_color</i></a
-                    >
-                    <a
-                      class="ms-md-2 ms-lg-2 ms-sm-1"
-                      (click)="deleteProduct(product.productDescription)"
-                      ><i class="material-icons">delete</i></a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

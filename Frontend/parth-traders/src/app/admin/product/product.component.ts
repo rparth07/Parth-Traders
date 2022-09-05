@@ -12,7 +12,7 @@ import { ProductService } from './product.service';
 })
 export class ProductComponent implements OnInit {
   ProductType = ProductType;
-  products$!: Observable<Product[]>;
+  products!: Product[];
   currentPageData$!: Observable<Product[]>;
 
   pageSize = 5;
@@ -20,6 +20,61 @@ export class ProductComponent implements OnInit {
 
   totalPages: number[] = [];
   updatableProduct!: Product | null;
+
+  columns = [
+    {
+      columnDef: 'productName',
+      header: 'Product Name',
+      cell: (element: Product) => `${element.productName}`,
+    },
+    {
+      columnDef: 'productType',
+      header: 'Product Type',
+      cell: (element: Product) => `${element.productType}`,
+    },
+    {
+      columnDef: 'productDescription',
+      header: 'Product Description',
+      cell: (element: Product) => `${element.productDescription}`,
+    },
+    {
+      columnDef: 'supplierName',
+      header: 'Supplier Name',
+      cell: (element: Product) => `${element.supplierName}`,
+    },
+    {
+      columnDef: 'categoryName',
+      header: 'Category Name',
+      cell: (element: Product) => `${element.categoryName}`,
+    },
+    {
+      columnDef: 'piecesPerUnit',
+      header: 'Pieces Per Unit',
+      cell: (element: Product) => `${element.piecesPerUnit}`,
+    },
+    {
+      columnDef: 'singlePieceMRP',
+      header: 'Single Piece MRP',
+      cell: (element: Product) => `${element.singlePieceMRP}`,
+    },
+    {
+      columnDef: 'unitPrice',
+      header: 'Unit Price',
+      cell: (element: Product) => `${element.unitPrice}`,
+    },
+    {
+      columnDef: 'discount',
+      header: 'Discount',
+      cell: (element: Product) => `${element.discount}`,
+    },
+    {
+      columnDef: 'Units Left In Stocks',
+      header: 'Units In Stock',
+      cell: (element: Product) => `${element.unitsInStock}`,
+    },
+  ];
+
+  displayedColumns = this.columns.map((c) => c.columnDef);
 
   constructor(
     private modalService: NgbModal,
@@ -41,12 +96,9 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts(): void {
-    this.products$ = this.productService.fetchProducts().pipe(
-      tap((product) => {
-        this.setTotalPage(product);
-      })
-    );
-    this.onPageChange(this.selectedPageNumber);
+    this.productService.fetchProducts().subscribe((response: Product[]) => {
+      this.products = response;
+    });
   }
 
   deleteProduct(productName: string) {
