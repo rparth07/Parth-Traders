@@ -11,6 +11,37 @@
   margin-left: 5px;
 }
 
+.pushable {
+  background: #3a5dffff;
+  border-radius: 12px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+}
+
+.front {
+  display: block;
+  padding: 7px 30px;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #011fff;
+  color: #fff;
+  transform: translateY(-5px);
+}
+
+.pushable:active .front {
+  transform: translateY(-1px);
+}
+
+#search {
+  border-radius: 5px 0px 0px 5px;
+}
+
+#searchButton {
+  border-radius: 0px 5px 5px 0px;
+}
+
 mat-card {
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px -1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
@@ -43,7 +74,6 @@ mat-card {
 
 .search-box button {
   display: flex;
-  padding: 10.5px 10px;
   background: #3a57e8; /*var(--primary-color);*/
   color: #fff;
   font-size: 17px;

@@ -17,7 +17,7 @@
                   aria-label="Search"
                   autocomplete="off"
                 />
-                <button type="submit" id="searchButton">
+                <button type="submit" id="searchButton" class="p-2">
                   <mat-icon
                     aria-hidden="false"
                     aria-label="search icon"
@@ -43,18 +43,18 @@
                 <button
                   id="add-product-file"
                   type="button"
-                  class="btn text-light primary-color"
+                  class="btn text-light pushable"
                   (click)="fileUpload.click()"
                 >
-                  Add CSV
+                  <span class="front">Add CSV</span>
                 </button>
                 <button
                   type="button"
-                  class="btn text-light primary-color"
+                  class="btn text-light pushable"
                   id="add-product-btn"
                   (click)="openUpdateProductModal()"
                 >
-                  Add Product
+                  <span class="front">Add Product</span>
                 </button>
               </div>
             </div>
