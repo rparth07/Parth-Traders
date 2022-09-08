@@ -23,7 +23,6 @@ export class ProductService {
     );
 
     products.subscribe({
-      next: (value) => console.log('value=', value),
       error: (err) => console.log('err = ', err),
     });
 

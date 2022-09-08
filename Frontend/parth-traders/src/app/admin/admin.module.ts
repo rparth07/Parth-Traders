@@ -10,8 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
     MatMenuModule,
     MatCardModule,
     MatTableModule,
+    MatPaginatorModule,
     // MatAutocompleteModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
@@ -43,7 +45,6 @@ import { MatTableModule } from '@angular/material/table';
     // MatIconModule,
     // MatInputModule,
     // MatListModule,
-    // MatPaginatorModule,
     // MatProgressBarModule,
     // MatProgressSpinnerModule,
     // MatRadioModule,

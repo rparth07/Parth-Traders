@@ -1,4 +1,5 @@
 export interface Product {
+  position: number;
   productName: string;
   productType: ProductType;
   productDescription: string;
