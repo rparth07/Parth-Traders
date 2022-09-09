@@ -25,44 +25,44 @@ export class ProductComponent implements OnInit {
 
   columns = [
     {
-      columnDef: 'No.',
-      header: 'Position',
+      columnDef: 'Position',
+      header: 'No.',
       cell: (element: Product) => `${element.position}`,
     },
     {
       columnDef: 'productName',
-      header: 'Product Name',
+      header: 'Name',
       cell: (element: Product) => `${element.productName}`,
     },
     {
       columnDef: 'productType',
-      header: 'Product Type',
+      header: 'Type',
       cell: (element: Product) => `${ProductType[element.productType]}`,
     },
     {
       columnDef: 'productDescription',
-      header: 'Product Description',
+      header: 'Description',
       cell: (element: Product) => `${element.productDescription}`,
     },
     {
       columnDef: 'supplierName',
-      header: 'Supplier Name',
+      header: 'Supplier',
       cell: (element: Product) => `${element.supplierName}`,
     },
     {
       columnDef: 'categoryName',
-      header: 'Category Name',
+      header: 'Category',
       cell: (element: Product) => `${element.categoryName}`,
-    },
-    {
-      columnDef: 'piecesPerUnit',
-      header: 'Pieces Per Unit',
-      cell: (element: Product) => `${element.piecesPerUnit}`,
     },
     {
       columnDef: 'singlePieceMRP',
       header: 'Single Piece MRP',
       cell: (element: Product) => `${element.singlePieceMRP}`,
+    },
+    {
+      columnDef: 'piecesPerUnit',
+      header: 'Pieces Per Unit',
+      cell: (element: Product) => `${element.piecesPerUnit}`,
     },
     {
       columnDef: 'unitPrice',
