@@ -1,8 +1,11 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, delay, map, Observable, startWith, tap } from 'rxjs';
+
 import { AddProductComponent } from '../add-product/add-product.component';
 import { Product, ProductType } from './product';
 import { ProductService } from './product.service';
@@ -14,6 +17,8 @@ import { ProductService } from './product.service';
 })
 export class ProductComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
@@ -85,11 +90,24 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
+    private _liveAnnouncer: LiveAnnouncer,
     private productService: ProductService
   ) {}
 
   ngOnInit(): void {
     this.getProducts();
+  }
+
+  applyFilter(filter: { searchValue: string }) {
+    this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
   addCsv(event: any) {
@@ -117,7 +135,6 @@ export class ProductComponent implements OnInit {
       .subscribe((response: Product[]) => {
         this.dataLength = response.length;
         this.dataSource = new MatTableDataSource(response);
-        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
       });
   }
