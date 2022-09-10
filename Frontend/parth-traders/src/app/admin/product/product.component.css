@@ -44,6 +44,10 @@ td.mat-cell {
   text-align: center;
 }
 
+::ng-deep .white-arrow .mat-sort-header-arrow {
+  color: #fff;
+}
+
 #search {
   border-radius: 5px 0px 0px 5px;
 }

@@ -81,7 +81,7 @@ export class ProductComponent implements OnInit {
     },
     {
       columnDef: 'Units Left In Stocks',
-      header: 'Units In Stock',
+      header: 'Stocks(Units)',
       cell: (element: Product) => `${element.unitsInStock}`,
     },
   ];
@@ -90,7 +90,6 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private _liveAnnouncer: LiveAnnouncer,
     private productService: ProductService
   ) {}
 
@@ -100,14 +99,6 @@ export class ProductComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   addCsv(event: any) {
@@ -136,6 +127,8 @@ export class ProductComponent implements OnInit {
         this.dataLength = response.length;
         this.dataSource = new MatTableDataSource(response);
         this.dataSource.paginator = this.paginator;
+        //sort is not working for No., Type and Stocks(Units) columns
+        this.dataSource.sort = this.sort;
       });
   }
 
