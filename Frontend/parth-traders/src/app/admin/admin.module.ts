@@ -15,18 +15,23 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
+import { AddProductComponent } from './add-product/add-product.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
     AdminComponent,
     HeaderComponent,
     ProductComponent,
+    AddProductComponent,
     EnumConverterPipe,
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     AdminRoutingModule,
     MatIconModule,
@@ -38,8 +43,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
     MatSortModule,
+    MatSelectModule,
     // MatAutocompleteModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
@@ -56,7 +61,6 @@ import { MatSortModule } from '@angular/material/sort';
     // MatProgressSpinnerModule,
     // MatRadioModule,
     // MatRippleModule,
-    // MatSelectModule,
     // MatSidenavModule,
     // MatSliderModule,
     // MatSlideToggleModule,
