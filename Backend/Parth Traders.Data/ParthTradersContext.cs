@@ -33,22 +33,34 @@ namespace Parth_Traders.Data
 
             modelBuilder.Entity<CustomerDataModel>(entity =>
             {
+                entity.Property(x => x.CustomerId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
                 entity.HasIndex(e => e.CustomerEmail).IsUnique();
                 entity.HasIndex(e => e.CustomerPhoneNumber).IsUnique();
+            });
+            modelBuilder.Entity<OrderDataModel>(entity =>
+            {
+                entity.Property(x => x.OrderId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
+            });
+            modelBuilder.Entity<OrderDetailDataModel>(entity =>
+            {
+                entity.Property(x => x.OrderDetailId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
             });
 
             modelBuilder.Entity<ProductDataModel>(entity =>
             {
+                entity.Property(x => x.ProductId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
                 entity.HasIndex(e => e.ProductName).IsUnique();
             });
 
             modelBuilder.Entity<CategoryDataModel>(entity =>
             {
+                entity.Property(x => x.CategoryId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
                 entity.HasIndex(e => e.CategoryName).IsUnique();
             });
 
             modelBuilder.Entity<SupplierDataModel>(entity =>
             {
+                entity.Property(x => x.SupplierId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
                 entity.HasIndex(e => e.SupplierName).IsUnique();
                 entity.HasIndex(e => e.SupplierEmail).IsUnique();
                 entity.HasIndex(e => e.SupplierPhoneNumber).IsUnique();

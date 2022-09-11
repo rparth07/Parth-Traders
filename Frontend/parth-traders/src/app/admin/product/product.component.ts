@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   public loading$ = this.loadingSubject.asObservable();
 
   dataSource!: MatTableDataSource<Product>;
-  ProductType = ProductType;
+  productType = ProductType;
   dataLength: number = 100;
 
   updatableProduct!: Product | null;
@@ -42,7 +42,7 @@ export class ProductComponent implements OnInit {
     {
       columnDef: 'productType',
       header: 'Type',
-      cell: (element: Product) => `${ProductType[element.productType]}`,
+      cell: (element: Product) => `${this.productType[element.productType]}`,
     },
     {
       columnDef: 'productDescription',
@@ -102,6 +102,7 @@ export class ProductComponent implements OnInit {
   }
 
   addCsv(event: any) {
+    event.preventDefault();
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
@@ -109,6 +110,7 @@ export class ProductComponent implements OnInit {
       this.productService.addProductCsvFile(formData);
     }
     event.target.value = '';
+    this.getProducts();
   }
 
   getProducts(): void {
