@@ -18,6 +18,11 @@ export class AddProductComponent implements OnInit {
     private activeModal: NgbActiveModal
   ) {}
 
+  productKeys(): Array<string> {
+    var keys = Object.keys(this.productType);
+    return keys.slice(keys.length / 2);
+  }
+
   ngOnInit(): void {
     console.log(this.product);
   }
