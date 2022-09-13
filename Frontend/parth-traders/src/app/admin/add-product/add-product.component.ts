@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Product, ProductType } from '../product/product';
+import { Product, ProductRequest, ProductType } from '../product/product';
 import { ProductService } from '../product/product.service';
 
 @Component({
@@ -29,11 +29,14 @@ export class AddProductComponent implements OnInit {
 
   addProduct(form: NgForm) {
     if (form.valid) {
-      this.productService.addProduct(form.value);
+      var product = <Product>form.value;
+      console.log('product = ', product);
+      this.productService.addProduct(product);
+      this.closeModal();
     }
   }
 
-  updateProduct(productForm: NgForm, oldProduct: Product) {
+  updateProduct(productForm: NgForm, oldProduct: ProductRequest) {
     if (productForm.valid) {
       this.productService.updateProduct(oldProduct, productForm.value);
     }
