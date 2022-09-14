@@ -68,7 +68,7 @@
   <div class="row mt-3">
     <label for="piecesPerUnit" class="form-label">Pieces per unit</label>
     <input
-      type="text"
+      type="number"
       class="form-control"
       id="pieces-per-unit"
       placeholder="e.g 20"
@@ -80,7 +80,7 @@
   <div class="row mt-3">
     <label for="singlePieceMRP" class="form-label">Single piece MRP</label>
     <input
-      type="text"
+      type="number"
       class="form-control"
       id="single-piece-MRP"
       placeholder="e.g 200 Rs"
@@ -92,7 +92,7 @@
   <div class="row mt-3">
     <label for="unitPrice" class="form-label">Unit price</label>
     <input
-      type="text"
+      type="number"
       class="form-control"
       id="unit-price"
       placeholder="e.g 5000 Rs"
@@ -104,7 +104,7 @@
   <div class="row mt-3">
     <label for="discount" class="form-label">Discount</label>
     <input
-      type="text"
+      type="number"
       class="form-control"
       id="discount"
       placeholder="e.g 50 Rs"
@@ -116,7 +116,7 @@
   <div class="row mt-3">
     <label for="unitsInStock" class="form-label">Units in stocks</label>
     <input
-      type="text"
+      type="number"
       class="form-control"
       id="units-in-stock"
       placeholder="e.g 50"
@@ -132,9 +132,7 @@
     <button
       class="btn btn-primary text-light"
       [disabled]="!form.valid"
-      (click)="
-        product ? updateProduct(form, product) : addProduct(form); closeModal()
-      "
+      (click)="product ? updateProduct(form, product) : addProduct(form)"
     >
       {{ product ? "Update" : "Add" }}
     </button>

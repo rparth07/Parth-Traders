@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { compare } from 'fast-json-patch';
 import { DomainConstants } from '../shared/domain.constants';
-import { Product, ProductRequest } from './product';
+import { Product } from './product';
 
 @Injectable({
   providedIn: 'root',
@@ -29,20 +29,22 @@ export class ProductService {
     return products;
   }
 
-  addProduct(product: ProductRequest) {
-    this.http
-      .post<ProductRequest>(DomainConstants.URL + 'admin/products', product)
-      .subscribe({
-        next: (value) => console.log(value),
-        error: (err) => console.log(err),
-      });
+  addProduct(product: Product): any {
+    this.http.post(DomainConstants.URL + 'admin/products', product).subscribe({
+      next: (value) => console.log(value),
+      error: (err) => {
+        console.log(err.error.errors);
+        return err.error.errors;
+      },
+    });
+    return null;
   }
 
-  updateProduct(oldProduct: ProductRequest, newProduct: ProductRequest) {
+  updateProduct(oldProduct: Product, newProduct: Product) {
     const patch = compare(oldProduct, newProduct);
     console.log('patch=', patch);
     this.http
-      .put<ProductRequest>(
+      .put<Product>(
         DomainConstants.URL + 'admin/products/' + oldProduct.productName,
         patch
       )
