@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Product, ProductType } from '../product/product';
 import { ProductService } from '../product/product.service';
 
@@ -13,10 +14,12 @@ export class AddProductComponent implements OnInit {
   @Input() product!: Product | null;
   productType = ProductType;
   errors: string[] = [];
+  types = ['success', 'error', 'info', 'warning'];
 
   constructor(
     private productService: ProductService,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private toastr: ToastrService
   ) {}
 
   productKeys(): Array<string> {
@@ -32,12 +35,18 @@ export class AddProductComponent implements OnInit {
     if (form.valid) {
       var product = <Product>form.value;
       console.log('product = ', product);
-      this.errors = this.productService.addProduct(product);
-      if (this.errors.length == 0) {
-        this.closeModal();
-      } else {
-        console.log('errors = ', this.errors);
-      }
+      this.showToaster('Product added successfully');
+      async () => {
+        this.errors = await this.productService.addProduct(product);
+        console.log('this.errors = ', this.errors);
+        if (this.errors.length == 0) {
+          this.closeModal();
+        } else {
+          this.errors.forEach((error) => {
+            this.showToaster(error);
+          });
+        }
+      };
     }
   }
 
@@ -49,5 +58,9 @@ export class AddProductComponent implements OnInit {
 
   closeModal() {
     this.activeModal.close();
+  }
+
+  showToaster(errMsg: string) {
+    this.toastr.error(errMsg);
   }
 }
