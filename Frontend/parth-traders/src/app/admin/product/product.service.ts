@@ -30,14 +30,7 @@ export class ProductService {
   }
 
   addProduct(product: Product): any {
-    this.http.post(DomainConstants.URL + 'admin/products', product).subscribe({
-      next: (value) => console.log(value),
-      error: (err) => {
-        console.log(err.error.errors);
-        return err.error.errors;
-      },
-    });
-    return null;
+    return this.http.post(DomainConstants.URL + 'admin/products', product);
   }
 
   updateProduct(oldProduct: Product, newProduct: Product) {

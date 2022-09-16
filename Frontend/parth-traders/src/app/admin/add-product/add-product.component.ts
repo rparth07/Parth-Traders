@@ -13,8 +13,6 @@ import { ProductService } from '../product/product.service';
 export class AddProductComponent implements OnInit {
   @Input() product!: Product | null;
   productType = ProductType;
-  errors: string[] = [];
-  types = ['success', 'error', 'info', 'warning'];
 
   constructor(
     private productService: ProductService,
@@ -34,19 +32,12 @@ export class AddProductComponent implements OnInit {
   addProduct(form: NgForm) {
     if (form.valid) {
       var product = <Product>form.value;
-      console.log('product = ', product);
-      this.showToaster('Product added successfully');
-      async () => {
-        this.errors = await this.productService.addProduct(product);
-        console.log('this.errors = ', this.errors);
-        if (this.errors.length == 0) {
-          this.closeModal();
-        } else {
-          this.errors.forEach((error) => {
-            this.showToaster(error);
-          });
-        }
-      };
+      this.productService.addProduct(product).subscribe({
+        next: (value: any) => console.log(value),
+        error: (err: { error: { errors: any } }) => {
+          this.showToaster(err.error.errors.productDto);
+        },
+      });
     }
   }
 
@@ -60,7 +51,7 @@ export class AddProductComponent implements OnInit {
     this.activeModal.close();
   }
 
-  showToaster(errMsg: string) {
-    this.toastr.error(errMsg);
+  showToaster(errorMsg: string) {
+    this.toastr.error(errorMsg, 'Error');
   }
 }
