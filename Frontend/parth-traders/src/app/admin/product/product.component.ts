@@ -94,6 +94,9 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.productService.getUpdatedProducts.subscribe((response) => {
+      this.getProducts();
+    });
     this.getProducts();
   }
 

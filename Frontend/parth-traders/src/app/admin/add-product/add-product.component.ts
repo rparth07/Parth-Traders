@@ -33,7 +33,10 @@ export class AddProductComponent implements OnInit {
     if (form.valid) {
       var product = <Product>form.value;
       this.productService.addProduct(product).subscribe({
-        next: (value: any) => console.log(value),
+        next: (value: any) => {
+          this.closeModal();
+          this.productService.getUpdatedProducts.next('Updated products');
+        },
         error: (err: { error: { errors: any } }) => {
           this.showToaster(err.error.errors.productDto);
         },
@@ -43,7 +46,17 @@ export class AddProductComponent implements OnInit {
 
   updateProduct(productForm: NgForm, oldProduct: Product) {
     if (productForm.valid) {
-      this.productService.updateProduct(oldProduct, productForm.value);
+      this.productService
+        .updateProduct(oldProduct?.productName, productForm.value)
+        .subscribe({
+          next: (value) => {
+            this.closeModal();
+            this.productService.getUpdatedProducts.next('Updated products');
+          },
+          error: (err: { error: { errors: any } }) => {
+            this.showToaster(err.error.errors.productDto);
+          },
+        });
     }
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { compare } from 'fast-json-patch';
+import { Subject } from 'rxjs';
 import { DomainConstants } from '../shared/domain.constants';
 import { Product } from './product';
 
@@ -8,6 +8,8 @@ import { Product } from './product';
   providedIn: 'root',
 })
 export class ProductService {
+  getUpdatedProducts = new Subject<string>();
+
   constructor(private http: HttpClient) {}
 
   addProductCsvFile(form: FormData) {
@@ -33,18 +35,11 @@ export class ProductService {
     return this.http.post(DomainConstants.URL + 'admin/products', product);
   }
 
-  updateProduct(oldProduct: Product, newProduct: Product) {
-    const patch = compare(oldProduct, newProduct);
-    console.log('patch=', patch);
-    this.http
-      .put<Product>(
-        DomainConstants.URL + 'admin/products/' + oldProduct.productName,
-        patch
-      )
-      .subscribe({
-        next: (value) => console.log(value),
-        error: (err) => console.log(err),
-      });
+  updateProduct(oldProductName: string, newProduct: Product) {
+    return this.http.post<Product>(
+      DomainConstants.URL + 'admin/products/' + oldProductName,
+      newProduct
+    );
   }
 
   deleteProduct(productName: string) {
