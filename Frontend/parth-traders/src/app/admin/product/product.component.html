@@ -87,7 +87,9 @@
                   <button mat-menu-item (click)="openUpdateProductModal(row)">
                     Update
                   </button>
-                  <button mat-menu-item>Delete</button>
+                  <button mat-menu-item (click)="deleteProduct(row)">
+                    Delete
+                  </button>
                 </mat-menu>
               </td>
             </ng-container>

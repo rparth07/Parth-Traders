@@ -94,10 +94,11 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getProducts();
+
     this.productService.getUpdatedProducts.subscribe((response) => {
       this.getProducts();
     });
-    this.getProducts();
   }
 
   applyFilter(filter: { searchValue: string }) {
@@ -137,8 +138,8 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  deleteProduct(productName: string) {
-    this.productService.deleteProduct(productName);
+  deleteProduct(product: Product) {
+    this.productService.deleteProduct(product.productName);
   }
 
   openUpdateProductModal(product?: Product) {

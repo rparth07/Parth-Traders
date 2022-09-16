@@ -46,7 +46,9 @@ export class ProductService {
     this.http
       .delete<Product>(DomainConstants.URL + 'admin/products/' + productName)
       .subscribe({
-        next: (value) => console.log(value),
+        next: (value) => {
+          this.getUpdatedProducts.next('Updated products');
+        },
         error: (err) => console.log(err),
       });
   }
