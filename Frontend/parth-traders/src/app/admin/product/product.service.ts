@@ -13,10 +13,7 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   addProductCsvFile(form: FormData) {
-    this.http.post(DomainConstants.URL + 'admin/products', form).subscribe({
-      next: (value) => console.log(value),
-      error: (err) => console.log(err),
-    });
+    return this.http.post(DomainConstants.URL + 'admin/products', form);
   }
 
   fetchProducts() {

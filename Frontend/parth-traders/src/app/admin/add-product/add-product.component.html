@@ -1,135 +1,138 @@
 <div class="modal-header">
   <h2 class="mt-2">{{ product ? "Update" : "Add" }} Product</h2>
 </div>
-<form class="form-design ps-4 pe-4 pb-3" #form="ngForm">
-  <div class="row mt-3">
-    <label for="product-name" class="form-label">Name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="product-name"
-      placeholder="e.g Belt"
-      required
-      [ngModel]="product?.productName"
-      name="productName"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="product-type" class="form-label">Product Type</label>
-    <mat-select
-      [(value)]="productKeys()[0]"
-      class="form-control"
-      id="product-type"
-      name="productType"
-      ><!--[(value)]="selected" -->
-      <mat-option *ngFor="let type of productKeys()" [value]="type">
-        {{ type }}
-      </mat-option>
-    </mat-select>
-  </div>
-  <div class="row mt-3">
-    <label for="productDescription" class="form-label"
-      >Product Description</label
-    >
-    <input
-      type="text"
-      class="form-control"
-      id="product-description"
-      placeholder="e.g This is v-belt"
-      required
-      [ngModel]="product?.productDescription"
-      name="productDescription"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="supplierName" class="form-label">Supplier Name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="supplier-name"
-      placeholder="e.g john"
-      required
-      [ngModel]="product?.supplierName"
-      name="supplierName"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="categoryName" class="form-label">Category Name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="category-name"
-      placeholder="e.g Belt"
-      required
-      [ngModel]="product?.categoryName"
-      name="categoryName"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="piecesPerUnit" class="form-label">Pieces per unit</label>
-    <input
-      type="number"
-      class="form-control"
-      id="pieces-per-unit"
-      placeholder="e.g 20"
-      required
-      [ngModel]="product?.piecesPerUnit"
-      name="piecesPerUnit"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="singlePieceMRP" class="form-label">Single piece MRP</label>
-    <input
-      type="number"
-      class="form-control"
-      id="single-piece-MRP"
-      placeholder="e.g 200 Rs"
-      required
-      [ngModel]="product?.singlePieceMRP"
-      name="singlePieceMRP"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="unitPrice" class="form-label">Unit price</label>
-    <input
-      type="number"
-      class="form-control"
-      id="unit-price"
-      placeholder="e.g 5000 Rs"
-      required
-      [ngModel]="product?.unitPrice"
-      name="unitPrice"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="discount" class="form-label">Discount</label>
-    <input
-      type="number"
-      class="form-control"
-      id="discount"
-      placeholder="e.g 50 Rs"
-      required
-      [ngModel]="product?.discount"
-      name="discount"
-    />
-  </div>
-  <div class="row mt-3">
-    <label for="unitsInStock" class="form-label">Units in stocks</label>
-    <input
-      type="number"
-      class="form-control"
-      id="units-in-stock"
-      placeholder="e.g 50"
-      required
-      [ngModel]="product?.unitsInStock"
-      name="unitsInStock"
-    />
-  </div>
-</form>
+<div class="modal-body">
+  <form class="form-design ps-4 pe-4 pb-3" #form="ngForm">
+    <div class="row mt-3">
+      <label for="product-name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="product-name"
+        placeholder="e.g Belt"
+        required
+        [ngModel]="product?.productName"
+        name="productName"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="product-type" class="form-label">Product Type</label>
+      <mat-select
+        [(value)]="productKeys()[0]"
+        class="form-control"
+        id="product-type"
+        name="productType"
+        ><!--[(value)]="selected" -->
+        <mat-option *ngFor="let type of productKeys()" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </div>
+    <div class="row mt-3">
+      <label for="productDescription" class="form-label"
+        >Product Description</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="product-description"
+        placeholder="e.g This is v-belt"
+        required
+        [ngModel]="product?.productDescription"
+        name="productDescription"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="supplierName" class="form-label">Supplier Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="supplier-name"
+        placeholder="e.g john"
+        required
+        [ngModel]="product?.supplierName"
+        name="supplierName"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="categoryName" class="form-label">Category Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="category-name"
+        placeholder="e.g Belt"
+        required
+        [ngModel]="product?.categoryName"
+        name="categoryName"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="piecesPerUnit" class="form-label">Pieces per unit</label>
+      <input
+        type="number"
+        class="form-control"
+        id="pieces-per-unit"
+        placeholder="e.g 20"
+        required
+        [ngModel]="product?.piecesPerUnit"
+        name="piecesPerUnit"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="singlePieceMRP" class="form-label">Single piece MRP</label>
+      <input
+        type="number"
+        class="form-control"
+        id="single-piece-MRP"
+        placeholder="e.g 200 Rs"
+        required
+        [ngModel]="product?.singlePieceMRP"
+        name="singlePieceMRP"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="unitPrice" class="form-label">Unit price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="unit-price"
+        placeholder="e.g 5000 Rs"
+        required
+        [ngModel]="product?.unitPrice"
+        name="unitPrice"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="discount" class="form-label">Discount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="discount"
+        placeholder="e.g 50 Rs"
+        required
+        [ngModel]="product?.discount"
+        name="discount"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="unitsInStock" class="form-label">Units in stocks</label>
+      <input
+        type="number"
+        class="form-control"
+        id="units-in-stock"
+        placeholder="e.g 50"
+        required
+        [ngModel]="product?.unitsInStock"
+        name="unitsInStock"
+      />
+    </div>
+  </form>
+</div>
+
 <div class="modal-footer">
   <div>
     <button
-      class="btn btn-primary text-light"
+      class="btn btn-primary text-light me-1"
       [disabled]="!form.valid"
       (click)="product ? updateProduct(form, product) : addProduct(form)"
     >
@@ -137,7 +140,7 @@
     </button>
     <button
       type="reset"
-      class="btn btn-danger cancel-button text-light"
+      class="btn btn-danger cancel-button text-light ms-1"
       id="cancel"
       (click)="closeModal()"
     >

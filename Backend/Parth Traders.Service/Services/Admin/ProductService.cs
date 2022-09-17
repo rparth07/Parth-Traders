@@ -39,7 +39,7 @@ namespace Parth_Traders.Service.Admin
             }
             catch (Exception ex)
             {
-                throw new BadRequestException("One or more product data is in wrong format. Please enter data in correct format!");
+                throw new BadRequestException("One or more product data is in wrong format. Please check your file and enter data in correct format!");
             }
 
             List<Product> addedproducts = productsToAdd

@@ -9,6 +9,7 @@ import { BehaviorSubject, delay, map, Observable, startWith, tap } from 'rxjs';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { Product, ProductType } from './product';
 import { ProductService } from './product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -90,6 +91,7 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
+    private toastr: ToastrService,
     private productService: ProductService
   ) {}
 
@@ -111,10 +113,16 @@ export class ProductComponent implements OnInit {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      this.productService.addProductCsvFile(formData);
+      this.productService.addProductCsvFile(formData).subscribe({
+        next: (value) => {
+          this.getProducts();
+        },
+        error: (err: { error: string }) => {
+          this.showToaster(err.error);
+        },
+      });
     }
     event.target.value = '';
-    this.getProducts();
   }
 
   getProducts(): void {
@@ -156,5 +164,9 @@ export class ProductComponent implements OnInit {
     }
 
     modalRef.componentInstance.product = this.updatableProduct;
+  }
+
+  showToaster(errorMsg: string) {
+    this.toastr.error(errorMsg, 'Error');
   }
 }
