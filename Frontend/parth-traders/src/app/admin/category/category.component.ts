@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, fromEvent, map } from 'rxjs';
 import { Category } from './category';
 import { CategoryService } from '../category/category.service';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 @Component({
   selector: 'app-category',
@@ -109,7 +110,19 @@ export class CategoryComponent implements OnInit {
   }
 
   openUpdateCategoryModal(category?: Category) {
-    console.log(category);
+    const modalRef = this.modalService.open(AddCategoryComponent, {
+      modalDialogClass: 'modal-lg modal-dialog-centered',
+      backdrop: 'static',
+      keyboard: false,
+    });
+
+    if (category) {
+      this.updatableCategory = category;
+    } else {
+      this.updatableCategory = null;
+    }
+
+    modalRef.componentInstance.category = this.updatableCategory;
   }
 
   showToaster(errorMsg: string) {

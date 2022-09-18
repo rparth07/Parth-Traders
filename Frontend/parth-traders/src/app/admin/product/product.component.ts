@@ -6,7 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BehaviorSubject, delay, map, Observable, startWith, tap } from 'rxjs';
 
-import { AddProductComponent } from '../add-product/add-product.component';
+import { AddProductComponent } from './add-product/add-product.component';
 import { Product, ProductType } from './product';
 import { ProductService } from './product.service';
 import { ToastrService } from 'ngx-toastr';

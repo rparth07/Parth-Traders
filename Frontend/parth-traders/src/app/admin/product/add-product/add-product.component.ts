@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Product, ProductType } from '../product/product';
-import { ProductService } from '../product/product.service';
+import { Product, ProductType } from '../product';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-add-product',
