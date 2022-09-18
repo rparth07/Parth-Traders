@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductComponent } from './product/product.component';
 import { CategoryComponent } from './category/category.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'suppliers',
-    component: ProductComponent,
+    component: SupplierComponent,
   },
   {
     path: '',

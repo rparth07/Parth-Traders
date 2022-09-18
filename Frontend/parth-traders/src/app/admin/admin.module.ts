@@ -21,6 +21,7 @@ import { AddProductComponent } from './product/add-product/add-product.component
 import { CategoryComponent } from './category/category.component';
 import { AddCategoryComponent } from './category/add-category/add-category.component';
 import { EnumConverterPipe } from './shared/enum-converter.pipe';
+import { SupplierComponent } from './supplier/supplier.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { EnumConverterPipe } from './shared/enum-converter.pipe';
     EnumConverterPipe,
     CategoryComponent,
     AddCategoryComponent,
+    SupplierComponent,
   ],
   imports: [
     CommonModule,

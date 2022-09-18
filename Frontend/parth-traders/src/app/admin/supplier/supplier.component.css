@@ -2,12 +2,12 @@
   margin-top: 10rem;
 }
 
-.add-product {
+.add-supplier {
   display: flex;
   justify-content: flex-end;
 }
 
-.add-product button {
+.add-supplier button {
   margin-left: 5px;
 }
 
