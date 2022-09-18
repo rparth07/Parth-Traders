@@ -27,7 +27,7 @@ export class SupplierComponent implements OnInit {
 
   columns = [
     {
-      columnDef: 'Position',
+      columnDef: 'position',
       header: 'No.',
       cell: (element: Supplier) => `${element.position}`,
     },
@@ -37,7 +37,7 @@ export class SupplierComponent implements OnInit {
       cell: (element: Supplier) => `${element.supplierName}`,
     },
     {
-      columnDef: 'supplierDescription',
+      columnDef: 'supplierAddress',
       header: 'Description',
       cell: (element: Supplier) => `${element.supplierAddress}`,
     },
@@ -102,12 +102,12 @@ export class SupplierComponent implements OnInit {
             return supplier;
           })
         )
+        // need to find a way to display products in table
       )
       .subscribe((response: Supplier[]) => {
         this.dataLength = response.length;
         this.dataSource = new MatTableDataSource(response);
         this.dataSource.paginator = this.paginator;
-        //sort is not working for No., Type and Stocks(Units) columns
         this.dataSource.sort = this.sort;
       });
   }

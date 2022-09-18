@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
 
   columns = [
     {
-      columnDef: 'Position',
+      columnDef: 'position',
       header: 'No.',
       cell: (element: Product) => `${element.position}`,
     },
@@ -81,7 +81,7 @@ export class ProductComponent implements OnInit {
       cell: (element: Product) => `${element.discount}`,
     },
     {
-      columnDef: 'Units Left In Stocks',
+      columnDef: 'unitsInStock',
       header: 'Stocks(Units)',
       cell: (element: Product) => `${element.unitsInStock}`,
     },
@@ -141,7 +141,6 @@ export class ProductComponent implements OnInit {
         this.dataLength = response.length;
         this.dataSource = new MatTableDataSource(response);
         this.dataSource.paginator = this.paginator;
-        //sort is not working for No., Type and Stocks(Units) columns
         this.dataSource.sort = this.sort;
       });
   }

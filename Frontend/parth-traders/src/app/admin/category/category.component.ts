@@ -28,7 +28,7 @@ export class CategoryComponent implements OnInit {
 
   columns = [
     {
-      columnDef: 'Position',
+      columnDef: 'position',
       header: 'No.',
       cell: (element: Category) => `${element.position}`,
     },
@@ -100,7 +100,6 @@ export class CategoryComponent implements OnInit {
         this.dataLength = response.length;
         this.dataSource = new MatTableDataSource(response);
         this.dataSource.paginator = this.paginator;
-        //sort is not working for No. column
         this.dataSource.sort = this.sort;
       });
   }
