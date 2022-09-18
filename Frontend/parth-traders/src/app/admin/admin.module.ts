@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { AddProductComponent } from './add-product/add-product.component';
 import { MatSelectModule } from '@angular/material/select';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
     ProductComponent,
     AddProductComponent,
     EnumConverterPipe,
+    CategoryComponent,
   ],
   imports: [
     CommonModule,

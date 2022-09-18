@@ -16,11 +16,6 @@
   position: fixed;
 }
 
-#navbarSupportedContent {
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-
 a:hover {
   color: #000;
   border-bottom: #7387ee5d 3px solid;
@@ -104,10 +99,6 @@ a:hover.active {
 
 li {
   list-style-type: none;
-}
-
-.navbar-toggler:focus {
-  outline: none;
 }
 
 a,
