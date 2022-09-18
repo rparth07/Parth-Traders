@@ -4,12 +4,50 @@
 >
   <div class="container d-flex">
     <a
-      class="home-link navbar-brand float-left d-flex align-items-center mb-md-0 me-md-auto text-decoration-none"
+      class="home-link navbar-brand float-left d-flex align-items-center m-0 text-decoration-none"
       routerLink="home"
     >
       <img src="../../assets/images/parth-traders-logo.jpg" />
       <h4 class="logo-title">Parth Traders</h4>
     </a>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a
+          class="nav-link pb-1"
+          routerLink="products"
+          routerLinkActive="active"
+        >
+          <span>Products</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link pb-1"
+          routerLink="categories"
+          routerLinkActive="active"
+        >
+          <span>Category</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link pb-1"
+          routerLink="suppliers"
+          routerLinkActive="active"
+        >
+          <span>Supplier</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link pb-1"
+          routerLink="customers"
+          routerLinkActive="active"
+        >
+          <span>Customer</span>
+        </a>
+      </li>
+    </ul>
     <button mat-button [matMenuTriggerFor]="belowMenu">
       <mat-icon>account_circle</mat-icon>admin name
     </button>
