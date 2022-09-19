@@ -1,0 +1,77 @@
+<div class="modal-header">
+  <h2 class="mt-2">{{ supplier ? "Update" : "Add" }} Supplier</h2>
+</div>
+<div class="modal-body">
+  <form class="form-design ps-4 pe-4 pb-3" #form="ngForm">
+    <div class="row mt-3">
+      <label for="supplier-name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="supplier-name"
+        placeholder="e.g john"
+        required
+        [ngModel]="supplier?.supplierName"
+        name="supplierName"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="supplierAddress" class="form-label">Supplier Address</label>
+      <input
+        type="text"
+        class="form-control"
+        id="supplier-address"
+        placeholder="e.g Rajkot, Gujarat"
+        required
+        [ngModel]="supplier?.supplierAddress"
+        name="supplierAddress"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="supplierEmail" class="form-label">supplier Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="supplier-email"
+        placeholder="e.g abc@gmail.com"
+        required
+        [ngModel]="supplier?.supplierEmail"
+        name="supplierEmail"
+      />
+    </div>
+    <div class="row mt-3">
+      <label for="supplierPhoneNumber" class="form-label"
+        >supplier Phone Number</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="supplier-phone-number"
+        placeholder="e.g 9874516230"
+        required
+        [ngModel]="supplier?.supplierPhoneNumber"
+        name="supplierPhoneNumber"
+      />
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <div>
+    <button
+      class="btn btn-primary text-light me-1"
+      [disabled]="!form.valid"
+      (click)="supplier ? updateSupplier(form, supplier) : addSupplier(form)"
+    >
+      {{ supplier ? "Update" : "Add" }}
+    </button>
+    <button
+      type="reset"
+      class="btn btn-danger cancel-button text-light ms-1"
+      id="cancel"
+      (click)="closeModal()"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

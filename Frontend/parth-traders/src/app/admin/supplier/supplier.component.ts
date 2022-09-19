@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map } from 'rxjs';
+import { AddSupplierComponent } from './add-supplier/add-supplier.component';
 import { Supplier } from './supplier';
 import { SupplierService } from './supplier.service';
 
@@ -117,7 +118,19 @@ export class SupplierComponent implements OnInit {
   }
 
   openUpdateSupplierModal(supplier?: Supplier) {
-    console.log(supplier);
+    const modalRef = this.modalService.open(AddSupplierComponent, {
+      modalDialogClass: 'modal-lg modal-dialog-centered',
+      backdrop: 'static',
+      keyboard: false,
+    });
+
+    if (supplier) {
+      this.updatableSupplier = supplier;
+    } else {
+      this.updatableSupplier = null;
+    }
+
+    modalRef.componentInstance.supplier = this.updatableSupplier;
   }
 
   showToaster(errorMsg: string) {
