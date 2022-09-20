@@ -17,15 +17,7 @@ export class CategoryService {
   }
 
   fetchCategories() {
-    var categories = this.http.get<Category[]>(
-      DomainConstants.URL + 'admin/categories'
-    );
-
-    categories.subscribe({
-      error: (err) => console.log('err = ', err),
-    });
-
-    return categories;
+    return this.http.get<Category[]>(DomainConstants.URL + 'admin/categories');
   }
 
   addCategory(category: Category): any {

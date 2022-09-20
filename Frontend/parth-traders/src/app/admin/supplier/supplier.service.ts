@@ -17,15 +17,7 @@ export class SupplierService {
   }
 
   fetchSuppliers() {
-    var suppliers = this.http.get<Supplier[]>(
-      DomainConstants.URL + 'admin/suppliers'
-    );
-
-    suppliers.subscribe({
-      error: (err) => console.log('err = ', err),
-    });
-
-    return suppliers;
+    return this.http.get<Supplier[]>(DomainConstants.URL + 'admin/suppliers');
   }
 
   addSupplier(supplier: Supplier): any {

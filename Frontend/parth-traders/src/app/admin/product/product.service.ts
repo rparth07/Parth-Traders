@@ -17,15 +17,7 @@ export class ProductService {
   }
 
   fetchProducts() {
-    var products = this.http.get<Product[]>(
-      DomainConstants.URL + 'admin/products'
-    );
-
-    products.subscribe({
-      error: (err) => console.log('err = ', err),
-    });
-
-    return products;
+    return this.http.get<Product[]>(DomainConstants.URL + 'admin/products');
   }
 
   addProduct(product: Product): any {
