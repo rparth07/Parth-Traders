@@ -6,6 +6,8 @@ using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Controllers.Admin
 {
+    [ApiController]
+    [Route("API/admin/customers")]
     public class CustomerController : ControllerBase
     {
         public readonly ICustomerService _customerService;
@@ -52,8 +54,8 @@ namespace Parth_Traders.Controllers.Admin
                     return Ok(_mapper.Map<List<CustomerDto>>(addedcustomers));
                 }
         */
-        [HttpGet("{customerName}", Name = "GetCustomer")]
-        public IActionResult GetCustomer(string customerName)
+        [HttpGet("{customerName}", Name = "GetCustomerInfo")]
+        public IActionResult GetCustomerInfo(string customerName)
         {
             CustomerDto customerFromRepo = _mapper.Map<CustomerDto>(_customerService.GetCustomerByName(customerName));
             return Ok(customerFromRepo);

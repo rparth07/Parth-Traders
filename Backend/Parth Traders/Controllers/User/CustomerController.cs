@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Parth_Traders.CsvParserModel;
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Dto.User;
-using Parth_Traders.Helper;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Controllers.User
 {
     [ApiController]
-    [Route("API/admin/customers")]
+    [Route("API/user/customers")]
     public class CustomerController : ControllerBase
     {
         public readonly ICustomerService _customerService;
@@ -40,34 +38,11 @@ namespace Parth_Traders.Controllers.User
                                   customerToReturn);
         }
 
-        //TODO: 1.Admin API - for case where admin need to add list of customer.
-        //                    for this case admin will use below API. But need 
-        //                    to change API route for below API.
-        [HttpPost, DisableRequestSizeLimit]
-        public IActionResult AddAllCustomers()
-        {
-            IFormFile? file = Request.Form.Files[0];
-            List<ParsedCustomer> parsedcustomers = new ParsedCustomer().ParseData(file);
-
-            var customersToAdd = _mapper.Map<List<Customer>>(parsedcustomers);
-
-            var addedcustomers = _customerService.AddAllCustomers(customersToAdd);
-
-            return Ok(_mapper.Map<List<CustomerDto>>(addedcustomers));
-        }
-
         [HttpGet("{customerName}", Name = "GetCustomer")]
         public IActionResult GetCustomer(string customerName)
         {
             CustomerDto customerFromRepo = _mapper.Map<CustomerDto>(_customerService.GetCustomerByName(customerName));
             return Ok(customerFromRepo);
-        }
-
-        [HttpGet]
-        public IActionResult GetAllCustomers()
-        {
-            var customers = _mapper.Map<List<CustomerDto>>(_customerService.GetAllCustomers());
-            return Ok(customers);
         }
 
         [HttpPost("{customerName}")]
