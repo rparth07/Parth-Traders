@@ -1,6 +1,8 @@
 <main class="home-content">
   <div class="position-relative">
-    <app-header></app-header>
+    <ng-container *ngIf="IsUserLogin">
+      <app-header></app-header>
+    </ng-container>
     <router-outlet></router-outlet>
   </div>
 </main>
