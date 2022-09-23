@@ -1,0 +1,29 @@
+.modal-container {
+  margin-top: 10rem;
+}
+
+.panel-title {
+  margin-bottom: 2rem;
+  margin-left: 3rem;
+}
+
+form div {
+  margin-bottom: 1rem;
+}
+
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  outline: 0;
+  box-shadow: none;
+}
+
+.center {
+  padding: 0rem 15rem;
+}
+
+.side-image img {
+  width: 57%;
+  position: fixed;
+  top: 1rem;
+}
