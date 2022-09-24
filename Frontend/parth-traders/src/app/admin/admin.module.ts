@@ -25,6 +25,7 @@ import { SupplierComponent } from './supplier/supplier.component';
 import { AddSupplierComponent } from './supplier/add-supplier/add-supplier.component';
 import { CustomerComponent } from './customer/customer.component';
 import { LogInComponent } from './log-in/log-in.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { LogInComponent } from './log-in/log-in.component';
     AddSupplierComponent,
     CustomerComponent,
     LogInComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
