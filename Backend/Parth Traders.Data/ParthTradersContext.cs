@@ -1,29 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.DataModel.User;
 
 namespace Parth_Traders.Data
 {
-    public class ParthTradersContext : DbContext
+    public class ParthTradersContext : IdentityDbContext<AdminUser>
     {
-        public DbSet<ProductDataModel> Products { get; set; }
-
-        public DbSet<CustomerDataModel> Customers { get; set; }
-
-        public DbSet<CategoryDataModel> Categories { get; set; }
-
-        public DbSet<OrderDataModel> Orders { get; set; }
-
-        public DbSet<OrderDetailDataModel> OrderDetails { get; set; }
-
-        public DbSet<SupplierDataModel> Suppliers { get; set; }
-
         public ParthTradersContext()
         {
 
         }
 
-        public ParthTradersContext(DbContextOptions<ParthTradersContext> options) : base(options)
+        public ParthTradersContext(DbContextOptions<ParthTradersContext> options)
+            : base(options)
         {
 
         }
@@ -65,6 +55,8 @@ namespace Parth_Traders.Data
                 entity.HasIndex(e => e.SupplierEmail).IsUnique();
                 entity.HasIndex(e => e.SupplierPhoneNumber).IsUnique();
             });
+
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -75,5 +67,17 @@ namespace Parth_Traders.Data
                 optionsBuilder.UseSqlServer("server=PARTH\\SQLEXPRESS; Database=Parth Traders; Integrated Security=true;");
             }
         }
+
+        public DbSet<ProductDataModel> Products { get; set; }
+
+        public DbSet<CustomerDataModel> Customers { get; set; }
+
+        public DbSet<CategoryDataModel> Categories { get; set; }
+
+        public DbSet<OrderDataModel> Orders { get; set; }
+
+        public DbSet<OrderDetailDataModel> OrderDetails { get; set; }
+
+        public DbSet<SupplierDataModel> Suppliers { get; set; }
     }
 }
