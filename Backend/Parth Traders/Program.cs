@@ -6,6 +6,7 @@ using Parth_Traders.Data.Repositories.User;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
+using Parth_Traders.Extensions;
 using Parth_Traders.Service.Admin;
 using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin;
@@ -52,6 +53,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ParthTradersContext>();
 
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+
+
 //Filter to handle exception
 builder.Services.AddMvc(options =>
 {
@@ -76,6 +81,7 @@ app.UseCors(builder =>
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
