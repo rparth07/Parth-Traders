@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
 using Parth_Traders.Domain.Entity.Admin;
@@ -67,7 +68,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(productFromRepo);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetAllProducts()
         {
             var products = _mapper.Map<List<ProductDto>>(_productService.GetAllProducts());

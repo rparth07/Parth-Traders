@@ -55,6 +55,7 @@ builder.Services.AddDbContext<ParthTradersContext>();
 
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
 
 
 //Filter to handle exception
