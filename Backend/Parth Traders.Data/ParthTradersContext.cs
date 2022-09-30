@@ -5,7 +5,7 @@ using Parth_Traders.Data.DataModel.User;
 
 namespace Parth_Traders.Data
 {
-    public class ParthTradersContext : IdentityDbContext<AdminUser>
+    public class ParthTradersContext : IdentityDbContext<AdminUserDataModel>
     {
         public ParthTradersContext()
         {

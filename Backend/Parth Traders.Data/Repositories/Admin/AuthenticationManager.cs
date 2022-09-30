@@ -16,10 +16,10 @@ namespace Parth_Traders.Data.Repositories.Admin
 {
     public class AuthenticationManager : IAuthenticationManager
     {
-        private readonly UserManager<AdminUser> _adminManager;
+        private readonly UserManager<AdminUserDataModel> _adminManager;
         private readonly IConfiguration _configuration;
-        private AdminUser _admin;
-        public AuthenticationManager(UserManager<AdminUser> adminManager, IConfiguration
+        private AdminUserDataModel _admin;
+        public AuthenticationManager(UserManager<AdminUserDataModel> adminManager, IConfiguration
        configuration)
         {
             _adminManager = adminManager;
