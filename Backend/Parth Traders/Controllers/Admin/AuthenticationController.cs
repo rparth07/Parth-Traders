@@ -8,21 +8,39 @@ using Parth_Traders.Dto.Admin;
 
 namespace Parth_Traders.Controllers.Admin
 {
-    [Route("api/authentication")]
     [ApiController]
+    [Route("api/authentication")]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<AdminUser> _adminManager;
+        private readonly UserManager<AdminAuthenticationDataModel> _userManager;
         private readonly IAuthenticationManager _authManager;
+        private readonly IMapper _mapper;
         public AuthenticationController(IMapper mapper,
-                                        UserManager<AdminUser> adminManager,
+                                        UserManager<AdminAuthenticationDataModel> adminManager,
                                         IAuthenticationManager authManager)
         {
             _mapper = mapper;
-            _adminManager = adminManager;
+            _userManager = adminManager;
             _authManager = authManager;
         }
+
+        [HttpPost]
+        [Consumes("application/json")]
+        public async Task<IActionResult> RegisterUser(AdminUserDto userForRegistration)
+        {
+            var adminUser = _mapper.Map<AdminAuthenticationDataModel>(userForRegistration);
+            var result = await _userManager.CreateAsync(adminUser, userForRegistration.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
+            return StatusCode(201);
+        }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Authenticate([FromBody] AdminAuthenticationDto admin)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Parth_Traders.Data.Configuration;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.DataModel.User;
 
@@ -20,7 +21,6 @@ namespace Parth_Traders.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<CustomerDataModel>(entity =>
             {
                 entity.Property(x => x.CustomerId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
@@ -55,6 +55,8 @@ namespace Parth_Traders.Data
                 entity.HasIndex(e => e.SupplierEmail).IsUnique();
                 entity.HasIndex(e => e.SupplierPhoneNumber).IsUnique();
             });
+            
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

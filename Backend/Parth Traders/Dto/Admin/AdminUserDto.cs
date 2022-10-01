@@ -15,5 +15,6 @@ namespace Parth_Traders.Dto.Admin
         public string Email { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+        public ICollection<string> Roles { get; set; }
     }
 }
