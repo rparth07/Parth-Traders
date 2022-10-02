@@ -2,7 +2,7 @@
 
 namespace Parth_Traders.Dto.Admin
 {
-    public class AdminAuthenticationDto
+    public class AdminForAuthenticationDto
     {
         [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }

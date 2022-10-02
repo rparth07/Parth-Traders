@@ -2,7 +2,7 @@
 
 namespace Parth_Traders.Dto.Admin
 {
-    public class AdminUserDto
+    public class AdminForRegistrationDto
     {
         [Required]
         public string FirstName { get; set; }

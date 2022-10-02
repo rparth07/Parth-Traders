@@ -12,11 +12,11 @@ namespace Parth_Traders.Controllers.Admin
     [Route("api/authentication")]
     public class AuthenticationController : ControllerBase
     {
-        private readonly UserManager<AdminAuthenticationDataModel> _userManager;
+        private readonly UserManager<AdminDataModel> _userManager;
         private readonly IAuthenticationManager _authManager;
         private readonly IMapper _mapper;
         public AuthenticationController(IMapper mapper,
-                                        UserManager<AdminAuthenticationDataModel> adminManager,
+                                        UserManager<AdminDataModel> adminManager,
                                         IAuthenticationManager authManager)
         {
             _mapper = mapper;
@@ -26,10 +26,10 @@ namespace Parth_Traders.Controllers.Admin
 
         [HttpPost]
         [Consumes("application/json")]
-        public async Task<IActionResult> RegisterUser(AdminUserDto userForRegistration)
+        public async Task<IActionResult> RegisterUser(AdminForRegistrationDto adminForRegistration)
         {
-            var adminUser = _mapper.Map<AdminAuthenticationDataModel>(userForRegistration);
-            var result = await _userManager.CreateAsync(adminUser, userForRegistration.Password);
+            var adminUser = _mapper.Map<AdminDataModel>(adminForRegistration);
+            var result = await _userManager.CreateAsync(adminUser, adminForRegistration.Password);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -43,9 +43,9 @@ namespace Parth_Traders.Controllers.Admin
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Authenticate([FromBody] AdminAuthenticationDto admin)
+        public async Task<IActionResult> Authenticate([FromBody] AdminForAuthenticationDto admin)
         {
-            if (!await _authManager.ValidateAdmin(_mapper.Map<AdminAuthentication>(admin)))
+            if (!await _authManager.ValidateAdmin(_mapper.Map<AdminForAuthentication>(admin)))
             {
                 return Unauthorized();
             }

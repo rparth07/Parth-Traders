@@ -9,7 +9,7 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.Admin
 {
     public interface IAuthenticationManager
     {
-        Task<bool> ValidateAdmin(AdminAuthentication adminAuth);
+        Task<bool> ValidateAdmin(AdminForAuthentication adminAuth);
         Task<string> CreateToken();
     }
 }

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using Parth_Traders.Data;
+using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.Repositories.Admin;
 using Parth_Traders.Data.Repositories.User;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
@@ -55,6 +57,9 @@ builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ParthTradersContext>();
+
+builder.Services.AddIdentity<AdminDataModel, IdentityRole>()
+    .AddEntityFrameworkStores<ParthTradersContext>();
 
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();

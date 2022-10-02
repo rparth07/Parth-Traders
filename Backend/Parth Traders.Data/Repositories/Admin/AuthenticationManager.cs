@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Parth_Traders.Data.DataModel.Admin;
@@ -16,14 +17,16 @@ namespace Parth_Traders.Data.Repositories.Admin
 {
     public class AuthenticationManager : IAuthenticationManager
     {
-        private readonly UserManager<AdminUserDataModel> _adminManager;
+        private readonly UserManager<AdminDataModel> _adminManager;
         private readonly IConfiguration _configuration;
-        private AdminUserDataModel _admin;
-        public AuthenticationManager(UserManager<AdminUserDataModel> adminManager, IConfiguration
-       configuration)
+        private readonly IMapper _mapper;
+        private AdminDataModel _admin;
+        public AuthenticationManager(UserManager<AdminDataModel> adminManager, IConfiguration
+       configuration, IMapper mapper)
         {
             _adminManager = adminManager;
             _configuration = configuration;
+            _mapper = mapper;
         }
         public async Task<string> CreateToken()
         {
@@ -33,8 +36,9 @@ namespace Parth_Traders.Data.Repositories.Admin
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
-        public async Task<bool> ValidateAdmin(AdminAuthentication adminAuth)
+        public async Task<bool> ValidateAdmin(AdminForAuthentication admin)
         {
+            var adminAuth = _mapper.Map<AdminForAuthenticationDataModel>(admin);
             _admin = await _adminManager.FindByNameAsync(adminAuth.UserName);
 
             return (_admin != null && await _adminManager.CheckPasswordAsync(_admin,

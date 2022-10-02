@@ -11,7 +11,7 @@ namespace Parth_Traders.Extensions
     {
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<AdminUserDataModel>(o =>
+            var builder = services.AddIdentityCore<AdminDataModel>(o =>
             {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
