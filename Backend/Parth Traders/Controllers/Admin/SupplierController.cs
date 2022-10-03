@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
 using Parth_Traders.Domain.Entity.Admin;
@@ -9,7 +10,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/suppliers")]
+    [Route("API/admin/suppliers"), Authorize]
     public class SupplierController : ControllerBase
     {
         public readonly ISupplierService _supplierService;

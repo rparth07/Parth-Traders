@@ -10,7 +10,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/products")]
+    [Route("API/admin/products"), Authorize]
     public class ProductController : ControllerBase
     {
         public readonly IProductService _productService;
@@ -68,7 +68,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(productFromRepo);
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAllProducts()
         {
             var products = _mapper.Map<List<ProductDto>>(_productService.GetAllProducts());

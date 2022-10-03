@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Dto.User;
@@ -7,7 +8,7 @@ using Parth_Traders.Service.Services.User.UserInterface;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/customers")]
+    [Route("API/admin/customers"), Authorize]
     public class CustomerController : ControllerBase
     {
         public readonly ICustomerService _customerService;
