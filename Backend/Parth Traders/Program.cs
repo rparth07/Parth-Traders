@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using NLog;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.Repositories.Admin;
@@ -52,6 +53,8 @@ builder.Services.AddScoped<IOrderHelperService, OrderHelperService>();
 
 builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
+"/nlog.config"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -61,6 +64,7 @@ builder.Services.AddDbContext<ParthTradersContext>();
 builder.Services.AddIdentity<AdminDataModel, IdentityRole>()
     .AddEntityFrameworkStores<ParthTradersContext>();
 
+builder.Services.ConfigureLoggerService();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);

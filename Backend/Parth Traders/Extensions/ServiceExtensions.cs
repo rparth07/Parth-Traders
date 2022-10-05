@@ -3,12 +3,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Service.Services.Logger;
 using System.Text;
 
 namespace Parth_Traders.Extensions
 {
     public static class ServiceExtensions
     {
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+            services.AddScoped<ILoggerManager, LoggerManager>();
+
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             var builder = services.AddIdentityCore<AdminDataModel>(o =>

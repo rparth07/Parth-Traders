@@ -21,8 +21,9 @@ namespace Parth_Traders.Data.Repositories.Admin
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private AdminDataModel _admin;
-        public AuthenticationManager(UserManager<AdminDataModel> adminManager, IConfiguration
-       configuration, IMapper mapper)
+        public AuthenticationManager(UserManager<AdminDataModel> adminManager, 
+                                     IConfiguration configuration, 
+                                     IMapper mapper)
         {
             _adminManager = adminManager;
             _configuration = configuration;
