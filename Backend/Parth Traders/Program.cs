@@ -19,7 +19,11 @@ using Parth_Traders.Service.Services.User.UserInterface;
 
 var builder = WebApplication.CreateBuilder(args);
 
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+
 // Add services to the container.
+
+builder.Services.ConfigureLoggerService();
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson(setupAction =>
@@ -53,9 +57,6 @@ builder.Services.AddScoped<IOrderHelperService, OrderHelperService>();
 
 builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
-LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
-"/nlog.config"));
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -64,7 +65,6 @@ builder.Services.AddDbContext<ParthTradersContext>();
 builder.Services.AddIdentity<AdminDataModel, IdentityRole>()
     .AddEntityFrameworkStores<ParthTradersContext>();
 
-builder.Services.ConfigureLoggerService();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
