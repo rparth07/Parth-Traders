@@ -2,17 +2,21 @@
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
+using Parth_Traders.Service.Services.Logger;
 
 namespace Parth_Traders.Service.Services.Admin
 {
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ILoggerManager _logger;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, ILoggerManager logger)
         {
             _categoryRepository = categoryRepository ??
                 throw new ArgumentNullException(nameof(categoryRepository));
+            _logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         public Category AddCategory(Category categoryToAdd)
@@ -24,6 +28,8 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("Entered data was in incorrect format and throwing error" +
+                    $"{ex}");
                 throw new BadRequestException("Please enter data in correct format!");
             }
 
@@ -39,7 +45,10 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
-                throw new BadRequestException("One or more category data is in wrong format. Please enter data in correct format!");
+                _logger.LogInfo("CSV file data is in incorrect format and throwing error" +
+                    $"{ex}");
+                throw new BadRequestException("One or more category data is in wrong format. " +
+                    "Please enter data in correct format!");
             }
 
             List<Category> addedCategories = categoriesToAdd
@@ -54,6 +63,7 @@ namespace Parth_Traders.Service.Services.Admin
             var categoryToReturn = _categoryRepository.GetCategoryById(categoryId);
             if (categoryToReturn == null)
             {
+                _logger.LogInfo("Invalid category id was entered");
                 throw new NotFoundException("Please enter a valid Id!");
             }
             return categoryToReturn;
@@ -64,6 +74,7 @@ namespace Parth_Traders.Service.Services.Admin
             var categoryToReturn = _categoryRepository.GetCategoryByName(categoryName);
             if (categoryToReturn == null)
             {
+                _logger.LogInfo("Invalid category name was entered");
                 throw new NotFoundException("Please enter a valid category name!");
             }
             return categoryToReturn;
@@ -102,6 +113,9 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("Invalid category name was entered and throwing error" +
+                    $"{ex}");
+
                 throw new BadRequestException("Please enter a valid category name!");
             }
         }
