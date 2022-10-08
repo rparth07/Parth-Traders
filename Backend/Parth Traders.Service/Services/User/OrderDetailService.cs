@@ -1,6 +1,7 @@
 ﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service.Filter;
+using Parth_Traders.Service.Services.Logger;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Service.Services.User
@@ -8,11 +9,14 @@ namespace Parth_Traders.Service.Services.User
     public class OrderDetailService : IOrderDetailService
     {
         private readonly IOrderDetailRepository _orderDetailRepository;
+        private readonly ILoggerManager _logger;
 
-        public OrderDetailService(IOrderDetailRepository orderDetailRepository)
+        public OrderDetailService(IOrderDetailRepository orderDetailRepository, ILoggerManager logger)
         {
             _orderDetailRepository = orderDetailRepository ??
                 throw new ArgumentNullException(nameof(orderDetailRepository));
+            _logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         public OrderDetail AddOrderDetail(OrderDetail orderDetailToAdd)
@@ -24,6 +28,8 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("Entered data was in incorrect format and throwing error" +
+                    $"{ex}");
                 throw new BadRequestException("Please enter data in correct format!");
             }
             //TODO: Need to find a way to get addedOrderDetail, right now I am not using any method in this service.
@@ -39,6 +45,8 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("CSV file data is in incorrect format and throwing error" +
+                    $"{ex}");
                 throw new BadRequestException("Please enter data in correct format!");
             }
 

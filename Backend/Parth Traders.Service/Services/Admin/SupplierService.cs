@@ -2,17 +2,22 @@
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
 using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
+using Parth_Traders.Service.Services.Logger;
 
 namespace Parth_Traders.Service.Services.Admin
 {
     public class SupplierService : ISupplierService
     {
         private readonly ISupplierRepository _supplierRepository;
+        private readonly ILoggerManager _logger;
 
-        public SupplierService(ISupplierRepository supplierRepository)
+        public SupplierService(ISupplierRepository supplierRepository, ILoggerManager logger)
         {
             _supplierRepository = supplierRepository ??
                 throw new ArgumentNullException(nameof(supplierRepository));
+
+            _logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         public Supplier AddSupplier(Supplier supplierToAdd)
@@ -24,6 +29,8 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("Entered data was in incorrect format and throwing error" +
+                    $"{ex}");
                 throw new BadRequestException("Please enter data in correct format!");
             }
 
@@ -39,6 +46,8 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("CSV file data is in incorrect format and throwing error" +
+                    $"{ex}");
                 throw new BadRequestException("One or more supplier data is in wrong format. Please enter data in correct format!");
             }
 
@@ -54,6 +63,7 @@ namespace Parth_Traders.Service.Services.Admin
             var supplierToReturn = _supplierRepository.GetSupplierById(supplierId);
             if (supplierToReturn == null)
             {
+                _logger.LogInfo("Invalid supplier id was entered");
                 throw new NotFoundException("Please enter a valid supplier id!");
             }
             return supplierToReturn;
@@ -64,6 +74,7 @@ namespace Parth_Traders.Service.Services.Admin
             var supplierToReturn = _supplierRepository.GetSupplierByName(supplierName);
             if (supplierToReturn == null)
             {
+                _logger.LogInfo("Invalid supplier name was entered");
                 throw new NotFoundException("Please enter a valid supplier name!");
             }
             return supplierToReturn;
@@ -101,6 +112,8 @@ namespace Parth_Traders.Service.Services.Admin
             }
             catch (Exception ex)
             {
+                _logger.LogInfo("Invalid supplier name was entered and throwing error" +
+                    $"{ex}");
                 throw new NotFoundException("Please enter a valid supplier name!");
             }
         }
