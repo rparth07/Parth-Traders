@@ -8,6 +8,7 @@ namespace Parth_Traders.Controllers.User
 {
     [ApiController]
     [Route("API/user/customers")]
+    //[ApiExplorerSettings(GroupName = "v1")]
     public class CustomerController : ControllerBase
     {
         public readonly ICustomerService _customerService;

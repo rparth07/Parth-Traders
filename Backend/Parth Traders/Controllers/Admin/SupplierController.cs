@@ -25,7 +25,7 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost]
+        [HttpPost("add-supplier")]
         [Consumes("application/json")]
         public IActionResult AddSupplier(SupplierDto supplierForCreation)
         {

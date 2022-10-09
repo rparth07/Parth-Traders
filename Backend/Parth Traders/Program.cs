@@ -60,6 +60,7 @@ builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 builder.Services.AddDbContext<ParthTradersContext>();
 
 builder.Services.AddIdentity<AdminDataModel, IdentityRole>()
@@ -98,5 +99,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSwagger();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Parth Traders API v1");
+    s.SwaggerEndpoint("/swagger/v2/swagger.json", "Parth Traders API v2");
+});
 
 app.Run();

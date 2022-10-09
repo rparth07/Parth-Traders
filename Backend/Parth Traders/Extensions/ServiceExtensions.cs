@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Service.Services.Logger;
@@ -54,6 +55,23 @@ namespace Parth_Traders.Extensions
                     ValidAudience = jwtSettings.GetSection("validAudience").Value,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
+            });
+        }
+
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Parth Traders API",
+                    Version = "v1"
+                });
+                s.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "Parth Traders API",
+                    Version = "v2"
+                });
             });
         }
 

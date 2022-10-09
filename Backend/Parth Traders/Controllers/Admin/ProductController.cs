@@ -11,6 +11,7 @@ namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
     [Route("API/admin/products"), Authorize]
+    //[ApiExplorerSettings(GroupName = "v2")]
     public class ProductController : ControllerBase
     {
         public readonly IProductService _productService;
@@ -26,7 +27,7 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost]
+        [HttpPost("add-product")]
         [Consumes("application/json")]
         public IActionResult AddProduct(ProductDto productForCreation)
         {
