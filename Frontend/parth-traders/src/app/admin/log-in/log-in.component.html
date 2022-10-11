@@ -5,12 +5,12 @@
     </div>
     <div class="col-5 col-md-5">
       <div class="panel-body">
-        <form role="form">
+        <form #form="ngForm">
           <fieldset>
             <div class="form-group">
               <input
                 class="form-control"
-                placeholder="E-mail"
+                placeholder="Email"
                 name="email"
                 type="email"
                 autofocus
@@ -25,19 +25,12 @@
                 value=""
               />
             </div>
-            <div class="checkbox">
-              <label>
-                <input
-                  name="remember"
-                  type="checkbox"
-                  value="Remember Me"
-                />Remember Me
-              </label>
-            </div>
-            <!-- Change this to a button or input when using this as a form -->
-            <a href="index.html" class="btn btn-lg btn-success btn-block"
-              >Login</a
+            <button
+              class="btn btn-lg btn-primary btn-block"
+              (click)="login(form)"
             >
+              Login
+            </button>
           </fieldset>
         </form>
       </div>
