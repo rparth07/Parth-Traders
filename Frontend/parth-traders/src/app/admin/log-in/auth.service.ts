@@ -42,7 +42,7 @@ export class AuthService {
       .set('username', loginData.username)
       .set('password', loginData.password);
 
-    return this.http.post<any>(API_URL + 'oauth/token', body).pipe(
+    return this.http.post<any>(API_URL + 'api/authentication/login', body).pipe(
       tap((res) => {
         this.tokenService.saveToken(res.access_token);
         this.tokenService.saveRefreshToken(res.refresh_token);
@@ -59,7 +59,7 @@ export class AuthService {
       refreshData.refresh_token
     );
 
-    return this.http.post<any>(API_URL + 'oauth/token', body).pipe(
+    return this.http.post<any>(API_URL + 'api/authentication/login', body).pipe(
       tap((res) => {
         this.tokenService.saveToken(res.access_token);
         this.tokenService.saveRefreshToken(res.refresh_token);

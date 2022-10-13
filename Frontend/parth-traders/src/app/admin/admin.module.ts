@@ -26,6 +26,8 @@ import { AddSupplierComponent } from './supplier/add-supplier/add-supplier.compo
 import { CustomerComponent } from './customer/customer.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthInterceptor } from './log-in/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,13 @@ import { ProfileComponent } from './profile/profile.component';
     // MatToolbarModule,
     // MatTooltipModule,
     // MatTreeModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
   exports: [EnumConverterPipe, AdminComponent],
   bootstrap: [AdminComponent],
