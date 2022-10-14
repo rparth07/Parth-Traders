@@ -8,7 +8,7 @@ import { catchError, Observable, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { TokenService } from './token.service';
 
-const API_URL = 'http://localhost:5031/';
+const API_URL = 'https://localhost:5031/';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +16,7 @@ export class AuthService {
   redirectUrl = '';
 
   private static handleError(error: HttpErrorResponse): any {
+    console.log(error);
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
