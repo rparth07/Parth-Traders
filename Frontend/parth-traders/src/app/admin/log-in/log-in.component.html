@@ -1,4 +1,7 @@
 <div class="modal-container center">
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
   <div class="row justify-content-around">
     <div class="panel-heading">
       <h3 class="panel-title">Please Sign In</h3>

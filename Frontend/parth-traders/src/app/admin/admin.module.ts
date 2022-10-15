@@ -28,6 +28,7 @@ import { LogInComponent } from './log-in/log-in.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthInterceptor } from './log-in/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatInputModule,
     MatSortModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     // MatAutocompleteModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
@@ -74,7 +76,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     // MatIconModule,
     // MatListModule,
     // MatProgressBarModule,
-    // MatProgressSpinnerModule,
     // MatRadioModule,
     // MatRippleModule,
     // MatSidenavModule,

@@ -39,19 +39,20 @@ export class AuthService {
   login(loginData: any): Observable<any> {
     this.tokenService.removeToken();
     this.tokenService.removeRefreshToken();
-    const body = new HttpParams()
-      .set('username', loginData.username)
-      .set('password', loginData.password);
+    const body: { username: string; password: string } = {
+      username: loginData.username,
+      password: loginData.password,
+    };
 
     return this.http.post<any>(API_URL + 'api/authentication/login', body).pipe(
       tap((res) => {
-        this.tokenService.saveToken(res.access_token);
+        this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
       }),
       catchError(AuthService.handleError)
     );
   }
-
+  //refactor this method
   refreshToken(refreshData: any): Observable<any> {
     this.tokenService.removeToken();
     this.tokenService.removeRefreshToken();
@@ -62,7 +63,7 @@ export class AuthService {
 
     return this.http.post<any>(API_URL + 'api/authentication/login', body).pipe(
       tap((res) => {
-        this.tokenService.saveToken(res.access_token);
+        this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
       }),
       catchError(AuthService.handleError)

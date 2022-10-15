@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -7,7 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
   IsUserLogin = false;
-  constructor() {}
+  constructor(private router: Router) {
+    // on route change to '/login', set the variable IsUserLogin to false
+    router.events.forEach((event) => {
+      console.log('admin event', event);
+      if (event instanceof NavigationStart || event instanceof NavigationEnd) {
+        if (event.url.endsWith('/login')) {
+          this.IsUserLogin = false;
+        } else {
+          console.log('NU');
+          this.IsUserLogin = true;
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {}
 }
