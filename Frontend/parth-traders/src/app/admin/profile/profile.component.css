@@ -1,0 +1,48 @@
+.modal-container {
+  margin-top: 10rem;
+}
+
+.add-product button {
+  margin-left: 5px;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep .white-arrow .mat-sort-header-arrow {
+  color: #fff;
+}
+
+.search-box button {
+  display: flex;
+  background: #3a57e8; /*var(--primary-color);*/
+  color: #fff;
+  font-size: 17px;
+  border: none;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  border: 1px solid #ced4da;
+  box-shadow: 0 0 0 0;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn:focus {
+  color: #fff;
+  box-shadow: none;
+}
+
+.row {
+  margin-top: 5px;
+  margin-right: 0px;
+}

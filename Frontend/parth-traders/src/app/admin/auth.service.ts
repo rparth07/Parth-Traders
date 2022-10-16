@@ -6,9 +6,10 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { catchError, Observable, tap } from 'rxjs';
+import { catchError, Observable, Subject, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { TokenService } from './token.service';
+import decode from 'jwt-decode';
 
 const API_URL = 'https://localhost:5031/';
 @Injectable({
@@ -16,6 +17,7 @@ const API_URL = 'https://localhost:5031/';
 })
 export class AuthService {
   redirectUrl = '';
+  adminNameSubject = new Subject<string>();
 
   private static handleError(error: HttpErrorResponse): any {
     console.log(error);
@@ -43,8 +45,13 @@ export class AuthService {
     private tokenService: TokenService
   ) {}
 
+  //reactor this method to first validate the token and then calculate the expiration date later
   isAuthenticated(): boolean {
     const token = this.tokenService.getToken();
+    const tokenPayload = decode<any>(this.tokenService.getToken() as string);
+    if (tokenPayload.name) {
+      this.adminNameSubject.next(tokenPayload.name);
+    }
     return !this.jwtHelper.isTokenExpired(token as string);
   }
 

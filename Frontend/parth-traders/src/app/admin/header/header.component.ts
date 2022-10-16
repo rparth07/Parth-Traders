@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
   enableHeader: boolean = false;
+  adminName: string = 'admin';
 
   constructor(private authService: AuthService) {
     fromEvent(window, 'scroll').subscribe((event) => {
@@ -18,7 +19,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.adminNameSubject.subscribe((_: string) => {
+      this.adminName = _;
+    });
+  }
 
   logout() {
     this.authService.logout();

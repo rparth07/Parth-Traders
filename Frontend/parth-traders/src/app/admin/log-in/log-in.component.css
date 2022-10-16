@@ -27,3 +27,13 @@ form div {
   position: fixed;
   top: 1rem;
 }
+
+.btn:focus-visible {
+  border: none;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none;
+  box-shadow: none;
+}
