@@ -55,8 +55,8 @@
       <button mat-menu-item>
         <a class="dropdown-item" routerLink="home">Profile</a>
       </button>
-      <button mat-menu-item>
-        <a class="dropdown-item" routerLink="home">Logout</a>
+      <button mat-menu-item (click)="logout()">
+        <a class="dropdown-item">Logout</a>
       </button>
     </mat-menu>
   </div>

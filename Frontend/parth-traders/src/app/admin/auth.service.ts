@@ -4,6 +4,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, tap } from 'rxjs';
 import { throwError } from 'rxjs';
@@ -37,6 +38,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private jwtHelper: JwtHelperService,
     private tokenService: TokenService
   ) {}
@@ -83,5 +85,6 @@ export class AuthService {
   logout(): void {
     this.tokenService.removeToken();
     this.tokenService.removeRefreshToken();
+    this.router.navigate(['/admin/login']);
   }
 }
