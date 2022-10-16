@@ -26,7 +26,7 @@ import { AddSupplierComponent } from './supplier/add-supplier/add-supplier.compo
 import { CustomerComponent } from './customer/customer.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { ProfileComponent } from './profile/profile.component';
-import { AuthInterceptor } from './log-in/auth.interceptor';
+import { AuthInterceptor } from './auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 

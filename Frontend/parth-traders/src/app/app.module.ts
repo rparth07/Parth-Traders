@@ -9,7 +9,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { ToastrModule } from 'ngx-toastr';
-import { AuthInterceptor } from './admin/log-in/auth.interceptor';
+import { AuthInterceptor } from './admin/auth.interceptor';
+import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
+const JWT_Module_Options: JwtModuleOptions = {
+  config: {
+    tokenGetter: tokenGetter,
+    allowedDomains: ['https://localhost:4200'],
+  },
+};
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,6 +33,7 @@ import { AuthInterceptor } from './admin/log-in/auth.interceptor';
     MatDialogModule,
     MatMenuModule,
     ToastrModule.forRoot(),
+    JwtModule.forRoot(JWT_Module_Options),
   ],
   providers: [
     {

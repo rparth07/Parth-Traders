@@ -4,6 +4,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { TokenService } from './token.service';
@@ -34,7 +35,16 @@ export class AuthService {
     console.log(message);
   }
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService,
+    private tokenService: TokenService
+  ) {}
+
+  isAuthenticated(): boolean {
+    const token = this.tokenService.getToken();
+    return !this.jwtHelper.isTokenExpired(token as string);
+  }
 
   login(loginData: any): Observable<any> {
     this.tokenService.removeToken();
