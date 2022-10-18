@@ -15,6 +15,7 @@ namespace Parth_Traders.Controllers.Admin
         private readonly UserManager<AdminDataModel> _userManager;
         private readonly IAuthenticationManager _authManager;
         private readonly IMapper _mapper;
+
         public AuthenticationController(IMapper mapper,
                                         UserManager<AdminDataModel> adminManager,
                                         IAuthenticationManager authManager)
@@ -54,10 +55,13 @@ namespace Parth_Traders.Controllers.Admin
                                     .FirstOrDefault(_ => _.UserName == admin.UserName)});
         }
 
-        [HttpGet("admin-details")]
-        public AdminDataModel GetAdminsDetails(string adminId)
+        [HttpPost("admin-details/{adminId}")]
+        public async Task<IdentityResult> GetAdminsDetailsAsync(string adminId,
+                                                                [FromBody] AdminDataModel admin)
         {
-            return _userManager.Users.FirstOrDefault(_ => _.Id == adminId);
+            admin.Id = null;
+            admin.NormalizedUserName = admin.UserName.ToUpper();
+            return await _userManager.UpdateAsync(admin);
         }
     }
 }

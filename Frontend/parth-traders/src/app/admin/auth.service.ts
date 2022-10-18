@@ -18,10 +18,10 @@ const API_URL = 'https://localhost:5031/';
 })
 export class AuthService {
   redirectUrl = '';
-  adminSubject = new Subject<AdminDetails>();
+  admin!: AdminDetails;
 
   private static handleError(error: HttpErrorResponse): any {
-    console.log(error);
+    console.log('error = ', error);
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
@@ -53,6 +53,17 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token as string);
   }
 
+  updateProfile(admin: AdminDetails): Observable<any> {
+    return this.http
+      .post(API_URL + 'api/authentication/admin-details/' + admin.id, admin)
+      .pipe(
+        tap((res) => {
+          AuthService.log('Profile updated successfully!');
+        }),
+        catchError(AuthService.handleError)
+      );
+  }
+
   login(loginData: any): Observable<any> {
     this.tokenService.removeToken();
     this.tokenService.removeRefreshToken();
@@ -65,21 +76,12 @@ export class AuthService {
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
-        const adminDetails: AdminDetails = {
-          firstName: res.admin.name,
-          lastName: res.admin.lastName,
-          id: res.admin.id,
-          email: res.admin.email,
-          phone: res.admin.phone,
-          userName: res.admin.userName,
-          password: res.admin.password,
-          adminImage: res.admin.adminImage,
-        };
-        this.adminSubject.next(adminDetails);
+        this.admin = res.admin;
       }),
       catchError(AuthService.handleError)
     );
   }
+
   //refactor this method
   refreshToken(refreshData: any): Observable<any> {
     this.tokenService.removeToken();

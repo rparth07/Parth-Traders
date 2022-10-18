@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { AdminDetails } from './admin-details';
 
@@ -10,13 +10,20 @@ import { AdminDetails } from './admin-details';
 export class ProfileComponent implements OnInit {
   admin!: AdminDetails;
 
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.adminSubject.subscribe((_: AdminDetails) => {
-      this.admin = _;
-    });
+  constructor(private authService: AuthService) {
+    this.admin = this.authService.admin;
   }
 
-  updateProfile(form: any) {}
+  ngOnInit(): void {}
+
+  updateProfile(form: any) {
+    this.authService.updateProfile(this.admin).subscribe({
+      next: () => {
+        console.log('Profile updated successfully!');
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
 }

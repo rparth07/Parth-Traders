@@ -21,9 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.adminSubject.subscribe((_: AdminDetails) => {
-      this.adminName = _.userName;
-    });
+    this.adminName = this.authService.admin.userName;
   }
 
   logout() {

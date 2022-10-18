@@ -11,12 +11,10 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router) {
     // on route change to '/login', set the variable IsUserLogin to false
     router.events.forEach((event) => {
-      console.log('admin event', event);
       if (event instanceof NavigationStart || event instanceof NavigationEnd) {
         if (event.url.endsWith('/login')) {
           this.IsUserLogin = false;
         } else {
-          console.log('NU');
           this.IsUserLogin = true;
         }
       }

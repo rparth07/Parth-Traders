@@ -3,7 +3,7 @@ export interface AdminDetails {
   lastName: string;
   id: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   userName: string;
   password: string;
   confirmPassword?: string;
