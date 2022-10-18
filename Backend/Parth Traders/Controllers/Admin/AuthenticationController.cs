@@ -49,8 +49,15 @@ namespace Parth_Traders.Controllers.Admin
             {
                 return Unauthorized();
             }
-            return Ok(new { Token = await _authManager.CreateToken() });
+            return Ok(new { Token = await _authManager.CreateToken(),
+                            Admin = _userManager.Users
+                                    .FirstOrDefault(_ => _.UserName == admin.UserName)});
+        }
+
+        [HttpGet("admin-details")]
+        public AdminDataModel GetAdminsDetails(string adminId)
+        {
+            return _userManager.Users.FirstOrDefault(_ => _.Id == adminId);
         }
     }
-
 }

@@ -66,8 +66,8 @@ namespace Parth_Traders.Data.Repositories.Admin
             }
             return claims;
         }
-        private JwtSecurityToken GenerateTokenOptions(SigningCredentials
-       signingCredentials, List<Claim> claims)
+        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials,
+                                                      List<Claim> claims)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var tokenOptions = new JwtSecurityToken

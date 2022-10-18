@@ -9,6 +9,7 @@ namespace Parth_Traders.Profiles
         public MappingProfile()
         {
             CreateMap<AdminForRegistrationDto, AdminDataModel>();
+            CreateMap<AdminDataModel, AdminForRegistrationDto>();
         }
     }
 }

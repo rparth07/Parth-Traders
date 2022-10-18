@@ -10,6 +10,7 @@ import { catchError, Observable, Subject, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { TokenService } from './token.service';
 import decode from 'jwt-decode';
+import { AdminDetails } from './profile/admin-details';
 
 const API_URL = 'https://localhost:5031/';
 @Injectable({
@@ -17,7 +18,7 @@ const API_URL = 'https://localhost:5031/';
 })
 export class AuthService {
   redirectUrl = '';
-  adminNameSubject = new Subject<string>();
+  adminSubject = new Subject<AdminDetails>();
 
   private static handleError(error: HttpErrorResponse): any {
     console.log(error);
@@ -48,10 +49,7 @@ export class AuthService {
   //reactor this method to first validate the token and then calculate the expiration date later
   isAuthenticated(): boolean {
     const token = this.tokenService.getToken();
-    const tokenPayload = decode<any>(this.tokenService.getToken() as string);
-    if (tokenPayload.name) {
-      this.adminNameSubject.next(tokenPayload.name);
-    }
+
     return !this.jwtHelper.isTokenExpired(token as string);
   }
 
@@ -67,6 +65,17 @@ export class AuthService {
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
+        const adminDetails: AdminDetails = {
+          firstName: res.admin.name,
+          lastName: res.admin.lastName,
+          id: res.admin.id,
+          email: res.admin.email,
+          phone: res.admin.phone,
+          userName: res.admin.userName,
+          password: res.admin.password,
+          adminImage: res.admin.adminImage,
+        };
+        this.adminSubject.next(adminDetails);
       }),
       catchError(AuthService.handleError)
     );

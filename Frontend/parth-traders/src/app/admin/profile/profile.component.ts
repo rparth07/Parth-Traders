@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import { AdminDetails } from './admin-details';
 
 @Component({
@@ -9,7 +10,13 @@ import { AdminDetails } from './admin-details';
 export class ProfileComponent implements OnInit {
   admin!: AdminDetails;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.adminSubject.subscribe((_: AdminDetails) => {
+      this.admin = _;
+    });
+  }
 
   updateProfile(form: any) {}
 }

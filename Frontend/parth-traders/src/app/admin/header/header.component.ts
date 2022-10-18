@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { AdminDetails } from '../profile/admin-details';
 
 @Component({
   selector: 'app-header',
@@ -20,8 +21,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.adminNameSubject.subscribe((_: string) => {
-      this.adminName = _;
+    this.authService.adminSubject.subscribe((_: AdminDetails) => {
+      this.adminName = _.userName;
     });
   }
 
