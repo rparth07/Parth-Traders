@@ -18,8 +18,8 @@ export class ProfileComponent implements OnInit {
 
   updateProfile(form: any) {
     this.authService.updateProfile(this.admin).subscribe({
-      next: () => {
-        console.log('Profile updated successfully!');
+      next: (res) => {
+        this.admin = res.admin;
       },
       error: (err: any) => {
         console.log(err);

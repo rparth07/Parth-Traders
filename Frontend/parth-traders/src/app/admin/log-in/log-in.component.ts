@@ -15,6 +15,7 @@ export class LogInComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  //need to add errors in the form
   login(form: NgForm) {
     this.authService.login(form.value).subscribe({
       next: () => {

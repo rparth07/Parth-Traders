@@ -19,6 +19,7 @@ const API_URL = 'https://localhost:5031/';
 export class AuthService {
   redirectUrl = '';
   admin!: AdminDetails;
+  adminName = new Subject<string>();
 
   private static handleError(error: HttpErrorResponse): any {
     console.log('error = ', error);
@@ -55,10 +56,16 @@ export class AuthService {
 
   updateProfile(admin: AdminDetails): Observable<any> {
     return this.http
-      .post(API_URL + 'api/authentication/admin-details/' + admin.id, admin)
+      .post<any>(
+        API_URL + 'api/authentication/admin-details/' + admin.id,
+        admin
+      )
       .pipe(
         tap((res) => {
-          AuthService.log('Profile updated successfully!');
+          this.tokenService.saveToken(res.token);
+          this.tokenService.saveRefreshToken(res.refresh_token);
+          this.admin = res.admin;
+          this.adminName.next(this.admin.userName);
         }),
         catchError(AuthService.handleError)
       );
@@ -77,6 +84,7 @@ export class AuthService {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
         this.admin = res.admin;
+        this.adminName.next(this.admin.userName);
       }),
       catchError(AuthService.handleError)
     );

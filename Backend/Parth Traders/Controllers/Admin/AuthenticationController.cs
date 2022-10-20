@@ -52,16 +52,29 @@ namespace Parth_Traders.Controllers.Admin
             }
             return Ok(new { Token = await _authManager.CreateToken(),
                             Admin = _userManager.Users
-                                    .FirstOrDefault(_ => _.UserName == admin.UserName)});
+                                        .FirstOrDefault(_ => _.UserName == admin.UserName)});
         }
 
         [HttpPost("admin-details/{adminId}")]
-        public async Task<IdentityResult> GetAdminsDetailsAsync(string adminId,
-                                                                [FromBody] AdminDataModel admin)
+        public async Task<IActionResult> GetAdminsDetailsAsync(string adminId,
+                                                               [FromBody] AdminDataModel adminDetailsToUpdate)
         {
-            admin.Id = null;
+            var admin = await _userManager.FindByIdAsync(adminId);
+            admin.FirstName = adminDetailsToUpdate.FirstName;
+            admin.LastName = adminDetailsToUpdate.LastName;
+            admin.UserName = adminDetailsToUpdate.UserName;
             admin.NormalizedUserName = admin.UserName.ToUpper();
-            return await _userManager.UpdateAsync(admin);
+            admin.Email = adminDetailsToUpdate.Email; //confirm this
+            admin.NormalizedEmail = adminDetailsToUpdate.Email.ToUpper();
+            admin.PhoneNumber = adminDetailsToUpdate.PhoneNumber; // confirm this
+
+            await _userManager.UpdateAsync(admin);
+            AdminForAuthenticationDto adminDto = new AdminForAuthenticationDto()
+            {
+                UserName = admin.UserName,
+                Password = admin.PasswordHash
+            };
+            return await Authenticate(adminDto);
         }
     }
 }
