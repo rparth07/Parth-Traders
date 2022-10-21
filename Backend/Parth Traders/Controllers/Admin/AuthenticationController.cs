@@ -56,8 +56,8 @@ namespace Parth_Traders.Controllers.Admin
         }
 
         [HttpPost("admin-details/{adminId}")]
-        public async Task<IActionResult> GetAdminsDetailsAsync(string adminId,
-                                                               [FromBody] AdminDataModel adminDetailsToUpdate)
+        public async Task<IActionResult> UpdateAdminDetailsAsync(string adminId,
+                                                                 [FromBody] AdminDataModel adminDetailsToUpdate)
         {
             var admin = await _userManager.FindByIdAsync(adminId);
             admin.FirstName = adminDetailsToUpdate.FirstName;
@@ -76,5 +76,13 @@ namespace Parth_Traders.Controllers.Admin
             };
             return await Authenticate(adminDto);
         }
+
+        [HttpDelete("{adminId}")]
+        public async Task<IdentityResult> DeleteAdmin(string adminId)
+        {
+            var admin = await _userManager.FindByIdAsync(adminId);
+            return await _userManager.DeleteAsync(admin);
+        }
+
     }
 }
