@@ -78,11 +78,26 @@ namespace Parth_Traders.Controllers.Admin
         }
 
         [HttpDelete("{adminId}")]
-        public async Task<IdentityResult> DeleteAdmin(string adminId)
+        public async Task<IActionResult> DeleteAdmin(string adminId)
         {
             var admin = await _userManager.FindByIdAsync(adminId);
-            return await _userManager.DeleteAsync(admin);
+            if(admin != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(admin);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.TryAddModelError(error.Code, error.Description);
+                    }
+                    return BadRequest(ModelState);
+                }
+            } 
+            else
+            {
+                return BadRequest("No user found!");
+            }
+            return Ok("user deleted successfully.");
         }
-
     }
 }
