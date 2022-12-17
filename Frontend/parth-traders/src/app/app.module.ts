@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './admin/auth.interceptor';
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
