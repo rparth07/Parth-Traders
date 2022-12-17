@@ -8,7 +8,7 @@
 }
 
 .modal-body {
-  height: 70vh;
+  height: auto;
   overflow-y: auto;
 }
 
