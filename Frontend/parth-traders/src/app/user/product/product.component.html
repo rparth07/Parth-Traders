@@ -1,0 +1,19 @@
+<div class="product">
+  <div class="product__info">
+    <p>{{ title }}</p>
+    <p class="product__price">
+      <small>$</small>
+      <strong>{{ price }}</strong>
+    </p>
+    <div class="product__rating">
+      {{ rating }}
+      <!-- {Array(rating).fill() .map((_, i) => (
+      <p>🌟</p>
+      ))} product rating -->
+    </div>
+  </div>
+
+  <img src="{{ image }}" alt="" />
+
+  <button>Add to Basket</button>
+</div>
