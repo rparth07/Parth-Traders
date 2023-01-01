@@ -7,9 +7,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [UserComponent, HeaderComponent, HomeComponent, ProductComponent, ProductListComponent],
+  declarations: [
+    UserComponent,
+    HeaderComponent,
+    HomeComponent,
+    ProductComponent,
+    ProductListComponent,
+    FooterComponent,
+  ],
   imports: [CommonModule, MatIconModule, UserRoutingModule],
 })
 export class UserModule {}

@@ -1,6 +1,23 @@
 .home__image {
   width: 100%;
   z-index: -1;
-  margin-bottom: -22.6rem;
+  /* margin-bottom: -22.6rem; */
   /* mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); */
+}
+
+.home__row {
+  background-color: #fff;
+  padding: 0 1rem;
+}
+
+.home {
+  margin-bottom: 5px;
+}
+
+.product-list-container:first-child {
+  margin: 0;
+}
+
+.product-list-container {
+  margin: 3rem 0rem 0rem 1rem;
 }
