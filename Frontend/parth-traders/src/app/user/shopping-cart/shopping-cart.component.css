@@ -1,0 +1,25 @@
+.cart-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.cart-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.cart-item span {
+    flex-grow: 1;
+}
+
+.cart-item-border {
+    margin-top: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.delete-item {
+    cursor: pointer;
+    color: red;
+}

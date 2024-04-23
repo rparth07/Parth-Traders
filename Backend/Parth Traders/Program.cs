@@ -77,12 +77,6 @@ builder.Services.AddMvc(options =>
     options.Filters.Add(new UserFriendlyExceptionFilterAttribute());
 });
 
-builder.Services.AddDbContext<ParthTradersContext>(options =>
-{
-    options.UseSqlServer(
-        @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Parth Traders");
-});
-
 var app = builder.Build();
 
 app.UseHttpsRedirection();

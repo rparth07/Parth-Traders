@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DomainConstants } from '../shared/domain.constants';
@@ -10,10 +10,13 @@ import { Supplier } from './supplier';
 export class SupplierService {
   getUpdatedSuppliers = new Subject<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addSupplierCsvFile(form: FormData) {
-    return this.http.post(DomainConstants.URL + 'admin/suppliers', form);
+    const headers = new HttpHeaders({
+      'Content-Type': 'multipart/form-data',
+    });
+    return this.http.post(DomainConstants.URL + 'admin/suppliers', form, { headers });
   }
 
   fetchSuppliers() {

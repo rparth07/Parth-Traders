@@ -1,0 +1,975 @@
+{
+	"info": {
+		"_postman_id": "537f5ea8-fdbe-48be-92a5-a09552efa915",
+		"name": "Parth Traders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Add Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"ProductName\" : \"test product\",\r\n\t\"ProductType\" : \"Buff\",\r\n    \"ProductDescription\" : \"this is product description\",\r\n    \"SupplierName\": \"Sonu\",\r\n    \"CategoryName\": \"Luster\",\r\n    \"PiecesPerUnit\" : 10,\r\n    \"SinglePieceMRP\" : 50,\r\n    \"UnitPrice\" : 500,\r\n    \"Discount\" : 0,\r\n    \"UnitsInStock\" : 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/products",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/KIshan/Downloads/Products.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/products",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AcGFydGgiLCJleHAiOjE2NjUyNDc1NzUsImlzcyI6IlBhcnRoVHJhZGVyc0FQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMzEifQ.5B1p9ENV55FJ2GN3imvvVRN4UrkeWuj_DCMIkIDQSws",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/products/updated Test Product ",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"products",
+								"updated Test Product "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AcGFydGgiLCJleHAiOjE2NjQ3Njk4NDQsImlzcyI6IlBhcnRoVHJhZGVyc0FQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMzEifQ.689JYT2J9RGUj2w1ubW3Lcx2TwQckSNcgar-8y79x70",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/products",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/products/updated test product",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"products",
+								"updated test product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"updated test product\",\r\n    \"productType\": 1,\r\n    \"productDescription\": \"this is updated product description\",\r\n    \"supplierName\": \"Sonu\",\r\n    \"categoryName\": \"Luster\",\r\n    \"orderDetails\": [],\r\n    \"quantityPerUnit\": 100,\r\n    \"unitPrice\": 500,\r\n    \"singlePieceMRP\": 50,\r\n    \"discount\": 10,\r\n    \"unitsInStock\": 150\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/products/test product",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"products",
+								"test product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Supplier",
+			"item": [
+				{
+					"name": "Add Supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"SupplierName\" : \"test supplier\",\r\n    \"SupplierAddress\" : \"4-govindnagar, rajkot.\",\r\n    \"SupplierEmail\": \"test3@gmail.com\",\r\n    \"SupplierPhoneNumber\": \"1111211111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/suppliers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Suppliers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/KIshan/Downloads/Supplier.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/suppliers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Supplier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/suppliers/test supplier",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"suppliers",
+								"test supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/suppliers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Supplier",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/suppliers/test2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"suppliers",
+								"test2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"supplierName\": \"updated test supplier\",\r\n    \"supplierAddress\": \"4-govindnagar, junagadh.\",\r\n    \"supplierEmail\": \"test2@gmail.com\",\r\n    \"supplierPhoneNumber\": \"1111111111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/suppliers/test supplier",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"suppliers",
+								"test supplier"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Add Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CategoryName\" : \"test category\",\r\n    \"CategoryDescription\" : \"This is category description.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/KIshan/Downloads/Category.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category By Name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/KIshan/Downloads/Category.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories/test category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories",
+								"test category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//can not use as we have same url for get category by name need to figuare out something new.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories/10006",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories",
+								"10006"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories/updated test category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories",
+								"updated test category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryName\": \"updated test category\",\r\n    \"categoryDescription\": \"This is updated description.\",\r\n    \"products\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/admin/categories/test category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"admin",
+								"categories",
+								"test category"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Add Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerName\" : \"test customer\",\r\n    \"CustomerEmail\" : \"test@gmail.com\",\r\n    \"CustomerPhoneNumber\" : \"1234567898\",\r\n    \"CustomerAddress\" : \"Rajkot\",\r\n    \"PaymentType\" : \"Cash\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/customers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Customers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/KIshan/Downloads/Customer.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/customers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/customers/updated test customer",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"customers",
+								"updated test customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/customers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/customers/test customer 2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"customers",
+								"test customer 2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerName\" : \"updated test customer\",\r\n    \"CustomerEmail\" : \"updated@gmail.com\",\r\n    \"CustomerPhoneNumber\" : \"1111111111\",\r\n    \"CustomerAddress\" : \"Gondal\",\r\n    \"PaymentType\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/customers/test customer",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"customers",
+								"test customer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Add Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerName\" : \"parth\",\r\n    \"OrderDetails\" : [\r\n        {\r\n            \"CustomerName\" : \"parth\",\r\n            \"ProductName\" : \"Light wheel\",\r\n            \"PricePerPiece\" : 50,\r\n            \"QuantityPurchased\" : 10,\r\n            \"Discount\" : 0,\r\n            \"Total\" : 500\r\n        },\r\n        {\r\n            \"CustomerName\" : \"parth\",\r\n            \"ProductName\" : \"Belt\",\r\n            \"PricePerPiece\" : 50,\r\n            \"QuantityPurchased\" : 10,\r\n            \"Discount\" : 0,\r\n            \"Total\" : 500\r\n        }\r\n    ],\r\n    \"PaymentType\" : \"General\",\r\n    \"GrandTotal\" : 1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/API/orders",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Latest Order For Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/orders/parth/latest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"orders",
+								"parth",
+								"latest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders For Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/orders/parth",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"orders",
+								"parth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders For Customer With Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/orders/parth/status/CanceledByCustomer",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"orders",
+								"parth",
+								"status",
+								"CanceledByCustomer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/orders/parth/10010",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"orders",
+								"parth",
+								"10010"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5031/API/orders/parth/10011",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"API",
+								"orders",
+								"parth",
+								"10011"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin authentication",
+			"item": [
+				{
+					"name": "Update User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"firstName\": \"parth\",\r\n        \"lastName\": \"raiyani\",\r\n        \"id\": \"d18eb738-dccd-4264-9dc2-6beae9db8340\",\r\n        \"userName\": \"admin@parth\",\r\n        \"normalizedUserName\": \"ADMIN@PARTH\",\r\n        \"email\": \"pmr642001@gmail.com\",\r\n        \"normalizedEmail\": \"PMR642001@GMAIL.COM\",\r\n        \"emailConfirmed\": false,\r\n        \"passwordHash\": \"AQAAAAEAACcQAAAAEIr+YE7jwlm3EJtJ/XCVJ8J9EjNOfRY9mnFqjIF4uLmEXPJ+190uxqCPwf30l4bpFw==\",\r\n        \"securityStamp\": \"PVQWY2J6MVZ52UCFRPAE77HFMIHQKXC5\",\r\n        \"concurrencyStamp\": \"c8e31e2a-3fb7-401d-b0d8-768261cdc540\",\r\n        \"phoneNumber\": \"6353464025\",\r\n        \"phoneNumberConfirmed\": false,\r\n        \"twoFactorEnabled\": false,\r\n        \"lockoutEnd\": null,\r\n        \"lockoutEnabled\": true,\r\n        \"accessFailedCount\": 0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/api/admin-details/d18eb738-dccd-4264-9dc2-6beae9db8340",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"api",
+								"admin-details",
+								"d18eb738-dccd-4264-9dc2-6beae9db8340"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin@parth\",\r\n    \"password\": \"Password@1110\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/api/authentication/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"api",
+								"authentication",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"parth\",\r\n    \"lastname\": \"raiyani\",\r\n    \"username\": \"admin@parth\",\r\n    \"password\": \"Password@1110\",\r\n    \"email\": \"pmr642001@gmail.com\",\r\n    \"phonenumber\": \"6353464025\",\r\n    \"Roles\": [\r\n        \"Manager\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5031/api/authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5031",
+							"path": [
+								"api",
+								"authentication"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logger",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5031/logger",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5031",
+					"path": [
+						"logger"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

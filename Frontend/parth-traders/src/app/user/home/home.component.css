@@ -21,3 +21,66 @@
 .product-list-container {
   margin: 3rem 0rem 0rem 1rem;
 }
+
+#grid {
+  width: 1298px;
+  position: absolute;
+  left: 340px;
+  height: 1200px;
+  top: 180px;
+}
+
+#grid-selector {
+  height: 10px;
+  width: 1291px;
+  padding: 40px 0 40px 30px;
+  float: left;
+  color: #5d5f68;
+  font-size: 14px;
+}
+
+#grid-menu {
+  float: right;
+  width: 105px;
+}
+
+#grid-menu ul {
+  width: 65px;
+  float: right;
+  position: relative;
+  top: -1px;
+}
+
+#grid-menu li {
+  float: right;
+  width: 25px;
+  height: 25px;
+  list-style: none;
+}
+
+#grid-menu li a {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/grid-menu.png") 0 0 no-repeat;
+}
+
+#grid-menu li.smallGrid {
+  margin-right: 7px;
+}
+
+#grid-menu li.smallGrid a {
+  background-position: 0 -33px;
+}
+
+#grid-menu li.largeGrid a {
+  background-position: -37px 0;
+}
+
+#grid-menu li.smallGrid a.active {
+  background-position: 0 0;
+}
+
+#grid-menu li.largeGrid a.active {
+  background-position: -37px -33px;
+}

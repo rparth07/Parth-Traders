@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Parth_Traders.Data.Configuration;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.DataModel.User;
@@ -66,7 +67,9 @@ namespace Parth_Traders.Data
             //optionsBuilder.EnableSensitiveDataLogging();
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=PARTH\\SQLEXPRESS; Database=Parth Traders; Integrated Security=true;");
+                optionsBuilder.UseSqlServer(
+        @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Parth Traders");
+                //optionsBuilder.UseSqlServer("server=PARTH\\SQLEXPRESS; Database=Parth Traders; Integrated Security=true;");
             }
         }
 

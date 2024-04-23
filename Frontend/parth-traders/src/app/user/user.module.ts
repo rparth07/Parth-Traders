@@ -5,19 +5,19 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
 import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
-import { ProductComponent } from './product/product.component';
-import { ProductListComponent } from './product-list/product-list.component';
 import { FooterComponent } from './footer/footer.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
     UserComponent,
     HeaderComponent,
     HomeComponent,
-    ProductComponent,
-    ProductListComponent,
     FooterComponent,
+    ShoppingCartComponent,
+    ProductComponent,
   ],
   imports: [CommonModule, MatIconModule, UserRoutingModule],
 })
-export class UserModule {}
+export class UserModule { }

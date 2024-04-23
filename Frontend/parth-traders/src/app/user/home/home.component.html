@@ -1,30 +1,17 @@
 <div class="home">
   <div class="home__container">
-    <img
-      class="home__image"
+    <img class="home__image"
       src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
-      alt=""
-    />
+      alt="" />
     <div class="home__row">
       <div class="product-list-container">
         <h4 class="list-title">Most Selling Products</h4>
-        <app-product-list></app-product-list>
-      </div>
-      <div class="product-list-container">
-        <h4 class="list-title">Most Selling Products</h4>
-        <app-product-list></app-product-list>
-      </div>
-      <div class="product-list-container">
-        <h4 class="list-title">Most Selling Products</h4>
-        <app-product-list></app-product-list>
-      </div>
-      <div class="product-list-container">
-        <h4 class="list-title">Most Selling Products</h4>
-        <app-product-list></app-product-list>
-      </div>
-      <div class="product-list-container">
-        <h4 class="list-title">Most Selling Products</h4>
-        <app-product-list></app-product-list>
+        <div id="grid">
+          <span *ngFor="let product of products">
+            <app-product [product]="product"></app-product>
+          </span>
+        </div>
+
       </div>
     </div>
   </div>
