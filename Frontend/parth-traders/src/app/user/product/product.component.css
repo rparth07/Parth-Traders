@@ -388,7 +388,7 @@ div.shadow {
     position: absolute;
     top: 382px;
     left: 0;
-    width: 252px;
+    width: -webkit-fill-available;
     height: 300px;
     padding: 24px 40px 35px 32px;
     -webkit-transition: all 200ms ease-out;
@@ -674,4 +674,48 @@ div.floating-cart .stats-container {
     -ms-transition: all 100ms ease-out;
     -o-transition: all 100ms ease-out;
     transition: all 100ms ease-out;
+}
+
+
+div.c-blue span {
+    background: #6e8cd5;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #e8e9eb;
+}
+
+div.c-red span {
+    background: #f56060;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #e8e9eb;
+}
+
+div.c-green span {
+    background: #44c28d;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #e8e9eb;
+}
+
+div.c-white span {
+    background: #fff;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #e8e9eb;
+}
+
+div.shadow {
+    width: 335px;
+    height: 520px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -o-linear-gradient(right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient(right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
 }

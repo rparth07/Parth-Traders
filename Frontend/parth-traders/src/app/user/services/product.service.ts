@@ -9,7 +9,7 @@ export class ProductService {
     products: Product[] = [
         {
             id: "12321341",
-            title: "The Lean Startup: How Constant Innovation Creates Radically Successful Businesses Paperback",
+            title: "FLUTED HEM DRESS",
             type: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
@@ -18,7 +18,7 @@ export class ProductService {
         },
         {
             id: "49538094",
-            title: "Kenwood kMix Stand Mixer for Baking, Stylish Kitchen Mixer with K-beater, Dough Hook and Whisk, 5 Litre Glass Bowl",
+            title: "FLUTED HEM DRESS",
             type: 'Glass Bowl',
             sku: '5L-Glass-Bowl',
             price: 239.0,
@@ -27,7 +27,7 @@ export class ProductService {
         },
         {
             id: "4903850",
-            title: "Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor",
+            title: "FLUTED HEM DRESS",
             type: 'Monitor',
             sku: 'TV-49',
             price: 199.99,
@@ -36,7 +36,7 @@ export class ProductService {
         },
         {
             id: "23445930",
-            title: "Amazon Echo (3rd generation) | Smart speaker with Alexa, Charcoal Fabric",
+            title: "FLUTED HEM DRESS",
             type: 'Alexa',
             sku: 'Alexa-3rd',
             price: 98.99,
@@ -45,7 +45,7 @@ export class ProductService {
         },
         {
             id: "3254354345",
-            title: "New Apple iPad Pro (12.9-inch, Wi-Fi, 128GB) - Silver (4th Generation)",
+            title: "FLUTED HEM DRESS",
             type: 'iPad',
             sku: 'Apple-iPad-Pro',
             price: 598.99,
@@ -54,7 +54,7 @@ export class ProductService {
         },
         {
             id: "90829332",
-            title: "Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1440",
+            title: "FLUTED HEM DRESS",
             type: 'Monitor',
             sku: 'Monitor-49',
             price: 1094.98,
