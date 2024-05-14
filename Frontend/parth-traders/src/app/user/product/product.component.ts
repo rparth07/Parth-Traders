@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { Product } from '../core/models/Product';
 
 @Component({
@@ -6,127 +6,161 @@ import { Product } from '../core/models/Product';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements AfterViewInit {
   @Input() product!: Product;
-  constructor() { }
+  @ViewChild('carouselContainer') carouselContainer!: ElementRef<HTMLUListElement>;
+  @ViewChild('productElement') productCardRef!: ElementRef<HTMLDivElement>;
 
-  ngOnInit(): void {
+  constructor(private renderer: Renderer2) { }
+
+  ngAfterViewInit(): void {
+    // Make carousel on component initialization
     this.makeCarousel();
   }
 
-  changeColor(): void {
-    return;
+  // Method to change product color
+  changeColor(color: string): void {
+    // Implement color change logic here
   }
 
+  // Method to lift product card
   liftCard(): void {
-    $('.product').css('z-index', "20");
-    $('.make3D').addClass('animate');
-    $('div.carouselNext').addClass('visible');
-    $('div.carouselPrev').addClass('visible');
+    const productCard = this.productCardRef.nativeElement;
+    this.renderer.setStyle(productCard, 'z-index', '20');
+    const make3D = productCard.querySelector('.make3D');
+    if (make3D) {
+      this.renderer.addClass(make3D, 'animate');
+      const carouselNext = productCard.querySelector('div.carouselNext');
+      const carouselPrev = productCard.querySelector('div.carouselPrev');
+      if (carouselNext && carouselPrev) {
+        this.renderer.addClass(carouselNext, 'visible');
+        this.renderer.addClass(carouselPrev, 'visible');
+      }
+    }
   }
 
+  // Method to drop product card
   dropCard(): void {
-    $('.make3D').removeClass('animate');
-    $('.product').css('z-index', "20");
-    $('div.carouselNext').removeClass('visible');
-    $('div.carouselPrev').removeClass('visible');
+    const productCard = this.productCardRef.nativeElement;
+    const make3D = productCard.querySelector('.make3D');
+    if (make3D) {
+      this.renderer.removeClass(make3D, 'animate');
+      const carouselNext = productCard.querySelector('div.carouselNext');
+      const carouselPrev = productCard.querySelector('div.carouselPrev');
+      if (carouselNext && carouselPrev) {
+        this.renderer.removeClass(carouselNext, 'visible');
+        this.renderer.removeClass(carouselPrev, 'visible');
+      }
+    }
   }
 
+  // Method to flip product card to back
   flipCardToBack(): void {
-    $('div.carouselNext').removeClass('visible');
-    $('div.carouselPrev').removeClass('visible');
-    $('.make3D').addClass('flip-10');
+    this.renderer.removeClass(document.querySelector('div.carouselNext'), 'visible');
+    this.renderer.removeClass(document.querySelector('div.carouselPrev'), 'visible');
+    this.renderer.addClass(document.querySelector('.make3D'), 'flip-10');
 
-    setTimeout(function () {
-      $('.make3D').removeClass('flip-10').addClass('flip90').find('div.shadow').show().fadeTo(80, 1, function () {
-        $('.product-front, .product-front div.shadow').hide();
-      });
+    setTimeout(() => {
+      this.renderer.removeClass(document.querySelector('.make3D'), 'flip-10');
+      this.renderer.addClass(document.querySelector('.make3D'), 'flip90');
+      this.renderer.setStyle(document.querySelector('.product-front .shadow'), 'display', 'block');
+      this.renderer.setStyle(document.querySelector('.product-front'), 'display', 'none');
     }, 50);
 
-    setTimeout(function () {
-      $('.make3D').removeClass('flip90').addClass('flip190');
-      $('.product-back').show().find('div.shadow').show().fadeTo(90, 0);
-      setTimeout(function () {
-        $('.make3D').removeClass('flip190').addClass('flip180').find('div.shadow').hide();
-        setTimeout(function () {
-          $('.make3D').css('transition', '100ms ease-out');
-          $('.cx, .cy').addClass('s1');
-          setTimeout(function () { $('.cx, .cy').addClass('s2'); }, 100);
-          setTimeout(function () { $('.cx, .cy').addClass('s3'); }, 200);
-          $('div.carouselNext, div.carouselPrev').addClass('visible');
-        }, 100);
+    setTimeout(() => {
+      this.renderer.removeClass(document.querySelector('.make3D'), 'flip90');
+      this.renderer.addClass(document.querySelector('.make3D'), 'flip190');
+      this.renderer.setStyle(document.querySelector('.product-back'), 'display', 'block');
+      this.renderer.setStyle(document.querySelector('.product-back .shadow'), 'display', 'block');
+      this.renderer.setStyle(document.querySelector('.product-back .shadow'), 'opacity', '0');
+      setTimeout(() => {
+        this.renderer.removeClass(document.querySelector('.make3D'), 'flip190');
+        this.renderer.addClass(document.querySelector('.make3D'), 'flip180');
+        this.renderer.setStyle(document.querySelector('.make3D'), 'transition', '100ms ease-out');
+        this.renderer.addClass(document.querySelector('.cx'), 's1');
+        setTimeout(() => { this.renderer.addClass(document.querySelector('.cx'), 's2'); }, 100);
+        setTimeout(() => { this.renderer.addClass(document.querySelector('.cx'), 's3'); }, 200);
+        this.renderer.addClass(document.querySelector('div.carouselNext'), 'visible');
+        this.renderer.addClass(document.querySelector('div.carouselPrev'), 'visible');
       }, 100);
     }, 150);
   }
 
+  // Method to flip product card to front
   flipCardToFront(): void {
-    $('.make3D').removeClass('flip180').addClass('flip190');
+    this.renderer.removeClass(document.querySelector('.make3D'), 'flip180');
+    this.renderer.addClass(document.querySelector('.make3D'), 'flip190');
 
-    setTimeout(function () {
-      $('.make3D').removeClass('flip190').addClass('flip90');
-
-      $('.product-back div.shadow').css('opacity', 0).fadeTo(100, 1, function () {
-        $('.product-back, .product-back div.shadow').hide();
-        $('.product-front, .product-front div.shadow').show();
-      });
+    setTimeout(() => {
+      this.renderer.removeClass(document.querySelector('.make3D'), 'flip190');
+      this.renderer.addClass(document.querySelector('.make3D'), 'flip90');
+      this.renderer.setStyle(document.querySelector('.product-back .shadow'), 'opacity', '0');
+      setTimeout(() => {
+        this.renderer.setStyle(document.querySelector('.product-back'), 'display', 'none');
+        this.renderer.setStyle(document.querySelector('.product-front .shadow'), 'display', 'block');
+        this.renderer.setStyle(document.querySelector('.product-front .shadow'), 'opacity', '0');
+        this.renderer.setStyle(document.querySelector('.make3D'), 'transition', '100ms ease-out');
+        this.renderer.removeClass(document.querySelector('.cx'), 's1');
+        this.renderer.removeClass(document.querySelector('.cx'), 's2');
+        this.renderer.removeClass(document.querySelector('.cx'), 's3');
+      }, 100);
     }, 50);
 
-    setTimeout(function () {
-      $('.make3D').removeClass('flip90').addClass('flip-10');
-      $('.product-front div.shadow').show().fadeTo(100, 0);
-      setTimeout(function () {
-        $('.product-front div.shadow').hide();
-        $('.make3D').removeClass('flip-10').css('transition', '100ms ease-out');
-        $('.cx, .cy').removeClass('s1 s2 s3');
+    setTimeout(() => {
+      this.renderer.removeClass(document.querySelector('.make3D'), 'flip90');
+      this.renderer.addClass(document.querySelector('.make3D'), 'flip-10');
+      this.renderer.setStyle(document.querySelector('.product-front .shadow'), 'display', 'block');
+      this.renderer.setStyle(document.querySelector('.product-front .shadow'), 'opacity', '0');
+      setTimeout(() => {
+        this.renderer.setStyle(document.querySelector('.product-front .shadow'), 'display', 'none');
+        this.renderer.setStyle(document.querySelector('.make3D'), 'transition', '100ms ease-out');
       }, 100);
     }, 150);
   }
 
+  // Method to make carousel
   makeCarousel(): void {
-    var carousel = $('.carousel ul');
-    var carouselSlideWidth = 315;
-    var carouselWidth = 0;
-    var isAnimating = false;
-    var currSlide = 0;
-    $(carousel).attr('rel', currSlide);
+    const carousel = this.carouselContainer.nativeElement;
+    let carouselWidth = 0;
+    const carouselSlideWidth = 315;
+    let isAnimating = false;
+    let currSlide = 0;
+    carousel.setAttribute('rel', currSlide.toString());
 
-    // building the width of the casousel
-    $(carousel).find('li').each(function () {
+    // Building the width of the carousel
+    carousel.querySelectorAll('li').forEach(() => {
       carouselWidth += carouselSlideWidth;
     });
-    $(carousel).css('width', carouselWidth);
+    this.renderer.setStyle(carousel, 'width', `${carouselWidth}px`);
 
     // Load Next Image
-    $('div.carouselNext').on('click', function () {
-      var currentLeft = Math.abs(parseInt($(carousel).css("left")));
-      var newLeft = currentLeft + carouselSlideWidth;
-      if (newLeft == carouselWidth || isAnimating === true) { return; }
-      $(carousel).css({
-        'left': "-" + newLeft + "px",
-        "transition": "300ms ease-out"
-      });
+    this.renderer.listen(document.querySelector('div.carouselNext'), 'click', () => {
+      const currentLeft = Math.abs(parseInt(getComputedStyle(carousel).left));
+      const newLeft = currentLeft + carouselSlideWidth;
+      if (newLeft === carouselWidth || isAnimating === true) { return; }
+      this.renderer.setStyle(carousel, 'left', `-${newLeft}px`);
+      this.renderer.setStyle(carousel, 'transition', '300ms ease-out');
       isAnimating = true;
       currSlide++;
-      $(carousel).attr('rel', currSlide);
-      setTimeout(function () { isAnimating = false; }, 300);
+      carousel.setAttribute('rel', currSlide.toString());
+      setTimeout(() => { isAnimating = false; }, 300);
     });
 
     // Load Previous Image
-    $('div.carouselPrev').on('click', function () {
-      var currentLeft = Math.abs(parseInt($(carousel).css("left")));
-      var newLeft = currentLeft - carouselSlideWidth;
+    this.renderer.listen(document.querySelector('div.carouselPrev'), 'click', () => {
+      const currentLeft = Math.abs(parseInt(getComputedStyle(carousel).left));
+      const newLeft = currentLeft - carouselSlideWidth;
       if (newLeft < 0 || isAnimating === true) { return; }
-      $(carousel).css({
-        'left': "-" + newLeft + "px",
-        "transition": "300ms ease-out"
-      });
+      this.renderer.setStyle(carousel, 'left', `-${newLeft}px`);
+      this.renderer.setStyle(carousel, 'transition', '300ms ease-out');
       isAnimating = true;
       currSlide--;
-      $(carousel).attr('rel', currSlide);
-      setTimeout(function () { isAnimating = false; }, 300);
+      carousel.setAttribute('rel', currSlide.toString());
+      setTimeout(() => { isAnimating = false; }, 300);
     });
   }
 
+  // Method to add product to cart in large view
   addCartLarge(): void {
     var carousel = $(".carousel-container");
     const imgIndex: number = parseInt(carousel.attr("rel") || "0", 10); // Parsing to integer with fallback to 0 if "rel" attribute is not set
@@ -172,6 +206,7 @@ export class ProductComponent implements OnInit {
     }, 1000);
   }
 
+  // Method to add product to cart in normal view
   addToCart(): void {
     var productCard = $(this).parent();
     var position = productCard.offset()!;

@@ -5,5 +5,7 @@ export interface Product {
     sku: string,
     price: number,
     rating: number,
+    colors: string[],
+    sizes: string[],
     image_paths: string[]
 }
