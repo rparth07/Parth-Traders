@@ -45,23 +45,13 @@
         </div>
         <div class="product-back">
             <div class="shadow"></div>
-            <div class="carousel" #carouselContainer>
-                <ul class="carousel-container">
-                    <li *ngFor="let image of product.image_paths">
-                        <img src="{{ image }}" alt="" />
-                    </li>
-                </ul>
-                <div class="arrows-perspective">
-                    <div class="carouselPrev">
-                        <div class="y"></div>
-                        <div class="x"></div>
+            <ngb-carousel *ngIf="product.image_paths">
+                <ng-template *ngFor="let image of product.image_paths" ngbSlide>
+                    <div class="wrapper">
+                        <img [src]="image" alt="product image" />
                     </div>
-                    <div class="carouselNext">
-                        <div class="y"></div>
-                        <div class="x"></div>
-                    </div>
-                </div>
-            </div>
+                </ng-template>
+            </ngb-carousel>
             <div class="flip-back" (click)="flipCardToFront()">
                 <div class="cy"></div>
                 <div class="cx"></div>

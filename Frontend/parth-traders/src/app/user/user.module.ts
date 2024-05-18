@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ProductComponent } from './product/product.component';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,6 @@ import { ProductComponent } from './product/product.component';
     ShoppingCartComponent,
     ProductComponent,
   ],
-  imports: [CommonModule, MatIconModule, UserRoutingModule],
+  imports: [CommonModule, MatIconModule, NgbCarouselModule, UserRoutingModule],
 })
 export class UserModule { }

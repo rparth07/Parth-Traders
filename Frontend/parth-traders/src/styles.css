@@ -21,3 +21,32 @@ body::-webkit-scrollbar-thumb {
 .cdk-overlay-container {
   z-index: 9999 !important;
 }
+
+.make3D:hover .carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: #56aa96;
+}
+
+.make3D:hover .carousel-control-next-icon:after {
+  content: '>';
+  font-size: 55px;
+  color: #56aa96;
+}
+
+.make3D:hover button.carousel-control-prev,
+.make3D:hover button.carousel-control-next {
+  background-color: #fff;
+  height: 100px;
+  top: 40%;
+}
+
+.make3D:hover .carousel-control-prev-icon,
+.make3D:hover .carousel-control-next-icon {
+  display: contents !important;
+  background: none;
+}
+
+.carousel-indicators {
+  display: none !important;
+}
