@@ -22,16 +22,24 @@
   border-radius: 24px;
 }
 
-.header__searchInput {
-  height: 12px;
-  padding: 10px;
+.header__dropdown {
+  height: 2.4rem;
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
   border: none;
-  width: 100%;
+  background-color: #f7f7f7;
+}
+
+.header__searchInput {
+  border: none;
+  height: 45px;
 }
 
 .header__searchIcon {
-  height: 22px !important;
   background-color: #cd9042;
+  height: 2.8rem;
+  width: 2.8rem;
+  border-radius: 0% 20% 20% 0%;
 }
 
 .header__optionLineOne {
@@ -55,8 +63,8 @@
 }
 
 .header__nav {
-  display: flex;
   justify-content: space-evenly;
+  width: 500px;
 }
 
 .header__option {
@@ -65,4 +73,121 @@
   margin-left: 10px;
   margin-right: 10px;
   color: white;
+}
+
+.w-16 {
+  width: 16.67%;
+}
+
+.w-41 {
+  width: 41.666667%;
+}
+
+.relative {
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.py-06 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.rounded-l-lg {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.text-gray-900 {
+  color: #1a202c;
+}
+
+.dark\:bg-gray-700 {
+  background-color: #f3f4f6;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.block {
+  display: block;
+}
+
+.outline-none {
+  outline: none;
+}
+
+.border-none {
+  border: none;
+}
+
+.p-06 {
+  padding: 0.625rem;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.text-md {
+  font-size: 1rem;
+}
+
+.md\:rounded-l-none {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rounded-r-lg {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

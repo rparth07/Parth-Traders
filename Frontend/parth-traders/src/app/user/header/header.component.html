@@ -1,20 +1,30 @@
-<div class="header">
-  <img
-    class="header__logo"
-    src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-  />
-
-  <div class="header__search">
-    <input class="header__searchInput" type="text" />
-    <mat-icon
-      class="header__searchIcon"
-      aria-hidden="false"
-      aria-label="search icon"
-      fontIcon="search"
-    ></mat-icon>
+<div class="header w-full header-upper py-2 h-100 flex justify-content-between">
+  <div class="w-16">
+    <h1><a href="">
+        <img class="header__logo" src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" />
+      </a></h1>
   </div>
-
-  <div class="header__nav">
+  <div class="w-41">
+    <div class="d-flex">
+      <button id="dropdown-button" data-dropdown-toggle="dropdown"
+        class="border-0 dark:bg-gray-700 dark:text-white flex-shrink-0 font-medium items-center px-4 py-06 rounded-l-lg text-center text-gray-900 text-sm z-10"
+        type="button"> All categories <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+          viewBox="0 0 512 512" height="22" width="22" xmlns="http://www.w3.org/2000/svg">
+          <path d="M128 192l128 128 128-128z"></path>
+        </svg> </button>
+      <div class="header__search justify-content-center w-41 relative">
+        <input type="search" id="search-dropdown"
+          class="block border-none header__searchInput md:rounded-l-none outline-none p-06 text-md w-full z-20"
+          placeholder="Search for machine tools, buffs etc..." type="text" />
+        <button type="submit" class="p-0 rounded-r-lg text-white border-0">
+          <mat-icon class="header__searchIcon d-flex justify-content-center align-items-center" aria-hidden="false"
+            aria-label="search icon" fontIcon="search"></mat-icon>
+          <span class="sr-only">Search</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex header__nav">
     <div class="header__option">
       <span class="header__optionLineOne">Hello Guest</span>
       <span class="header__optionLineTwo">Sign In</span>
@@ -31,12 +41,7 @@
     </div>
 
     <div class="header__optionBasket">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="shopping basket icon"
-        fontIcon="shopping_basket"
-      ></mat-icon>
-      <!-- <ShoppingBasketIcon /> -->
+      <mat-icon aria-hidden="false" aria-label="shopping basket icon" fontIcon="shopping_basket"></mat-icon>
       <span class="header__optionLineTwo header__basketCount"> 0 </span>
     </div>
   </div>
