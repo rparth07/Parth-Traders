@@ -47,25 +47,25 @@ h3 {
 }
 
 div.cart-icon-top {
-    position: relative;
+    position: absolute;
     background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/cart.png") 0 -3px no-repeat;
     margin: 0;
     width: 21px;
     height: 3px;
     z-index: 1;
-    top: -34px;
-    left: 45px;
+    top: 44.8rem;
+    left: 5rem;
 }
 
 div.cart-icon-bottom {
-    position: relative;
+    position: absolute;
     background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/cart.png") 0 -3px no-repeat;
     margin: 0;
     width: 21px;
     height: 19px;
     z-index: 1;
-    top: -34px;
-    left: 45px;
+    top: 45rem;
+    left: 5rem;
 }
 
 body.MakeFloatingCart div.cart-icon-top {

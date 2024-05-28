@@ -2,7 +2,7 @@
     float: left;
     background: #fff;
     width: 275px;
-    padding: 13px 0 0 45px;
+    padding: 13px 0 0 0;
     height: 1400px;
     border-right: 1px solid #eee;
 }
@@ -12,13 +12,17 @@
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 700;
-    padding: 35px 0 10px 0;
+    padding: 35px 0 10px 32px;
     letter-spacing: 1px;
     clear: both;
 }
 
 #sidebar .checklist {
     padding: 0;
+}
+
+.cart-container {
+    padding-left: 32px;
 }
 
 .checklist ul li {
@@ -166,4 +170,5 @@
 
 #sidebar img {
     margin-top: 6px;
+    margin-left: 32px;
 }
