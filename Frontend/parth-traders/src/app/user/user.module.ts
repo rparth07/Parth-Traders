@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ProductComponent } from './product/product.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     ShoppingCartComponent,
     ProductComponent,
+    SidebarComponent,
   ],
   imports: [CommonModule, MatIconModule, NgbCarouselModule, UserRoutingModule],
 })

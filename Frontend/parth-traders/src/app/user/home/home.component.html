@@ -3,11 +3,16 @@
     <img class="home__image"
       src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
       alt="" />
-    <div class="home__row">
-      <div class="product-list-container">
-        <h4 class="list-title">Most Selling Products</h4>
-        <div id="grid">
-          <app-product *ngFor="let product of products" [product]="product"></app-product>
+    <div class="d-flex">
+      <div class="sidebar">
+        <app-sidebar></app-sidebar>
+      </div>
+      <div class="home__row">
+        <div class="product-list-container">
+          <h4 class="list-title">Most Selling Products</h4>
+          <div id="grid">
+            <app-product *ngFor="let product of products" [product]="product"></app-product>
+          </div>
         </div>
       </div>
     </div>
