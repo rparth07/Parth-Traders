@@ -217,44 +217,89 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 1000);
   }
 
-  //[WIP] Method to add product to cart in normal view
+  // Method to handle add to cart functionality
   addToCart(): void {
-    var productCard = $(this).parent();
-    var position = productCard.offset()!;
-    var productImage = ($('img').get(0)! as HTMLImageElement).src;
-    var productName = $('.product_name').get(0)!.innerHTML;
+    const position = this.productCard.getBoundingClientRect();
+    const productImage = this.productCard.getElementsByTagName('img')[0].src;
+    const productName = this.productCard.getElementsByClassName('product_name')[0].innerHTML;
 
-    $("body").append('<div class="floating-cart"></div>');
-    var cart = $('div.floating-cart');
-    productCard.clone().appendTo(cart);
-    $(cart).css({ 'top': position.top + 'px', "left": position.left + 'px' }).fadeIn("slow").addClass('moveToCart');
-    setTimeout(function () { $("body").addClass("MakeFloatingCart"); }, 800);
-    setTimeout(function () {
-      $('div.floating-cart').remove();
-      $("body").removeClass("MakeFloatingCart");
+    // Create floating cart
+    const floatingCart = this.renderer.createElement('div');
+    this.renderer.addClass(floatingCart, 'floating-cart');
+    this.renderer.appendChild(this.renderer.selectRootElement('body', true), floatingCart);
 
+    // Clone product card
+    const clonedProductCard = this.productCard.cloneNode(true);
+    this.renderer.appendChild(floatingCart, clonedProductCard);
 
-      var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + productImage + "' alt='' /></div><span>" + productName + "</span><strong>$39</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
+    // Set initial position
+    this.renderer.setStyle(floatingCart, 'top', `${position.top}px`);
+    this.renderer.setStyle(floatingCart, 'left', `${position.left}px`);
 
-      $("#cart .empty").hide();
-      $("#cart").append(cartItem);
-      $("#checkout").fadeIn(500);
+    // Animate floating cart
+    this.renderer.addClass(floatingCart, 'moveToCart');
+    setTimeout(() => {
+      this.renderer.addClass(this.renderer.selectRootElement('body', true), 'MakeFloatingCart');
+    }, 800);
 
-      $("#cart .cart-item").last()
-        .addClass("flash")
-        .find(".delete-item").click(function () {
-          $(this).parent().fadeOut(300, function () {
-            $(this).remove();
-            if ($("#cart .cart-item").length == 0) {
-              $("#cart .empty").fadeIn(500);
-              $("#checkout").fadeOut(500);
-            }
-          })
-        });
-      setTimeout(function () {
-        $("#cart .cart-item").last().removeClass("flash");
+    // Finalize cart animation
+    setTimeout(() => {
+      this.renderer.removeChild(this.renderer.selectRootElement('body', true), floatingCart);
+      this.renderer.removeClass(this.renderer.selectRootElement('body', true), 'MakeFloatingCart');
+
+      // Create cart item
+      const cartItem = this.renderer.createElement('div');
+      this.renderer.addClass(cartItem, 'cart-item');
+
+      const imgWrap = this.renderer.createElement('div');
+      this.renderer.addClass(imgWrap, 'img-wrap');
+      const img = this.renderer.createElement('img');
+      this.renderer.setAttribute(img, 'src', productImage);
+      this.renderer.setAttribute(img, 'alt', '');
+      this.renderer.appendChild(imgWrap, img);
+
+      const span = this.renderer.createElement('span');
+      const text = this.renderer.createText(productName);
+      this.renderer.appendChild(span, text);
+
+      const strong = this.renderer.createElement('strong');
+      const priceText = this.renderer.createText('$39');
+      this.renderer.appendChild(strong, priceText);
+
+      const cartItemBorder = this.renderer.createElement('div');
+      this.renderer.addClass(cartItemBorder, 'cart-item-border');
+
+      const deleteItem = this.renderer.createElement('div');
+      this.renderer.addClass(deleteItem, 'delete-item');
+      this.renderer.listen(deleteItem, 'click', () => {
+        this.renderer.setStyle(cartItem, 'display', 'none');
+        if (document.querySelectorAll('#cart .cart-item').length === 0) {
+          this.renderer.setStyle(document.querySelector('#cart .empty'), 'display', 'block');
+          this.renderer.setStyle(document.querySelector('#checkout'), 'display', 'none');
+        }
+      });
+
+      this.renderer.appendChild(cartItem, imgWrap);
+      this.renderer.appendChild(cartItem, span);
+      this.renderer.appendChild(cartItem, strong);
+      this.renderer.appendChild(cartItem, cartItemBorder);
+      this.renderer.appendChild(cartItem, deleteItem);
+
+      const cart = this.renderer.selectRootElement('#cart', true);
+      const checkout = this.renderer.selectRootElement('#checkout', true);
+
+      // Hide empty message and show checkout button
+      this.renderer.setStyle(cart.querySelector('.empty'), 'display', 'none');
+      this.renderer.appendChild(cart, cartItem);
+      this.renderer.setStyle(checkout, 'display', 'block');
+
+      // Flash effect for new cart item
+      this.renderer.addClass(cartItem, 'flash');
+      setTimeout(() => {
+        this.renderer.removeClass(cartItem, 'flash');
       }, 10);
 
     }, 1000);
   }
+
 }
