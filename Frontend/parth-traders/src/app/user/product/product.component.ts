@@ -44,7 +44,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer.removeClass(this.productCard, 'large');
     const make3D = this.productCard.querySelector('.make3D');
     if (make3D)
-      this.renderer.addClass(make3D, 'animate');
+      this.renderer.removeClass(make3D, 'animate');
 
     this.renderer.setStyle(this.productCard.querySelector('.info-large'), 'display', 'none');
     this.flipCardToFront();

@@ -9,17 +9,15 @@
       </div>
       <div class="home__row">
         <div class="product-list-container">
-          <div class="product-list-header">
-            <div id="grid-selector" class="grid-selector" [class]="isLargeGrid ? 'grid-selector-large' : ''">
-              <div id="grid-menu">
-                View:
-                <ul class="d-flex gap-2">
-                  <li class="largeGrid" (click)="switchToLargeGrid()"><a [class]="isLargeGrid ? 'active':''"></a></li>
-                  <li class="smallGrid" (click)="switchToSmallGrid()"><a [class]="isLargeGrid ? '':'active'"></a></li>
-                </ul>
-              </div>
-              Showing 1-9 of 48 results
+          <div id="grid-selector" class="grid-selector">
+            <div id="grid-menu">
+              View:
+              <ul class="d-flex gap-2">
+                <li class="largeGrid" (click)="switchToLargeGrid()"><a [class]="isLargeGrid ? 'active':''"></a></li>
+                <li class="smallGrid" (click)="switchToSmallGrid()"><a [class]="isLargeGrid ? '':'active'"></a></li>
+              </ul>
             </div>
+            Showing 1-9 of 48 results
           </div>
           <div id="grid">
             <app-product *ngFor="let product of products" [product]="product"

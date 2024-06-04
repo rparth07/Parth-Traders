@@ -28,16 +28,9 @@
 
 .grid-selector {
   height: 10px;
-  width: 1163px;
   padding: 40px 57px 40px 45px;
-  float: left;
   color: #5d5f68;
   font-size: 14px;
-}
-
-.grid-selector-large {
-  padding: 40px 10px 40px 20px !important;
-  width: 1321px !important;
 }
 
 #grid-menu {
