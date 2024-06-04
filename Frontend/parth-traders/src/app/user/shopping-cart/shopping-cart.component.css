@@ -23,3 +23,66 @@
     cursor: pointer;
     color: red;
 }
+
+h3 {
+    color: #262626;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 35px 0 10px 0;
+    letter-spacing: 1px;
+    clear: both;
+}
+
+#checkout {
+    border: 2px solid #5ff7d2;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 3px 9px;
+    position: absolute;
+    top: 137px;
+    left: 181px;
+    color: #5ff7d2;
+    display: none;
+}
+
+div.cart-icon-top {
+    position: absolute;
+    background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/cart.png") 0 -3px no-repeat;
+    margin: 0;
+    width: 21px;
+    height: 3px;
+    z-index: 1;
+    top: 44.8rem;
+    left: 5rem;
+}
+
+div.cart-icon-bottom {
+    position: absolute;
+    background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/cart.png") 0 -3px no-repeat;
+    margin: 0;
+    width: 21px;
+    height: 19px;
+    z-index: 1;
+    top: 45rem;
+    left: 5rem;
+}
+
+body.MakeFloatingCart div.cart-icon-top {
+    z-index: 30;
+}
+
+body.MakeFloatingCart div.cart-icon-bottom {
+    z-index: 300;
+}
+
+#cart {
+    padding: 0px;
+}
+
+#cart .empty {
+    font-style: italic;
+    color: #a0a3ab;
+    font-size: 14px;
+    letter-spacing: 1px;
+}

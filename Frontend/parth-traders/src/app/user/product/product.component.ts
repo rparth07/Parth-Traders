@@ -1,18 +1,22 @@
-import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../core/models/Product';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements AfterViewInit {
+export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product!: Product;
   productCard!: HTMLDivElement;
   productImagePath: string;
-
   @ViewChild('productElement') productCardRef!: ElementRef<HTMLDivElement>;
+
+  private changeGridToLargeSubject$!: Subscription;
+  @Input() events!: Observable<boolean>;
+
 
   constructor(private renderer: Renderer2, carouselConfig: NgbCarouselConfig) {
     this.productImagePath = this.product?.image_paths[0];
@@ -20,9 +24,39 @@ export class ProductComponent implements AfterViewInit {
     carouselConfig.keyboard = true;
   }
 
+  ngOnInit(): void {
+    this.changeGridToLargeSubject$ = this.events
+      .subscribe((shouldSwitchToLargeGrid: boolean) => {
+        if (shouldSwitchToLargeGrid)
+          this.switchToLargeGrid();
+        else
+          this.switchToSmallGrid();
+      });
+  }
+
+  switchToLargeGrid() {
+    this.renderer.addClass(this.productCard, 'large');
+    this.renderer.setStyle(this.productCard.querySelector('.info-large'), 'display', 'block');
+    this.flipCardToBack();
+  }
+
+  switchToSmallGrid() {
+    this.renderer.removeClass(this.productCard, 'large');
+    const make3D = this.productCard.querySelector('.make3D');
+    if (make3D)
+      this.renderer.removeClass(make3D, 'animate');
+
+    this.renderer.setStyle(this.productCard.querySelector('.info-large'), 'display', 'none');
+    this.flipCardToFront();
+  }
+
   ngAfterViewInit(): void {
     // Make carousel on component initialization
     this.productCard = this.productCardRef.nativeElement;
+  }
+
+  ngOnDestroy(): void {
+    this.changeGridToLargeSubject$.unsubscribe();
   }
 
   // Method to change product color
@@ -137,7 +171,7 @@ export class ProductComponent implements AfterViewInit {
     }, 150);
   }
 
-  // Method to add product to cart in large view
+  //[WIP] Method to add product to cart in large view
   addCartLarge(): void {
     var carousel = $(".carousel-container");
     const imgIndex: number = parseInt(carousel.attr("rel") || "0", 10); // Parsing to integer with fallback to 0 if "rel" attribute is not set
@@ -183,7 +217,7 @@ export class ProductComponent implements AfterViewInit {
     }, 1000);
   }
 
-  // Method to add product to cart in normal view
+  //[WIP] Method to add product to cart in normal view
   addToCart(): void {
     var productCard = $(this).parent();
     var position = productCard.offset()!;

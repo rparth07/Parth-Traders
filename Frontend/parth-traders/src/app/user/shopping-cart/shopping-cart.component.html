@@ -1,3 +1,9 @@
+<h3>CART</h3>
+<div class="cart-icon-top"></div>
+
+<div class="cart-icon-bottom"></div>
+
+<div id="checkout">CHECKOUT</div>
 <div *ngIf="cartItems.length > 0; else emptyCart">
     <div class="cart-item" *ngFor="let item of cartItems; let i = index">
         <div class="img-wrap">
@@ -12,5 +18,7 @@
 </div>
 
 <ng-template #emptyCart>
-    <div class="empty">Your cart is empty</div>
+    <div id="cart">
+        <span class="empty">Your cart is empty</span>
+    </div>
 </ng-template>

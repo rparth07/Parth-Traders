@@ -26,11 +26,9 @@
   display: inline-block;
 }
 
-#grid-selector {
+.grid-selector {
   height: 10px;
-  width: 1291px;
-  padding: 40px 0 40px 30px;
-  float: left;
+  padding: 40px 57px 40px 45px;
   color: #5d5f68;
   font-size: 14px;
 }
@@ -52,6 +50,7 @@
   width: 25px;
   height: 25px;
   list-style: none;
+  cursor: pointer;
 }
 
 #grid-menu li a {
