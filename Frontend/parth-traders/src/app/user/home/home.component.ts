@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit {
   }
 
   onAddToCart({ productCard, product }: { productCard: HTMLDivElement, product: Product }) {
-    console.log('add to cart in home component is called!');
     const position = productCard.getBoundingClientRect();
     const floatingCart = this.renderer.createElement('div');
     this.renderer.addClass(floatingCart, 'floating-cart');
@@ -50,18 +49,10 @@ export class HomeComponent implements OnInit {
     const clone = productCard.cloneNode(true);
     this.renderer.setStyle(clone, 'width', '100%');
     this.renderer.setStyle(clone, 'position', 'initial');
-    console.log('created clone: ', clone);
     this.renderer.setStyle(floatingCart, 'top', `${position.top}px`);
     this.renderer.setStyle(floatingCart, 'left', `${position.left}px`);
-    this.renderer.setStyle(floatingCart, 'display', 'block');
     this.renderer.appendChild(floatingCart, clone);
     this.renderer.appendChild(this.homeComponent.nativeElement, floatingCart);
-
-    // this.renderer.setStyle(floatingCart, 'opacity', 0);
-    // this.renderer.setStyle(floatingCart, 'transition', 'opacity 0.5s'); // adjust the transition duration to your liking
-    // setTimeout(() => {
-    //   this.renderer.setStyle(floatingCart, 'opacity', 1);
-    // }, 0);
 
     setTimeout(() => {
       this.ngZone.run(() => {

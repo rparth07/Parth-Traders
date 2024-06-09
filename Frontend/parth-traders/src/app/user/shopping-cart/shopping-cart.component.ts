@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
   shouldFlash: Boolean = true;
   cartItems: Product[] = [];
-  @ViewChild('cartIconTop', { static: true }) cartIconTop!: ElementRef;
   @ViewChild('cart', { static: true }) cartRef!: ElementRef;
 
   private addToCartSubscription!: Subscription;
@@ -20,8 +19,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.cartService.setCartIconTop(this.cartIconTop);
-    console.log('view updated!');
   }
 
   removeFromCart(index: number) {

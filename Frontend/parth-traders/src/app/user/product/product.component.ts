@@ -7,14 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css'],
-  animations: [
-    trigger('move', [
-      state('topRight', style({ left: 'calc(100% - 128px)', top: 0 })),
-      state('bottomLeft', style({ left: 0, top: 'calc(100% - 128px)' })),
-      transition('topRight <=> bottomLeft', animate('300ms ease-in-out')),
-    ]),
-  ],
+  styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product!: Product;

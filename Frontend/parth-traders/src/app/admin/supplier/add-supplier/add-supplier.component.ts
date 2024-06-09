@@ -17,10 +17,9 @@ export class AddSupplierComponent implements OnInit {
     private supplierService: SupplierService,
     private activeModal: NgbActiveModal,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.supplier);
   }
 
   addSupplier(form: NgForm) {

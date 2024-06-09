@@ -26,7 +26,6 @@
 .cart-item-border {
     margin-top: 10px;
     border-bottom: 1px solid #ccc;
-
     position: absolute;
     bottom: 0;
     background: #edeff0;
@@ -127,16 +126,4 @@ body.MakeFloatingCart div.cart-icon-bottom {
     color: #a0a3ab;
     font-size: 14px;
     letter-spacing: 1px;
-}
-
-#checkout {
-    border: 2px solid #5ff7d2;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 3px 9px;
-    position: absolute;
-    top: 137px;
-    left: 181px;
-    color: #5ff7d2;
-    display: none;
 }
