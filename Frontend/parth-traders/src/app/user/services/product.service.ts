@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { Product } from '../core/models/Product';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
+    productFilter$ = new Subject<string[]>();
     products: Product[] = [
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -24,7 +25,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -38,7 +39,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -52,7 +53,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -66,7 +67,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -80,7 +81,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -94,7 +95,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -108,7 +109,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -122,7 +123,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -136,7 +137,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -150,7 +151,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -164,7 +165,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -178,7 +179,7 @@ export class ProductService {
         {
             id: "12321341",
             title: "FLUTED HEM DRESS",
-            type: 'Paperback',
+            category: 'Paperback',
             sku: 'L-Paperback',
             price: 11.96,
             rating: 5,
@@ -192,7 +193,7 @@ export class ProductService {
         {
             id: "49538094",
             title: "FLUTED HEM DRESS",
-            type: 'Glass Bowl',
+            category: 'Glass Bowl',
             sku: '5L-Glass-Bowl',
             price: 239.0,
             rating: 4,
@@ -206,7 +207,7 @@ export class ProductService {
         {
             id: "4903850",
             title: "FLUTED HEM DRESS",
-            type: 'Monitor',
+            category: 'Monitor',
             sku: 'TV-49',
             price: 199.99,
             rating: 3,
@@ -220,7 +221,7 @@ export class ProductService {
         {
             id: "23445930",
             title: "FLUTED HEM DRESS",
-            type: 'Alexa',
+            category: 'Alexa',
             sku: 'Alexa-3rd',
             price: 98.99,
             rating: 5,
@@ -234,7 +235,7 @@ export class ProductService {
         {
             id: "3254354345",
             title: "FLUTED HEM DRESS",
-            type: 'iPad',
+            category: 'iPad',
             sku: 'Apple-iPad-Pro',
             price: 598.99,
             rating: 4,
@@ -248,7 +249,7 @@ export class ProductService {
         {
             id: "90829332",
             title: "FLUTED HEM DRESS",
-            type: 'Monitor',
+            category: 'Monitor',
             sku: 'Monitor-49',
             price: 1094.98,
             rating: 4,
@@ -265,5 +266,11 @@ export class ProductService {
 
     getProducts() {
         return this.products;
+    }
+
+    getCategories() {
+        return this.products.filter((product, index, self) => {
+            return self.findIndex(p => p.category === product.category) === index;
+        }).map(_ => _.category);
     }
 }

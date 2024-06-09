@@ -22,7 +22,6 @@ import { CartService } from '../services/cart.service';
   ],
 })
 export class HomeComponent implements OnInit {
-
   products: Product[] = [];
   shownProducts: Product[] = [];
   loading: boolean = false;
@@ -38,6 +37,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productService.productFilter$.subscribe(next => {
+      if (next)
+        this.products = this.products.filter(_ => next.findIndex(c => c === _.category) > -1);
+      else
+        this.products = this.productService.getProducts();
+    }
+    );
   }
 
   async onScroll() {

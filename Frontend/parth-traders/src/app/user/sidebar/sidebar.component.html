@@ -5,35 +5,14 @@
     <h3>CATEGORIES</h3>
     <div class="checklist categories">
         <ul>
-            <li>
-                <a href=""><span></span>New Arivals</a>
-            </li>
-            <li>
-                <a href=""><span></span>Accesories</a>
-            </li>
-            <li>
-                <a href=""><span></span>Bags</a>
-            </li>
-            <li>
-                <a href=""><span></span>Dressed</a>
-            </li>
-            <li>
-                <a href=""><span></span>Jackets</a>
-            </li>
-            <li>
-                <a href=""><span></span>jewelry</a>
-            </li>
-            <li>
-                <a href=""><span></span>Shoes</a>
-            </li>
-            <li>
-                <a href=""><span></span>Shirts</a>
-            </li>
-            <li>
-                <a href=""><span></span>Sweaters</a>
-            </li>
-            <li>
-                <a href=""><span></span>T-shirts</a>
+            <li *ngFor="let category of categories">
+                <a href="#" (click)="toggleCategory($event, category)" [class.checked]="isChecked(category)">
+                    <span>
+                        <span class="x" [class.animate]="isAnimateX(category)"></span>
+                        <span class="y" [class.animate]="isAnimateY(category)"></span>
+                    </span>
+                    {{ category }}
+                </a>
             </li>
         </ul>
     </div>
