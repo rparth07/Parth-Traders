@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../core/models/Product';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,9 +14,10 @@ export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cartIconTop', { static: true }) cartIconTop!: ElementRef;
   @ViewChild('cart', { static: true }) cartRef!: ElementRef;
 
+  private addToCartSubscription!: Subscription;
+
   constructor(private cartService: CartService, private ngZone: NgZone, private renderer: Renderer2) {
   }
-
 
   ngAfterViewInit(): void {
     this.cartService.setCartIconTop(this.cartIconTop);
@@ -28,7 +30,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.cartService.getAddToCartEvent().subscribe((product: Product) => {
+    this.addToCartSubscription = this.cartService.getAddToCartEvent().subscribe((product: Product) => {
       this.shouldFlash = true;
       this.cartItems.push(product);
       setTimeout(() => {
@@ -41,6 +43,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.cartService.getAddToCartEvent().unsubscribe();
+    if (this.addToCartSubscription) {
+      this.addToCartSubscription.unsubscribe();
+    }
   }
 }
