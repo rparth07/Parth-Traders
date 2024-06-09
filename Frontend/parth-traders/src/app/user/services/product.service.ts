@@ -93,23 +93,9 @@ export class ProductService {
         }
     ];
 
-    cartItems: any[] = [];
-
     constructor() { }
 
     getProducts() {
         return this.products;
-    }
-
-    addToCart(product: any) {
-        this.cartItems.push(product);
-    }
-
-    getCartItems() {
-        return this.cartItems;
-    }
-
-    removeFromCart(index: number) {
-        this.cartItems.splice(index, 1);
     }
 }

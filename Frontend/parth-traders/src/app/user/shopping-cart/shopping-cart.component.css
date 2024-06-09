@@ -1,27 +1,69 @@
 .cart-item {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
+    height: 62px;
+    position: relative;
+    background: #fff;
+    -webkit-transition: all 1000ms ease-out;
+    -moz-transition: all 1000ms ease-out;
+    -ms-transition: all 1000ms ease-out;
+    -o-transition: all 1000ms ease-out;
+    transition: all 1000ms ease-out;
 }
 
 .cart-item img {
-    width: 50px;
-    height: 50px;
+    height: max-content;
     margin-right: 10px;
+    width: 100%;
+    position: relative;
 }
 
 .cart-item span {
     flex-grow: 1;
+    color: #393c45;
+    display: block;
+    font-size: 14px;
 }
 
 .cart-item-border {
     margin-top: 10px;
     border-bottom: 1px solid #ccc;
+
+    position: absolute;
+    bottom: 0;
+    background: #edeff0;
+    height: 1px;
+    width: 230px;
+}
+
+.cart-item.flash {
+    background: #fffeb0;
+}
+
+.cart-item .img-wrap {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border: 1px solid #edeff0;
+    float: left;
+    margin-right: 10px;
+}
+
+.cart-item strong {
+    color: #5ff7d2;
+    font-size: 16px;
 }
 
 .delete-item {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/delete-item.png") 0 0 no-repeat;
+    width: 15px;
+    height: 15px;
+    float: right;
+    margin-right: 18px;
+    display: none;
+}
+
+.cart-item:hover .delete-item {
+    display: block;
     cursor: pointer;
-    color: red;
 }
 
 h3 {
@@ -53,7 +95,7 @@ div.cart-icon-top {
     width: 21px;
     height: 3px;
     z-index: 1;
-    top: 44.8rem;
+    top: 7.8rem;
     left: 5rem;
 }
 
@@ -64,7 +106,7 @@ div.cart-icon-bottom {
     width: 21px;
     height: 19px;
     z-index: 1;
-    top: 45rem;
+    top: 8rem;
     left: 5rem;
 }
 

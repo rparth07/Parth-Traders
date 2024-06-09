@@ -1,12 +1,20 @@
-import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Product } from '../core/models/Product';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
+  animations: [
+    trigger('move', [
+      state('topRight', style({ left: 'calc(100% - 128px)', top: 0 })),
+      state('bottomLeft', style({ left: 0, top: 'calc(100% - 128px)' })),
+      transition('topRight <=> bottomLeft', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product!: Product;
@@ -16,6 +24,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private changeGridToLargeSubject$!: Subscription;
   @Input() events!: Observable<boolean>;
+  @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product }>();
 
 
   constructor(private renderer: Renderer2, carouselConfig: NgbCarouselConfig) {
@@ -192,7 +201,6 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       $('div.floating-cart').remove();
       $("body").removeClass("MakeFloatingCart");
 
-
       var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + img.src + "' alt='' /></div><span>" + productName + "</span><strong>$39</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
 
       $("#cart .empty").hide();
@@ -219,87 +227,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Method to handle add to cart functionality
   addToCart(): void {
-    const position = this.productCard.getBoundingClientRect();
-    const productImage = this.productCard.getElementsByTagName('img')[0].src;
-    const productName = this.productCard.getElementsByClassName('product_name')[0].innerHTML;
-
-    // Create floating cart
-    const floatingCart = this.renderer.createElement('div');
-    this.renderer.addClass(floatingCart, 'floating-cart');
-    this.renderer.appendChild(this.renderer.selectRootElement('body', true), floatingCart);
-
-    // Clone product card
-    const clonedProductCard = this.productCard.cloneNode(true);
-    this.renderer.appendChild(floatingCart, clonedProductCard);
-
-    // Set initial position
-    this.renderer.setStyle(floatingCart, 'top', `${position.top}px`);
-    this.renderer.setStyle(floatingCart, 'left', `${position.left}px`);
-
-    // Animate floating cart
-    this.renderer.addClass(floatingCart, 'moveToCart');
-    setTimeout(() => {
-      this.renderer.addClass(this.renderer.selectRootElement('body', true), 'MakeFloatingCart');
-    }, 800);
-
-    // Finalize cart animation
-    setTimeout(() => {
-      this.renderer.removeChild(this.renderer.selectRootElement('body', true), floatingCart);
-      this.renderer.removeClass(this.renderer.selectRootElement('body', true), 'MakeFloatingCart');
-
-      // Create cart item
-      const cartItem = this.renderer.createElement('div');
-      this.renderer.addClass(cartItem, 'cart-item');
-
-      const imgWrap = this.renderer.createElement('div');
-      this.renderer.addClass(imgWrap, 'img-wrap');
-      const img = this.renderer.createElement('img');
-      this.renderer.setAttribute(img, 'src', productImage);
-      this.renderer.setAttribute(img, 'alt', '');
-      this.renderer.appendChild(imgWrap, img);
-
-      const span = this.renderer.createElement('span');
-      const text = this.renderer.createText(productName);
-      this.renderer.appendChild(span, text);
-
-      const strong = this.renderer.createElement('strong');
-      const priceText = this.renderer.createText('$39');
-      this.renderer.appendChild(strong, priceText);
-
-      const cartItemBorder = this.renderer.createElement('div');
-      this.renderer.addClass(cartItemBorder, 'cart-item-border');
-
-      const deleteItem = this.renderer.createElement('div');
-      this.renderer.addClass(deleteItem, 'delete-item');
-      this.renderer.listen(deleteItem, 'click', () => {
-        this.renderer.setStyle(cartItem, 'display', 'none');
-        if (document.querySelectorAll('#cart .cart-item').length === 0) {
-          this.renderer.setStyle(document.querySelector('#cart .empty'), 'display', 'block');
-          this.renderer.setStyle(document.querySelector('#checkout'), 'display', 'none');
-        }
-      });
-
-      this.renderer.appendChild(cartItem, imgWrap);
-      this.renderer.appendChild(cartItem, span);
-      this.renderer.appendChild(cartItem, strong);
-      this.renderer.appendChild(cartItem, cartItemBorder);
-      this.renderer.appendChild(cartItem, deleteItem);
-
-      const cart = this.renderer.selectRootElement('#cart', true);
-      const checkout = this.renderer.selectRootElement('#checkout', true);
-
-      // Hide empty message and show checkout button
-      this.renderer.setStyle(cart.querySelector('.empty'), 'display', 'none');
-      this.renderer.appendChild(cart, cartItem);
-      this.renderer.setStyle(checkout, 'display', 'block');
-
-      // Flash effect for new cart item
-      this.renderer.addClass(cartItem, 'flash');
-      setTimeout(() => {
-        this.renderer.removeClass(cartItem, 'flash');
-      }, 10);
-
-    }, 1000);
+    const productFrontDiv: HTMLDivElement = this.productCard.querySelectorAll('.product-front')[0] as HTMLDivElement;
+    this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product });
   }
-
 }

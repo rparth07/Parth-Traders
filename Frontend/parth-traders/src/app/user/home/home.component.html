@@ -1,8 +1,8 @@
-<div class="home">
+<div class="home" #home>
   <div class="home__container">
-    <img class="home__image"
+    <!-- <img class="home__image"
       src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
-      alt="" />
+      alt="" /> -->
     <div class="d-flex">
       <div class="sidebar-container" *ngIf="!isLargeGrid" [@fadeInOut] width="300">
         <app-sidebar></app-sidebar>
@@ -20,7 +20,7 @@
             Showing 1-9 of 48 results
           </div>
           <div id="grid">
-            <app-product *ngFor="let product of products" [product]="product"
+            <app-product *ngFor="let product of products" [product]="product" (addToCartEvent)="onAddToCart($event)"
               [events]="changeGridToLargeSubject$.asObservable()"></app-product>
           </div>
         </div>

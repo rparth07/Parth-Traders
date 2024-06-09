@@ -79,3 +79,52 @@
 #grid-menu li.largeGrid a.active {
   background-position: -37px -33px;
 }
+
+/* @keyframes shrink {
+  to {
+    transform: scale(0.2);
+    opacity: 0.5;
+  }
+} */
+
+div.floating-cart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 315px;
+  height: 480px;
+  background: #fff;
+  z-index: 200;
+  overflow: hidden;
+  box-shadow: 0px 5px 31px -1px rgba(0, 0, 0, 0.15);
+  /* display: none; */
+}
+
+div.floating-cart.moveToCart {
+  /* left: 75px !important;
+  top: 55px !important; */
+  left: 68px !important;
+  top: 55px !important;
+  width: 47px;
+  height: 47px;
+  -webkit-transition: all 800ms ease-in-out;
+  -moz-transition: all 800ms ease-in-out;
+  -ms-transition: all 800ms ease-in-out;
+  -o-transition: all 800ms ease-in-out;
+  transition: all 800ms ease-in-out;
+}
+
+.MakeFloatingCart div.floating-cart.moveToCart {
+  /* left: 90px !important;
+  top: 140px !important; */
+  left: 80px !important;
+  top: 110px !important;
+  width: 21px;
+  height: 22px;
+  box-shadow: 0px 5px 31px -1px rgba(0, 0, 0, 0);
+  -webkit-transition: all 200ms ease-out;
+  -moz-transition: all 200ms ease-out;
+  -ms-transition: all 200ms ease-out;
+  -o-transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
+}
