@@ -14,11 +14,14 @@
                 <li class="smallGrid" (click)="switchToSmallGrid()"><a [class]="isLargeGrid ? '':'active'"></a></li>
               </ul>
             </div>
-            Showing 1-9 of 48 results
+            Showing 1-{{pageSize}} of {{products.length}} results
           </div>
-          <div id="grid">
-            <app-product *ngFor="let product of products" [product]="product" (addToCartEvent)="onAddToCart($event)"
-              [events]="changeGridToLargeSubject$.asObservable()"></app-product>
+          <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
+            <app-product *ngFor="let product of shownProducts" [product]="product"
+              (addToCartEvent)="onAddToCart($event)" [events]="changeGridToLargeSubject$.asObservable()"></app-product>
+            <div *ngIf="loading" class="loading-indicator d-flex justify-content-center">
+              <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+            </div>
           </div>
         </div>
       </div>

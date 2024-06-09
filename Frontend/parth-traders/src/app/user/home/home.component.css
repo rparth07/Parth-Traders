@@ -116,3 +116,8 @@ div.floating-cart.moveToCart {
   -o-transition: all 200ms ease-out;
   transition: all 200ms ease-out;
 }
+
+.loading-indicator {
+  text-align: center;
+  padding: 20px;
+}

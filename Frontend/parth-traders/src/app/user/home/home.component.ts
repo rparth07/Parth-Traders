@@ -1,8 +1,13 @@
 import { Component, ElementRef, EventEmitter, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Subject } from 'rxjs';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+
 import { ProductService } from '../services/product.service';
 import { Product } from '../core/models/Product';
-import { Subject } from 'rxjs';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CartService } from '../services/cart.service';
 
 @Component({
@@ -19,16 +24,39 @@ import { CartService } from '../services/cart.service';
 export class HomeComponent implements OnInit {
 
   products: Product[] = [];
+  shownProducts: Product[] = [];
+  loading: boolean = false;
   isLargeGrid = false;
   changeGridToLargeSubject$: Subject<boolean> = new Subject<boolean>();
+  pageSize = 6;
 
   @ViewChild('home', { static: true }) homeComponent!: ElementRef;
 
   constructor(private renderer: Renderer2, private ngZone: NgZone, private productService: ProductService, private cartService: CartService) {
     this.products = productService.getProducts();
+    this.shownProducts = this.products.slice(0, this.pageSize);
   }
 
   ngOnInit(): void {
+  }
+
+  async onScroll() {
+    this.loading = true;
+    try {
+      await this.delay(800);
+
+      const startIndex = this.shownProducts.length;
+      const endIndex = startIndex + this.pageSize;
+      const newProducts = this.products.slice(startIndex, endIndex);
+
+      this.shownProducts = [...this.shownProducts, ...newProducts];
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  private delay(ms: number): Promise<void> {//TODO: need to globalize this to use it all places instead of timeout
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   switchToLargeGrid() {
