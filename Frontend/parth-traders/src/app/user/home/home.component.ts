@@ -33,17 +33,21 @@ export class HomeComponent implements OnInit {
 
   constructor(private renderer: Renderer2, private ngZone: NgZone, private productService: ProductService, private cartService: CartService) {
     this.products = productService.getProducts();
-    this.shownProducts = this.products.slice(0, this.pageSize);
+    this.refreshShownProduct();
   }
 
   ngOnInit(): void {
     this.productService.productFilter$.subscribe(next => {
-      if (next)
+      this.products = this.productService.getProducts();
+      if (next.length) {
         this.products = this.products.filter(_ => next.findIndex(c => c === _.category) > -1);
-      else
-        this.products = this.productService.getProducts();
-    }
-    );
+      }
+      this.refreshShownProduct();
+    });
+  }
+
+  refreshShownProduct() {
+    this.shownProducts = this.products.slice(0, this.pageSize);
   }
 
   async onScroll() {

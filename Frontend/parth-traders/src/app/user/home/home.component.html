@@ -4,7 +4,7 @@
       <div class="sidebar-container" *ngIf="!isLargeGrid" [@fadeInOut] width="300">
         <app-sidebar></app-sidebar>
       </div>
-      <div class="home__row">
+      <div class="home__row w-100">
         <div class="product-list-container">
           <div id="grid-selector" class="grid-selector">
             <div id="grid-menu">
@@ -14,7 +14,7 @@
                 <li class="smallGrid" (click)="switchToSmallGrid()"><a [class]="isLargeGrid ? '':'active'"></a></li>
               </ul>
             </div>
-            Showing 1-{{pageSize}} of {{products.length}} results
+            Showing 1-{{shownProducts.length}} of {{products.length}} results
           </div>
           <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
             <app-product *ngFor="let product of shownProducts" [product]="product"
