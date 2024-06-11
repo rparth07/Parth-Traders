@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Subject, of } from 'rxjs';
 import { Product } from '../core/models/Product';
+import { FilterCriteria } from '../core/models/FilterCriteria';
+import { ProductType } from '../core/enums/ProductType';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
-    productFilter$ = new Subject<string[]>();
+    productFilter$ = new Subject<FilterCriteria>();
     products: Product[] = [
         {
             id: "12321341",
@@ -20,7 +22,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Buff
         },
         {
             id: "12321341",
@@ -34,7 +37,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Buff
         },
         {
             id: "12321341",
@@ -48,7 +52,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Buff
         },
         {
             id: "12321341",
@@ -62,7 +67,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.General
         },
         {
             id: "12321341",
@@ -76,7 +82,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.General
         },
         {
             id: "12321341",
@@ -90,7 +97,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.General
         },
         {
             id: "12321341",
@@ -104,7 +112,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "12321341",
@@ -118,7 +127,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "12321341",
@@ -132,7 +142,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "12321341",
@@ -146,7 +157,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "12321341",
@@ -160,7 +172,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "12321341",
@@ -174,7 +187,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "12321341",
@@ -188,7 +202,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "49538094",
@@ -202,7 +217,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/81O%2BGNdkzKL._AC_SX450_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/81O%2BGNdkzKL._AC_SX450_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "4903850",
@@ -216,7 +232,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/71Swqqe7XAL._AC_SX466_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/71Swqqe7XAL._AC_SX466_.jpg"],
+            productType: ProductType.Machine_Tools
         },
         {
             id: "23445930",
@@ -230,7 +247,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://media.very.co.uk/i/very/P6LTG_SQ1_0000000071_CHARCOAL_SLf?$300x400_retinamobilex2$"]
+                "https://media.very.co.uk/i/very/P6LTG_SQ1_0000000071_CHARCOAL_SLf?$300x400_retinamobilex2$"],
+            productType: ProductType.Packing_Materials
         },
         {
             id: "3254354345",
@@ -244,7 +262,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/816ctt5WV5L._AC_SX385_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/816ctt5WV5L._AC_SX385_.jpg"],
+            productType: ProductType.Packing_Materials
         },
         {
             id: "90829332",
@@ -258,7 +277,8 @@ export class ProductService {
             image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
                 "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"]
+                "https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"],
+            productType: ProductType.Packing_Materials
         }
     ];
 

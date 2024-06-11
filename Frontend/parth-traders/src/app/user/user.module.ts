@@ -12,6 +12,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ProductComponent,
     SidebarComponent,
   ],
-  imports: [CommonModule, MatIconModule, NgbCarouselModule, UserRoutingModule, InfiniteScrollModule, MatProgressSpinnerModule],
+  imports: [CommonModule,
+    MatIconModule,
+    NgbCarouselModule,
+    UserRoutingModule,
+    InfiniteScrollModule,
+    MatProgressSpinnerModule,
+    MatSliderModule
+  ],
 })
 export class UserModule { }

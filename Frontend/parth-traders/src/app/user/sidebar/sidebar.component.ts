@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { ProductType } from '../core/enums/ProductType';
+import { FilterCriteria } from '../core/models/FilterCriteria';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,15 +14,26 @@ export class SidebarComponent implements OnInit {
   animateX: { [key: string]: boolean } = {};
   animateY: { [key: string]: boolean } = {};
 
+  productTypeKeys = Object.values(ProductType);
+  filterCriteria: FilterCriteria;
+
   constructor(private productService: ProductService) {
     this.categories = productService.getCategories();
+    this.filterCriteria = {
+      categories: this.getCheckedCategories(),
+      activeProductType: null,
+      priceRange: {
+        min: null,
+        max: null
+      }
+    };
   }
 
   ngOnInit(): void {
   }
 
-  filterByCheckedCategories() {
-    this.productService.productFilter$.next(this.getCheckedCategories());
+  triggerProductFilterEvent() {
+    this.productService.productFilter$.next(this.filterCriteria);
   }
 
   toggleCategory(event: Event, category: string): void {
@@ -38,7 +51,8 @@ export class SidebarComponent implements OnInit {
       }, 100);
       this.checkedCategories[category] = true;
     }
-    this.filterByCheckedCategories();
+    this.filterCriteria.categories = this.getCheckedCategories();
+    this.triggerProductFilterEvent();
   }
 
   isChecked(category: string): boolean {
@@ -55,5 +69,13 @@ export class SidebarComponent implements OnInit {
 
   getCheckedCategories(): string[] {
     return Object.keys(this.checkedCategories).filter(key => this.checkedCategories[key]);
+  }
+
+  setActiveProductType(type: ProductType): void {
+    this.filterCriteria.activeProductType = this.filterCriteria.activeProductType === type ? null : type;
+    this.triggerProductFilterEvent();
+  }
+
+  onPriceRangeChange(): void {
   }
 }

@@ -39,8 +39,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.productService.productFilter$.subscribe(next => {
       this.products = this.productService.getProducts();
-      if (next.length) {
-        this.products = this.products.filter(_ => next.findIndex(c => c === _.category) > -1);
+      if (next) {
+        this.products = this.products.filter(_ => {
+          return (next.categories.length === 0 || next.categories.findIndex(c => c === _.category) > -1)
+            && (!next.activeProductType || next.activeProductType === _.productType)
+            && (!next.priceRange.min || next.priceRange.min <= _.price)
+            && (!next.priceRange.max || next.priceRange.max >= _.price)
+        });
       }
       this.refreshShownProduct();
     });
