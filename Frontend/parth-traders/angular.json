@@ -95,7 +95,6 @@
       }
     }
   },
-  "defaultProject": "parth-traders",
   "cli": {
     "analytics": false
   }
