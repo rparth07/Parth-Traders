@@ -50,7 +50,7 @@ export class CategoryComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private categoryService: CategoryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCategories();

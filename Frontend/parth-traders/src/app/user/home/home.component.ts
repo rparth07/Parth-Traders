@@ -1,10 +1,6 @@
 import { Component, ElementRef, EventEmitter, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 
 import { ProductService } from '../services/product.service';
 import { Product } from '../core/models/Product';
