@@ -13,6 +13,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatSliderModule } from '@angular/material/slider';
     UserRoutingModule,
     InfiniteScrollModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    NgxSliderModule
   ],
 })
 export class UserModule { }

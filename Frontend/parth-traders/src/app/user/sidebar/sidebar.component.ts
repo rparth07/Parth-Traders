@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { ProductType } from '../core/enums/ProductType';
 import { FilterCriteria } from '../core/models/FilterCriteria';
+import { Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
   categories: string[] = [];
@@ -16,6 +17,14 @@ export class SidebarComponent implements OnInit {
 
   productTypeKeys = Object.values(ProductType);
   filterCriteria: FilterCriteria;
+
+  minValue: number = 300;
+  maxValue: number = 400;
+  sliderOptions: Options = {
+    floor: 200,
+    ceil: 500,
+    step: 1
+  };
 
   constructor(private productService: ProductService) {
     this.categories = productService.getCategories();

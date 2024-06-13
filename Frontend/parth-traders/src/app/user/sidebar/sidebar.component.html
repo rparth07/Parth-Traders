@@ -28,8 +28,5 @@
     </div>
 
     <h3>PRICE RANGE</h3>
-    <mat-slider min="200" max="500">
-        <input value="300" matSliderStartThumb>
-        <input value="400" matSliderEndThumb>
-    </mat-slider>
+    <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"></ngx-slider>
 </div>
