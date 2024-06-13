@@ -25,7 +25,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     ProductComponent,
     SidebarComponent,
   ],
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MatIconModule,
     NgbCarouselModule,
     UserRoutingModule,
