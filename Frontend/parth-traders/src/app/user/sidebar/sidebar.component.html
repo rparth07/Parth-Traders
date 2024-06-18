@@ -28,5 +28,8 @@
     </div>
 
     <h3>PRICE RANGE</h3>
-    <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"></ngx-slider>
+    <div class="custom-slider">
+        <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"
+            (valueChange)="filterByPrice()"></ngx-slider>
+    </div>
 </div>

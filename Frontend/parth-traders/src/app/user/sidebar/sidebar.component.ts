@@ -18,11 +18,11 @@ export class SidebarComponent implements OnInit {
   productTypeKeys = Object.values(ProductType);
   filterCriteria: FilterCriteria;
 
-  minValue: number = 300;
-  maxValue: number = 400;
+  minValue: number = 10;
+  maxValue: number = 5000;
   sliderOptions: Options = {
-    floor: 200,
-    ceil: 500,
+    floor: 10,
+    ceil: 10000,
     step: 1
   };
 
@@ -85,6 +85,9 @@ export class SidebarComponent implements OnInit {
     this.triggerProductFilterEvent();
   }
 
-  onPriceRangeChange(): void {
+  filterByPrice() {
+    this.filterCriteria.priceRange.min = this.minValue;
+    this.filterCriteria.priceRange.max = this.maxValue;
+    this.triggerProductFilterEvent();
   }
 }
