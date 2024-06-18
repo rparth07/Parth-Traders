@@ -10,6 +10,9 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ProductComponent } from './product/product.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ProductComponent,
     SidebarComponent,
   ],
-  imports: [CommonModule, MatIconModule, NgbCarouselModule, UserRoutingModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    NgbCarouselModule,
+    UserRoutingModule,
+    InfiniteScrollModule,
+    MatProgressSpinnerModule,
+    NgxSliderModule
+  ],
 })
 export class UserModule { }

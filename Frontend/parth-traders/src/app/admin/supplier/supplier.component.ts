@@ -60,7 +60,7 @@ export class SupplierComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private supplierService: SupplierService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getSuppliers();

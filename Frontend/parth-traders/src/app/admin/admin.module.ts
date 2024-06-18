@@ -98,4 +98,4 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   exports: [EnumConverterPipe, AdminComponent],
   bootstrap: [AdminComponent],
 })
-export class AdminModule {}
+export class AdminModule { }

@@ -18,7 +18,7 @@ export class AddProductComponent implements OnInit {
     private productService: ProductService,
     private activeModal: NgbActiveModal,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   productKeys(): Array<string> {
     var keys = Object.keys(this.productType);
@@ -26,7 +26,6 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.product);
   }
 
   addProduct(form: NgForm) {

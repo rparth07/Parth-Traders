@@ -1,13 +1,10 @@
-<div class="home">
+<div class="home" #home>
   <div class="home__container">
-    <img class="home__image"
-      src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
-      alt="" />
     <div class="d-flex">
       <div class="sidebar-container" *ngIf="!isLargeGrid" [@fadeInOut] width="300">
         <app-sidebar></app-sidebar>
       </div>
-      <div class="home__row">
+      <div class="home__row w-100">
         <div class="product-list-container">
           <div id="grid-selector" class="grid-selector">
             <div id="grid-menu">
@@ -17,11 +14,14 @@
                 <li class="smallGrid" (click)="switchToSmallGrid()"><a [class]="isLargeGrid ? '':'active'"></a></li>
               </ul>
             </div>
-            Showing 1-9 of 48 results
+            Showing 1-{{shownProducts.length}} of {{products.length}} results
           </div>
-          <div id="grid">
-            <app-product *ngFor="let product of products" [product]="product"
-              [events]="changeGridToLargeSubject$.asObservable()"></app-product>
+          <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
+            <app-product *ngFor="let product of shownProducts" [product]="product"
+              (addToCartEvent)="onAddToCart($event)" [events]="changeGridToLargeSubject$.asObservable()"></app-product>
+            <div *ngIf="loading" class="loading-indicator d-flex justify-content-center">
+              <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+            </div>
           </div>
         </div>
       </div>

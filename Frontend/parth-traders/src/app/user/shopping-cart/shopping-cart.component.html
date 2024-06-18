@@ -3,22 +3,21 @@
 
 <div class="cart-icon-bottom"></div>
 
-<div id="checkout">CHECKOUT</div>
-<div *ngIf="cartItems.length > 0; else emptyCart">
-    <div class="cart-item" *ngFor="let item of cartItems; let i = index">
+<!-- <div id="checkout">CHECKOUT</div> -->
+<div id="cart" #cart>
+    <div class="cart-item" [class]="(isLast && shouldFlash) ? 'flash': ''"
+        *ngFor="let item of cartItems; let i = index; last as isLast">
         <div class="img-wrap">
-            <img [src]="item.image" alt="Product">
+            <img [src]="item.image_paths[0]" alt="Product">
         </div>
-        <span>{{ item.name }}</span>
+        <span>{{ item.title }}</span>
         <strong>{{ item.price }}</strong>
         <div class="cart-item-border"></div>
-        <div class="delete-item" (click)="removeFromCart(i)">Delete</div>
+        <div class="delete-item" (click)="removeFromCart(i)"></div>
     </div>
-    <button id="checkout" *ngIf="cartItems.length > 0">Checkout</button>
-</div>
+    <button id="checkout" *ngIf="cartItems.length > 0">CHECKOUT</button>
 
-<ng-template #emptyCart>
-    <div id="cart">
+    <ng-template *ngIf="cartItems.length == 0">
         <span class="empty">Your cart is empty</span>
-    </div>
-</ng-template>
+    </ng-template>
+</div>

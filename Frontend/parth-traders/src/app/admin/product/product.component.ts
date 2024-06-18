@@ -93,7 +93,7 @@ export class ProductComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getProducts();
