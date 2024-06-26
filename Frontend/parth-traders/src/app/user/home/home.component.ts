@@ -37,10 +37,13 @@ export class HomeComponent implements OnInit {
       this.products = this.productService.getProducts();
       if (next) {
         this.products = this.products.filter(_ => {
-          return (next.categories.length === 0 || next.categories.findIndex(c => c === _.category) > -1)
+          return (next.name === '' || _.productName.includes(next.name))
+            && (next.categories.length === 0 || next.categories.findIndex(c => c === _.category) > -1)
             && (!next.activeProductType || next.activeProductType === _.productType)
             && (!next.priceRange.min || next.priceRange.min <= _.price)
             && (!next.priceRange.max || next.priceRange.max >= _.price)
+            && (!next.ratingRange.min || next.ratingRange.min <= _.rating)
+            && (!next.ratingRange.max || next.ratingRange.max >= _.rating)
         });
       }
       this.refreshShownProduct();

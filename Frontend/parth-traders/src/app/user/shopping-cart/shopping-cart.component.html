@@ -10,7 +10,7 @@
         <div class="img-wrap">
             <img [src]="item.image_paths[0]" alt="Product">
         </div>
-        <span>{{ item.title }}</span>
+        <span>{{ item.productName }}</span>
         <strong>{{ item.price }}</strong>
         <div class="cart-item-border"></div>
         <div class="delete-item" (click)="removeFromCart(i)"></div>

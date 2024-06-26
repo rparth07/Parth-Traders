@@ -29,7 +29,51 @@
 
     <h3>PRICE RANGE</h3>
     <div class="custom-slider">
+        <div class="price-range">₹{{minValue}}-₹{{maxValue}}</div>
         <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"
             (valueChange)="filterByPrice()"></ngx-slider>
+    </div>
+
+    <h3>Review</h3>
+    <div class="ratings">
+        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==4"
+            (click)="updateMinRating(4)">
+            <ngb-rating [max]="4" [rate]="4" [readonly]="true">
+                <ng-template let-fill="fill">
+                    <span class="star">&#9733;</span>
+                </ng-template>
+            </ngb-rating> and up
+        </div>
+
+        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==3"
+            (click)="updateMinRating(3)">
+            <ngb-rating [max]="3" [rate]="3" [readonly]="true">
+                <ng-template let-fill="fill">
+                    <span class="star">&#9733;</span>
+                </ng-template>
+            </ngb-rating> and up
+        </div>
+
+        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==2"
+            (click)="updateMinRating(2)">
+            <ngb-rating [max]="2" [rate]="2" [readonly]="true">
+                <ng-template let-fill="fill">
+                    <span class="star">&#9733;</span>
+                </ng-template>
+            </ngb-rating> and up
+        </div>
+
+        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==1"
+            (click)="updateMinRating(1)">
+            <ngb-rating [max]="1" [rate]="1" [readonly]="true">
+                <ng-template let-fill="fill">
+                    <span class="star">&#9733;</span>
+                </ng-template>
+            </ngb-rating> and up
+        </div>
+
+        <div class="clear-rating">
+            <a (click)="clearRating()">clear</a>
+        </div>
     </div>
 </div>
