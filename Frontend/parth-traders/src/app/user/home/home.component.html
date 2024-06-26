@@ -14,7 +14,8 @@
                 <li class="smallGrid" (click)="switchToSmallGrid()"><a [class]="isLargeGrid ? '':'active'"></a></li>
               </ul>
             </div>
-            Showing 1-{{shownProducts.length}} of {{products.length}} results
+            Showing {{shownProducts.length > 0 ? 1 : 0}}-{{shownProducts.length}} of
+            {{products.length}} results
           </div>
           <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
             <app-product *ngFor="let product of shownProducts" [product]="product"

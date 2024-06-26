@@ -6,17 +6,18 @@
   </div>
   <div class="w-41">
     <div class="d-flex">
-      <button id="dropdown-button" data-dropdown-toggle="dropdown"
-        class="border-0 dark:bg-gray-700 dark:text-white flex-shrink-0 font-medium items-center px-4 py-06 rounded-l-lg text-center text-gray-900 text-sm z-10"
-        type="button"> All categories <svg stroke="currentColor" fill="currentColor" stroke-width="0"
-          viewBox="0 0 512 512" height="22" width="22" xmlns="http://www.w3.org/2000/svg">
-          <path d="M128 192l128 128 128-128z"></path>
-        </svg> </button>
+      <mat-form-field>
+        <mat-select id="dropdown-button" [(ngModel)]="selectedCategory" name="category">
+          <mat-option *ngFor=" let category of categories" [value]="category">
+            {{category}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div class="header__search justify-content-center w-41 relative">
-        <input type="search" id="search-dropdown"
+        <input type="search" id="search-dropdown" (keydown)="searchProduct($event)" [(ngModel)]="searchInput"
           class="block border-none header__searchInput md:rounded-l-none outline-none p-06 text-md w-full z-20"
           placeholder="Search for machine tools, buffs etc..." type="text" />
-        <button type="submit" class="p-0 rounded-r-lg text-white border-0">
+        <button (click)="searchProduct($event)" type="submit" class="p-0 rounded-r-lg text-white border-0">
           <mat-icon class="header__searchIcon d-flex justify-content-center align-items-center" aria-hidden="false"
             aria-label="search icon" fontIcon="search"></mat-icon>
           <span class="sr-only">Search</span>

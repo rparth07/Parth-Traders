@@ -13,7 +13,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -27,14 +32,20 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    OverlayModule,
     MatIconModule,
     NgbCarouselModule,
     UserRoutingModule,
     InfiniteScrollModule,
     MatProgressSpinnerModule,
     NgxSliderModule,
-    FormsModule,
-    NgbRatingModule
+    NgbRatingModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
   ],
 })
 export class UserModule { }
