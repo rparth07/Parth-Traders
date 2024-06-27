@@ -122,12 +122,12 @@ div.sku strong {
     left: -1px;
 }
 
-.sizes-large span {
+.sizes span {
     font-weight: 600;
     color: #b0b0b0;
 }
 
-.sizes-large span:hover {
+.sizes span:hover {
     color: #000;
     cursor: pointer;
 }
@@ -438,7 +438,7 @@ div.floating-cart .stats-container {
 .product-options span {
     color: #969699;
     font-size: 14px;
-    display: block;
+    display: inline-block;
     margin-bottom: 8px;
 }
 

@@ -1,7 +1,7 @@
 import { ProductType } from "../enums/ProductType"
 
 export interface Product {
-    id: string,
+    id: number,
     productName: string,
     productDescription: string;
     productType: ProductType

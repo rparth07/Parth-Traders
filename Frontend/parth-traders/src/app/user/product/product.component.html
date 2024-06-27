@@ -2,9 +2,9 @@
     <div class="info-large">
         <h4>{{ product.productName }}</h4>
         <div class="sku">PRODUCT SKU: <strong>{{ product.sku }}</strong></div>
-        <div class="price-big"><span>$43</span> ${{ product.price }}</div>
+        <div class="price-big"><span>$ {{product.price}}</span> ${{ product.price - product.discount}}</div>
         <h3>SIZE</h3>
-        <div class="sizes-large">
+        <div class="sizes">
             <span class="ms-1" *ngFor="let size of product.sizes">{{ size }}</span>
         </div>
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
@@ -21,16 +21,9 @@
                     <span class="product_price">${{ product.price }}</span>
                     <span class="product_name">{{ product.productType }}</span>
                     <p>{{ product.category }}</p>
-                    <div class="product-options">
-                        <strong>SIZES</strong>
-                        <span>{{ product.sizes.join(', ') }}</span>
-                        <strong>COLORS</strong>
-                        <div class="colors d-flex gap-1">
-                            <div class="c-blue"><span></span></div>
-                            <div class="c-red"><span></span></div>
-                            <div class="c-white"><span></span></div>
-                            <div class="c-green"><span></span></div>
-                        </div>
+                    <div class="product-options sizes">
+                        <strong>SIZES</strong><br>
+                        <span class="ms-1" *ngFor="let size of product.sizes">{{ size }}</span>
                     </div>
                 </div>
             </div>

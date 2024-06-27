@@ -11,7 +11,7 @@ export class ProductService {
     productFilter$ = new Subject<FilterCriteria>();
     products: Product[] = [
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -28,7 +28,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -45,7 +45,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -62,7 +62,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -79,7 +79,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -96,7 +96,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -113,7 +113,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -130,7 +130,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -147,7 +147,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -164,7 +164,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -181,7 +181,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -198,7 +198,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -215,7 +215,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12321341",
+            id: 12321341,
             productName: "FLUTED HEM DRESS",
             category: 'Paperback',
             sku: 'L-Paperback',
@@ -232,7 +232,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "49538094",
+            id: 49538094,
             productName: "FLUTED HEM DRESS",
             category: 'Glass Bowl',
             sku: '5L-Glass-Bowl',
@@ -249,7 +249,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "4903850",
+            id: 4903850,
             productName: "FLUTED HEM DRESS",
             category: 'Monitor',
             sku: 'TV-49',
@@ -266,7 +266,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "23445930",
+            id: 23445930,
             productName: "FLUTED HEM DRESS",
             category: 'Alexa',
             sku: 'Alexa-3rd',
@@ -283,7 +283,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "3254354345",
+            id: 3254354345,
             productName: "FLUTED HEM DRESS",
             category: 'iPad',
             sku: 'Apple-iPad-Pro',
@@ -300,7 +300,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "90829332",
+            id: 90829332,
             productName: "FLUTED HEM DRESS",
             category: 'Monitor',
             sku: 'Monitor-49',
@@ -317,7 +317,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "38748374",
+            id: 38748374,
             productName: "Acer",
             category: 'Monitor',
             sku: 'Acer-49',
@@ -334,7 +334,7 @@ export class ProductService {
             unitsInStock: 0
         },
         {
-            id: "12345676",
+            id: 12345676,
             productName: "Dell",
             category: 'Monitor',
             sku: 'Dell-49',
