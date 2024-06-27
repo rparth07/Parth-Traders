@@ -7,13 +7,11 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  searchInput: string;
   selectedCategory: string;
 
   categories: string[];
 
   constructor(private productService: ProductService) {
-    this.searchInput = '';
     this.selectedCategory = 'All Categories';
     this.categories = productService.getCategories();
     this.categories.push('All Categories');
@@ -22,10 +20,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchProduct(event: Event) {
+  searchProduct(key: string, searchValue: string) {
+    if (key === 'Backspace' && searchValue.length === 1)
+      searchValue = '';
+
     const filterCriteria = {
-      name: this.searchInput,
-      categories: [this.selectedCategory === 'All Categories' ? '' : this.selectedCategory],
+      name: searchValue,
+      categories: this.selectedCategory === 'All Categories' ? [] : [this.selectedCategory],
       activeProductType: null,
       priceRange: {
         min: null,
@@ -36,11 +37,8 @@ export class HeaderComponent implements OnInit {
         max: null
       }
     };
-
-    if ((event as KeyboardEvent).key === 'Enter' || (event as MouseEvent)) {//Find a way to identify mouse and keyboard event
-      if (this.searchInput.trim() !== '') {
-        this.productService.productFilter$.next(filterCriteria);
-      }
+    if (key === 'clicked' || key === 'Enter' || (key === 'Backspace' && searchValue === '')) {
+      this.productService.productFilter$.next(filterCriteria);
     }
   }
 }

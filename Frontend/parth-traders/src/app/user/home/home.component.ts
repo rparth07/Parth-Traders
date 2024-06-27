@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
       this.products = this.productService.getProducts();
       if (next) {
         this.products = this.products.filter(_ => {
-          return (next.name === '' || _.productName.includes(next.name))
+          return (next.name === '' || _.productName.trim().toLowerCase().includes(next.name.trim().toLowerCase()))
             && (next.categories.length === 0 || next.categories.findIndex(c => c === _.category) > -1)
             && (!next.activeProductType || next.activeProductType === _.productType)
             && (!next.priceRange.min || next.priceRange.min <= _.price)

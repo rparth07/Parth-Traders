@@ -7,17 +7,20 @@
   <div class="w-41">
     <div class="d-flex">
       <mat-form-field>
-        <mat-select id="dropdown-button" [(ngModel)]="selectedCategory" name="category">
+        <mat-select id="dropdown-button" (selectionChange)="searchProduct('clicked', searchInputRef.value)"
+          [(ngModel)]="selectedCategory" name="category">
           <mat-option *ngFor=" let category of categories" [value]="category">
             {{category}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <div class="header__search justify-content-center w-41 relative">
-        <input type="search" id="search-dropdown" (keydown)="searchProduct($event)" [(ngModel)]="searchInput"
+        <input type="search" id="search-dropdown" #searchInputRef
+          (keydown)="searchProduct($event.key, searchInputRef.value)"
           class="block border-none header__searchInput md:rounded-l-none outline-none p-06 text-md w-full z-20"
           placeholder="Search for machine tools, buffs etc..." type="text" />
-        <button (click)="searchProduct($event)" type="submit" class="p-0 rounded-r-lg text-white border-0">
+        <button (click)="searchProduct('clicked', searchInputRef.value)" type="submit"
+          class="p-0 rounded-r-lg text-white border-0">
           <mat-icon class="header__searchIcon d-flex justify-content-center align-items-center" aria-hidden="false"
             aria-label="search icon" fontIcon="search"></mat-icon>
           <span class="sr-only">Search</span>
