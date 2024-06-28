@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
     this.changeGridToLargeSubject$.next(false);
   }
 
-  onAddToCart({ productCard, product }: { productCard: HTMLDivElement, product: Product }) {
+  onAddToCart({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
     const position = productCard.getBoundingClientRect();
     const floatingCart = this.renderer.createElement('div');
     this.renderer.addClass(floatingCart, 'floating-cart');
@@ -111,7 +111,7 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.renderer.removeChild(this.homeComponent.nativeElement, floatingCart);
       this.renderer.removeClass(this.homeComponent.nativeElement, 'MakeFloatingCart');
-      this.cartService.emitAddItemToCartEvent(product);
+      this.cartService.addToCart(product, productSize);
     }, 1100);
   }
 }

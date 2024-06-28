@@ -127,3 +127,34 @@ body.MakeFloatingCart div.cart-icon-bottom {
     font-size: 14px;
     letter-spacing: 1px;
 }
+
+.increment-product-count-button,
+.decrement-product-count-button {
+    display: inline-block;
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.product-count-container {
+    margin-left: 5px;
+}
+
+.increment-product-count-button:hover,
+.decrement-product-count-button:hover {
+    background-color: #0056b3;
+}
+
+.product-count-container,
+.product-count {
+    display: inline;
+}

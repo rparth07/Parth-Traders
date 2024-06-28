@@ -11,14 +11,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product!: Product;
+  productSize!: string;
   productCard!: HTMLDivElement;
   productImagePath: string;
   @ViewChild('productElement') productCardRef!: ElementRef<HTMLDivElement>;
 
   private changeGridToLargeSubject$!: Subscription;
-  @Input() events!: Observable<boolean>;
-  @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product }>();
-
+  @Input() changeGridToLargeObservable!: Observable<boolean>;
+  @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
 
   constructor(private renderer: Renderer2, carouselConfig: NgbCarouselConfig) {
     this.productImagePath = this.product?.image_paths[0];
@@ -27,7 +27,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.changeGridToLargeSubject$ = this.events
+    this.changeGridToLargeSubject$ = this.changeGridToLargeObservable
       .subscribe((shouldSwitchToLargeGrid: boolean) => {
         if (shouldSwitchToLargeGrid)
           this.switchToLargeGrid();
@@ -221,6 +221,10 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   // Method to handle add to cart functionality
   addToCart(): void {
     const productFrontDiv: HTMLDivElement = this.productCard.querySelectorAll('.product-front')[0] as HTMLDivElement;
-    this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product });
+    this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product, productSize: this.productSize });
+  }
+
+  updateProductSize(productSize: string) {
+    this.productSize = productSize;
   }
 }

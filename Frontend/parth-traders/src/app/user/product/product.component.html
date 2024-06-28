@@ -5,7 +5,10 @@
         <div class="price-big"><span>$ {{product.price}}</span> ${{ product.price - product.discount}}</div>
         <h3>SIZE</h3>
         <div class="sizes">
-            <span class="ms-1" *ngFor="let size of product.sizes">{{ size }}</span>
+            <!-- TODO: need to keep bold/highlight the selected product size and pass its value while add to cart -->
+            <span class="ms-1" *ngFor="let productSize of product.sizes" (click)="updateProductSize(productSize)">
+                {{ productSize }}
+            </span>
         </div>
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
     </div>
