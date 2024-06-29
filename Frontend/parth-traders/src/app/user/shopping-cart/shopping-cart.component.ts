@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../core/models/Product';
 import { Subscription } from 'rxjs';
@@ -10,18 +10,20 @@ import { OrderDetail } from '../core/models/OrderDetail';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
-  shouldFlash: Boolean = true;
+  flashIndex: number = -1;
 
   @ViewChild('cart', { static: true }) cartRef!: ElementRef;
 
   private addToCartSubscription!: Subscription;
 
-  constructor(private cartService: CartService, private ngZone: NgZone, private renderer: Renderer2) {
+  constructor(private cartService: CartService, private ngZone: NgZone) {
   }
 
   ngOnInit(): void {
     this.addToCartSubscription = this.cartService.getAddToCartEvent().subscribe(() => {
-      this.flashLastProduct();
+      setTimeout(() => {
+        this.flashProductAt(this.getCartItems().length - 1);
+      }, 10);
     });
   }
 
@@ -36,30 +38,26 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   removeFromCart(index: number) {
-    this.shouldFlash = false;
+    this.flashIndex = -1;
     this.cartService.removeFromCartAt(index);
   }
 
   incrementProductCountOf(orderDetail: OrderDetail) {
     this.cartService.incrementProductCountOf(orderDetail);
-    this.flashLastProduct();
+    this.flashProductAt(this.getCartItems().indexOf(orderDetail));
   }
 
   decrementProductCountFrom(orderDetail: OrderDetail) {
     this.cartService.decrementProductCountFrom(orderDetail);
-    this.flashLastProduct();
+    this.flashProductAt(this.getCartItems().indexOf(orderDetail));
   }
 
-  //TODO: need to flash the last product when increment or decrement and add to cart is clicked
-  flashLastProduct() {
-    this.shouldFlash = true;
-    setTimeout(() => {
-      this.ngZone.run(() => {
-        const lastCartItem = this.cartRef.nativeElement.querySelectorAll('.flash')[0];
-        this.renderer.removeClass(lastCartItem, 'flash');
-      });
-    }, 10);
+  flashProductAt(productIndex: number) {
+    this.ngZone.run(() => {
+      this.flashIndex = productIndex;
+      setTimeout(() => {
+        this.flashIndex = -1;
+      }, 700);
+    });
   }
 }
-
-

@@ -5,8 +5,7 @@
 
 <!-- <div id="checkout">CHECKOUT</div> -->
 <div id="cart" #cart>
-    <div class="cart-item" [class]="(isLast && shouldFlash) ? 'flash': ''"
-        *ngFor="let item of getCartItems(); let i = index; last as isLast">
+    <div class="cart-item" [class.flash]="flashIndex==i" *ngFor="let item of getCartItems(); let i = index">
         <div class="img-wrap">
             <img [src]="item.product.image_paths[0]" alt="Product">
         </div>
