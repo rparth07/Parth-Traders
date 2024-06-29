@@ -11,7 +11,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product!: Product;
-  productSize!: string;
+  selectedProductSize: string | null = null;
   productCard!: HTMLDivElement;
   productImagePath: string;
   @ViewChild('productElement') productCardRef!: ElementRef<HTMLDivElement>;
@@ -220,11 +220,15 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Method to handle add to cart functionality
   addToCart(): void {
-    const productFrontDiv: HTMLDivElement = this.productCard.querySelectorAll('.product-front')[0] as HTMLDivElement;
-    this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product, productSize: this.productSize });
+    if (this.selectedProductSize) {
+      const productFrontDiv: HTMLDivElement = this.productCard.querySelectorAll('.product-front')[0] as HTMLDivElement;
+      this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product, productSize: this.selectedProductSize as string });
+    } else {
+      alert("Please select a size.");
+    }
   }
 
   updateProductSize(productSize: string) {
-    this.productSize = productSize;
+    this.selectedProductSize = productSize;
   }
 }
