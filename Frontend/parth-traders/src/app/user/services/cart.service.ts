@@ -9,9 +9,11 @@ import { OrderDetail } from '../core/models/OrderDetail';
 })
 export class CartService {
   private addToCartEvent = new EventEmitter();
+  private orderCountEvent = new EventEmitter<number>();
+
   private order: Order;
 
-  constructor() { this.order = new Order(new Customer('', '', '', '')) }
+  constructor() { this.order = new Order(new Customer('', '', '', '')) }//TODO: need to add customer
 
   public addToCart(product: Product, productSize: string) {
     if (this.order.hasProduct(product)) {
@@ -20,10 +22,12 @@ export class CartService {
       this.order.addNewProduct(product, productSize);
     }
     this.emitAddItemToCartEvent();
+    this.emitOrderCountEvent();
   }
 
   removeFromCartAt(index: number) {
     this.order.removeOrderItemAt(index);
+    this.emitOrderCountEvent();
   }
 
   public getCartItems() {
@@ -40,10 +44,19 @@ export class CartService {
 
   public decrementProductCountFrom(orderDetail: OrderDetail) {
     this.order.decrementProductCountFrom(orderDetail);
+    this.emitOrderCountEvent();
   }
 
   public incrementProductCountOf(orderDetail: OrderDetail) {
     this.order.incrementProductCountOf(orderDetail);
+    this.emitOrderCountEvent();
   }
 
+  private emitOrderCountEvent() {
+    this.orderCountEvent.emit(this.order.getAllProductsCount());
+  }
+
+  public getOrderCountEvent() {
+    return this.orderCountEvent;
+  }
 }

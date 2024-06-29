@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +9,18 @@ import { ProductService } from '../services/product.service';
 })
 export class HeaderComponent implements OnInit {
   selectedCategory: string;
+  totalOrderItems: number = 0;
 
   categories: string[];
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private cartService: CartService) {
     this.selectedCategory = 'All Categories';
     this.categories = productService.getCategories();
     this.categories.push('All Categories');
+
+    this.cartService.getOrderCountEvent().subscribe((orderItemsCount: number) => {
+      this.totalOrderItems = orderItemsCount;
+    })
   }
 
   ngOnInit(): void {

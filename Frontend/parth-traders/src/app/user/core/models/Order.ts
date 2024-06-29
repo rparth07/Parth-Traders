@@ -35,6 +35,10 @@ export class Order {
         return this.orderDetails;
     }
 
+    getAllProductsCount() {
+        return this.orderDetails.reduce((acc, current) => acc + current.quantity, 0);
+    }
+
     hasProduct(product: Product): Boolean {
         return this.orderDetails.findIndex(_ => _.product == product) > -1;
     }
