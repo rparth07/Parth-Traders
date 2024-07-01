@@ -1,9 +1,8 @@
 <h3>CART</h3>
 <div class="cart-icon-top"></div>
-
 <div class="cart-icon-bottom"></div>
+<button id="checkout" *ngIf="getCartItems().length > 0">CHECKOUT</button>
 
-<!-- <div id="checkout">CHECKOUT</div> -->
 <div id="cart" #cart>
     <div class="cart-item" [class.flash]="flashIndex==i" *ngFor="let item of getCartItems(); let i = index">
         <div class="img-wrap">
@@ -21,7 +20,6 @@
         <div class="cart-item-border"></div>
         <div class="delete-item" (click)="removeFromCart(i)"></div>
     </div>
-    <button id="checkout" *ngIf="getCartItems().length > 0">CHECKOUT</button>
 
     <ng-template *ngIf="getCartItems().length == 0">
         <span class="empty">Your cart is empty</span>

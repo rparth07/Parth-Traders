@@ -81,10 +81,14 @@ h3 {
     font-weight: 700;
     padding: 3px 9px;
     position: absolute;
-    top: 137px;
-    left: 181px;
+    top: 7.5rem;
+    left: 10.25rem;
     color: #5ff7d2;
-    display: none;
+    background-color: #fff;
+}
+
+#checkout:hover {
+    background-color: #f5f5f5;
 }
 
 div.cart-icon-top {
