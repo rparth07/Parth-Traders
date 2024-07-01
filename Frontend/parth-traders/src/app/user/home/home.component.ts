@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit {
   shownProducts: Product[] = [];
   loading: boolean = false;
   isLargeGrid = false;
-  changeGridToLargeSubject$: Subject<boolean> = new Subject<boolean>();
   pageSize = 6;
 
   @ViewChild('home', { static: true }) homeComponent!: ElementRef;
@@ -57,13 +56,15 @@ export class HomeComponent implements OnInit {
   async onScroll() {
     this.loading = true;
     try {
-      await this.delay(800);
+      await this.delay(1000);
 
       const startIndex = this.shownProducts.length;
       const endIndex = startIndex + this.pageSize;
       const newProducts = this.products.slice(startIndex, endIndex);
+      this.isLargeGrid ? this.switchToLargeGrid() : this.switchToSmallGrid();
 
       this.shownProducts = [...this.shownProducts, ...newProducts];
+
     } finally {
       this.loading = false;
     }
@@ -75,12 +76,10 @@ export class HomeComponent implements OnInit {
 
   switchToLargeGrid() {
     this.isLargeGrid = true;
-    this.changeGridToLargeSubject$.next(true);
   }
 
   switchToSmallGrid() {
     this.isLargeGrid = false;
-    this.changeGridToLargeSubject$.next(false);
   }
 
   onAddToCart({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
@@ -111,6 +110,40 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.renderer.removeChild(this.homeComponent.nativeElement, floatingCart);
       this.renderer.removeClass(this.homeComponent.nativeElement, 'MakeFloatingCart');
+      this.cartService.addToCart(product, productSize);
+    }, 1100);
+  }
+
+  onAddToCartLarge({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
+    this.renderer.setStyle(productCard, 'display', 'block');
+    const position = productCard.getBoundingClientRect();
+    const floatingCart = this.renderer.createElement('div');
+    this.renderer.addClass(floatingCart, 'floating-cart-large');
+
+    const clone = productCard.cloneNode(true);
+    this.renderer.setStyle(clone, 'width', '100%');
+    this.renderer.setStyle(clone, 'position', 'initial');
+    this.renderer.setStyle(floatingCart, 'top', `${position.top}px`);
+    this.renderer.setStyle(floatingCart, 'left', `${position.left}px`);
+    this.renderer.appendChild(floatingCart, clone);
+    this.renderer.appendChild(this.homeComponent.nativeElement, floatingCart);
+    this.renderer.setStyle(productCard, 'display', 'none');
+
+    setTimeout(() => {
+      this.ngZone.run(() => {
+        this.renderer.addClass(floatingCart, 'moveToCartLarge');//TODO
+      });
+    }, 100);
+
+    setTimeout(() => {
+      this.ngZone.run(() => {
+        this.renderer.addClass(this.homeComponent.nativeElement, 'MakeFloatingCartLarge');//TODO
+      });
+    }, 900);
+
+    setTimeout(() => {
+      this.renderer.removeChild(this.homeComponent.nativeElement, floatingCart);
+      this.renderer.removeClass(this.homeComponent.nativeElement, 'MakeFloatingCartLarge');
       this.cartService.addToCart(product, productSize);
     }, 1100);
   }

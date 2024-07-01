@@ -44,12 +44,17 @@
 }
 
 .large .info-large {
+    display: block;
     left: 310px;
     -webkit-transition: all 300ms ease-out;
     -moz-transition: all 300ms ease-out;
     -ms-transition: all 300ms ease-out;
     -o-transition: all 300ms ease-out;
     transition: all 300ms ease-out;
+}
+
+.large .product-back {
+    display: block;
 }
 
 .info-large h4 {

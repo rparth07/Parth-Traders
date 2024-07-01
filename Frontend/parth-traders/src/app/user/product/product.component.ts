@@ -9,7 +9,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProductComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() product!: Product;
   selectedProductSize: string | null = null;
   productCard!: HTMLDivElement;
@@ -18,6 +18,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private changeGridToLargeSubject$!: Subscription;
   @Input() changeGridToLargeObservable!: Observable<boolean>;
+  @Input('shouldSwitchToLargeGrid') shouldSwitchToLargeGrid: boolean = false;
+
   @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
 
   constructor(private renderer: Renderer2, carouselConfig: NgbCarouselConfig) {
@@ -27,13 +29,25 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.changeGridToLargeSubject$ = this.changeGridToLargeObservable
-      .subscribe((shouldSwitchToLargeGrid: boolean) => {
-        if (shouldSwitchToLargeGrid)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['shouldSwitchToLargeGrid']) {
+      if (this.shouldSwitchToLargeGrid) {
           this.switchToLargeGrid();
-        else
+      } else {
           this.switchToSmallGrid();
-      });
+      }
+    }
+  }
+
+  ngAfterViewInit(): void {
+    // Make carousel on component initialization
+    this.productCard = this.productCardRef.nativeElement;
+  }
+
+  ngOnDestroy(): void {
+    this.changeGridToLargeSubject$.unsubscribe();
   }
 
   switchToLargeGrid() {

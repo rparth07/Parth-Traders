@@ -19,8 +19,8 @@
           </div>
           <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
             <app-product *ngFor="let product of shownProducts" [product]="product"
-              (addToCartEvent)="onAddToCart($event)"
-              [changeGridToLargeObservable]="changeGridToLargeSubject$.asObservable()"></app-product>
+              (addToCartEvent)="onAddToCart($event)" (addToCartLargeEvent)="onAddToCartLarge($event)"
+              [shouldSwitchToLargeGrid]="isLargeGrid"></app-product>
             <div *ngIf="loading" class="loading-indicator d-flex justify-content-center">
               <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
             </div>
