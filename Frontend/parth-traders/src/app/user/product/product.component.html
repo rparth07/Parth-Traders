@@ -1,9 +1,9 @@
-<div class="product" [id]="'product_' + product.id" #productElement>
-    <div class="info-large">
+<div class="product" [id]="'product_' + product.id" #productElement [class.large]="shouldSwitchToLargeGrid">
+    <div class="info-large" [class]="shouldSwitchToLargeGrid ? 'd-block': 'd-none'">
         <h4>{{ product.productName }}</h4>
         <div class="sku">PRODUCT SKU: <strong>{{ product.sku }}</strong></div>
         <div class="price-big">
-            <span *ngIf="product.discount!=0">$ {{product.price}}</span>
+            <span *ngIf="product.discount != 0">$ {{product.price}}</span>
             ${{ product.price - product.discount }}
         </div>
         <h3>SIZE</h3>
@@ -16,8 +16,7 @@
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
     </div>
     <div class="make3D" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
-        <div class="product-front">
-            <div class="shadow"></div>
+        <div class="product-front" *ngIf="!shouldSwitchToLargeGrid">
             <img src="{{ product.image_paths[0] }}" alt="" />
             <div class="image_overlay"></div>
             <div class="add_to_cart" (click)="addToCart()">Add to cart</div>
@@ -37,8 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="product-back">
-            <div class="shadow"></div>
+        <div class="product-back" [class.d-block]="shouldSwitchToLargeGrid">
             <ngb-carousel *ngIf="product.image_paths">
                 <ng-template *ngFor="let image of product.image_paths" ngbSlide>
                     <div class="wrapper">

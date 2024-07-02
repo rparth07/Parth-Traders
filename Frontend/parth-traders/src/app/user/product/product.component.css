@@ -30,7 +30,6 @@
 }
 
 .info-large {
-    display: none;
     position: absolute;
     top: 0;
     left: 0px;
@@ -44,17 +43,12 @@
 }
 
 .large .info-large {
-    display: block;
     left: 310px;
     -webkit-transition: all 300ms ease-out;
     -moz-transition: all 300ms ease-out;
     -ms-transition: all 300ms ease-out;
     -o-transition: all 300ms ease-out;
     transition: all 300ms ease-out;
-}
-
-.large .product-back {
-    display: block;
 }
 
 .info-large h4 {
@@ -275,30 +269,6 @@ div.floating-cart .product-front {
     width: 100%;
     top: 0;
     left: 0;
-}
-
-div.shadow {
-    width: 335px;
-    height: 520px;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    display: none;
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-    background: -o-linear-gradient(right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-    background: -moz-linear-gradient(right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-}
-
-.product-back div.shadow {
-    z-index: 10;
-    opacity: 1;
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
-    background: -o-linear-gradient(right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
-    background: -moz-linear-gradient(right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
 }
 
 .image_overlay {
@@ -699,19 +669,4 @@ div.c-white span {
     width: 14px;
     height: 14px;
     border: 1px solid #e8e9eb;
-}
-
-div.shadow {
-    width: 335px;
-    height: 520px;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    display: none;
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-    background: -o-linear-gradient(right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-    background: -moz-linear-gradient(right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
 }
