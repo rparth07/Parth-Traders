@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef, OnInit, OnDestroy, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { Product } from '../core/models/Product';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
@@ -35,17 +35,26 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     if (this.productCard == undefined)
       return;
 
-    const make3D = this.productCard?.querySelector('.make3D');
-      if (this.shouldSwitchToLargeGrid) {
-      this.renderer.addClass(make3D, 'flip180');
-    } else if (!this.shouldSwitchToLargeGrid) {
-      this.renderer.removeClass(make3D, 'flip180');
+    if (changes["shouldSwitchToLargeGrid"].currentValue === false) {
+      this.flipCardToFront();
+    } else {
+      this.flipCardIfLargeGrid();
     }
   }
 
   ngAfterViewInit(): void {
     // Make carousel on component initialization
     this.productCard = this.productCardRef.nativeElement;
+    this.flipCardIfLargeGrid();
+  }
+
+  flipCardIfLargeGrid() {
+    const make3D = this.productCard?.querySelector('.make3D');
+    if (this.shouldSwitchToLargeGrid) {
+      this.renderer.addClass(make3D, 'flip180');
+    } else {
+      this.renderer.removeClass(make3D, 'flip180');
+    }
   }
 
   ngOnDestroy(): void {

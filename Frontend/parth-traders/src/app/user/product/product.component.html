@@ -15,8 +15,8 @@
         </div>
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
     </div>
-    <div class="make3D" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
-        <div class="product-front" *ngIf="!shouldSwitchToLargeGrid">
+    <div class="make3D flip180" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
+        <div class="product-front" [class]="shouldSwitchToLargeGrid ? 'd-none': 'd-block'">
             <img src="{{ product.image_paths[0] }}" alt="" />
             <div class="image_overlay"></div>
             <div class="add_to_cart" (click)="addToCart()">Add to cart</div>
