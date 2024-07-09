@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   @Input('shouldSwitchToLargeGrid') shouldSwitchToLargeGrid: boolean = false;
 
   @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
+  @Output() addToCartLargeEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
 
   constructor(private renderer: Renderer2, carouselConfig: NgbCarouselConfig) {
     this.productImagePath = this.product?.image_paths[0];
@@ -159,49 +160,14 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     }, 150);
   }
 
-  //[WIP] Method to add product to cart in large view
+  // Method to add product to cart in large view
   addCartLarge(): void {
-    var carousel = $(".carousel-container");
-    const imgIndex: number = parseInt(carousel.attr("rel") || "0", 10); // Parsing to integer with fallback to 0 if "rel" attribute is not set
-    const img: HTMLImageElement = carousel.find('img').eq(imgIndex).get(0)!;
-
-    var position = $(img).offset()!;
-
-    var productName = $('h4').get(0)!.innerHTML;
-
-    $("body").append('<div class="floating-cart"></div>');
-    var cart = $('div.floating-cart');
-    $("<img src='" + img.src + "' class='floating-image-large' />").appendTo(cart);
-
-    $(cart).css({ 'top': position.top + 'px', "left": position.left + 'px' }).fadeIn("slow").addClass('moveToCart');
-    setTimeout(function () { $("body").addClass("MakeFloatingCart"); }, 800);
-
-    setTimeout(function () {
-      $('div.floating-cart').remove();
-      $("body").removeClass("MakeFloatingCart");
-
-      var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + img.src + "' alt='' /></div><span>" + productName + "</span><strong>$39</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
-
-      $("#cart .empty").hide();
-      $("#cart").append(cartItem);
-      $("#checkout").fadeIn(500);
-
-      $("#cart .cart-item").last()
-        .addClass("flash")
-        .find(".delete-item").click(function () {
-          $(this).parent().fadeOut(300, function () {
-            $(this).remove();
-            if ($("#cart .cart-item").length == 0) {
-              $("#cart .empty").fadeIn(500);
-              $("#checkout").fadeOut(500);
-            }
-          })
-        });
-      setTimeout(function () {
-        $("#cart .cart-item").last().removeClass("flash");
-      }, 10);
-
-    }, 1000);
+    if (this.selectedProductSize) {
+      const productFrontDiv: HTMLDivElement = this.productCard?.querySelectorAll('.product-front')[0] as HTMLDivElement;
+      this.addToCartLargeEvent.emit({ productCard: productFrontDiv, product: this.product, productSize: this.selectedProductSize as string });
+    } else {
+      alert("Please select a size.");
+    }
   }
 
   // Method to handle add to cart functionality

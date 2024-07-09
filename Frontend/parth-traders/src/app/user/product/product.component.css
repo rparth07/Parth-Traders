@@ -6,7 +6,7 @@
     transform-style: preserve-3d;
     transition: transform 5s;
     float: left;
-    margin: 10px 40px 10px 40px;
+    margin: 10px 30px 10px 30px;
     -webkit-transition: width 500ms ease-in-out;
     -moz-transition: width 500ms ease-in-out;
     -ms-transition: width 500ms ease-in-out;

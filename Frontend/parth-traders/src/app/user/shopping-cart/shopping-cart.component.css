@@ -80,9 +80,6 @@ h3 {
     font-size: 13px;
     font-weight: 700;
     padding: 3px 9px;
-    position: absolute;
-    top: 7.5rem;
-    left: 10.25rem;
     color: #5ff7d2;
     background-color: #fff;
 }
@@ -92,25 +89,23 @@ h3 {
 }
 
 div.cart-icon-top {
-    position: absolute;
     background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/cart.png") 0 -3px no-repeat;
     margin: 0;
     width: 21px;
     height: 3px;
     z-index: 1;
-    top: 7.8rem;
-    left: 5rem;
 }
 
 div.cart-icon-bottom {
-    position: absolute;
     background: #fff url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/cart.png") 0 -3px no-repeat;
     margin: 0;
     width: 21px;
     height: 19px;
     z-index: 1;
-    top: 8rem;
-    left: 5rem;
+}
+
+.flex-icon-container {
+    padding: 32px 0px 10px 15px;
 }
 
 body.MakeFloatingCart div.cart-icon-top {

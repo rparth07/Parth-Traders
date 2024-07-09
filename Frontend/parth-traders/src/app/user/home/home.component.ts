@@ -84,14 +84,16 @@ export class HomeComponent implements OnInit {
 
   onAddToCart({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
     const position = productCard.getBoundingClientRect();
+    const actualTop = position.top + window.scrollY;
+    const actualLeft = position.left + window.scrollX;
     const floatingCart = this.renderer.createElement('div');
     this.renderer.addClass(floatingCart, 'floating-cart');
 
     const clone = productCard.cloneNode(true);
     this.renderer.setStyle(clone, 'width', '100%');
     this.renderer.setStyle(clone, 'position', 'initial');
-    this.renderer.setStyle(floatingCart, 'top', `${position.top}px`);
-    this.renderer.setStyle(floatingCart, 'left', `${position.left}px`);
+    this.renderer.setStyle(floatingCart, 'top', `${actualTop}px`);
+    this.renderer.setStyle(floatingCart, 'left', `${actualLeft}px`);
     this.renderer.appendChild(floatingCart, clone);
     this.renderer.appendChild(this.homeComponent.nativeElement, floatingCart);
 
@@ -115,35 +117,7 @@ export class HomeComponent implements OnInit {
   }
 
   onAddToCartLarge({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
-    this.renderer.setStyle(productCard, 'display', 'block');
-    const position = productCard.getBoundingClientRect();
-    const floatingCart = this.renderer.createElement('div');
-    this.renderer.addClass(floatingCart, 'floating-cart-large');
-
-    const clone = productCard.cloneNode(true);
-    this.renderer.setStyle(clone, 'width', '100%');
-    this.renderer.setStyle(clone, 'position', 'initial');
-    this.renderer.setStyle(floatingCart, 'top', `${position.top}px`);
-    this.renderer.setStyle(floatingCart, 'left', `${position.left}px`);
-    this.renderer.appendChild(floatingCart, clone);
-    this.renderer.appendChild(this.homeComponent.nativeElement, floatingCart);
-    this.renderer.setStyle(productCard, 'display', 'none');
-
     setTimeout(() => {
-      this.ngZone.run(() => {
-        this.renderer.addClass(floatingCart, 'moveToCartLarge');//TODO
-      });
-    }, 100);
-
-    setTimeout(() => {
-      this.ngZone.run(() => {
-        this.renderer.addClass(this.homeComponent.nativeElement, 'MakeFloatingCartLarge');//TODO
-      });
-    }, 900);
-
-    setTimeout(() => {
-      this.renderer.removeChild(this.homeComponent.nativeElement, floatingCart);
-      this.renderer.removeClass(this.homeComponent.nativeElement, 'MakeFloatingCartLarge');
       this.cartService.addToCart(product, productSize);
     }, 1100);
   }
