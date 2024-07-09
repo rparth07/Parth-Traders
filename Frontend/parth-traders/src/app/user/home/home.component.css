@@ -97,8 +97,8 @@ div.floating-cart {
 }
 
 div.floating-cart.moveToCart {
-  left: 68px !important;
-  top: 55px !important;
+  left: 73px !important;
+  top: 80px !important;
   width: 47px;
   height: 47px;
   -webkit-transition: all 800ms ease-in-out;
@@ -109,8 +109,8 @@ div.floating-cart.moveToCart {
 }
 
 .MakeFloatingCart div.floating-cart.moveToCart {
-  left: 80px !important;
-  top: 110px !important;
+  left: 86px !important;
+  top: 130px !important;
   width: 21px;
   height: 22px;
   box-shadow: 0px 5px 31px -1px rgba(0, 0, 0, 0);
