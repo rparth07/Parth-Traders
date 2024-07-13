@@ -3,6 +3,7 @@ import { Product } from '../core/models/Product';
 import { Order } from '../core/models/Order';
 import { Customer } from '../core/models/Customer';
 import { OrderDetail } from '../core/models/OrderDetail';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class CartService {
 
   private order: Order;
 
-  constructor() { this.order = new Order(new Customer('', '', '', '')) }//TODO: need to add customer
+  constructor(private authService: AuthService) {
+    this.order = new Order(this.authService.getCustomer())
+  }//TODO: need to add customer
 
   public addToCart(product: Product, productSize: string) {
     if (this.order.hasProduct(product)) {

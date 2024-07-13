@@ -1,0 +1,77 @@
+<div class="wrapper">
+    <div class="auth-box" *ngIf="!registering">
+        <div class="auth-header">
+            <span>Login</span>
+        </div>
+        <div class="input_box">
+            <input type="text" id="user" class="input-field" required>
+            <label for="user" class="label">Email</label>
+            <i class="bx bx-user icon"></i>
+        </div>
+        <div class="input_box">
+            <input type="password" id="pass" class="input-field" required (input)="checkPasswordStrength($event)">
+            <label for="pass" class="label">Password</label>
+            <i class="bx bx-lock-alt icon" (click)="togglePasswordVisibility('pass', $event)"></i>
+        </div>
+        <div id="passwordStrength" class="password-strength"></div>
+
+        <div class="remember-forgot">
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember"> Remember me </label>
+            </div>
+            <div class="forgot">
+                <a href="#" (click)="openModal('forgotPasswordModal', $event)">Forgot password ?</a>
+            </div>
+        </div>
+        <div class="input_box">
+            <input type="submit" class="input-submit" value="Login" (click)="handleLogin()">
+        </div>
+        <div class="auth">
+            <span>Don't have an account ? <a href="#" (click)="toggleAuthForms($event)">Register</a></span>
+        </div>
+    </div>
+    <div class="auth-box" *ngIf="registering">
+        <div class="auth-header">
+            <span>Register</span>
+        </div>
+        <div class="input_box">
+            <input type="text" id="registerUser" class="input-field" required>
+            <label for="registerUser" class="label">Username</label>
+        </div>
+        <div class="input_box">
+            <input type="email" id="registerEmail" class="input-field" required>
+            <label for="registerEmail" class="label">Email</label>
+        </div>
+        <div class="input_box">
+            <input type="password" id="registerPass" class="input-field" required
+                (input)="checkPasswordStrengthRegister($event)">
+            <label for="registerPass" class="label">Password</label>
+            <i class="bx bx-lock-alt icon" (click)="togglePasswordVisibility('registerPass', $event)"></i>
+        </div>
+        <div id="passwordStrengthRegister" class="password-strength"></div>
+
+        <div class="input_box">
+            <input type="submit" class="input-submit" value="Register" (click)="handleRegister()">
+        </div>
+
+        <div class="auth">
+            <span>Already have an account ? <a href="#" (click)="toggleAuthForms($event)">Login</a></span>
+        </div>
+    </div>
+</div>
+<div id="forgotPasswordModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-content-header">
+            <span class="close" (click)="closeModal('forgotPasswordModal')">&times;</span>
+            <h2>Forgot Password</h2>
+        </div>
+        <div class="input_box">
+            <input type="email" id="forgotEmail" class="input-field" required>
+            <label for="forgotEmail" class="label">Email</label>
+        </div>
+        <div class="input_box">
+            <input type="submit" class="input-submit" value="Reset Password" (click)="handleForgotPassword()">
+        </div>
+    </div>
+</div>

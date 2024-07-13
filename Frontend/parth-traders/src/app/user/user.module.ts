@@ -19,6 +19,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { AuthenticateComponent } from './authenticate/authenticate.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     ShoppingCartComponent,
     ProductComponent,
     SidebarComponent,
+    AuthenticateComponent
   ],
   imports: [
     CommonModule,

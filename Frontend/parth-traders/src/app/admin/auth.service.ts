@@ -36,16 +36,12 @@ export class AuthService {
     );
   }
 
-  private static log(message: string): any {
-    console.log(message);
-  }
-
   constructor(
     private http: HttpClient,
     private router: Router,
     private jwtHelper: JwtHelperService,
     private tokenService: TokenService
-  ) {}
+  ) { }
 
   //reactor this method to first validate the token and then calculate the expiration date later
   isAuthenticated(): boolean {
