@@ -35,7 +35,7 @@ namespace Parth_Traders.Controllers.User
             CustomerDto customerToReturn = _mapper.Map<CustomerDto>(addedCustomer);
 
             return CreatedAtRoute("GetCustomer",
-                                  new { customerName = customerToReturn.CustomerName },
+                                  new { customerName = customerToReturn.UserName },
                                   customerToReturn);
         }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parth_Traders.Data;
 
@@ -11,9 +12,10 @@ using Parth_Traders.Data;
 namespace Parth_Traders.Data.Migrations
 {
     [DbContext(typeof(ParthTradersContext))]
-    partial class ParthTradersContextModelSnapshot : ModelSnapshot
+    [Migration("20240713123938_added customer login using identity")]
+    partial class addedcustomerloginusingidentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

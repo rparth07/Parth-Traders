@@ -7,7 +7,7 @@ using Parth_Traders.Data.DataModel.User;
 
 namespace Parth_Traders.Data
 {
-    public class ParthTradersContext : IdentityDbContext<AdminDataModel>
+    public class ParthTradersContext : IdentityDbContext<DataModel.Admin.AdminDataModel>
     {
         public ParthTradersContext()
         {
@@ -24,9 +24,8 @@ namespace Parth_Traders.Data
         {
             modelBuilder.Entity<CustomerDataModel>(entity =>
             {
-                entity.Property(x => x.CustomerId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
-                entity.HasIndex(e => e.CustomerEmail).IsUnique();
-                entity.HasIndex(e => e.CustomerPhoneNumber).IsUnique();
+                entity.HasIndex(e => e.Email).IsUnique();
+                entity.HasIndex(e => e.PhoneNumber).IsUnique();
             });
             modelBuilder.Entity<OrderDataModel>(entity =>
             {
@@ -75,7 +74,7 @@ namespace Parth_Traders.Data
 
         public DbSet<ProductDataModel> Products { get; set; }
 
-        public DbSet<CustomerDataModel> Customers { get; set; }
+        public DbSet<DataModel.User.CustomerDataModel> Customers { get; set; }
 
         public DbSet<CategoryDataModel> Categories { get; set; }
 

@@ -9,22 +9,19 @@ namespace Parth_Traders.Dto.User
     {
         public CustomerDto()
         {
-            CreatedDate = DateTime.Now;
             Orders = new List<OrderDto>();
         }
 
-        public long CustomerId { get; set; }
+        public long Id { get; set; }
 
         [Required]
-        public string CustomerName { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+
+        public string Email { get; set; }
 
         [Required]
-        public DateTime CreatedDate { get; set; }
-
-        public string CustomerEmail { get; set; }
-
-        [Required]
-        public string CustomerPhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string CustomerAddress { get; set; }
 

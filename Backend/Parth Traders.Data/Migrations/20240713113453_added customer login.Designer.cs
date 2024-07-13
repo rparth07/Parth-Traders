@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parth_Traders.Data;
 
@@ -11,9 +12,10 @@ using Parth_Traders.Data;
 namespace Parth_Traders.Data.Migrations
 {
     [DbContext(typeof(ParthTradersContext))]
-    partial class ParthTradersContextModelSnapshot : ModelSnapshot
+    [Migration("20240713113453_added customer login")]
+    partial class addedcustomerlogin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +53,15 @@ namespace Parth_Traders.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c617cb89-6dba-4e65-a646-c311a8c29b8b",
-                            ConcurrencyStamp = "8a2a9a39-a9d3-4299-ab0e-68683e854805",
+                            Id = "bf8cbdbc-ddef-48cc-af08-81eb7ae4dfc0",
+                            ConcurrencyStamp = "b32e537a-ccd9-417c-9dad-1af92fd84cb2",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "f532dcf0-64d9-40f3-adad-1307506f73b3",
-                            ConcurrencyStamp = "5646f8c9-4f4b-4e75-85c8-baa35377614a",
+                            Id = "8830bb04-43b9-43df-a9ad-13b847c5b3c6",
+                            ConcurrencyStamp = "8ccab8f7-25b1-487c-b785-dc3e95255365",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -171,7 +173,31 @@ namespace Parth_Traders.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Parth_Traders.Data.DataModel.Admin.AdminDataModel", b =>
+            modelBuilder.Entity("Parth_Traders.Data.DataModel.Admin.CategoryDataModel", b =>
+                {
+                    b.Property<long>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("CategoryDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("CategoryName")
+                        .IsUnique();
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Parth_Traders.Data.DataModel.Admin.CustomerDataModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -242,30 +268,6 @@ namespace Parth_Traders.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Parth_Traders.Data.DataModel.Admin.CategoryDataModel", b =>
-                {
-                    b.Property<long>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CategoryId"), 1L, 1);
-
-                    b.Property<string>("CategoryDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CategoryId");
-
-                    b.HasIndex("CategoryName")
-                        .IsUnique();
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Parth_Traders.Data.DataModel.Admin.ProductDataModel", b =>
@@ -360,8 +362,11 @@ namespace Parth_Traders.Data.Migrations
 
             modelBuilder.Entity("Parth_Traders.Data.DataModel.User.CustomerDataModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CustomerId"), 1L, 1);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -369,15 +374,33 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("CustomerAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -398,7 +421,7 @@ namespace Parth_Traders.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -412,15 +435,13 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CustomerId");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                    b.HasIndex("CustomerEmail")
+                        .IsUnique();
 
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
+                    b.HasIndex("CustomerPhoneNumber")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -439,10 +460,6 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<long>("GrandTotal")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -454,7 +471,7 @@ namespace Parth_Traders.Data.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -508,7 +525,7 @@ namespace Parth_Traders.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Parth_Traders.Data.DataModel.Admin.AdminDataModel", null)
+                    b.HasOne("Parth_Traders.Data.DataModel.Admin.CustomerDataModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -517,7 +534,7 @@ namespace Parth_Traders.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Parth_Traders.Data.DataModel.Admin.AdminDataModel", null)
+                    b.HasOne("Parth_Traders.Data.DataModel.Admin.CustomerDataModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -532,7 +549,7 @@ namespace Parth_Traders.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Parth_Traders.Data.DataModel.Admin.AdminDataModel", null)
+                    b.HasOne("Parth_Traders.Data.DataModel.Admin.CustomerDataModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -541,7 +558,7 @@ namespace Parth_Traders.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Parth_Traders.Data.DataModel.Admin.AdminDataModel", null)
+                    b.HasOne("Parth_Traders.Data.DataModel.Admin.CustomerDataModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -571,7 +588,7 @@ namespace Parth_Traders.Data.Migrations
                 {
                     b.HasOne("Parth_Traders.Data.DataModel.User.CustomerDataModel", "CustomerData")
                         .WithMany("Orders")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

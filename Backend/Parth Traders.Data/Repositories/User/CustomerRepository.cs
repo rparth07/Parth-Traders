@@ -38,7 +38,7 @@ namespace Parth_Traders.Data.Repositories.User
             var customer = _context.Customers
                 .Include("Orders")
                 .AsNoTracking()
-                .FirstOrDefault(_ => _.CustomerId == id);
+                .FirstOrDefault(_ => _.Id == id.ToString());
 
             return _mapper.Map<Customer>(customer);
         }
@@ -48,7 +48,7 @@ namespace Parth_Traders.Data.Repositories.User
             var customer = _context.Customers
                 .Include("Orders")
                 .AsNoTracking()
-                .FirstOrDefault(_ => _.CustomerName == customerName);
+                .FirstOrDefault(_ => _.UserName == customerName);
 
             return _mapper.Map<Customer>(customer);
         }
