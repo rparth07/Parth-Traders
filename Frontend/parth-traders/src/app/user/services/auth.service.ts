@@ -13,18 +13,22 @@ const API_URL = 'https://localhost:5031/';
 export class AuthService {
   private customer: Customer | null = null;
   redirectUrl = '';
-  customerName = new Subject<string>();
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private jwtHelper: JwtHelperService,
     private tokenService: TokenService
-  ) { }
+  ) {
+    if (this.isAuthenticated()) {
+      this.customer = this.tokenService.getCustomer();
+    } else {
+      this.removeAllTokens();
+    }
+  }
 
   async loginApi(email: string, password: string): Promise<any> {
-    this.tokenService.removeToken();
-    this.tokenService.removeRefreshToken();
+    this.removeAllTokens();
 
     const body: { email: string; password: string } = {
       email: email,
@@ -36,9 +40,9 @@ export class AuthService {
         next: (res) => {
           this.tokenService.saveToken(res.token);
           this.tokenService.saveRefreshToken(res.refresh_token);
+          this.tokenService.saveCustomer(res.customer);
           this.customer = res.customer;
           this.customer!.token = res.token;
-          this.customerName.next(this.customer!.userName);
           this.router
             .navigate(['/user/home'])
             .then((_) => console.log('You are secure now!'));
@@ -58,8 +62,7 @@ export class AuthService {
 
   async registerApi(username: string, email: string, password: string): Promise<any> {
     // Replace with actual API call
-    this.tokenService.removeToken();
-    this.tokenService.removeRefreshToken();
+    this.removeAllTokens();
 
     const body: { userName: string, email: string, password: string } = {
       userName: username,
@@ -109,7 +112,6 @@ export class AuthService {
           this.tokenService.saveToken(res.token);
           this.tokenService.saveRefreshToken(res.refresh_token);
           this.customer = res.customer;
-          this.customerName.next(this.customer!.userName);
         }),
         catchError(AuthService.handleError)
       );
@@ -117,8 +119,8 @@ export class AuthService {
 
   //refactor this method
   refreshToken(refreshData: any): Observable<any> {
-    this.tokenService.removeToken();
-    this.tokenService.removeRefreshToken();
+    this.removeAllTokens();
+
     const body = new HttpParams().set(
       'refresh_token',
       refreshData.refresh_token
@@ -128,19 +130,35 @@ export class AuthService {
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
+        this.tokenService.saveCustomer(res.customer);
+        this.customer = res.customer;
+        this.customer!.token = res.token;
       }),
       catchError(AuthService.handleError)
     );
   }
 
   logout(): void {
-    this.tokenService.removeToken();
-    this.tokenService.removeRefreshToken();
+    this.removeAllTokens();
     this.router.navigate(['/user/authenticate']);
   }
 
   getCustomer() {
     return this.customer!;
+  }
+
+  getCustomerName(): string {
+    return this.customer == null ? '' : this.customer.userName;
+  }
+
+  redirectToLogIn(): void {
+    this.router.navigate(['/user/authenticate']);
+  }
+
+  removeAllTokens() {
+    this.tokenService.removeCustomer();
+    this.tokenService.removeToken();
+    this.tokenService.removeRefreshToken();
   }
 
   private static handleError(error: HttpErrorResponse): any {

@@ -5,13 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Parth_Traders.Data.Repositories.Admin
 {

@@ -54,6 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         console.log(error.error.error);
         if (error.status === 401) {
+          this.authService.removeAllTokens();
           if (error.error.error === 'invalid_token') {
             this.authService
               .refreshToken({ refresh_token: refreshToken })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,11 @@ import { CartService } from '../services/cart.service';
 export class HeaderComponent implements OnInit {
   selectedCategory: string;
   totalOrderItems: number = 0;
+  customerName: string = '';
 
   categories: string[];
 
-  constructor(private productService: ProductService, private cartService: CartService) {
+  constructor(private productService: ProductService, private cartService: CartService, private authService: AuthService) {
     this.selectedCategory = 'All Categories';
     this.categories = productService.getCategories();
     this.categories.push('All Categories');
@@ -21,6 +23,8 @@ export class HeaderComponent implements OnInit {
     this.cartService.getOrderCountEvent().subscribe((orderItemsCount: number) => {
       this.totalOrderItems = orderItemsCount;
     })
+
+    this.customerName = authService.getCustomerName();
   }
 
   ngOnInit(): void {
@@ -46,5 +50,13 @@ export class HeaderComponent implements OnInit {
     if (key === 'clicked' || key === 'Enter' || (key === 'Backspace' && searchValue === '')) {
       this.productService.productFilter$.next(filterCriteria);
     }
+  }
+
+  isAuthenticated(): Boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  redirectToLogIn(): void {
+    this.authService.redirectToLogIn();
   }
 }

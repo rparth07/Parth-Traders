@@ -9,15 +9,13 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class ProductComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() product!: Product;
   selectedProductSize: string | null = null;
   productCard: HTMLDivElement | undefined;
   productImagePath: string;
   @ViewChild('productElement') productCardRef!: ElementRef<HTMLDivElement>;
 
-  private changeGridToLargeSubject$!: Subscription;
-  @Input() changeGridToLargeObservable!: Observable<boolean>;
   @Input('shouldSwitchToLargeGrid') shouldSwitchToLargeGrid: boolean = false;
 
   @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
@@ -56,10 +54,6 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     } else {
       this.renderer.removeClass(make3D, 'flip180');
     }
-  }
-
-  ngOnDestroy(): void {
-    this.changeGridToLargeSubject$.unsubscribe();
   }
 
   // Method to lift product card

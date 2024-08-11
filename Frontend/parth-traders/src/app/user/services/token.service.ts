@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Customer } from '../core/models/Customer';
 
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
+const CUSTOMER_INFO = 'customer_info';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
-  constructor() {}
+  constructor() { }
 
   getToken(): string | null {
     return localStorage.getItem(ACCESS_TOKEN);
@@ -31,5 +33,18 @@ export class TokenService {
 
   removeRefreshToken(): void {
     localStorage.removeItem(REFRESH_TOKEN);
+  }
+
+  saveCustomer(customer: Customer): void {
+    localStorage.setItem(CUSTOMER_INFO, JSON.stringify(customer));
+  }
+
+  getCustomer(): Customer | null {
+    const customerInfo = localStorage.getItem(CUSTOMER_INFO);
+    return customerInfo ? JSON.parse(customerInfo) : null;
+  }
+
+  removeCustomer(): void {
+    localStorage.removeItem(CUSTOMER_INFO);
   }
 }

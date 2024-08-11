@@ -1,6 +1,6 @@
 <div class="header w-full header-upper py-2 h-100 flex justify-content-between">
   <div class="w-16">
-    <h1><a href="">
+    <h1><a href="/user/home">
         <img class="header__logo" src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" />
       </a></h1>
   </div>
@@ -29,7 +29,11 @@
     </div>
   </div>
   <div class="d-flex header__nav">
-    <div class="header__option">
+    <div class="header__option" *ngIf="isAuthenticated()">
+      <span class="header__optionLineOne">Welcome,</span>
+      <span class="header__optionLineTwo">{{customerName}}</span>
+    </div>
+    <div class="header__option" (click)="redirectToLogIn()" *ngIf="!isAuthenticated()">
       <span class="header__optionLineOne">Hello Guest</span>
       <span class="header__optionLineTwo">Sign In</span>
     </div>

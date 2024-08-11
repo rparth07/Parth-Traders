@@ -7,15 +7,15 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  IsUserLogin = false;
+  isAuthenticationPage = true;
   constructor(router: Router) {
-    // on route change to '/login', set the variable IsUserLogin to false
+    // on route change to '/login', set the variable isAuthenticationPage to false
     router.events.forEach((event) => {
       if (event instanceof NavigationStart || event instanceof NavigationEnd) {
         if (event.url.endsWith('/authenticate')) {
-          this.IsUserLogin = false;
+          this.isAuthenticationPage = true;
         } else {
-          this.IsUserLogin = true;
+          this.isAuthenticationPage = false;
         }
       }
     });
