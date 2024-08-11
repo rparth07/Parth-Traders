@@ -1,40 +1,28 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../core/models/Product';
 import { Subscription } from 'rxjs';
+import { OrderDetail } from '../core/models/OrderDetail';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
-  shouldFlash: Boolean = true;
-  cartItems: Product[] = [];
+export class ShoppingCartComponent implements OnInit, OnDestroy {
+  flashIndex: number = -1;
+
   @ViewChild('cart', { static: true }) cartRef!: ElementRef;
 
   private addToCartSubscription!: Subscription;
 
-  constructor(private cartService: CartService, private ngZone: NgZone, private renderer: Renderer2) {
-  }
-
-  ngAfterViewInit(): void {
-  }
-
-  removeFromCart(index: number) {
-    this.shouldFlash = false;
-    this.cartItems.splice(index, 1);
+  constructor(private cartService: CartService, private ngZone: NgZone) {
   }
 
   ngOnInit(): void {
-    this.addToCartSubscription = this.cartService.getAddToCartEvent().subscribe((product: Product) => {
-      this.shouldFlash = true;
-      this.cartItems.push(product);
+    this.addToCartSubscription = this.cartService.getAddToCartEvent().subscribe(() => {
       setTimeout(() => {
-        this.ngZone.run(() => {
-          const lastCartItem = this.cartRef.nativeElement.querySelectorAll('.flash')[0];
-          this.renderer.removeClass(lastCartItem, 'flash');
-        });
+        this.flashProductAt(this.getCartItems().length - 1);
       }, 10);
     });
   }
@@ -43,5 +31,33 @@ export class ShoppingCartComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.addToCartSubscription) {
       this.addToCartSubscription.unsubscribe();
     }
+  }
+
+  getCartItems() {
+    return this.cartService.getCartItems();
+  }
+
+  removeFromCart(index: number) {
+    this.flashIndex = -1;
+    this.cartService.removeFromCartAt(index);
+  }
+
+  incrementProductCountOf(orderDetail: OrderDetail) {
+    this.cartService.incrementProductCountOf(orderDetail);
+    this.flashProductAt(this.getCartItems().indexOf(orderDetail));
+  }
+
+  decrementProductCountFrom(orderDetail: OrderDetail) {
+    this.cartService.decrementProductCountFrom(orderDetail);
+    this.flashProductAt(this.getCartItems().indexOf(orderDetail));
+  }
+
+  flashProductAt(productIndex: number) {
+    this.ngZone.run(() => {
+      this.flashIndex = productIndex;
+      setTimeout(() => {
+        this.flashIndex = -1;
+      }, 700);
+    });
   }
 }

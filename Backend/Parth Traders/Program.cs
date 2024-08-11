@@ -4,6 +4,7 @@ using Newtonsoft.Json.Serialization;
 using NLog;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Data.DataModel.User;
 using Parth_Traders.Data.Repositories.Admin;
 using Parth_Traders.Data.Repositories.User;
 using Parth_Traders.Domain.RepositoryInterfaces.Admin;
@@ -16,13 +17,13 @@ using Parth_Traders.Service.Services.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 using Parth_Traders.Service.Services.User;
 using Parth_Traders.Service.Services.User.UserInterface;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
-
 builder.Services.ConfigureLoggerService();
 
 builder.Services.AddControllers()
@@ -56,6 +57,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderHelperService, OrderHelperService>();
 
 builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+builder.Services.AddScoped<ICustomerAuthManager, CustomerAuthManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -63,13 +65,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSwagger();
 builder.Services.AddDbContext<ParthTradersContext>();
 
+builder.Services.AddIdentityCore<AdminDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
+builder.Services.AddIdentityCore<CustomerDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
+
 builder.Services.AddIdentity<AdminDataModel, IdentityRole>()
-    .AddEntityFrameworkStores<ParthTradersContext>();
+    .AddEntityFrameworkStores<ParthTradersContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
-
 
 //Filter to handle exception
 builder.Services.AddMvc(options =>
@@ -85,7 +90,7 @@ app.UseRouting();
 
 app.UseCors(builder =>
 {
-    //Need to refactore as this - .WithOrigins("https://localhost:4200")
+    // Need to refactor as this - .WithOrigins("https://localhost:4200")
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 });
 

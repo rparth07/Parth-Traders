@@ -1,50 +1,42 @@
-<div class="product" [id]="'product_' + product.id" #productElement>
-    <div class="info-large">
-        <h4>{{ product.title }}</h4>
+<div class="product" [id]="'product_' + product.id" #productElement [class.large]="shouldSwitchToLargeGrid">
+    <div class="info-large" [class]="shouldSwitchToLargeGrid ? 'd-block': 'd-none'">
+        <h4>{{ product.productName }}</h4>
         <div class="sku">PRODUCT SKU: <strong>{{ product.sku }}</strong></div>
-        <div class="price-big"><span>$43</span> ${{ product.price }}</div>
-        <h3>COLORS</h3>
-        <div class="colors-large">
-            <ul>
-                <li *ngFor="let color of product.colors" (click)="changeColor(color)" [style.background]="color">
-                    <span></span>
-                </li>
-            </ul>
+        <div class="price-big">
+            <span *ngIf="product.discount != 0">$ {{product.price}}</span>
+            ${{ product.price - product.discount }}
         </div>
         <h3>SIZE</h3>
-        <div class="sizes-large">
-            <span *ngFor="let size of product.sizes">{{ size }}</span>
+        <div class="sizes">
+            <span class="ms-1" [class.selected-product-size]="selectedProductSize == productSize"
+                *ngFor="let productSize of product.sizes" (click)="updateProductSize(productSize)">
+                {{ productSize }}
+            </span>
         </div>
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
     </div>
-    <div class="make3D" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
-        <div class="product-front">
-            <div class="shadow"></div>
+    <div class="make3D flip180" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
+        <div class="product-front" [class]="shouldSwitchToLargeGrid ? 'd-none': 'd-block'">
             <img src="{{ product.image_paths[0] }}" alt="" />
             <div class="image_overlay"></div>
             <div class="add_to_cart" (click)="addToCart()">Add to cart</div>
             <div class="view_gallery" (click)="flipCardToBack()">View gallery</div>
             <div class="stats">
                 <div class="stats-container">
-                    <span class="product_price">${{ product.price }}</span>
+                    <span class="product_price">${{ product.price - product.discount }}</span>
                     <span class="product_name">{{ product.productType }}</span>
                     <p>{{ product.category }}</p>
-                    <div class="product-options">
-                        <strong>SIZES</strong>
-                        <span>{{ product.sizes.join(', ') }}</span>
-                        <strong>COLORS</strong>
-                        <div class="colors d-flex gap-1">
-                            <div class="c-blue"><span></span></div>
-                            <div class="c-red"><span></span></div>
-                            <div class="c-white"><span></span></div>
-                            <div class="c-green"><span></span></div>
-                        </div>
+                    <div class="product-options sizes">
+                        <strong>SIZES</strong><br>
+                        <span class="ms-1" [class.selected-product-size]="selectedProductSize == productSize"
+                            *ngFor="let productSize of product.sizes" (click)="updateProductSize(productSize)">
+                            {{ productSize }}
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="product-back">
-            <div class="shadow"></div>
+        <div class="product-back" [class.d-block]="shouldSwitchToLargeGrid">
             <ngb-carousel *ngIf="product.image_paths">
                 <ng-template *ngFor="let image of product.image_paths" ngbSlide>
                     <div class="wrapper">

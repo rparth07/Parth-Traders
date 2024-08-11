@@ -23,17 +23,22 @@ export class SidebarComponent implements OnInit {
   sliderOptions: Options = {
     floor: 10,
     ceil: 10000,
-    step: 1
+    step: 10
   };
 
   constructor(private productService: ProductService) {
     this.categories = productService.getCategories();
     this.filterCriteria = {
+      name: '',
       categories: this.getCheckedCategories(),
       activeProductType: null,
       priceRange: {
         min: null,
         max: null
+      },
+      ratingRange: {
+        min: null,
+        max: 5
       }
     };
   }
@@ -88,6 +93,16 @@ export class SidebarComponent implements OnInit {
   filterByPrice() {
     this.filterCriteria.priceRange.min = this.minValue;
     this.filterCriteria.priceRange.max = this.maxValue;
+    this.triggerProductFilterEvent();
+  }
+
+  updateMinRating(rating: number) {
+    this.filterCriteria.ratingRange.min = rating;
+    this.triggerProductFilterEvent();
+  }
+
+  clearRating() {
+    this.filterCriteria.ratingRange.min = null;
     this.triggerProductFilterEvent();
   }
 }

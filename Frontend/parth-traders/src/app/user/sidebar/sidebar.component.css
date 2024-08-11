@@ -1,7 +1,7 @@
 #sidebar {
     float: left;
     background: #fff;
-    width: 275px;
+    width: 300px;
     padding: 13px 0 0 0;
     height: 1400px;
     border-right: 1px solid #eee;
@@ -174,9 +174,50 @@
     margin-left: -21px;
 }
 
+.price-range {
+    padding: 0 32px;
+    font-weight: bold;
+}
+
 #sidebar img {
     margin-top: 6px;
     margin-left: 32px;
+}
+
+.ratings {
+    padding: 0 0 10px 32px;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #cd9042;
+}
+
+.rating-container:hover {
+    background-color: #9ff5df;
+}
+
+.rating-container {
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 0 10px;
+    margin-bottom: 5px;
+    width: max-content;
+    border-radius: 10px;
+}
+
+.rating-container.active {
+    background-color: #5ff7d2;
+    border: 2px solid #007185;
+}
+
+.clear-rating {
+    cursor: pointer;
+}
+
+.clear-rating a:hover {
+    color: #007185;
+    text-decoration-line: underline;
 }
 
 ::ng-deep .ngx-slider .ngx-slider-selection {
@@ -211,4 +252,8 @@
 
 ::ng-deep .custom-slider .ngx-slider .ngx-slider-bubble.ngx-slider-limit {
     font-weight: bold;
+}
+
+::ng-deep .ngx-slider-bubble {
+    display: none !important;
 }

@@ -1,24 +1,12 @@
-﻿using Parth_Traders.Domain.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using Parth_Traders.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Data.DataModel.User
 {
-    public class CustomerDataModel
+    public class CustomerDataModel : IdentityUser
     {
-        [Key]
-        public long CustomerId { get; set; }
-
-        [Required]
-        public string CustomerName { get; set; }
-
-        [Required]
-        public DateTime CreatedDate { get; set; }
-
-        public string CustomerEmail { get; set; }
-
-        [Required]
-        public string CustomerPhoneNumber { get; set; }
-
+        //TODO: need to verify
         public string CustomerAddress { get; set; }
 
         [Required]

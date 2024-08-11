@@ -1,13 +1,12 @@
 .home__image {
   width: 100%;
   z-index: -1;
-  /* margin-bottom: -22.6rem; */
-  /* mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); */
 }
 
 .home__row {
   background-color: #fff;
   padding: 0 1rem;
+  flex: 1;
 }
 
 .home {
@@ -62,18 +61,23 @@
 
 #grid-menu li.smallGrid {
   margin-right: 7px;
+  cursor: pointer;
 }
 
 #grid-menu li.smallGrid a {
   background-position: 0 -33px;
 }
 
-#grid-menu li.largeGrid a {
-  background-position: -37px 0;
-}
-
 #grid-menu li.smallGrid a.active {
   background-position: 0 0;
+}
+
+#grid-menu li.largeGrid {
+  cursor: pointer;
+}
+
+#grid-menu li.largeGrid a {
+  background-position: -37px 0;
 }
 
 #grid-menu li.largeGrid a.active {
@@ -93,8 +97,8 @@ div.floating-cart {
 }
 
 div.floating-cart.moveToCart {
-  left: 68px !important;
-  top: 55px !important;
+  left: 73px !important;
+  top: 80px !important;
   width: 47px;
   height: 47px;
   -webkit-transition: all 800ms ease-in-out;
@@ -105,8 +109,8 @@ div.floating-cart.moveToCart {
 }
 
 .MakeFloatingCart div.floating-cart.moveToCart {
-  left: 80px !important;
-  top: 110px !important;
+  left: 86px !important;
+  top: 130px !important;
   width: 21px;
   height: 22px;
   box-shadow: 0px 5px 31px -1px rgba(0, 0, 0, 0);
@@ -120,4 +124,11 @@ div.floating-cart.moveToCart {
 .loading-indicator {
   text-align: center;
   padding: 20px;
+}
+
+.sidebar-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }

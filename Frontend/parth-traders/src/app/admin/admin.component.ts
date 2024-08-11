@@ -8,7 +8,7 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
   IsUserLogin = false;
-  constructor(private router: Router) {
+  constructor(router: Router) {
     // on route change to '/login', set the variable IsUserLogin to false
     router.events.forEach((event) => {
       if (event instanceof NavigationStart || event instanceof NavigationEnd) {
@@ -21,5 +21,5 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

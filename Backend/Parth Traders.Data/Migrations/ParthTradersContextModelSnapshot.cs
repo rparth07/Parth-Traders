@@ -51,15 +51,15 @@ namespace Parth_Traders.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f9ec7013-8b81-4bd8-978a-7806ae5c3bf7",
-                            ConcurrencyStamp = "3c191a0f-40e8-467e-8b17-a8ab60512147",
+                            Id = "c617cb89-6dba-4e65-a646-c311a8c29b8b",
+                            ConcurrencyStamp = "8a2a9a39-a9d3-4299-ab0e-68683e854805",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "38f28894-03a3-4fad-b245-9f99dd5e36c1",
-                            ConcurrencyStamp = "b6f1f492-9306-44a1-91a5-af8666fb97a2",
+                            Id = "f532dcf0-64d9-40f3-adad-1307506f73b3",
+                            ConcurrencyStamp = "5646f8c9-4f4b-4e75-85c8-baa35377614a",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -360,41 +360,67 @@ namespace Parth_Traders.Data.Migrations
 
             modelBuilder.Entity("Parth_Traders.Data.DataModel.User.CustomerDataModel", b =>
                 {
-                    b.Property<long>("CustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CustomerId"), 1L, 1);
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerEmail")
-                        .IsRequired()
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerPhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentType")
                         .HasColumnType("int");
 
-                    b.HasKey("CustomerId");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("CustomerEmail")
-                        .IsUnique();
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("CustomerPhoneNumber")
-                        .IsUnique();
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
@@ -413,6 +439,10 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<long>("GrandTotal")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -424,7 +454,7 @@ namespace Parth_Traders.Data.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Orders");
                 });
@@ -541,7 +571,7 @@ namespace Parth_Traders.Data.Migrations
                 {
                     b.HasOne("Parth_Traders.Data.DataModel.User.CustomerDataModel", "CustomerData")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

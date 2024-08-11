@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Parth_Traders.CsvParserModel;
+using Parth_Traders.Data.DataModel.User;
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Dto.User;
 
@@ -12,6 +13,7 @@ namespace Parth_Traders.Data.Profiles
             CreateMap<CustomerDto, Customer>();
             CreateMap<ParsedCustomer, Customer>();
             CreateMap<Customer, CustomerDto>();
+            CreateMap<CustomerDto, CustomerDataModel>();
         }
     }
 }

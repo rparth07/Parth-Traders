@@ -44,7 +44,7 @@ namespace Parth_Traders.Data.Repositories.User
                 .Include("CustomerData")
                 .Include("OrderDetails.ProductData")
                 .AsNoTracking()
-                .Where(_ => _.CustomerData.CustomerName == customerName)
+                .Where(_ => _.CustomerData.UserName == customerName)
                 .OrderByDescending(_ => _.OrderDate)
                 .FirstOrDefault();
 
@@ -57,7 +57,7 @@ namespace Parth_Traders.Data.Repositories.User
                 .Include("CustomerData")
                 .Include("OrderDetails.ProductData")
                 .AsNoTracking()
-                .Where(_ => _.CustomerData.CustomerName == customerName);
+                .Where(_ => _.CustomerData.UserName == customerName);
 
             return _mapper.Map<List<Order>>(ordersToReturn);
         }
@@ -69,7 +69,7 @@ namespace Parth_Traders.Data.Repositories.User
                 .Include("CustomerData")
                 .Include("OrderDetails.ProductData")
                 .AsNoTracking()
-                .Where(_ => _.CustomerData.CustomerName == customerName &&
+                .Where(_ => _.CustomerData.UserName == customerName &&
                        _.OrderStatus == orderStatus);
 
             return _mapper.Map<List<Order>>(ordersToReturn);

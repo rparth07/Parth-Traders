@@ -8,11 +8,18 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ProductComponent } from './product/product.component';
-import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { AuthenticateComponent } from './authenticate/authenticate.component';
 
 @NgModule({
   declarations: [
@@ -23,15 +30,24 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     ShoppingCartComponent,
     ProductComponent,
     SidebarComponent,
+    AuthenticateComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    OverlayModule,
     MatIconModule,
     NgbCarouselModule,
     UserRoutingModule,
     InfiniteScrollModule,
     MatProgressSpinnerModule,
-    NgxSliderModule
+    NgxSliderModule,
+    NgbRatingModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
   ],
 })
 export class UserModule { }

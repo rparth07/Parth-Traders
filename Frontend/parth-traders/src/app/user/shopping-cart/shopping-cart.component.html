@@ -1,23 +1,33 @@
-<h3>CART</h3>
-<div class="cart-icon-top"></div>
-
-<div class="cart-icon-bottom"></div>
-
-<!-- <div id="checkout">CHECKOUT</div> -->
-<div id="cart" #cart>
-    <div class="cart-item" [class]="(isLast && shouldFlash) ? 'flash': ''"
-        *ngFor="let item of cartItems; let i = index; last as isLast">
-        <div class="img-wrap">
-            <img [src]="item.image_paths[0]" alt="Product">
+<div class="d-flex align-items-baseline justify-content-between">
+    <div class="d-flex justify-content-between cart-display-container">
+        <h3>CART</h3>
+        <div class="flex-icon-container">
+            <div class="cart-icon-top"></div>
+            <div class="cart-icon-bottom"></div>
         </div>
-        <span>{{ item.title }}</span>
-        <strong>{{ item.price }}</strong>
+    </div>
+    <button class="me-3" id="checkout" *ngIf="getCartItems().length > 0">CHECKOUT</button>
+</div>
+
+<div id="cart" #cart>
+    <div class="cart-item" [class.flash]="flashIndex==i" *ngFor="let item of getCartItems(); let i = index">
+        <div class="img-wrap">
+            <img [src]="item.product.image_paths[0]" alt="Product">
+        </div>
+        <span>{{ item.product.productName }}</span>
+        <strong>{{ item.totalPrice | number : '1.2-2'}}</strong>
+        <div class="product-count-container">
+            <button class="decrement-product-count-button" (click)="decrementProductCountFrom(item)">-</button>
+            <div class="product-count">
+                x {{item.quantity}}
+            </div>
+            <button class="increment-product-count-button" (click)="incrementProductCountOf(item)">+</button>
+        </div>
         <div class="cart-item-border"></div>
         <div class="delete-item" (click)="removeFromCart(i)"></div>
     </div>
-    <button id="checkout" *ngIf="cartItems.length > 0">CHECKOUT</button>
 
-    <ng-template *ngIf="cartItems.length == 0">
+    <ng-template *ngIf="getCartItems().length == 0">
         <span class="empty">Your cart is empty</span>
     </ng-template>
 </div>
