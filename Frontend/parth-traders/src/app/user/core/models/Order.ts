@@ -68,6 +68,10 @@ export class Order {
             this.orderDetails[index].decrementProductCountFrom();
         }
     }
+
+    getTotalOrderPrice() {
+        return this.orderDetails.reduce((acc, currentOrderDetail) => acc + currentOrderDetail.getTotalPrice(), 0);
+    }
 }
 
 export enum OrderStatus {

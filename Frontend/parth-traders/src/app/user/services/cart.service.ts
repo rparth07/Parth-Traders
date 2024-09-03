@@ -12,11 +12,10 @@ export class CartService {
   private addToCartEvent = new EventEmitter();
   private orderCountEvent = new EventEmitter<number>();
 
-  private order: Order;
+  private order: Order = new Order(this.authService.getCustomer());
 
   constructor(private authService: AuthService) {
-    this.order = new Order(this.authService.getCustomer())
-  }//TODO: need to add customer
+  }
 
   public addToCart(product: Product, productSize: string) {
     if (this.order.hasProduct(product)) {
@@ -37,6 +36,10 @@ export class CartService {
     return this.order.getOrderDetails();
   }
 
+  public isCartEmpty(): Boolean {
+    return this.order.orderDetails.length > 0;
+  }
+
   private emitAddItemToCartEvent() {
     this.addToCartEvent.emit();
   }
@@ -53,6 +56,10 @@ export class CartService {
   public incrementProductCountOf(orderDetail: OrderDetail) {
     this.order.incrementProductCountOf(orderDetail);
     this.emitOrderCountEvent();
+  }
+
+  public getTotalOrderPrice(): number {
+    return this.order.getTotalOrderPrice();
   }
 
   private emitOrderCountEvent() {

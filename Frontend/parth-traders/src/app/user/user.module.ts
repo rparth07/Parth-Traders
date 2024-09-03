@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ShoppingCartComponent,
     ProductComponent,
     SidebarComponent,
-    AuthenticateComponent
+    AuthenticateComponent,
+    CheckoutComponent
   ],
   imports: [
     CommonModule,

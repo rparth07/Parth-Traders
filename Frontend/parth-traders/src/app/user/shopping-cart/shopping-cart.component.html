@@ -6,7 +6,8 @@
             <div class="cart-icon-bottom"></div>
         </div>
     </div>
-    <button class="me-3" id="checkout" *ngIf="getCartItems().length > 0">CHECKOUT</button>
+    <button class="me-3" id="checkout" *ngIf="getCartItems().length > 0"
+        (click)="redirectToCheckout()">CHECKOUT</button>
 </div>
 
 <div id="cart" #cart>

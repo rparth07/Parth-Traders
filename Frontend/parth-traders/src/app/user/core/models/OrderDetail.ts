@@ -1,6 +1,4 @@
-import { Order } from "./Order";
 import { Product } from "./Product";
-
 
 export class OrderDetail {
     product: Product;
@@ -27,5 +25,9 @@ export class OrderDetail {
 
     getProductQuantity() {
         return this.quantity;
+    }
+
+    getTotalPrice() {
+        return this.totalPrice;
     }
 }

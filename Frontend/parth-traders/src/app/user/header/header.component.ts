@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   categories: string[];
 
-  constructor(private productService: ProductService, private cartService: CartService, private authService: AuthService) {
+  constructor(private productService: ProductService, private cartService: CartService, private authService: AuthService, private router: Router) {
     this.selectedCategory = 'All Categories';
     this.categories = productService.getCategories();
     this.categories.push('All Categories');
@@ -28,6 +29,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  redirectToCheckout() {
+    this.router.navigate(['/user/checkout']);
   }
 
   searchProduct(key: string, searchValue: string) {

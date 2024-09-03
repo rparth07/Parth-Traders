@@ -4,6 +4,7 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { LogInGuardService as LogInGuard } from './services/log-in-guard.service';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
   },
   {
     path: '',

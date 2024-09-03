@@ -49,8 +49,10 @@
     </div>
 
     <div class="header__optionBasket">
-      <mat-icon aria-hidden="false" aria-label="shopping basket icon" fontIcon="shopping_basket"></mat-icon>
-      <span class="header__optionLineTwo header__basketCount"> {{totalOrderItems}} </span>
+      <div (click)="redirectToCheckout()" class="d-flex align-items-center text-white">
+        <mat-icon aria-hidden="false" aria-label="shopping basket icon" fontIcon="shopping_basket"></mat-icon>
+        <span class="header__optionLineTwo header__basketCount"> {{totalOrderItems}} </span>
+      </div>
     </div>
   </div>
 </div>

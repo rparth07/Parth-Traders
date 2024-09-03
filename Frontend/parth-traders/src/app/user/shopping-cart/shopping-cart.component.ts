@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CartService } from '../services/cart.service';
-import { Product } from '../core/models/Product';
 import { Subscription } from 'rxjs';
 import { OrderDetail } from '../core/models/OrderDetail';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -16,7 +16,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   private addToCartSubscription!: Subscription;
 
-  constructor(private cartService: CartService, private ngZone: NgZone) {
+  constructor(private cartService: CartService, private ngZone: NgZone, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -59,5 +59,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.flashIndex = -1;
       }, 700);
     });
+  }
+
+  redirectToCheckout() {
+    this.router.navigate(['/user/checkout']);
   }
 }
