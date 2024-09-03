@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
     MatFormFieldModule,
     MatOptionModule,
     MatInputModule,
+    NgxPayPalModule
   ],
 })
 export class UserModule { }

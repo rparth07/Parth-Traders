@@ -9,7 +9,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, Subject, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { TokenService } from './token.service';
-import decode from 'jwt-decode';
 import { AdminDetails } from './profile/admin-details';
 
 const API_URL = 'https://localhost:5031/';
