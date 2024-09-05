@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CartService } from "../services/cart.service";
 import { OrderDetail } from "../core/models/OrderDetail";
+import { OrderService } from "../services/order.service";
 
 @Component({
   selector: "app-checkout",
@@ -9,13 +10,14 @@ import { OrderDetail } from "../core/models/OrderDetail";
 })
 export class CheckoutComponent implements OnInit {
   totalOrderPrice: number = 0;
-  cartItems: OrderDetail[] = [];
+  orderItems: OrderDetail[] = [];
 
-  public constructor(private shoppingCartService: CartService) {
+  public constructor(private orderService: OrderService) {
   }
 
   public ngOnInit(): void {
-    this.cartItems = this.shoppingCartService.getCartItems();
-    this.totalOrderPrice = this.shoppingCartService.getTotalOrderPrice();
+    this.orderService.createOrder();
+    this.orderItems = this.orderService.getOrderItems();
+    this.totalOrderPrice = this.orderService.getTotalOrderPrice();
   }
 }

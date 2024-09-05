@@ -5948,4 +5948,11 @@ screen and (min-width: 75em) {
     clear: both;
 }
 
+.img-container>img {
+    width: 45%;
+    height: 100%;
+    object-fit: cover;
+    transition-duration: 0.4s;
+}
+
 /*# sourceMappingURL=foundation.css.map */

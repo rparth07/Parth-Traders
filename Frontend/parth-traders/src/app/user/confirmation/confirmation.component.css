@@ -1,0 +1,30 @@
+.row {
+    max-width: 75rem;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 4.9rem;
+    margin-bottom: 4.9rem;
+    padding: 3rem;
+    overflow: hidden;
+}
+
+.row::before,
+.row::after {
+    display: table;
+    content: ' ';
+}
+
+.row::after {
+    clear: both;
+}
+
+.row.collapse>.column,
+.row.collapse>.columns {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.success {
+    background-color: #b4ffbc;
+    color: #000;
+}

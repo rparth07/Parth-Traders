@@ -22,6 +22,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { PaymentComponent } from './payment/payment.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
     ProductComponent,
     SidebarComponent,
     AuthenticateComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    PaymentComponent,
+    ConfirmationComponent
   ],
   imports: [
     CommonModule,

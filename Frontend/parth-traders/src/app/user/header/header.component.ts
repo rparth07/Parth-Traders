@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     this.categories = productService.getCategories();
     this.categories.push('All Categories');
 
-    this.cartService.getOrderCountEvent().subscribe((orderItemsCount: number) => {
+    this.cartService.getAllProductCountEvent().subscribe((orderItemsCount: number) => {
       this.totalOrderItems = orderItemsCount;
     })
 

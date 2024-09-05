@@ -5,22 +5,22 @@
             <span class="ps-2">Checkout</span>
         </h2>
     </div>
-    <div class="medium-4 columns text-right" *ngIf="cartItems.length > 0">
+    <div class="medium-4 columns text-right" *ngIf="orderItems.length > 0">
         <h4>
             Order Total
-            <span class="text--red text--bold js-gross-total">{{ totalOrderPrice | currency:'INR':true}}</span>
+            <span class="text--red text--bold js-gross-total">{{ totalOrderPrice | currency:'USD':true}}</span>
         </h4>
     </div>
-    <div class="medium-4 columns text-right" *ngIf="cartItems.length > 0">
+    <div class="medium-4 columns text-right" *ngIf="orderItems.length > 0">
         <a class="button" routerLink="/user/home">Back to Home</a>
     </div>
     <hr />
 </div>
-<div class="row" *ngIf="cartItems.length > 0">
+<div class="row" *ngIf="orderItems.length > 0">
     <div class="medium-8 columns">
         <h4>Shopping Cart</h4>
         <small>Dispatching...</small>
-        <div class="row checkout_row" *ngFor="let item of cartItems">
+        <div class="row checkout_row" *ngFor="let item of orderItems">
             <div class="medium-2 columns text-center">
                 <img [src]="item.product.image_paths[0]" class="product_image" />
             </div>
@@ -29,24 +29,27 @@
                 <p class="js-product-desc">{{item.product.productDescription}}</p>
             </div>
             <div class="medium-2 columns text-right">
-                <p class="text--red js-product-costs">{{item.quantity}} x {{item.product.price | currency:'INR':true}}
+                <p class="text--red js-product-costs">{{item.quantity}} x {{item.product.price | currency:'USD':true}}
                 </p>
             </div>
             <div class="medium-3 columns text-right">
-                <p class="text--bold text--red js-product-total">{{item.totalPrice | currency:'INR':true}}</p>
+                <p class="text--bold text--red js-product-total">{{item.totalPrice | currency:'USD':true}}</p>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="small-10 columns small-centered">
-            <a class="warning button expanded large" routerLink="/confirmed">Proceed to Buy</a>
+            <a class="warning button expanded large" routerLink="/user/payment">Proceed to Buy</a>
         </div>
     </div>
 </div>
 
-<div class="row" *ngIf="cartItems.length == 0">
+<div class="row" *ngIf="orderItems.length == 0">
+    <div class="columns img-container text-center">
+        <img src="../../../assets/images/empty-cart.jpg" alt="empty cart">
+    </div>
     <div class="small-10 columns small-centered">
-        <a class="failure button expanded large" routerLink="/user/home">Your Cart is Empty</a>
+        <a class="success button expanded large" routerLink="/user/home">Your Cart is Empty</a>
     </div>
 </div>

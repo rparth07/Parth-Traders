@@ -1,43 +1,40 @@
-import { ElementRef, EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Product } from '../core/models/Product';
-import { Order } from '../core/models/Order';
-import { Customer } from '../core/models/Customer';
 import { OrderDetail } from '../core/models/OrderDetail';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   private addToCartEvent = new EventEmitter();
-  private orderCountEvent = new EventEmitter<number>();
+  private allProductCountEvent = new EventEmitter<number>();
 
-  private order: Order = new Order(this.authService.getCustomer());
+  private orderDetails: OrderDetail[] = [];
 
-  constructor(private authService: AuthService) {
+  constructor() {
   }
 
   public addToCart(product: Product, productSize: string) {
-    if (this.order.hasProduct(product)) {
-      this.order.updateProductCount(product);
+    if (this.orderDetails.findIndex(_ => _.product == product) > -1) {
+      this.orderDetails[this.orderDetails.findIndex(_ => _.product == product)].incrementProductCount();
     } else {
-      this.order.addNewProduct(product, productSize);
+      this.orderDetails.push(new OrderDetail(product, productSize, 1, product.price));
     }
     this.emitAddItemToCartEvent();
-    this.emitOrderCountEvent();
+    this.emitAllProductCountEvent();
   }
 
   removeFromCartAt(index: number) {
-    this.order.removeOrderItemAt(index);
-    this.emitOrderCountEvent();
+    this.orderDetails.splice(index, 1);
+    this.emitAllProductCountEvent();
   }
 
   public getCartItems() {
-    return this.order.getOrderDetails();
+    return this.orderDetails;
   }
 
   public isCartEmpty(): Boolean {
-    return this.order.orderDetails.length > 0;
+    return this.orderDetails.length > 0;
   }
 
   private emitAddItemToCartEvent() {
@@ -49,24 +46,30 @@ export class CartService {
   }
 
   public decrementProductCountFrom(orderDetail: OrderDetail) {
-    this.order.decrementProductCountFrom(orderDetail);
-    this.emitOrderCountEvent();
+    const index = this.orderDetails.findIndex(_ => _.product == orderDetail.product);
+    if (this.orderDetails[index].getProductQuantity() == 1) {
+      this.orderDetails.splice(index, 1);
+    } else {
+      this.orderDetails[index].decrementProductCountFrom();
+    }
+    this.emitAllProductCountEvent();
   }
 
   public incrementProductCountOf(orderDetail: OrderDetail) {
-    this.order.incrementProductCountOf(orderDetail);
-    this.emitOrderCountEvent();
+    const index = this.orderDetails.findIndex(_ => _.product == orderDetail.product);
+    this.orderDetails[index].incrementProductCount();
+    this.emitAllProductCountEvent();
   }
 
   public getTotalOrderPrice(): number {
-    return this.order.getTotalOrderPrice();
+    return this.orderDetails.reduce((acc, currentOrderDetail) => acc + currentOrderDetail.getTotalPrice(), 0);
   }
 
-  private emitOrderCountEvent() {
-    this.orderCountEvent.emit(this.order.getAllProductsCount());
+  private emitAllProductCountEvent() {
+    this.allProductCountEvent.emit(this.orderDetails.reduce((acc, current) => acc + current.quantity, 0));
   }
 
-  public getOrderCountEvent() {
-    return this.orderCountEvent;
+  public getAllProductCountEvent() {
+    return this.allProductCountEvent;
   }
 }
