@@ -1,49 +1,28 @@
-<nav
-  class="nav navbar navbar-expand-lg navbar-light iq-navbar pt-3 d-flex"
-  [ngClass]="enableHeader ? 'sticky-home-header' : 'home-header'"
->
+<nav class="nav navbar navbar-expand-lg navbar-light iq-navbar pt-3 d-flex"
+  [ngClass]="enableHeader ? 'sticky-home-header' : 'home-header'">
   <div class="container d-flex">
-    <a
-      class="home-link navbar-brand float-left d-flex align-items-center m-0 text-decoration-none"
-      routerLink="home"
-    >
-      <img src="../../assets/images/parth-traders-logo.jpg" />
+    <a class="home-link navbar-brand float-left d-flex align-items-center m-0 text-decoration-none" routerLink="home">
+      <img src="../../../assets/images/parth-traders.png" />
       <h4 class="logo-title">Parth Traders</h4>
     </a>
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a
-          class="nav-link pb-1"
-          routerLink="products"
-          routerLinkActive="active"
-        >
+        <a class="nav-link pb-1" routerLink="products" routerLinkActive="active">
           <span>Products</span>
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link pb-1"
-          routerLink="categories"
-          routerLinkActive="active"
-        >
+        <a class="nav-link pb-1" routerLink="categories" routerLinkActive="active">
           <span>Category</span>
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link pb-1"
-          routerLink="suppliers"
-          routerLinkActive="active"
-        >
+        <a class="nav-link pb-1" routerLink="suppliers" routerLinkActive="active">
           <span>Supplier</span>
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link pb-1"
-          routerLink="customers"
-          routerLinkActive="active"
-        >
+        <a class="nav-link pb-1" routerLink="customers" routerLinkActive="active">
           <span>Customer</span>
         </a>
       </li>

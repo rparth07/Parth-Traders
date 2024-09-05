@@ -35,6 +35,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/user/checkout']);
   }
 
+  redirectToWIP() {
+    this.router.navigate(['/user/WIP']);
+  }
+
   searchProduct(key: string, searchValue: string) {
     if (key === 'Backspace' && searchValue.length === 1)
       searchValue = '';

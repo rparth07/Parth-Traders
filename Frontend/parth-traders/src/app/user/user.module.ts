@@ -24,6 +24,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { WIPComponent } from './wip/wip.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     AuthenticateComponent,
     CheckoutComponent,
     PaymentComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    WIPComponent
   ],
   imports: [
     CommonModule,

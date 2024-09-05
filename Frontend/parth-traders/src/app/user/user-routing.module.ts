@@ -7,6 +7,7 @@ import { LogInGuardService as LogInGuard } from './services/log-in-guard.service
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { WIPComponent } from './wip/wip.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
     path: 'confirm',
     component: ConfirmationComponent,
     canActivate: [AuthGuardService],
+  },
+  {
+    path: 'WIP',
+    component: WIPComponent,
   },
   {
     path: '',
