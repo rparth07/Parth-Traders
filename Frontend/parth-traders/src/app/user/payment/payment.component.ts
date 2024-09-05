@@ -47,7 +47,7 @@ export class PaymentComponent {
         return actions.order.capture().then((details: any) => {
           if (details.status == 'COMPLETED') {
             this.orderService.setTransactionId(details.id);
-            this.router.navigate(['confirm']);
+            this.router.navigate(['/user/confirm']);
           }
         })
       },

@@ -1,8 +1,10 @@
-<div class="payment-container text-center d-flex flex-column align-items-center">
+<div class="align-items-center d-flex flex-column justify-content-center payment-container text-center gap-3">
     <div class="paypal-container">
         <div class="amount">Total amount to pay: ${{amount}}</div>
     </div>
-    <div class="info">Please do not refresh the browser while the transaction is processing</div>
-    <div #paymentRef></div>
+    <div class="info">
+        Please do not refresh the browser while the transaction is processing
+    </div>
+    <div #paymentRef class="payment-button w-50"></div>
     <button class="back bg-danger text-light border-0" (click)="cancel()">Cancel</button>
 </div>

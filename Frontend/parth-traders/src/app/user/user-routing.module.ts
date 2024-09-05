@@ -21,17 +21,17 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutComponent,
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
   {
     path: 'payment',
     component: PaymentComponent,
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
   {
     path: 'confirm',
     component: ConfirmationComponent,
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
   {
     path: '',
