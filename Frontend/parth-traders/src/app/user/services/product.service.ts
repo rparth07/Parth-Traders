@@ -11,7 +11,6 @@ import { AppSetting } from 'src/app/shared/app-settings';
 })
 export class ProductService {
     productFilter$ = new Subject<FilterCriteria>();
-    products: Product[] = [];
 
     constructor(private http: HttpClient) { }
 
@@ -32,9 +31,15 @@ export class ProductService {
     }
 
     getCategories() {
-        return this.products.filter((product, index, self) => {
-            return self.findIndex(p => p.categoryName === product.categoryName) === index;
-        }).map(_ => _.categoryName);
+        return this.http.get<{ categoryName: string }[]>(AppSetting.API_URL + 'API/admin/categories')
+            .pipe(
+                map(response => {
+                    return response.map(category => category.categoryName);
+                }),
+                catchError(error => {
+                    return throwError(error);
+                })
+            );
     }
 
     private generateImgPaths(sku: string): string[] {

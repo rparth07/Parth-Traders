@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parth_Traders.Data;
 
@@ -11,9 +12,10 @@ using Parth_Traders.Data;
 namespace Parth_Traders.Data.Migrations
 {
     [DbContext(typeof(ParthTradersContext))]
-    partial class ParthTradersContextModelSnapshot : ModelSnapshot
+    [Migration("20240912190910_modified order data table")]
+    partial class modifiedorderdatatable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +53,15 @@ namespace Parth_Traders.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c0b2294b-6e24-4e40-9d33-e13eb1bfd891",
-                            ConcurrencyStamp = "2f0650bc-571f-457a-9f25-4904c5c1f36b",
+                            Id = "08668c52-dbbb-4e2b-bccb-296a5d75a980",
+                            ConcurrencyStamp = "fb3f6db1-4824-4f11-aa4d-d715c47e4786",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "8f72fba8-51f1-4316-b54a-f73e62d4a2d9",
-                            ConcurrencyStamp = "d5b020c1-ad65-4a8d-bacc-2781761178e0",
+                            Id = "e856b174-d7e8-409f-a6af-e018db088851",
+                            ConcurrencyStamp = "83b2b2ca-3475-4c5e-b346-3b5db9eaa2a1",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -484,16 +486,16 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Price")
+                    b.Property<long>("PricePerPiece")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Quantity")
+                    b.Property<long>("QuantityPurchased")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TotalPrice")
+                    b.Property<long>("Total")
                         .HasColumnType("bigint");
 
                     b.HasKey("OrderDetailId");

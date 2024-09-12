@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parth_Traders.Data;
 
@@ -11,9 +12,10 @@ using Parth_Traders.Data;
 namespace Parth_Traders.Data.Migrations
 {
     [DbContext(typeof(ParthTradersContext))]
-    partial class ParthTradersContextModelSnapshot : ModelSnapshot
+    [Migration("20240912161223_modified rating datatype")]
+    partial class modifiedratingdatatype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +53,15 @@ namespace Parth_Traders.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c0b2294b-6e24-4e40-9d33-e13eb1bfd891",
-                            ConcurrencyStamp = "2f0650bc-571f-457a-9f25-4904c5c1f36b",
+                            Id = "9e775af8-0046-480b-a089-890b71eea770",
+                            ConcurrencyStamp = "c6ac895b-89d3-4606-bedd-b5c51aab4c7c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "8f72fba8-51f1-4316-b54a-f73e62d4a2d9",
-                            ConcurrencyStamp = "d5b020c1-ad65-4a8d-bacc-2781761178e0",
+                            Id = "8ee518ab-ea93-4717-b2b5-b91a27eb7bab",
+                            ConcurrencyStamp = "e7fcd958-1476-4f68-b5e5-4641dae2a19f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -443,12 +445,15 @@ namespace Parth_Traders.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"), 1L, 1);
 
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GrandTotal")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -465,7 +470,7 @@ namespace Parth_Traders.Data.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Orders");
                 });
@@ -484,16 +489,16 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Price")
+                    b.Property<long>("PricePerPiece")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Quantity")
+                    b.Property<long>("QuantityPurchased")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TotalPrice")
+                    b.Property<long>("Total")
                         .HasColumnType("bigint");
 
                     b.HasKey("OrderDetailId");
@@ -579,7 +584,7 @@ namespace Parth_Traders.Data.Migrations
                 {
                     b.HasOne("Parth_Traders.Data.DataModel.User.CustomerDataModel", "CustomerData")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

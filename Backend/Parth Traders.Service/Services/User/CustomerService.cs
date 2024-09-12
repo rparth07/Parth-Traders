@@ -70,7 +70,7 @@ namespace Parth_Traders.Service.Services.User
 
         public Customer GetCustomerByName(string customerName)
         {
-            var customerToReturn = _customerRepository.GetCustomerByName(customerName);
+            var customerToReturn = _customerRepository.GetCustomerByUserName(customerName);
             if (customerToReturn == null)
             {
                 _logger.LogInfo("Invalid product name was entered");

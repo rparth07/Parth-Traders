@@ -11,9 +11,9 @@ namespace Parth_Traders.Data.DataModel.User
 
         public string TransactionId { get; set; }
 
-        public long CustomerId { get; set; }
+        public string CustomerId { get; set; }
         [Required]
-        [ForeignKey("Id")]
+        [ForeignKey("CustomerId")]
         public virtual CustomerDataModel CustomerData { get; set; }
 
         [Required]

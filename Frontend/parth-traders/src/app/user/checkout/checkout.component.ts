@@ -16,12 +16,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.orderService.createOrder();
+    this.orderService.initializeOrder();
     this.orderItems = this.orderService.getOrderItems();
     this.totalOrderPrice = this.orderService.getTotalOrderPrice();
   }
 
   getImgPathFromSku(sku: string) {
-    return `../../../assets/${sku}/${sku}_1.jpg`;
+    return `assets/products/${sku}/${sku}_1.jpg`;
   }
 }

@@ -43,12 +43,12 @@ namespace Parth_Traders.Data.Repositories.User
             return _mapper.Map<Customer>(customer);
         }
 
-        public Customer GetCustomerByName(string customerName)
+        public Customer GetCustomerByUserName(string userName)
         {
             var customer = _context.Customers
                 .Include("Orders")
                 .AsNoTracking()
-                .FirstOrDefault(_ => _.UserName == customerName);
+                .FirstOrDefault(_ => _.UserName == userName);
 
             return _mapper.Map<Customer>(customer);
         }

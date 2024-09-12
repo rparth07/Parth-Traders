@@ -75,7 +75,7 @@ namespace Parth_Traders.Data
 
         public DbSet<ProductDataModel> Products { get; set; }
 
-        public DbSet<DataModel.User.CustomerDataModel> Customers { get; set; }
+        public DbSet<CustomerDataModel> Customers { get; set; }
 
         public DbSet<CategoryDataModel> Categories { get; set; }
 

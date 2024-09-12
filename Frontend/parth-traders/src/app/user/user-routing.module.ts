@@ -8,6 +8,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { WIPComponent } from './wip/wip.component';
+import { OrderComponent } from './order/order.component';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,16 @@ const routes: Routes = [
   {
     path: 'confirm',
     component: ConfirmationComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'orders',
+    component: OrderComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'order/order-details',
+    component: OrderDetailComponent,
     canActivate: [AuthGuardService],
   },
   {

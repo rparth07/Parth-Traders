@@ -15,7 +15,7 @@
               </ul>
             </div>
             Showing {{shownProducts.length > 0 ? 1 : 0}}-{{shownProducts.length}} of
-            {{products.length}} results
+            {{filterProducts.length}} results
           </div>
           <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
             <app-product *ngFor="let product of shownProducts" [product]="product"

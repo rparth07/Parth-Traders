@@ -59,7 +59,8 @@ namespace Parth_Traders.Data.Repositories.User
                 .AsNoTracking()
                 .Where(_ => _.CustomerData.UserName == customerName);
 
-            return _mapper.Map<List<Order>>(ordersToReturn);
+            var orders = _mapper.Map<List<Order>>(ordersToReturn);
+            return orders;
         }
 
         public List<Order> GetAllOrdersForCustomerWithStatus(string customerName,

@@ -10,7 +10,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/categories"), Authorize]
+    [Route("API/admin/categories")]
     public class CategoryController : ControllerBase
     {
         public readonly ICategoryService _categoryService;
@@ -25,7 +25,7 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost("add-category")]
+        [HttpPost("add-category"), Authorize]
         [Consumes("application/json")]
         public IActionResult AddCategory(CategoryDto categoryForCreation)
         {
@@ -41,7 +41,7 @@ namespace Parth_Traders.Controllers.Admin
                                       categoryToReturn);
         }
 
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost, DisableRequestSizeLimit, Authorize]
         public IActionResult AddAllCategories()
         {
             IFormFile? file = Request.Form.Files[0];
@@ -70,7 +70,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(categories);
         }
 
-        [HttpPost("{categoryName}")]
+        [HttpPost("{categoryName}"), Authorize]
         [Consumes("application/json")]
         public IActionResult UpdateCategory(
             string categoryName,
@@ -83,7 +83,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(category);
         }
 
-        [HttpDelete("{categoryName}")]
+        [HttpDelete("{categoryName}"), Authorize]
         public IActionResult DeleteCategory(string categoryName)
         {
             _categoryService.DeleteCategory(categoryName);

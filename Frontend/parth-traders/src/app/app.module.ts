@@ -13,6 +13,7 @@ import { AuthInterceptor } from './admin/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -46,6 +47,7 @@ const JWT_Module_Options: JwtModuleOptions = {
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

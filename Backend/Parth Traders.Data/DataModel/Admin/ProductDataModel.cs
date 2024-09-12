@@ -34,7 +34,7 @@ namespace Parth_Traders.Data.DataModel.Admin
         public ICollection<OrderDetailDataModel> OrderDetails { get; set; }
 
         [Required]
-        public int ProductRating { get; set; }
+        public double ProductRating { get; set; }
 
         [Required]
         public long UnitPrice { get; set; }

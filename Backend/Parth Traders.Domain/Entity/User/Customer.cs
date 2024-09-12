@@ -10,6 +10,8 @@ namespace Parth_Traders.Domain.Entity.User
         }
         public long CustomerId { get; set; }
 
+        public string UserName { get; set; }
+
         public string CustomerName { get; set; }
 
         public DateTime CreatedDate { get; set; }

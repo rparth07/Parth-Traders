@@ -9,12 +9,12 @@ namespace Parth_Traders.Profiles
         public OrderProfile()
         {
             CreateMap<OrderDto, Order>()
-                .ForPath(dest => dest.Customer.CustomerName,
-                    opt => opt.MapFrom(src => src.CustomerName));
+                .ForPath(dest => dest.Customer.UserName,
+                    opt => opt.MapFrom(src => src.UserName));
 
             CreateMap<Order, OrderDto>()
-                .ForMember(dest => dest.CustomerName,
-                    opt => opt.MapFrom(src => src.Customer.CustomerName));
+                .ForMember(dest => dest.UserName,
+                    opt => opt.MapFrom(src => src.Customer.UserName));
         }
     }
 }

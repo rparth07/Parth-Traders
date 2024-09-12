@@ -14,12 +14,13 @@ export class HeaderComponent implements OnInit {
   totalOrderItems: number = 0;
   customerName: string = '';
 
-  categories: string[];
+  categories: string[] = ['All Categories'];
 
   constructor(private productService: ProductService, private cartService: CartService, private authService: AuthService, private router: Router) {
     this.selectedCategory = 'All Categories';
-    this.categories = productService.getCategories();
-    this.categories.push('All Categories');
+    productService.getCategories()
+      .subscribe(categories => this.categories.push(...categories));
+    console.log(this.categories);
 
     this.cartService.getAllProductCountEvent().subscribe((orderItemsCount: number) => {
       this.totalOrderItems = orderItemsCount;
@@ -67,5 +68,9 @@ export class HeaderComponent implements OnInit {
 
   redirectToLogIn(): void {
     this.authService.redirectToLogIn();
+  }
+
+  redirectToPastOrders(): void {
+    this.router.navigate(['/user/orders']);
   }
 }

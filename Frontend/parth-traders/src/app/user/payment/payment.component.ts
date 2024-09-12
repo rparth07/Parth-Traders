@@ -46,8 +46,15 @@ export class PaymentComponent {
       onApprove: (data: any, actions: any) => {
         return actions.order.capture().then((details: any) => {
           if (details.status == 'COMPLETED') {
-            this.orderService.setTransactionId(details.id);
-            this.router.navigate(['/user/confirm']);
+            this.orderService.createOrder(details.id).subscribe({
+              next: (value: any) => {
+                console.log('order placed successfully: ', value);
+                this.router.navigate(['/user/confirm']);
+              },
+              error: (err: { error: { errors: any } }) => {
+                alert("something went wrong, please try again");
+              },
+            });
           }
         })
       },

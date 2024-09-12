@@ -16,15 +16,15 @@ namespace Parth_Traders.Dto.User
         public string ProductSku { get; set; }
 
         [Required]
-        public long PricePerPiece { get; set; }
+        public long Price { get; set; }
 
         [Required]
-        public long QuantityPurchased { get; set; }
+        public long Quantity { get; set; }
 
         [Required]
         public long Discount { get; set; }
 
         [Required]
-        public long Total { get; set; }
+        public long TotalPrice { get; set; }
     }
 }

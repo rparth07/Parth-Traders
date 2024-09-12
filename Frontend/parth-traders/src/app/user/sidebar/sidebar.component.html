@@ -29,7 +29,7 @@
 
     <h3>PRICE RANGE</h3>
     <div class="custom-slider">
-        <div class="price-range">₹{{minValue}}-₹{{maxValue}}</div>
+        <div class="price-range">${{minValue}}-${{maxValue}}</div>
         <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"
             (valueChange)="filterByPrice()"></ngx-slider>
     </div>

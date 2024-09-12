@@ -16,7 +16,7 @@ namespace Parth_Traders.Dto.User
         public string TransactionId { get; set; }
 
         [Required]
-        public string CustomerName { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         public ICollection<OrderDetailDto> OrderDetails { get; set; }

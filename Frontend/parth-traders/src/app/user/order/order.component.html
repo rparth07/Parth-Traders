@@ -1,0 +1,35 @@
+<div class="orders-list" *ngIf="orders.length > 0">
+    <h2>Orders</h2>
+    <mat-table [dataSource]="orders">
+        <ng-container matColumnDef="transactionId">
+            <mat-header-cell *matHeaderCellDef> Transaction ID </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.transactionId}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="customerName">
+            <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.userName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="grandTotal">
+            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.grandTotal | currency}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['transactionId', 'customerName', 'grandTotal']"></mat-header-row>
+        <mat-row *matRowDef="let order; columns: ['transactionId', 'customerName', 'grandTotal'];"
+            (click)="onSelectOrder(order)"></mat-row>
+    </mat-table>
+
+    <app-order-detail *ngIf="selectedOrder" [order]="selectedOrder"></app-order-detail>
+</div>
+
+<div class="text-center h-100" *ngIf="orders.length == 0">
+    <div class="columns img-container text-center">
+        <img src="assets/images/empty-cart.jpg" alt="empty cart">
+    </div>
+    <div class="small-10 columns small-centered text-center">
+        <a class="p-3 yellow button expanded large" routerLink="/user/home">No Orders found, Please visit home page to
+            place Order</a>
+    </div>
+</div>

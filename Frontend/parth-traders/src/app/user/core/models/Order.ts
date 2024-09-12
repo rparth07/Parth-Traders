@@ -3,7 +3,7 @@ import { OrderDetail } from "./OrderDetail";
 
 export class Order {
     transactionId: string;
-    customerName: string;
+    userName: string;
     orderDetails: OrderDetail[];
     paymentType: PaymentType;
     orderDate: Date;
@@ -12,9 +12,9 @@ export class Order {
 
     constructor(customer: Customer, orderDetails: OrderDetail[]) {
         this.transactionId = '';
-        this.customerName = customer?.userName;
+        this.userName = customer?.userName;
         this.orderDetails = orderDetails;
-        this.grandTotal = 0;
+        this.grandTotal = this.orderDetails.reduce((acc, currentOrderDetail) => acc + currentOrderDetail.getTotalPrice(), 0);
         this.orderDate = new Date();
         this.paymentType = PaymentType.CashOnDelivery;
         this.orderStatus = OrderStatus.Pending;

@@ -22,7 +22,7 @@ namespace Parth_Traders.Service.Services.User
 
         public Order MapOrderPropertiesToOrder(Order order)
         {
-            order.Customer = _customerRepository.GetCustomerByName(order.Customer.CustomerName);
+            order.Customer = _customerRepository.GetCustomerByUserName(order.Customer.UserName);
 
             order.OrderDetails.ForEach(_ =>
             {

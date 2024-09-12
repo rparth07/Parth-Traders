@@ -25,7 +25,7 @@ namespace Parth_Traders.Dto.Admin
 
         public string ProductDescription { get; set; }
 
-        public int ProductRating { get; set; }
+        public double ProductRating { get; set; }
 
         [Required]
         public string SupplierName { get; set; }

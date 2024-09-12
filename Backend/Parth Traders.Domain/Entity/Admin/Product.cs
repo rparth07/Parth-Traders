@@ -13,7 +13,7 @@ namespace Parth_Traders.Domain.Entity.Admin
 
         public string ProductSku { get; set; }
 
-        public int ProductRating { get; set; }
+        public double ProductRating { get; set; }
 
         public string ProductName { get; set; }
 

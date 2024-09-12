@@ -27,6 +27,10 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { WIPComponent } from './wip/wip.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
     CheckoutComponent,
     PaymentComponent,
     ConfirmationComponent,
-    WIPComponent
+    WIPComponent,
+    OrderComponent,
+    OrderDetailComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +65,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
     MatFormFieldModule,
     MatOptionModule,
     MatInputModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    MatTableModule,
+    MatButtonModule
   ],
   providers: [
     {

@@ -1,8 +1,10 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Order } from '../core/models/Order';
 import { AuthService } from './auth.service';
 import { CartService } from './cart.service';
 import { OrderDetail } from '../core/models/OrderDetail';
+import { AppSetting } from 'src/app/shared/app-settings';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +12,16 @@ import { OrderDetail } from '../core/models/OrderDetail';
 export class OrderService {
   private order!: Order;
 
-  constructor(private authService: AuthService, private cartService: CartService) {
+  constructor(private authService: AuthService, private cartService: CartService, private http: HttpClient) {
   }
 
-  createOrder() {
+  initializeOrder() {
     this.order = new Order(this.authService.getCustomer(), this.cartService.getCartItems());
+  }
+
+  createOrder(transactionId: string) {
+    this.setTransactionId(transactionId);
+    return this.http.post(AppSetting.API_URL + 'API/orders', this.order);
   }
 
   getOrderItems(): OrderDetail[] {
@@ -35,5 +42,9 @@ export class OrderService {
 
   getTransactionId(): string {
     return this.order?.transactionId;
+  }
+
+  getOrders() {
+    return this.http.get<Order[]>(AppSetting.API_URL + 'API/orders/' + this.authService.getCustomer().userName);
   }
 }

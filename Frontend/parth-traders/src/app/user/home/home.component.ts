@@ -19,6 +19,7 @@ import { CartService } from '../services/cart.service';
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
+  filterProducts: Product[] = [];
   shownProducts: Product[] = [];
   loading: boolean = false;
   isLargeGrid = false;
@@ -31,17 +32,19 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService.productFilter$.subscribe(next => {
-      this.fetchProducts();
-      if (next) {
-        this.products = this.products.filter(_ => {
-          return (next.name === '' || _.productName.trim().toLowerCase().includes(next.name.trim().toLowerCase()))
-            && (next.categories.length === 0 || next.categories.findIndex(c => c === _.categoryName) > -1)
-            && (!next.activeProductType || next.activeProductType === _.productType)
-            && (!next.priceRange.min || next.priceRange.min <= _.unitPrice)
-            && (!next.priceRange.max || next.priceRange.max >= _.unitPrice)
-            && (!next.ratingRange.min || next.ratingRange.min <= _.productRating)
-            && (!next.ratingRange.max || next.ratingRange.max >= _.productRating)
+    this.productService.productFilter$.subscribe(filterCriteria => {
+      // if (this.filterProducts.length <= 0)
+      //   this.filterProducts = this.products;
+      if (filterCriteria) {
+        this.filterProducts = this.products.filter(_ => {
+          // console.log('active: ' + filterCriteria.activeProductType, " and current: ", _.productType);
+          return (filterCriteria.name === '' || _.productName.trim().toLowerCase().includes(filterCriteria.name.trim().toLowerCase()))
+            && (filterCriteria.categories.length === 0 || filterCriteria.categories.findIndex(c => c === _.categoryName) > -1)
+            && (!filterCriteria.activeProductType || filterCriteria.activeProductType === _.productType)
+            && (!filterCriteria.priceRange.min || filterCriteria.priceRange.min <= _.unitPrice)
+            && (!filterCriteria.priceRange.max || filterCriteria.priceRange.max >= _.unitPrice)
+            && (!filterCriteria.ratingRange.min || filterCriteria.ratingRange.min <= _.productRating)
+            && (!filterCriteria.ratingRange.max || filterCriteria.ratingRange.max >= _.productRating)
         });
       }
       this.refreshShownProduct();
@@ -49,7 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   refreshShownProduct() {
-    this.shownProducts = this.products.slice(0, this.pageSize);
+    this.shownProducts = this.filterProducts.slice(0, this.pageSize);
   }
 
   async onScroll() {
@@ -59,7 +62,7 @@ export class HomeComponent implements OnInit {
 
       const startIndex = this.shownProducts.length;
       const endIndex = startIndex + this.pageSize;
-      const newProducts = this.products.slice(startIndex, endIndex);
+      const newProducts = this.filterProducts.slice(startIndex, endIndex);
       this.isLargeGrid ? this.switchToLargeGrid() : this.switchToSmallGrid();
 
       this.shownProducts = [...this.shownProducts, ...newProducts];
@@ -125,7 +128,9 @@ export class HomeComponent implements OnInit {
     this.productService.getProducts()
       .subscribe((next) => {
         this.products = next;
-        console.dir(this.products, { depth: null }); // Now you'll see the products in the console
+        // console.dir(this.products, { depth: null }); // Now you'll see the products in the console
+        this.filterProducts = this.products;
+        // console.log(this.filterProducts);
         this.refreshShownProduct(); // Call this to refresh the shown products
       });
   }

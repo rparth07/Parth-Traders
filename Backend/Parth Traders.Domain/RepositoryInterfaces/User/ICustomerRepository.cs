@@ -7,7 +7,7 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.User
         void AddCustomer(Customer customerToAdd);
         void AddAllCustomers(List<Customer> customersToAdd);
         Customer GetCustomerById(long customerId);
-        Customer GetCustomerByName(string customerName);
+        Customer GetCustomerByUserName(string userName);
         List<Customer> GetAllCustomers();
         void UpdateCustomer(Customer customer);
         void DeleteCustomer(Customer customerToDelete);
