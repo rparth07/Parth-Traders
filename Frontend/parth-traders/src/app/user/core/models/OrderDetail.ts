@@ -1,26 +1,28 @@
 import { Product } from "./Product";
 
 export class OrderDetail {
-    product: Product;
-    productSize: string;
+    productSku: string;
+    price: number;
     quantity: number;
+    discount: number;
     totalPrice: number;
 
-    constructor(product: Product, productSize: string, quantity: number, totalPrice: number) {
-        this.product = product;
-        this.productSize = productSize;
+    constructor(product: Product, quantity: number, totalPrice: number) {
+        this.productSku = product.productSku;
+        this.price = product.unitPrice;
+        this.discount = product.discount;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
 
     incrementProductCount() {
         this.quantity += 1;
-        this.totalPrice += this.product.price;
+        this.totalPrice += this.price;
     }
 
     decrementProductCountFrom() {
         this.quantity -= 1;
-        this.totalPrice -= this.product.price;
+        this.totalPrice -= this.price;
     }
 
     getProductQuantity() {

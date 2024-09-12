@@ -13,9 +13,9 @@
 <div id="cart" #cart>
     <div class="cart-item" [class.flash]="flashIndex==i" *ngFor="let item of getCartItems(); let i = index">
         <div class="img-wrap">
-            <img [src]="item.product.image_paths[0]" alt="Product">
+            <img [src]="getImgPathFromSku(item.productSku)" alt="Product">
         </div>
-        <span>{{ item.product.productName }}</span>
+        <span>{{ item.productSku }}</span>
         <strong>{{ item.totalPrice | number : '1.2-2'}}</strong>
         <div class="product-count-container">
             <button class="decrement-product-count-button" (click)="decrementProductCountFrom(item)">-</button>

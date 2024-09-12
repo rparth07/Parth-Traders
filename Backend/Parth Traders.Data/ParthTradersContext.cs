@@ -40,6 +40,7 @@ namespace Parth_Traders.Data
             {
                 entity.Property(x => x.ProductId).ValueGeneratedOnAdd().UseIdentityColumn(1, 1);
                 entity.HasIndex(e => e.ProductName).IsUnique();
+                entity.HasIndex(e => e.ProductSku).IsUnique();
             });
 
             modelBuilder.Entity<CategoryDataModel>(entity =>

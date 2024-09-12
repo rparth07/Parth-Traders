@@ -10,7 +10,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/products"), Authorize]
+    [Route("API/admin/products")]
     //[ApiExplorerSettings(GroupName = "v2")]
     public class ProductController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost("add-product")]
+        [HttpPost("add-product"), Authorize]
         [Consumes("application/json")]
         public IActionResult AddProduct(ProductDto productForCreation)
         {
@@ -45,7 +45,7 @@ namespace Parth_Traders.Controllers.Admin
                 productToReturn);
         }
 
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost, DisableRequestSizeLimit, Authorize]
         public IActionResult AddAllProducts()
         {
             IFormFile? file = Request.Form.Files[0];
@@ -76,7 +76,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(products);
         }
 
-        [HttpPost("{productName}")]
+        [HttpPost("{productName}"), Authorize]
         [Consumes("application/json")]
         public IActionResult UpdateProduct(
             string productName,
@@ -89,7 +89,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(product);
         }
 
-        [HttpDelete("{productName}")]
+        [HttpDelete("{productName}"), Authorize]
         public IActionResult DeleteProduct(string productName)
         {
             _productService.DeleteProduct(productName);

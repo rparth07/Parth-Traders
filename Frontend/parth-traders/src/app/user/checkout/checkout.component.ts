@@ -20,4 +20,8 @@ export class CheckoutComponent implements OnInit {
     this.orderItems = this.orderService.getOrderItems();
     this.totalOrderPrice = this.orderService.getTotalOrderPrice();
   }
+
+  getImgPathFromSku(sku: string) {
+    return `../../../assets/${sku}/${sku}_1.jpg`;
+  }
 }

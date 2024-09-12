@@ -1,366 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Subject, of } from 'rxjs';
+import { Subject, catchError, map, of, throwError } from 'rxjs';
 import { Product } from '../core/models/Product';
 import { FilterCriteria } from '../core/models/FilterCriteria';
-import { ProductType } from '../core/enums/ProductType';
+import { convertIntToProductType, ProductType } from '../core/enums/ProductType';
+import { HttpClient } from '@angular/common/http';
+import { AppSetting } from 'src/app/shared/app-settings';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
     productFilter$ = new Subject<FilterCriteria>();
-    products: Product[] = [
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 5,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Buff,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 5,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Buff,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 5,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Buff,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 5,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.General,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 5,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.General,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 4,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.General,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 4,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 4,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 4,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 4,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 3,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 3,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12321341,
-            productName: "FLUTED HEM DRESS",
-            category: 'Paperback',
-            sku: 'L-Paperback',
-            price: 11.96,
-            rating: 3,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._SX325_BO1,204,203,200_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 49538094,
-            productName: "FLUTED HEM DRESS",
-            category: 'Glass Bowl',
-            sku: '5L-Glass-Bowl',
-            price: 239.0,
-            rating: 3,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/81O%2BGNdkzKL._AC_SX450_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 4903850,
-            productName: "FLUTED HEM DRESS",
-            category: 'Monitor',
-            sku: 'TV-49',
-            price: 199.99,
-            rating: 3,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/71Swqqe7XAL._AC_SX466_.jpg"],
-            productType: ProductType.Machine_Tools,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 23445930,
-            productName: "FLUTED HEM DRESS",
-            category: 'Alexa',
-            sku: 'Alexa-3rd',
-            price: 98.99,
-            rating: 2,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://media.very.co.uk/i/very/P6LTG_SQ1_0000000071_CHARCOAL_SLf?$300x400_retinamobilex2$"],
-            productType: ProductType.Packing_Materials,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 3254354345,
-            productName: "FLUTED HEM DRESS",
-            category: 'iPad',
-            sku: 'Apple-iPad-Pro',
-            price: 598.99,
-            rating: 2,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/816ctt5WV5L._AC_SX385_.jpg"],
-            productType: ProductType.Packing_Materials,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 90829332,
-            productName: "FLUTED HEM DRESS",
-            category: 'Monitor',
-            sku: 'Monitor-49',
-            price: 1094.98,
-            rating: 2,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"],
-            productType: ProductType.Packing_Materials,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 38748374,
-            productName: "Acer",
-            category: 'Monitor',
-            sku: 'Acer-49',
-            price: 1094.98,
-            rating: 1,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"],
-            productType: ProductType.Packing_Materials,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        },
-        {
-            id: 12345676,
-            productName: "Dell",
-            category: 'Monitor',
-            sku: 'Dell-49',
-            price: 1094.98,
-            rating: 0,
-            sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-            image_paths: ["https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2.jpg",
-                "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"],
-            productType: ProductType.Packing_Materials,
-            productDescription: '',
-            discount: 0,
-            unitsInStock: 0
-        }
-    ];
+    products: Product[] = [];
 
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
     getProducts() {
-        return this.products;
+        return this.http.get<Product[]>(AppSetting.API_URL + 'API/admin/products')
+            .pipe(
+                map(response => {
+                    response.forEach(_ => {
+                        _.image_paths = this.generateImgPaths(_.productSku);
+                        _.productType = convertIntToProductType(_.productType as number)!;
+                    });
+                    return response;
+                }),
+                catchError(error => {
+                    return throwError(error);
+                })
+            );
     }
 
     getCategories() {
         return this.products.filter((product, index, self) => {
-            return self.findIndex(p => p.category === product.category) === index;
-        }).map(_ => _.category);
+            return self.findIndex(p => p.categoryName === product.categoryName) === index;
+        }).map(_ => _.categoryName);
+    }
+
+    private generateImgPaths(sku: string): string[] {
+        return [`assets/products/${sku}/${sku}_1.jpg`,
+        `assets/products/${sku}/${sku}_2.jpg`,
+        `assets/products/${sku}/${sku}_3.jpg`
+        ]
     }
 }

@@ -33,6 +33,19 @@ namespace Parth_Traders.Data.Repositories.Admin
             _context.Products.AddRange(productListToAdd);
         }
 
+        public Product GetProductBySku(string productSku)
+        {
+            var prouctToReturn = _context.Products
+                .AsNoTracking()
+                .Include(_ => _.SupplierData)
+                .Include(_ => _.CategoryData)
+                .Include(_ => _.OrderDetails).ThenInclude(_ => _.OrderData).ThenInclude(_ => _.CustomerData)
+                .Include(_ => _.OrderDetails)
+                .FirstOrDefault(_ => _.ProductSku == productSku);
+
+            return _mapper.Map<Product>(prouctToReturn);
+        }
+
         public Product GetProductByName(string productName)
         {
             var prouctToReturn = _context.Products

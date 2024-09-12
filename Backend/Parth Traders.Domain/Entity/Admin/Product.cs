@@ -11,6 +11,10 @@ namespace Parth_Traders.Domain.Entity.Admin
         }
         public long ProductId { get; set; }
 
+        public string ProductSku { get; set; }
+
+        public int ProductRating { get; set; }
+
         public string ProductName { get; set; }
 
         public ProductType ProductType { get; set; }

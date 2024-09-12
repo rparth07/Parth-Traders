@@ -3,33 +3,21 @@ import { OrderDetail } from "./OrderDetail";
 
 export class Order {
     transactionId: string;
-    customer: Customer;
+    customerName: string;
     orderDetails: OrderDetail[];
-    grandTotal: number;
-    orderDate: Date;
     paymentType: PaymentType;
+    orderDate: Date;
+    grandTotal: number;
     orderStatus: OrderStatus;
-    shippingAddress: string;
-    billingAddress: string;
 
     constructor(customer: Customer, orderDetails: OrderDetail[]) {
         this.transactionId = '';
-        this.customer = customer;
+        this.customerName = customer?.userName;
         this.orderDetails = orderDetails;
         this.grandTotal = 0;
         this.orderDate = new Date();
         this.paymentType = PaymentType.CashOnDelivery;
         this.orderStatus = OrderStatus.Pending;
-        this.shippingAddress = '';
-        this.billingAddress = '';
-    }
-
-    updateShippingAddress(shippingAddress: string) {
-        this.shippingAddress = shippingAddress;
-    }
-
-    updateBillingAddress(billingAddress: string) {
-        this.billingAddress = billingAddress;
     }
 
     getOrderDetails() {

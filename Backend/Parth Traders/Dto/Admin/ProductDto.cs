@@ -15,6 +15,8 @@ namespace Parth_Traders.Dto.Admin
 
         public long ProductId { get; set; }
 
+        public string ProductSku { get; set; }
+
         [Required]
         public string ProductName { get; set; }
 
@@ -22,6 +24,8 @@ namespace Parth_Traders.Dto.Admin
         public ProductType ProductType { get; set; }
 
         public string ProductDescription { get; set; }
+
+        public int ProductRating { get; set; }
 
         [Required]
         public string SupplierName { get; set; }

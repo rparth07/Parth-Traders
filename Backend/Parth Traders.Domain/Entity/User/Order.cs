@@ -6,6 +6,8 @@ namespace Parth_Traders.Domain.Entity.User
     {
         public long OrderId { get; set; }
 
+        public string TransactionId { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }

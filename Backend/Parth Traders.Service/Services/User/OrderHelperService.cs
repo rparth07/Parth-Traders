@@ -26,7 +26,7 @@ namespace Parth_Traders.Service.Services.User
 
             order.OrderDetails.ForEach(_ =>
             {
-                _.Product = _productRepository.GetProductByName(_.Product.ProductName);
+                _.Product = _productRepository.GetProductBySku(_.Product.ProductSku);
             });
 
             return order;

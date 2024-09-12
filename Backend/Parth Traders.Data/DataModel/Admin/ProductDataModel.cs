@@ -11,6 +11,9 @@ namespace Parth_Traders.Data.DataModel.Admin
         public long ProductId { get; set; }
 
         [Required]
+        public string ProductSku { get; set; }
+
+        [Required]
         public string ProductName { get; set; }
 
         [Required]
@@ -29,6 +32,9 @@ namespace Parth_Traders.Data.DataModel.Admin
         public virtual CategoryDataModel CategoryData { get; set; }
 
         public ICollection<OrderDetailDataModel> OrderDetails { get; set; }
+
+        [Required]
+        public int ProductRating { get; set; }
 
         [Required]
         public long UnitPrice { get; set; }

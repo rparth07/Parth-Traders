@@ -64,4 +64,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   redirectToCheckout() {
     this.router.navigate(['/user/checkout']);
   }
+
+  getImgPathFromSku(sku: string) {
+    return `assets/products/${sku}/${sku}_1.jpg`;
+  }
 }

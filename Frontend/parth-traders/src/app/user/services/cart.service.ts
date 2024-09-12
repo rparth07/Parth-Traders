@@ -14,11 +14,11 @@ export class CartService {
   constructor() {
   }
 
-  public addToCart(product: Product, productSize: string) {
-    if (this.orderDetails.findIndex(_ => _.product == product) > -1) {
-      this.orderDetails[this.orderDetails.findIndex(_ => _.product == product)].incrementProductCount();
+  public addToCart(product: Product) {
+    if (this.orderDetails.findIndex(_ => _.productSku == product.productSku) > -1) {
+      this.orderDetails[this.orderDetails.findIndex(_ => _.productSku == product.productSku)].incrementProductCount();
     } else {
-      this.orderDetails.push(new OrderDetail(product, productSize, 1, product.price));
+      this.orderDetails.push(new OrderDetail(product, 1, product.unitPrice));
     }
     this.emitAddItemToCartEvent();
     this.emitAllProductCountEvent();
@@ -46,7 +46,7 @@ export class CartService {
   }
 
   public decrementProductCountFrom(orderDetail: OrderDetail) {
-    const index = this.orderDetails.findIndex(_ => _.product == orderDetail.product);
+    const index = this.orderDetails.findIndex(_ => _.productSku == orderDetail.productSku);
     if (this.orderDetails[index].getProductQuantity() == 1) {
       this.orderDetails.splice(index, 1);
     } else {
@@ -56,7 +56,7 @@ export class CartService {
   }
 
   public incrementProductCountOf(orderDetail: OrderDetail) {
-    const index = this.orderDetails.findIndex(_ => _.product == orderDetail.product);
+    const index = this.orderDetails.findIndex(_ => _.productSku == orderDetail.productSku);
     this.orderDetails[index].incrementProductCount();
     this.emitAllProductCountEvent();
   }

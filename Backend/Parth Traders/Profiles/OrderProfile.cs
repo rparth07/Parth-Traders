@@ -2,7 +2,7 @@
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Dto.User;
 
-namespace Parth_Traders.Data.Profiles
+namespace Parth_Traders.Profiles
 {
     public class OrderProfile : Profile
     {

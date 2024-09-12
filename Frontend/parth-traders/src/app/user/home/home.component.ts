@@ -27,22 +27,21 @@ export class HomeComponent implements OnInit {
   @ViewChild('home', { static: true }) homeComponent!: ElementRef;
 
   constructor(private renderer: Renderer2, private ngZone: NgZone, private productService: ProductService, private cartService: CartService) {
-    this.products = productService.getProducts();
-    this.refreshShownProduct();
+    this.fetchProducts();
   }
 
   ngOnInit(): void {
     this.productService.productFilter$.subscribe(next => {
-      this.products = this.productService.getProducts();
+      this.fetchProducts();
       if (next) {
         this.products = this.products.filter(_ => {
           return (next.name === '' || _.productName.trim().toLowerCase().includes(next.name.trim().toLowerCase()))
-            && (next.categories.length === 0 || next.categories.findIndex(c => c === _.category) > -1)
+            && (next.categories.length === 0 || next.categories.findIndex(c => c === _.categoryName) > -1)
             && (!next.activeProductType || next.activeProductType === _.productType)
-            && (!next.priceRange.min || next.priceRange.min <= _.price)
-            && (!next.priceRange.max || next.priceRange.max >= _.price)
-            && (!next.ratingRange.min || next.ratingRange.min <= _.rating)
-            && (!next.ratingRange.max || next.ratingRange.max >= _.rating)
+            && (!next.priceRange.min || next.priceRange.min <= _.unitPrice)
+            && (!next.priceRange.max || next.priceRange.max >= _.unitPrice)
+            && (!next.ratingRange.min || next.ratingRange.min <= _.productRating)
+            && (!next.ratingRange.max || next.ratingRange.max >= _.productRating)
         });
       }
       this.refreshShownProduct();
@@ -82,7 +81,7 @@ export class HomeComponent implements OnInit {
     this.isLargeGrid = false;
   }
 
-  onAddToCart({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
+  onAddToCart({ productCard, product }: { productCard: HTMLDivElement, product: Product }) {
     const position = productCard.getBoundingClientRect();
     const actualTop = position.top + window.scrollY;
     const actualLeft = position.left + window.scrollX;
@@ -112,13 +111,23 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.renderer.removeChild(this.homeComponent.nativeElement, floatingCart);
       this.renderer.removeClass(this.homeComponent.nativeElement, 'MakeFloatingCart');
-      this.cartService.addToCart(product, productSize);
+      this.cartService.addToCart(product);
     }, 1100);
   }
 
-  onAddToCartLarge({ productCard, product, productSize }: { productCard: HTMLDivElement, product: Product, productSize: string }) {
+  onAddToCartLarge({ productCard, product }: { productCard: HTMLDivElement, product: Product }) {
     setTimeout(() => {
-      this.cartService.addToCart(product, productSize);
+      this.cartService.addToCart(product);
     }, 1100);
   }
+
+  fetchProducts(): void {
+    this.productService.getProducts()
+      .subscribe((next) => {
+        this.products = next;
+        console.dir(this.products, { depth: null }); // Now you'll see the products in the console
+        this.refreshShownProduct(); // Call this to refresh the shown products
+      });
+  }
 }
+

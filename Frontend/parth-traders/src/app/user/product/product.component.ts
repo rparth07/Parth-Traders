@@ -11,15 +11,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class ProductComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() product!: Product;
-  selectedProductSize: string | null = null;
   productCard: HTMLDivElement | undefined;
   productImagePath: string;
   @ViewChild('productElement') productCardRef!: ElementRef<HTMLDivElement>;
 
   @Input('shouldSwitchToLargeGrid') shouldSwitchToLargeGrid: boolean = false;
 
-  @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
-  @Output() addToCartLargeEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product, productSize: string }>();
+  @Output() addToCartEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product }>();
+  @Output() addToCartLargeEvent = new EventEmitter<{ productCard: HTMLDivElement, product: Product }>();
 
   constructor(private renderer: Renderer2, carouselConfig: NgbCarouselConfig) {
     this.productImagePath = this.product?.image_paths[0];
@@ -156,25 +155,13 @@ export class ProductComponent implements OnInit, AfterViewInit, OnChanges {
 
   // Method to add product to cart in large view
   addCartLarge(): void {
-    if (this.selectedProductSize) {
-      const productFrontDiv: HTMLDivElement = this.productCard?.querySelectorAll('.product-front')[0] as HTMLDivElement;
-      this.addToCartLargeEvent.emit({ productCard: productFrontDiv, product: this.product, productSize: this.selectedProductSize as string });
-    } else {
-      alert("Please select a size.");
-    }
+    const productFrontDiv: HTMLDivElement = this.productCard?.querySelectorAll('.product-front')[0] as HTMLDivElement;
+    this.addToCartLargeEvent.emit({ productCard: productFrontDiv, product: this.product });
   }
 
   // Method to handle add to cart functionality
   addToCart(): void {
-    if (this.selectedProductSize) {
-      const productFrontDiv: HTMLDivElement = this.productCard?.querySelectorAll('.product-front')[0] as HTMLDivElement;
-      this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product, productSize: this.selectedProductSize as string });
-    } else {
-      alert("Please select a size.");
-    }
-  }
-
-  updateProductSize(productSize: string) {
-    this.selectedProductSize = productSize;
+    const productFrontDiv: HTMLDivElement = this.productCard?.querySelectorAll('.product-front')[0] as HTMLDivElement;
+    this.addToCartEvent.emit({ productCard: productFrontDiv, product: this.product });
   }
 }

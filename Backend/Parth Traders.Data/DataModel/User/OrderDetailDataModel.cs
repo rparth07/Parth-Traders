@@ -30,8 +30,5 @@ namespace Parth_Traders.Data.DataModel.User
 
         [Required]
         public long Total { get; set; }
-
-        [Required]
-        public DateTime BillDate { get; set; }
     }
 }

@@ -25,6 +25,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { WIPComponent } from './wip/wip.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,5 +61,12 @@ import { WIPComponent } from './wip/wip.component';
     MatInputModule,
     NgxPayPalModule
   ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ]
 })
 export class UserModule { }

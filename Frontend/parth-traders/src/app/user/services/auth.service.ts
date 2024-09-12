@@ -5,8 +5,8 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenService } from './token.service';
+import { AppSetting } from 'src/app/shared/app-settings';
 
-const API_URL = 'https://localhost:5031/';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,7 +35,7 @@ export class AuthService {
       password: password,
     };
     let isLoginSuccessful = false;
-    this.http.post<any>(API_URL + 'api/user/authentication/login', body)
+    this.http.post<any>(AppSetting.API_URL + 'api/user/authentication/login', body)
       .subscribe({
         next: (res) => {
           this.tokenService.saveToken(res.token);
@@ -70,7 +70,7 @@ export class AuthService {
       password: password,
     };
 
-    return this.http.post<any>(API_URL + 'api/user/authentication', body)
+    return this.http.post<any>(AppSetting.API_URL + 'api/user/authentication', body)
       .subscribe({
         next: () => {
           catchError(AuthService.handleError)
@@ -86,7 +86,7 @@ export class AuthService {
       email: email,
     };
 
-    return this.http.post<any>(API_URL + 'api/user/forgot-password', body)
+    return this.http.post<any>(AppSetting.API_URL + 'api/user/forgot-password', body)
       .subscribe({
         next: () => {
           catchError(AuthService.handleError)
@@ -104,7 +104,7 @@ export class AuthService {
   updateProfile(customer: Customer): Observable<any> {
     return this.http
       .post<any>(
-        API_URL + 'api/authentication/customer-details/' + customer.id,
+        AppSetting.API_URL + 'api/authentication/customer-details/' + customer.id,
         customer
       )
       .pipe(
@@ -126,7 +126,7 @@ export class AuthService {
       refreshData.refresh_token
     );
 
-    return this.http.post<any>(API_URL + 'api/authentication/login', body).pipe(
+    return this.http.post<any>(AppSetting.API_URL + 'api/authentication/login', body).pipe(
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);

@@ -9,6 +9,8 @@ namespace Parth_Traders.Data.DataModel.User
         [Key]
         public long OrderId { get; set; }
 
+        public string TransactionId { get; set; }
+
         public long CustomerId { get; set; }
         [Required]
         [ForeignKey("Id")]

@@ -22,14 +22,14 @@
         <small>Dispatching...</small>
         <div class="row checkout_row" *ngFor="let item of orderItems">
             <div class="medium-2 columns text-center">
-                <img [src]="item.product.image_paths[0]" class="product_image" />
+                <img [src]="getImgPathFromSku(item.productSku)" class="product_image" />
             </div>
             <div class="medium-5 columns">
-                <span class="text--bold js-product-name">{{item.product.productName}}</span>
-                <p class="js-product-desc">{{item.product.productDescription}}</p>
+                <span class="text--bold js-product-name">{{item.productSku}}</span>
+                <!-- <p class="js-product-desc">{{item.product.productDescription}}</p> -->
             </div>
             <div class="medium-2 columns text-right">
-                <p class="text--red js-product-costs">{{item.quantity}} x {{item.product.price | currency:'USD':true}}
+                <p class="text--red js-product-costs">{{item.quantity}} x {{item.price | currency:'USD':true}}
                 </p>
             </div>
             <div class="medium-3 columns text-right">

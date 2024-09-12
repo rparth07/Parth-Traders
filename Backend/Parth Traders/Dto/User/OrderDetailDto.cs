@@ -6,7 +6,6 @@ namespace Parth_Traders.Dto.User
     {
         public OrderDetailDto()
         {
-            BillDate = DateTime.Now;
         }
 
         public long OrderDetailId { get; set; }
@@ -14,10 +13,7 @@ namespace Parth_Traders.Dto.User
         public long OrderId { get; set; }
 
         [Required]
-        public string CustomerName { get; set; }
-
-        [Required]
-        public string ProductName { get; set; }
+        public string ProductSku { get; set; }
 
         [Required]
         public long PricePerPiece { get; set; }
@@ -30,8 +26,5 @@ namespace Parth_Traders.Dto.User
 
         [Required]
         public long Total { get; set; }
-
-        [Required]
-        public DateTime BillDate { get; set; }
     }
 }

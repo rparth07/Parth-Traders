@@ -3,7 +3,7 @@ using Parth_Traders.CsvParserModel;
 using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Dto.Admin;
 
-namespace Parth_Traders.Data.Profiles
+namespace Parth_Traders.Profiles
 {
     public class SupplierProfile : Profile
     {
