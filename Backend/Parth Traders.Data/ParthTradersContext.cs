@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Parth_Traders.Data.Configuration;
@@ -7,7 +8,7 @@ using Parth_Traders.Data.DataModel.User;
 
 namespace Parth_Traders.Data
 {
-    public class ParthTradersContext : IdentityDbContext<DataModel.Admin.AdminDataModel>
+    public class ParthTradersContext : IdentityDbContext<AdminDataModel, IdentityRole, string>
     {
         public ParthTradersContext()
         {

@@ -3,7 +3,6 @@
   <div class="container d-flex">
     <a class="home-link navbar-brand float-left d-flex align-items-center m-0 text-decoration-none" routerLink="home">
       <img src="assets/images/parth-traders.png" />
-      <h4 class="logo-title">Parth Traders</h4>
     </a>
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
@@ -27,7 +26,7 @@
         </a>
       </li>
     </ul>
-    <button mat-button [matMenuTriggerFor]="belowMenu">
+    <button class="text-white" mat-button [matMenuTriggerFor]="belowMenu">
       <mat-icon>account_circle</mat-icon>{{ adminName }}
     </button>
     <mat-menu #belowMenu="matMenu" yPosition="below">

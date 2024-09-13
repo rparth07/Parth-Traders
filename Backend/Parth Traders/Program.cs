@@ -65,7 +65,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSwagger();
 builder.Services.AddDbContext<ParthTradersContext>();
 
-builder.Services.AddIdentityCore<AdminDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
 builder.Services.AddIdentityCore<CustomerDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
 
 builder.Services.AddIdentity<AdminDataModel, IdentityRole>()

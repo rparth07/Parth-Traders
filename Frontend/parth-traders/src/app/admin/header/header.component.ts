@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminName = this.authService.admin.userName;
+    this.adminName = this.authService.admin?.userName;
     this.authService.adminName.subscribe((res: string) => {
       this.adminName = res;
     });

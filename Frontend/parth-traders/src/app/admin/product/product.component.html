@@ -7,81 +7,37 @@
         </mat-card-header>
         <mat-card-content>
           <div class="row justify-content-between">
-            <div class="col-2 col-md-2 pe-0">
-              <form
-                #filter="ngForm"
-                class="d-flex form-inline search-box"
-                (submit)="applyFilter(filter.value)"
-              >
-                <input
-                  name="searchValue"
-                  id="search"
-                  class="form-control"
-                  type="search"
-                  placeholder="Search..."
-                  aria-label="Search"
-                  autocomplete="off"
-                  ngModel
-                />
+            <div class="col-3 col-md-3 pe-0">
+              <form #filter="ngForm" class="d-flex form-inline search-box" (submit)="applyFilter(filter.value)">
+                <input name="searchValue" id="search" class="form-control" type="search" placeholder="Search..."
+                  aria-label="Search" autocomplete="off" ngModel />
                 <button type="submit" id="searchButton" class="p-2">
-                  <mat-icon
-                    aria-hidden="false"
-                    aria-label="search icon"
-                    fontIcon="search"
-                  ></mat-icon>
+                  <mat-icon aria-hidden="false" aria-label="search icon" fontIcon="search"></mat-icon>
                 </button>
               </form>
             </div>
 
             <div class="col-5 ps-0">
               <div class="add-product">
-                <input
-                  type="file"
-                  id="fileLoader"
-                  name="files"
-                  title="Load File"
-                  hidden
-                  accept=".csv"
-                  #fileUpload
-                  (change)="addCsv($event)"
-                />
-                <button
-                  id="add-product-file"
-                  type="button"
-                  class="btn text-light pushable"
-                  (click)="fileUpload.click()"
-                >
+                <input type="file" id="fileLoader" name="files" title="Load File" hidden accept=".csv" #fileUpload
+                  (change)="addCsv($event)" />
+                <button id="add-product-file" type="button" class="btn text-light pushable"
+                  (click)="fileUpload.click()">
                   <span class="front">Add CSV</span>
                 </button>
-                <button
-                  type="button"
-                  class="btn text-light pushable"
-                  id="add-product-btn"
-                  (click)="openUpdateProductModal()"
-                >
+                <button type="button" class="btn text-light pushable" id="add-product-btn"
+                  (click)="openUpdateProductModal()">
                   <span class="front">Add Product</span>
                 </button>
               </div>
             </div>
           </div>
-          <table
-            mat-table
-            [dataSource]="dataSource"
-            matSort
-            class="w-100 mt-2 white-arrow"
-          >
-            <ng-container
-              *ngFor="let column of columns"
-              [matColumnDef]="column.columnDef"
-            >
+          <table mat-table [dataSource]="dataSource" matSort class="w-100 mt-2 white-arrow">
+            <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 {{ column.header }}
               </th>
-              <td
-                mat-cell
-                *matCellDef="let row"
-                [matMenuTriggerFor]="belowMenu"
-              >
+              <td mat-cell *matCellDef="let row" [matMenuTriggerFor]="belowMenu">
                 {{ column.cell(row) }}
                 <mat-menu #belowMenu="matMenu" yPosition="below">
                   <button mat-menu-item (click)="openUpdateProductModal(row)">
@@ -96,13 +52,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
-          <mat-paginator
-            #paginator
-            [length]="dataLength"
-            [pageSize]="5"
-            [pageSizeOptions]="[5, 10, 25, 100]"
-            aria-label="Select page"
-          >
+          <mat-paginator #paginator [length]="dataLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
           </mat-paginator>
         </mat-card-content>
       </mat-card>
