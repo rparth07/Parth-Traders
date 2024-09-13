@@ -31,6 +31,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 import { OrderComponent } from './order/order.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { OrderComponent } from './order/order.component';
     MatInputModule,
     NgxPayPalModule,
     MatTableModule,
-    MatButtonModule
+    MatPaginatorModule, // Add paginator module
+    MatSortModule, // Add sorting module
+    MatButtonModule // Add button module
   ],
   providers: [
     {

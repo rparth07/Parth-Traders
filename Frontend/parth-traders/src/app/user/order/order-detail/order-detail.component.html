@@ -1,27 +1,33 @@
 <div *ngIf="order" class="order-detail">
-    <h2>Order Details for {{order.transactionId}}</h2>
-    <mat-table [dataSource]="order.orderDetails">
+    <h2>Order Details for {{ order.transactionId }}</h2>
+    <mat-table [dataSource]="order.orderDetails" class="mat-elevation-z8">
+
+        <!-- Product SKU Column -->
         <ng-container matColumnDef="productSku">
             <mat-header-cell *matHeaderCellDef> Product SKU </mat-header-cell>
             <mat-cell *matCellDef="let detail"> {{detail.productSku}} </mat-cell>
         </ng-container>
 
+        <!-- Price Column -->
         <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
             <mat-cell *matCellDef="let detail"> {{detail.price | currency}} </mat-cell>
         </ng-container>
 
+        <!-- Quantity Column -->
         <ng-container matColumnDef="quantity">
             <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
             <mat-cell *matCellDef="let detail"> {{detail.quantity}} </mat-cell>
         </ng-container>
 
+        <!-- Total Price Column -->
         <ng-container matColumnDef="totalPrice">
             <mat-header-cell *matHeaderCellDef> Total Price </mat-header-cell>
             <mat-cell *matCellDef="let detail"> {{detail.quantity * detail.price | currency}} </mat-cell>
         </ng-container>
 
+        <!-- Header and Row Definitions -->
         <mat-header-row *matHeaderRowDef="['productSku', 'price', 'quantity', 'totalPrice']"></mat-header-row>
-        <mat-row *matRowDef="let detail; columns: ['productSku', 'price', 'quantity', 'totalPrice'];"></mat-row>
+        <mat-row *matRowDef="let row; columns: ['productSku', 'price', 'quantity', 'totalPrice'];"></mat-row>
     </mat-table>
 </div>

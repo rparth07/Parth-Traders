@@ -1,26 +1,49 @@
 <div class="orders-list" *ngIf="orders.length > 0">
     <h2>Orders</h2>
-    <mat-table [dataSource]="orders">
+
+    <!-- Angular Material Table with sort and paginator -->
+    <mat-table [dataSource]="orders" matSort class="mat-elevation-z8">
+
+        <!-- Transaction ID Column -->
         <ng-container matColumnDef="transactionId">
-            <mat-header-cell *matHeaderCellDef> Transaction ID </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </mat-header-cell>
             <mat-cell *matCellDef="let order"> {{order.transactionId}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="customerName">
-            <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+        <!-- Customer Name Column -->
+        <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </mat-header-cell>
             <mat-cell *matCellDef="let order"> {{order.userName}} </mat-cell>
         </ng-container>
 
+        <!-- Grand Total Column -->
         <ng-container matColumnDef="grandTotal">
-            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
             <mat-cell *matCellDef="let order"> {{order.grandTotal | currency}} </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="['transactionId', 'customerName', 'grandTotal']"></mat-header-row>
-        <mat-row *matRowDef="let order; columns: ['transactionId', 'customerName', 'grandTotal'];"
-            (click)="onSelectOrder(order)"></mat-row>
+        <!-- Action Column (for details) -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let order">
+                <button mat-raised-button color="primary" (click)="onSelectOrder(order)">View Details</button>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Definitions -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+            [ngClass]="{'selected-order': selectedOrder?.transactionId === row.transactionId}">
+        </mat-row>
     </mat-table>
 
+    <!-- Pagination Controls -->
+    <mat-paginator [length]="totalOrders" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons>
+    </mat-paginator>
+
+
+    <!-- Display selected order details -->
     <app-order-detail *ngIf="selectedOrder" [order]="selectedOrder"></app-order-detail>
 </div>
 
