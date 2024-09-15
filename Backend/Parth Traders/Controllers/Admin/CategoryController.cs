@@ -42,10 +42,8 @@ namespace Parth_Traders.Controllers.Admin
         }
 
         [HttpPost, DisableRequestSizeLimit, Authorize]
-        public IActionResult AddAllCategories()
+        public IActionResult AddAllCategories([FromForm] IFormFile file)
         {
-            IFormFile? file = Request.Form.Files[0];
-
             List<ParsedCategory> parsedcategories = new ParsedCategory().ParseData(file);
 
             var categoriesToAdd = _mapper.Map<List<Category>>(parsedcategories);

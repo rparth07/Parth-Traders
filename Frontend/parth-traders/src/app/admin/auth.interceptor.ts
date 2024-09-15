@@ -18,12 +18,13 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router,
     private tokenService: TokenService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): any {
     const token = this.tokenService.getToken();
     const refreshToken = this.tokenService.getRefreshToken();
 
+    // Add Authorization header if token is present
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -32,14 +33,16 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    if (!request.headers.has('Content-Type')) {
+    // Only set Content-Type header for JSON requests
+    if (request.body && !(request.body instanceof FormData)) {
       request = request.clone({
         setHeaders: {
-          'content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
       });
     }
 
+    // Set Accept header for all requests
     request = request.clone({
       headers: request.headers.set('Accept', 'application/json'),
     });
@@ -63,7 +66,7 @@ export class AuthInterceptor implements HttpInterceptor {
           } else {
             this.router
               .navigate(['/admin/login'])
-              .then((_) => console.log('redirect to login'));
+              .then(() => console.log('redirect to login'));
           }
         }
         return throwError(error);

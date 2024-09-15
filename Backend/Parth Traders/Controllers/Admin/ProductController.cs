@@ -46,9 +46,8 @@ namespace Parth_Traders.Controllers.Admin
         }
 
         [HttpPost, DisableRequestSizeLimit, Authorize]
-        public IActionResult AddAllProducts()
+        public IActionResult AddAllProducts([FromForm] IFormFile file)
         {
-            IFormFile? file = Request.Form.Files[0];
             List<ParsedProduct> parsedProducts = new ParsedProduct().ParseData(file);
 
             List<Product> productsToAdd = parsedProducts.Select(parsedProduct =>

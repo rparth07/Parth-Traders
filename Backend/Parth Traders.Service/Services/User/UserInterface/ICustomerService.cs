@@ -7,9 +7,9 @@ namespace Parth_Traders.Service.Services.User.UserInterface
         Customer AddCustomer(Customer customerToAdd);
         List<Customer> AddAllCustomers(List<Customer> customersToAdd);
         Customer GetCustomerById(long customerId);
-        Customer GetCustomerByName(string customerName);
+        Customer GetCustomerByUserName(string userName);
         List<Customer> GetAllCustomers();
-        void UpdateCustomer(Customer updatedCustomer, string oldCustomerName);
-        void DeleteCustomer(string customerName);
+        void UpdateCustomer(Customer updatedCustomer, string oldUserName);
+        void DeleteCustomer(string userName);
     }
 }

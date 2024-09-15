@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   adminName: string = 'admin';
 
   constructor(private authService: AuthService) {
+    this.adminName = this.authService.admin!.userName;
     fromEvent(window, 'scroll').subscribe((event) => {
       window.pageYOffset >= 35
         ? (this.enableHeader = true)
@@ -21,10 +22,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminName = this.authService.admin?.userName;
     this.authService.adminName.subscribe((res: string) => {
       this.adminName = res;
     });
+    console.log(this.adminName);
   }
 
   logout() {

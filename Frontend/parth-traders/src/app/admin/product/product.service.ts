@@ -10,7 +10,7 @@ import { Product } from './product';
 export class ProductService {
   getUpdatedProducts = new Subject<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addProductCsvFile(form: FormData) {
     return this.http.post(DomainConstants.URL + 'admin/products', form);
@@ -21,7 +21,7 @@ export class ProductService {
   }
 
   addProduct(product: Product): any {
-    return this.http.post(DomainConstants.URL + 'admin/products', product);
+    return this.http.post(DomainConstants.URL + 'admin/products/add-product', product);
   }
 
   updateProduct(oldProductName: string, newProduct: Product) {

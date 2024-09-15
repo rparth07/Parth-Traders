@@ -83,8 +83,7 @@
   align-items: center;
 }
 
-.navbar-nav li a,
-button {
+.navbar-nav li a {
   color: #fff;
 }
 

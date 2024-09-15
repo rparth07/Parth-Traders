@@ -35,7 +35,7 @@ namespace Parth_Traders.Controllers.Admin
                     CustomerDto customerToReturn = _mapper.Map<CustomerDto>(addedCustomer);
 
                     return CreatedAtRoute("GetCustomer",
-                                          new { customerName = customerToReturn.CustomerName },
+                                          new { userName = customerToReturn.userName },
                                           customerToReturn);
                 }*/
 
@@ -43,9 +43,8 @@ namespace Parth_Traders.Controllers.Admin
         //                    for this case admin will use below API. But need 
         //                    to change API route for below API.
         /*        [HttpPost, DisableRequestSizeLimit]
-                public IActionResult AddAllCustomers()
+                public IActionResult AddAllCustomers([FromForm] IFormFile file)
                 {
-                    IFormFile? file = Request.Form.Files[0];
                     List<ParsedCustomer> parsedcustomers = new ParsedCustomer().ParseData(file);
 
                     var customersToAdd = _mapper.Map<List<Customer>>(parsedcustomers);
@@ -55,10 +54,10 @@ namespace Parth_Traders.Controllers.Admin
                     return Ok(_mapper.Map<List<CustomerDto>>(addedcustomers));
                 }
         */
-        [HttpGet("{customerName}", Name = "GetCustomerInfo")]
-        public IActionResult GetCustomerInfo(string customerName)
+        [HttpGet("{userName}", Name = "GetCustomerInfo")]
+        public IActionResult GetCustomerInfo(string userName)
         {
-            CustomerDto customerFromRepo = _mapper.Map<CustomerDto>(_customerService.GetCustomerByName(customerName));
+            CustomerDto customerFromRepo = _mapper.Map<CustomerDto>(_customerService.GetCustomerByUserName(userName));
             return Ok(customerFromRepo);
         }
 
@@ -69,23 +68,23 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(customers);
         }
 
-        [HttpPost("{customerName}")]
+        [HttpPost("{userName}")]
         [Consumes("application/json")]
         public IActionResult UpdateCustomer(
-            string customerName,
+            string userName,
             CustomerDto customer)
         {
             var customerToUpdate = _mapper.Map<Customer>(customer);
 
-            _customerService.UpdateCustomer(customerToUpdate, customerName);
+            _customerService.UpdateCustomer(customerToUpdate, userName);
 
             return Ok(customer);
         }
 
-        [HttpDelete("{customerName}")]
-        public IActionResult DeleteCustomer(string customerName)
+        [HttpDelete("{userName}")]
+        public IActionResult DeleteCustomer(string userName)
         {
-            _customerService.DeleteCustomer(customerName);
+            _customerService.DeleteCustomer(userName);
             return NoContent();
         }
     }

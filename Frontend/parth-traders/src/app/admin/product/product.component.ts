@@ -41,15 +41,25 @@ export class ProductComponent implements OnInit {
       cell: (element: Product) => `${element.productName}`,
     },
     {
+      columnDef: 'productSku',
+      header: 'SKU',
+      cell: (element: Product) => `${element.productSku}`,
+    },
+    {
+      columnDef: 'productRating',
+      header: 'Rating',
+      cell: (element: Product) => `${element.productRating}`,
+    },
+    {
       columnDef: 'productType',
       header: 'Type',
       cell: (element: Product) => `${this.productType[element.productType]}`,
     },
-    {
-      columnDef: 'productDescription',
-      header: 'Description',
-      cell: (element: Product) => `${element.productDescription}`,
-    },
+    // {
+    //   columnDef: 'productDescription',
+    //   header: 'Description',
+    //   cell: (element: Product) => `${element.productDescription}`,
+    // },
     {
       columnDef: 'supplierName',
       header: 'Supplier',

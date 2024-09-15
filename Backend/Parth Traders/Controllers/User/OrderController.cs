@@ -42,42 +42,42 @@ namespace Parth_Traders.Controllers.User
             return Ok(orderToReturn);
         }
 
-        [HttpGet("{customerName}/{orderId}", Name = "GetOrder")]
-        public IActionResult GetOrder(string customerName, long orderId)
+        [HttpGet("{userName}/{orderId}", Name = "GetOrder")]
+        public IActionResult GetOrder(string userName, long orderId)
         {
             OrderDto orderFromRepo = _mapper.Map<OrderDto>(_orderService.GetOrderById(orderId));
             return Ok(orderFromRepo);
         }
 
-        [HttpGet("{customerName}/latest")]
-        public IActionResult GetLatestOrderForCustomer(string customerName)
+        [HttpGet("{userName}/latest")]
+        public IActionResult GetLatestOrderForCustomer(string userName)
         {
             var order = _mapper.Map<OrderDto>(_orderService
-                .GetLatestOrderForCustomer(customerName));
+                .GetLatestOrderForCustomer(userName));
 
             return Ok(order);
         }
 
-        [HttpGet("{customerName}")]
-        public IActionResult GetAllOrdersForCustomer(string customerName)
+        [HttpGet("{userName}")]
+        public IActionResult GetAllOrdersForCustomer(string userName)
         {
             var orders = _mapper.Map<List<OrderDto>>(_orderService
-                .GetAllOrdersForCustomer(customerName));
+                .GetAllOrdersForCustomer(userName));
 
             return Ok(orders);
         }
 
-        [HttpGet("{customerName}/status/{orderStatus}")]
-        public IActionResult GetAllOrdersForCustomerWithStatus(string customerName,
+        [HttpGet("{userName}/status/{orderStatus}")]
+        public IActionResult GetAllOrdersForCustomerWithStatus(string userName,
                                                                OrderStatus orderStatus)
         {
             var orders = _mapper.Map<List<OrderDto>>(_orderService
-                .GetAllOrdersForCustomerWithStatus(customerName, orderStatus));
+                .GetAllOrdersForCustomerWithStatus(userName, orderStatus));
 
             return Ok(orders);
         }
 
-        [HttpDelete("{customerName}/{orderId}")]
+        [HttpDelete("{userName}/{orderId}")]
         public IActionResult DeleteOrder(long orderId)
         {
             _orderService.CancelOrder(orderId);

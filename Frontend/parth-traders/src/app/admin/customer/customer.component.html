@@ -16,7 +16,7 @@
                 </button>
               </form>
             </div>
-
+            <!-- TODO: no need as admin can't modify customer information
             <div class="col-5 ps-0">
               <div class="add-customer">
                 <input type="file" id="fileLoader" name="files" title="Load File" hidden accept=".csv" #fileUpload
@@ -30,7 +30,7 @@
                   <span class="front">Add Customer</span>
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
           <table mat-table [dataSource]="dataSource" matSort class="w-100 mt-2 white-arrow">
             <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">

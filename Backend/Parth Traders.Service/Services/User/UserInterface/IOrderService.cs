@@ -7,9 +7,9 @@ namespace Parth_Traders.Service.Services.User.UserInterface
     {
         Order AddOrder(Order orderToAdd);
         Order GetOrderById(long orderId);
-        Order GetLatestOrderForCustomer(string customerName);
-        List<Order> GetAllOrdersForCustomer(string customerName);
-        List<Order> GetAllOrdersForCustomerWithStatus(string customerName, OrderStatus orderStatus);
+        Order GetLatestOrderForCustomer(string userName);
+        List<Order> GetAllOrdersForCustomer(string userName);
+        List<Order> GetAllOrdersForCustomerWithStatus(string userName, OrderStatus orderStatus);
         void CancelOrder(long orderId);
     }
 }

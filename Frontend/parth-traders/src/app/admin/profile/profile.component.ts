@@ -11,10 +11,10 @@ export class ProfileComponent implements OnInit {
   admin!: AdminDetails;
 
   constructor(private authService: AuthService) {
-    this.admin = this.authService.admin;
+    this.admin = this.authService.admin!;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   updateProfile(form: any) {
     this.authService.updateProfile(this.admin).subscribe({

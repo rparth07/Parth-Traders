@@ -10,7 +10,7 @@ import { DomainConstants } from '../shared/domain.constants';
 export class CategoryService {
   getUpdatedCategories = new Subject<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addCategoryCsvFile(form: FormData) {
     return this.http.post(DomainConstants.URL + 'admin/categories', form);
@@ -21,7 +21,7 @@ export class CategoryService {
   }
 
   addCategory(category: Category): any {
-    return this.http.post(DomainConstants.URL + 'admin/categories', category);
+    return this.http.post(DomainConstants.URL + 'admin/categories/add-category', category);
   }
 
   updateCategory(oldCategoryName: string, newCategory: Category) {

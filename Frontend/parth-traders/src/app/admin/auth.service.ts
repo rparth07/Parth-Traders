@@ -17,7 +17,7 @@ const API_URL = 'https://localhost:5031/';
 })
 export class AuthService {
   redirectUrl = '';
-  admin!: AdminDetails;
+  admin: AdminDetails | null;
   adminName = new Subject<string>();
 
   private static handleError(error: HttpErrorResponse): any {
@@ -40,7 +40,9 @@ export class AuthService {
     private router: Router,
     private jwtHelper: JwtHelperService,
     private tokenService: TokenService
-  ) { }
+  ) {
+    this.admin = tokenService.getAdmin();
+  }
 
   //reactor this method to first validate the token and then calculate the expiration date later
   isAuthenticated(): boolean {
@@ -60,7 +62,7 @@ export class AuthService {
           this.tokenService.saveToken(res.token);
           this.tokenService.saveRefreshToken(res.refresh_token);
           this.admin = res.admin;
-          this.adminName.next(this.admin.userName);
+          this.adminName.next(this.admin!.userName);
         }),
         catchError(AuthService.handleError)
       );
@@ -78,8 +80,9 @@ export class AuthService {
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
+        this.tokenService.saveAdmin(res.admin);
         this.admin = res.admin;
-        this.adminName.next(this.admin.userName);
+        this.adminName.next(this.admin!.userName);
       }),
       catchError(AuthService.handleError)
     );

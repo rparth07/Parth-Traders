@@ -24,8 +24,6 @@ export class CustomerComponent implements OnInit {
   paymentType = PaymentType;
   dataLength: number = 100;
 
-  updatableCustomer!: Customer | null;
-
   columns = [
     {
       columnDef: 'position',
@@ -33,24 +31,19 @@ export class CustomerComponent implements OnInit {
       cell: (element: Customer) => `${element.position}`,
     },
     {
-      columnDef: 'customerName',
+      columnDef: 'userName',
       header: 'Name',
-      cell: (element: Customer) => `${element.customerName}`,
+      cell: (element: Customer) => `${element.userName}`,
     },
     {
-      columnDef: 'createdDate',
-      header: 'Created Date',
-      cell: (element: Customer) => `${element.createdDate}`,
-    },
-    {
-      columnDef: 'customerEmail',
+      columnDef: 'email',
       header: 'Email',
-      cell: (element: Customer) => `${element.customerEmail}`,
+      cell: (element: Customer) => `${element.email}`,
     },
     {
-      columnDef: 'customerPhoneNumber',
+      columnDef: 'phoneNumber',
       header: 'Phone Number',
-      cell: (element: Customer) => `${element.customerPhoneNumber}`,
+      cell: (element: Customer) => `${element.phoneNumber}`,
     },
     {
       columnDef: 'customerAddress',
@@ -84,23 +77,23 @@ export class CustomerComponent implements OnInit {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
   }
 
-  addCsv(event: any) {
-    event.preventDefault();
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      this.customerService.addCustomerCsvFile(formData).subscribe({
-        next: (value) => {
-          this.getCustomers();
-        },
-        error: (err: { error: string }) => {
-          this.showToaster(err.error);
-        },
-      });
-    }
-    event.target.value = '';
-  }
+  // addCsv(event: any) {
+  //   event.preventDefault();
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  //     this.customerService.addCustomerCsvFile(formData).subscribe({
+  //       next: (value) => {
+  //         this.getCustomers();
+  //       },
+  //       error: (err: { error: string }) => {
+  //         this.showToaster(err.error);
+  //       },
+  //     });
+  //   }
+  //   event.target.value = '';
+  // }
 
   getCustomers(): void {
     this.loadingSubject.next(true);
@@ -112,7 +105,7 @@ export class CustomerComponent implements OnInit {
             customers.map((customer: Customer, index: number) => {
               customer.position = index + 1;
               return customer;
-            })
+            }),
           //need to find a way to show orders in the table
         )
       )
@@ -125,11 +118,11 @@ export class CustomerComponent implements OnInit {
   }
 
   deleteCustomer(customer: Customer) {
-    this.customerService.deleteCustomer(customer.customerName);
+    this.customerService.deleteCustomer(customer.userName);
   }
 
   openUpdateCustomerModal(customer?: Customer) {
-    console.log(customer);
+    console.log('coming soon!');
   }
 
   showToaster(errorMsg: string) {

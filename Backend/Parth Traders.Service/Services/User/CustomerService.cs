@@ -33,7 +33,7 @@ namespace Parth_Traders.Service.Services.User
                 throw new BadRequestException("Please enter data in correct format!");
             }
 
-            return GetCustomerByName(customerToAdd.CustomerName);
+            return GetCustomerByUserName(customerToAdd.UserName);
         }
 
         public List<Customer> AddAllCustomers(List<Customer> customersToAdd)
@@ -51,7 +51,7 @@ namespace Parth_Traders.Service.Services.User
             }
 
             List<Customer> addedCustomers = customersToAdd
-                .Select(_ => GetCustomerByName(_.CustomerName))
+                .Select(_ => GetCustomerByUserName(_.UserName))
                 .ToList();
 
             return addedCustomers;
@@ -68,13 +68,13 @@ namespace Parth_Traders.Service.Services.User
             return customerToReturn;
         }
 
-        public Customer GetCustomerByName(string customerName)
+        public Customer GetCustomerByUserName(string userName)
         {
-            var customerToReturn = _customerRepository.GetCustomerByUserName(customerName);
+            var customerToReturn = _customerRepository.GetCustomerByUserName(userName);
             if (customerToReturn == null)
             {
                 _logger.LogInfo("Invalid product name was entered");
-                throw new NotFoundException("Please enter a valid customer name!");
+                throw new NotFoundException("Please enter a valid username!");
             }
             return customerToReturn;
         }
@@ -84,9 +84,9 @@ namespace Parth_Traders.Service.Services.User
             return _customerRepository.GetAllCustomers();
         }
 
-        public void UpdateCustomer(Customer updatedCustomer, string oldCustomerName)
+        public void UpdateCustomer(Customer updatedCustomer, string oldUserName)
         {
-            var customerFromRepo = GetCustomerByName(oldCustomerName);
+            var customerFromRepo = GetCustomerByUserName(oldUserName);
 
             _customerRepository
                 .UpdateCustomer(FillRequiredInfo(customerFromRepo, updatedCustomer));
@@ -102,11 +102,11 @@ namespace Parth_Traders.Service.Services.User
             return customer;
         }
 
-        public void DeleteCustomer(string customerName)
+        public void DeleteCustomer(string userName)
         {
             try
             {
-                var customerFromRepo = GetCustomerByName(customerName);
+                var customerFromRepo = GetCustomerByUserName(userName);
                 _customerRepository.DeleteCustomer(customerFromRepo);
                 _customerRepository.Save();
             }

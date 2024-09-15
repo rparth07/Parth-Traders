@@ -26,9 +26,9 @@ namespace Parth_Traders.Data.Repositories.User
             _context.Customers.Add(customerToAdd);
         }
 
-        public void AddAllCustomers(List<Customer> categories)
+        public void AddAllCustomers(List<Customer> customers)
         {
-            var customerListToAdd = _mapper.Map<List<CustomerDataModel>>(categories);
+            var customerListToAdd = _mapper.Map<List<CustomerDataModel>>(customers);
 
             _context.Customers.AddRange(customerListToAdd);
         }
@@ -55,11 +55,12 @@ namespace Parth_Traders.Data.Repositories.User
 
         public List<Customer> GetAllCustomers()
         {
-            var categories = _context.Customers
+            var customers = _context.Customers
                 .Include("Orders")
                 .ToList();
 
-            return _mapper.Map<List<Customer>>(categories);
+            var customersToReturn = _mapper.Map<List<Customer>>(customers);
+            return customersToReturn;
         }
 
         public void UpdateCustomer(Customer customer)

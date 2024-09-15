@@ -38,39 +38,39 @@ namespace Parth_Traders.Data.Repositories.User
             return _mapper.Map<Order>(orderToReturn);
         }
 
-        public Order GetLatestOrderForCustomer(string customerName)
+        public Order GetLatestOrderForCustomer(string userName)
         {
             var orderToReturn = _context.Orders
                 .Include("CustomerData")
                 .Include("OrderDetails.ProductData")
                 .AsNoTracking()
-                .Where(_ => _.CustomerData.UserName == customerName)
+                .Where(_ => _.CustomerData.UserName == userName)
                 .OrderByDescending(_ => _.OrderDate)
                 .FirstOrDefault();
 
             return _mapper.Map<Order>(orderToReturn);
         }
 
-        public List<Order> GetAllOrdersForCustomer(string customerName)
+        public List<Order> GetAllOrdersForCustomer(string userName)
         {
             var ordersToReturn = _context.Orders
                 .Include("CustomerData")
                 .Include("OrderDetails.ProductData")
                 .AsNoTracking()
-                .Where(_ => _.CustomerData.UserName == customerName);
+                .Where(_ => _.CustomerData.UserName == userName);
 
             var orders = _mapper.Map<List<Order>>(ordersToReturn);
             return orders;
         }
 
-        public List<Order> GetAllOrdersForCustomerWithStatus(string customerName,
+        public List<Order> GetAllOrdersForCustomerWithStatus(string userName,
                                                              OrderStatus orderStatus)
         {
             var ordersToReturn = _context.Orders
                 .Include("CustomerData")
                 .Include("OrderDetails.ProductData")
                 .AsNoTracking()
-                .Where(_ => _.CustomerData.UserName == customerName &&
+                .Where(_ => _.CustomerData.UserName == userName &&
                        _.OrderStatus == orderStatus);
 
             return _mapper.Map<List<Order>>(ordersToReturn);

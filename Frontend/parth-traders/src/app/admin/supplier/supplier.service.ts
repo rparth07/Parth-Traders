@@ -13,10 +13,7 @@ export class SupplierService {
   constructor(private http: HttpClient) { }
 
   addSupplierCsvFile(form: FormData) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
-    });
-    return this.http.post(DomainConstants.URL + 'admin/suppliers', form, { headers });
+    return this.http.post(DomainConstants.URL + 'admin/suppliers', form);
   }
 
   fetchSuppliers() {
@@ -24,7 +21,7 @@ export class SupplierService {
   }
 
   addSupplier(supplier: Supplier): any {
-    return this.http.post(DomainConstants.URL + 'admin/suppliers', supplier);
+    return this.http.post(DomainConstants.URL + 'admin/suppliers/add-supplier', supplier);
   }
 
   updateSupplier(oldSupplierName: string, newSupplier: Supplier) {

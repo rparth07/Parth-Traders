@@ -35,34 +35,34 @@ namespace Parth_Traders.Controllers.User
             CustomerDto customerToReturn = _mapper.Map<CustomerDto>(addedCustomer);
 
             return CreatedAtRoute("GetCustomer",
-                                  new { customerName = customerToReturn.UserName },
+                                  new { userName = customerToReturn.UserName },
                                   customerToReturn);
         }
 
-        [HttpGet("{customerName}", Name = "GetCustomer")]
-        public IActionResult GetCustomer(string customerName)
+        [HttpGet("{userName}", Name = "GetCustomer")]
+        public IActionResult GetCustomer(string userName)
         {
-            CustomerDto customerFromRepo = _mapper.Map<CustomerDto>(_customerService.GetCustomerByName(customerName));
+            CustomerDto customerFromRepo = _mapper.Map<CustomerDto>(_customerService.GetCustomerByUserName(userName));
             return Ok(customerFromRepo);
         }
 
-        [HttpPost("{customerName}")]
+        [HttpPost("{userName}")]
         [Consumes("application/json")]
         public IActionResult UpdateCustomer(
-            string customerName,
+            string userName,
             CustomerDto customer)
         {
             var customerToUpdate = _mapper.Map<Customer>(customer);
 
-            _customerService.UpdateCustomer(customerToUpdate, customerName);
+            _customerService.UpdateCustomer(customerToUpdate, userName);
 
             return Ok(customer);
         }
 
-        [HttpDelete("{customerName}")]
-        public IActionResult DeleteCustomer(string customerName)
+        [HttpDelete("{userName}")]
+        public IActionResult DeleteCustomer(string userName)
         {
-            _customerService.DeleteCustomer(customerName);
+            _customerService.DeleteCustomer(userName);
             return NoContent();
         }
     }

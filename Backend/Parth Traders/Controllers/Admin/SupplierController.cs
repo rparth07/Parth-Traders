@@ -42,9 +42,8 @@ namespace Parth_Traders.Controllers.Admin
         }
 
         [HttpPost, DisableRequestSizeLimit]
-        public IActionResult AddAllSuppliers()
+        public IActionResult AddAllSuppliers([FromForm] IFormFile file)
         {
-            IFormFile? file = Request.Form.Files[0];
             List<ParsedSupplier> parsedsuppliers = new ParsedSupplier().ParseData(file);
 
             var suppliersToAdd = _mapper.Map<List<Supplier>>(parsedsuppliers);

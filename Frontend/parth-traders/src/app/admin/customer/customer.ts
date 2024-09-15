@@ -2,10 +2,9 @@ import { Order } from '../shared/order';
 
 export interface Customer {
   position: number;
-  customerName: string;
-  createdDate: Date;
-  customerEmail: string;
-  customerPhoneNumber: string;
+  userName: string;
+  email: string;
+  phoneNumber: string;
   customerAddress: string;
   paymentType: PaymentType;
   orders: Order[];
