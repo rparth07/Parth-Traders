@@ -47,12 +47,12 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log('event--->>>', event);
+          // console.log('event--->>>', event);
         }
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
-        console.log(error.error.error);
+        // console.log(error.error.error);
         if (error.status === 401) {
           this.authService.removeAllTokens();
           if (error.error.error === 'invalid_token') {

@@ -1,7 +1,6 @@
 ﻿using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.RepositoryInterfaces.User;
 using Parth_Traders.Service.Filter;
-using Parth_Traders.Service.Services.Logger;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Service.Services.User
@@ -9,14 +8,11 @@ namespace Parth_Traders.Service.Services.User
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
-        private readonly ILoggerManager _logger;
 
-        public CustomerService(ICustomerRepository customerRepository, ILoggerManager logger)
+        public CustomerService(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository ??
                 throw new ArgumentNullException(nameof(customerRepository));
-            _logger = logger ??
-                throw new ArgumentNullException(nameof(logger));
         }
 
         public Customer AddCustomer(Customer customerToAdd)
@@ -28,8 +24,6 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                _logger.LogInfo("Entered data was in incorrect format and throwing error" +
-                    $"{ex}");
                 throw new BadRequestException("Please enter data in correct format!");
             }
 
@@ -45,8 +39,6 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                _logger.LogInfo("CSV file data is in incorrect format and throwing error" +
-                    $"{ex}");
                 throw new BadRequestException("One or more customer data is in wrong format. Please enter data in correct format!");
             }
 
@@ -62,7 +54,6 @@ namespace Parth_Traders.Service.Services.User
             var customerToReturn = _customerRepository.GetCustomerById(customerId);
             if (customerToReturn == null)
             {
-                _logger.LogInfo("Invalid product id was entered");
                 throw new NotFoundException("Please enter a valid customer id!");
             }
             return customerToReturn;
@@ -73,7 +64,6 @@ namespace Parth_Traders.Service.Services.User
             var customerToReturn = _customerRepository.GetCustomerByUserName(userName);
             if (customerToReturn == null)
             {
-                _logger.LogInfo("Invalid product name was entered");
                 throw new NotFoundException("Please enter a valid username!");
             }
             return customerToReturn;
@@ -112,8 +102,6 @@ namespace Parth_Traders.Service.Services.User
             }
             catch (Exception ex)
             {
-                _logger.LogInfo("Invalid product name was entered and throwing error" +
-                    $"{ex}");
                 throw new NotFoundException("Please enter a valid customer name!");
             }
         }

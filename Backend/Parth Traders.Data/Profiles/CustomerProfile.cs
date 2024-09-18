@@ -9,7 +9,9 @@ namespace Parth_Traders.Data.Profiles
         public CustomerProfile()
         {
             CreateMap<Customer, CustomerDataModel>();
-            CreateMap<CustomerDataModel, Customer>();
+            CreateMap<CustomerDataModel, Customer>()
+                .ForMember(dest => dest.CustomerId,
+                    opt => opt.MapFrom(src => src.Id));
         }
     }
 }

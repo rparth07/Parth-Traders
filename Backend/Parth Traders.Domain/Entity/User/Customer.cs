@@ -8,7 +8,8 @@ namespace Parth_Traders.Domain.Entity.User
         {
             CreatedDate = DateTime.Now;
         }
-        public long CustomerId { get; set; }
+
+        public string CustomerId { get; set; }
 
         public string UserName { get; set; }
 

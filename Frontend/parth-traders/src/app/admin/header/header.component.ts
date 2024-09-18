@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     this.authService.adminName.subscribe((res: string) => {
       this.adminName = res;
     });
-    console.log(this.adminName);
+    // console.log(this.adminName);
   }
 
   logout() {

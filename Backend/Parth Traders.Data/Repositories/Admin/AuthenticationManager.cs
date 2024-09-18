@@ -45,7 +45,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         private SigningCredentials GetSigningCredentials()
         {
             var key =
-           Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+           Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("PARTHTRADERSSECRETNEWLOGINVALIDATIONKEY"));
             var secret = new SymmetricSecurityKey(key);
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }

@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
   constructor(private productService: ProductService) {
     productService.getCategories()
       .subscribe(categories => this.categories = categories);
-    console.log(this.categories);
+    // console.log(this.categories);
     this.filterCriteria = {
       name: '',
       categories: this.getCheckedCategories(),

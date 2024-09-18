@@ -5,7 +5,7 @@
       </a></h1>
   </div>
   <div class="w-41">
-    <div class="d-flex">
+    <div class="d-flex" *ngIf="shouldDisplaySearchBox">
       <mat-form-field>
         <mat-select id="dropdown-button" (selectionChange)="searchProduct('clicked', searchInputRef.value)"
           [(ngModel)]="selectedCategory" name="category">

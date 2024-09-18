@@ -14,12 +14,12 @@ export class PaymentComponent {
 
   @ViewChild('paymentRef', { static: true }) paymentRef!: ElementRef;
 
-  constructor(private router: Router, private orderService: OrderService) {
+  constructor(private router: Router, private orderService: OrderService, private cartService: CartService) {
   }
 
   ngOnInit(): void {
     this.amount = this.orderService.getTotalOrderPrice();
-    console.log(this.amount);
+    // console.log(this.amount);
     if (this.amount == 0) {
       this.router.navigate(['/user/home']);
     }
@@ -48,12 +48,12 @@ export class PaymentComponent {
           if (details.status == 'COMPLETED') {
             this.orderService.createOrder(details.id).subscribe({
               next: (value: any) => {
-                console.log('order placed successfully: ', value);
+                this.cartService.emitClearCartEvent();
                 this.router.navigate(['/user/confirm']);
               },
               error: (err: { error: { errors: any } }) => {
                 alert("something went wrong, please try again");
-              },
+              }
             });
           }
         })

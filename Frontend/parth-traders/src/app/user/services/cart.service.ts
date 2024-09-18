@@ -72,4 +72,9 @@ export class CartService {
   public getAllProductCountEvent() {
     return this.allProductCountEvent;
   }
+
+  public emitClearCartEvent() {
+    this.orderDetails = [];
+    this.emitAllProductCountEvent();
+  }
 }

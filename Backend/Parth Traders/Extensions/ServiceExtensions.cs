@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
-using Parth_Traders.Service.Services.Logger;
 using System.Text;
 
 namespace Parth_Traders.Extensions
@@ -13,7 +12,6 @@ namespace Parth_Traders.Extensions
     {
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
-            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)
@@ -37,7 +35,6 @@ namespace Parth_Traders.Extensions
             IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("JwtSettings");
-            var secretKey = Environment.GetEnvironmentVariable("SECRET");
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -53,7 +50,7 @@ namespace Parth_Traders.Extensions
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
                     ValidAudience = jwtSettings.GetSection("validAudience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("PARTHTRADERSSECRETNEWLOGINVALIDATIONKEY"))
                 };
             });
         }

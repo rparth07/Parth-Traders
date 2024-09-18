@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using NLog;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.DataModel.User;
@@ -17,11 +16,8 @@ using Parth_Traders.Service.Services.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 using Parth_Traders.Service.Services.User;
 using Parth_Traders.Service.Services.User.UserInterface;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
-
-LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
 builder.Services.ConfigureLoggerService();
@@ -63,7 +59,6 @@ builder.Services.AddScoped<ICustomerAuthManager, CustomerAuthManager>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSwagger();
-builder.Services.AddDbContext<ParthTradersContext>();
 
 builder.Services.AddIdentityCore<CustomerDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
 
@@ -81,28 +76,37 @@ builder.Services.AddMvc(options =>
     options.Filters.Add(new UserFriendlyExceptionFilterAttribute());
 });
 
+builder.Services.AddDbContext<ParthTradersContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetSection("ConnectionString").Value);
+});
+
+var allowedOrigin = builder.Configuration.GetSection("AllowedOrigin").Value;
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+app.UseCors(builder =>
+{
+    builder.WithOrigins(allowedOrigin).AllowAnyHeader();
+    builder.WithOrigins(allowedOrigin).AllowAnyMethod();
+});
 
 app.UseHttpsRedirection();
 
-app.UseRouting();
+//app.UseRouting();
 
-app.UseCors(builder =>
-{
-    // Need to refactor as this - .WithOrigins("https://localhost:4200")
-    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-});
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseSwagger();
-app.UseSwaggerUI(s =>
+//app.UseSwagger();
+/*app.UseSwaggerUI(s =>
 {
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Parth Traders API v1");
     s.SwaggerEndpoint("/swagger/v2/swagger.json", "Parth Traders API v2");
-});
+});*/
 
 app.Run();
