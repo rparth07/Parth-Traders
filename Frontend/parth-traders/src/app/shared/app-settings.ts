@@ -1,3 +1,3 @@
 export const AppSetting = {
-    API_URL: 'https://localhost:5031/',
+    API_URL: 'https://rparth07-parth-traders.somee.com/',
 }

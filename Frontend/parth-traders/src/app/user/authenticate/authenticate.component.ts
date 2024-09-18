@@ -105,6 +105,8 @@ export class AuthenticateComponent implements OnInit {
     this.clearErrors();
 
     const username = (document.getElementById("registerUser") as HTMLInputElement | null)?.value;
+    const phone = (document.getElementById("registerPhone") as HTMLInputElement | null)?.value;
+    const address = (document.getElementById("registerAddress") as HTMLInputElement | null)?.value;
     const email = (document.getElementById("registerEmail") as HTMLInputElement | null)?.value;
     const password = (document.getElementById("registerPass") as HTMLInputElement | null)?.value;
 
@@ -112,6 +114,16 @@ export class AuthenticateComponent implements OnInit {
 
     if (!username) {
       this.showError((document.getElementById("registerUser") as HTMLInputElement | null), "Username is required");
+      valid = false;
+    }
+
+    if (!phone) {
+      this.showError((document.getElementById("registerPhone") as HTMLInputElement | null), "Phone is required");
+      valid = false;
+    }
+
+    if (!address) {
+      this.showError((document.getElementById("registerAddress") as HTMLInputElement | null), "Address is required");
       valid = false;
     }
 
@@ -130,7 +142,7 @@ export class AuthenticateComponent implements OnInit {
     }
 
     // Perform register operation
-    this.authService.registerApi(username!, email!, password!).then(result => {
+    this.authService.registerApi(username!, phone!, address!, email!, password!).then(result => {
       if (result.success) {
         alert("Registration successful");
       } else {

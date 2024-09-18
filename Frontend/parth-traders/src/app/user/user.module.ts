@@ -69,9 +69,9 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     NgxPayPalModule,
     MatTableModule,
-    MatPaginatorModule, // Add paginator module
-    MatSortModule, // Add sorting module
-    MatButtonModule // Add button module
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
   ],
   providers: [
     {

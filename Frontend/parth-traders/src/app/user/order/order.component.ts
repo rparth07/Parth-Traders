@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Order } from '../core/models/Order';
 import { OrderService } from '../services/order.service';
 import { MatPaginator } from '@angular/material/paginator';
@@ -10,33 +10,36 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit, AfterViewInit {
   orders: Order[] = [];
   selectedOrder: Order | null = null;
   displayedColumns: string[] = ['transactionId', 'userName', 'grandTotal', 'actions'];
-  dataSource: MatTableDataSource<Order>;
-  totalOrders: number = 0; // Total records
-  pageSize = 10; // Default page size
-  pageIndex = 0; // Default starting page
+  dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private orderService: OrderService) {
-    this.dataSource = new MatTableDataSource(this.orders);
   }
 
   ngOnInit(): void {
     this.fetchOrders();
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   fetchOrders(): void {
     this.orderService.getOrders().subscribe((data: Order[]) => {
       this.orders = data;
-      this.totalOrders = data.length; // Set total records
       this.dataSource.data = this.orders;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+      if (this.paginator && this.sort) {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
     });
   }
 

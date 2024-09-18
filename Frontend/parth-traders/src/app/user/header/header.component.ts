@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   selectedCategory: string;
   totalOrderItems: number = 0;
   customerName: string = '';
+  shouldDisplaySearchBox: boolean = true;
 
   categories: string[] = ['All Categories'];
 
@@ -20,13 +21,19 @@ export class HeaderComponent implements OnInit {
     this.selectedCategory = 'All Categories';
     productService.getCategories()
       .subscribe(categories => this.categories.push(...categories));
-    console.log(this.categories);
+    // console.log(this.categories);
 
     this.cartService.getAllProductCountEvent().subscribe((orderItemsCount: number) => {
       this.totalOrderItems = orderItemsCount;
     })
 
     this.customerName = authService.getCustomerName();
+
+    router.events.subscribe((route) => {
+      if (route instanceof NavigationEnd) {
+        this.shouldDisplaySearchBox = route.url.includes('user/home');
+      }
+    });
   }
 
   ngOnInit(): void {

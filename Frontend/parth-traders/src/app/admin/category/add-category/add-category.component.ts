@@ -17,10 +17,10 @@ export class AddCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private activeModal: NgbActiveModal,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.category);
+    // console.log(this.category);
   }
 
   addCategory(form: NgForm) {

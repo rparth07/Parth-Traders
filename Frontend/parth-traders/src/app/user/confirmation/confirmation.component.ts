@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './confirmation.component.css'
 })
 export class ConfirmationComponent implements OnInit {
-
+  countdownSeconds = 10;
   transactionId = "";
 
   constructor(private orderService: OrderService, private router: Router) { }
@@ -17,5 +17,18 @@ export class ConfirmationComponent implements OnInit {
     this.transactionId = this.orderService.getTransactionId();
     if (!this.transactionId)
       this.router.navigate(['/user/home']);
+
+    this.displayCountdown();
+  }
+
+  displayCountdown() {
+    const countdown = setInterval(() => {
+      this.countdownSeconds--;
+
+      if (this.countdownSeconds < 0) {
+        clearInterval(countdown);
+        this.router.navigate(['/user/home']);
+      }
+    }, 1000);
   }
 }

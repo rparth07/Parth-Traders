@@ -6,6 +6,10 @@ namespace Parth_Traders.Data.DataModel.User
 {
     public class CustomerDataModel : IdentityUser
     {
+        public CustomerDataModel(): base()
+        {
+            
+        }
         //TODO: need to verify
         public string CustomerAddress { get; set; }
 

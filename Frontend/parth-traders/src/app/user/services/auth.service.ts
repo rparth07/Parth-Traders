@@ -60,17 +60,19 @@ export class AuthService {
     return { success: false };
   }
 
-  async registerApi(username: string, email: string, password: string): Promise<any> {
+  async registerApi(username: string, phone: string, address: string, email: string, password: string): Promise<any> {
     // Replace with actual API call
     this.removeAllTokens();
 
-    const body: { userName: string, email: string, password: string } = {
+    const body: { userName: string, phoneNumber: string, customerAddress: string, email: string, password: string } = {
       userName: username,
+      phoneNumber: phone,
+      customerAddress: address,
       email: email,
       password: password,
     };
 
-    return this.http.post<any>(AppSetting.API_URL + 'api/user/authentication', body)
+    return this.http.post<any>(AppSetting.API_URL + 'api/user/authentication/signup', body)
       .subscribe({
         next: () => {
           catchError(AuthService.handleError)
@@ -162,7 +164,7 @@ export class AuthService {
   }
 
   private static handleError(error: HttpErrorResponse): any {
-    console.log('error = ', error);
+    // console.log('error = ', error);
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {

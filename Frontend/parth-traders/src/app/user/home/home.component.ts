@@ -33,8 +33,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.productFilter$.subscribe(filterCriteria => {
-      // if (this.filterProducts.length <= 0)
-      //   this.filterProducts = this.products;
       if (filterCriteria) {
         this.filterProducts = this.products.filter(_ => {
           // console.log('active: ' + filterCriteria.activeProductType, " and current: ", _.productType);

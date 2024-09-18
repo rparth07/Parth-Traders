@@ -65,13 +65,13 @@ namespace Parth_Traders.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.EnableSensitiveDataLogging();
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(
-        @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Parth Traders");
-                //optionsBuilder.UseSqlServer("server=PARTH\\SQLEXPRESS; Database=Parth Traders; Integrated Security=true;");
-            }
+        //    //optionsBuilder.EnableSensitiveDataLogging();
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(
+        //@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Parth Traders");
+        //        //optionsBuilder.UseSqlServer("server=PARTH\\SQLEXPRESS; Database=Parth Traders; Integrated Security=true;");
+        //    }
         }
 
         public DbSet<ProductDataModel> Products { get; set; }

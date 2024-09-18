@@ -26,7 +26,7 @@ namespace Parth_Traders.Controllers.User
         }
 
         [HttpPost("signup")]
-        [Consumes("application/json")]
+        //[Consumes("application/json")]
         public async Task<IActionResult> RegisterUser(CustomerDto customerDto)
         {
             var customerUser = _mapper.Map<CustomerDataModel>(customerDto);
@@ -55,11 +55,12 @@ namespace Parth_Traders.Controllers.User
             {
                 return Unauthorized();
             }
+            var newlyAddedCustomer = _cutomerManager.Users
+                                        .FirstOrDefault(_ => _.Email == customer.Email);
             return Ok(new
             {
                 Token = await _authManager.CreateToken(),
-                Customer = _cutomerManager.Users
-                                        .FirstOrDefault(_ => _.Email == customer.Email),
+                Customer = newlyAddedCustomer,
                 Success = true
             });
         }
