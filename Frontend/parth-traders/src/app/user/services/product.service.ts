@@ -10,6 +10,7 @@ import { AppSetting } from 'src/app/shared/app-settings';
     providedIn: 'root'
 })
 export class ProductService {
+    matchingCount$ = new BehaviorSubject<number | null>(null);
     productFilter$ = new BehaviorSubject<FilterCriteria>({ name: '', categories: [], activeProductType: null, priceRange: { min: null, max: null }, ratingRange: { min: null, max: null } });
 
     constructor(private http: HttpClient) { }

@@ -69,3 +69,11 @@ padding:6px 0;
 min-height:36px;
 font-size:14px
 }
+
+.filter-panel select { display:block; width:100%; min-height:44px; border:1px solid var(--store-line); border-radius:5px; padding:8px; background:#fff; color:var(--store-ink); font-size:16px; }
+.filter-hint { font-size:13px; line-height:1.5; color:var(--store-muted); margin:10px 0; }
+.filter-match-count { font-size:14px; font-weight:600; margin:12px 0; color:var(--store-ink); }
+.filter-error { font-size:14px; line-height:1.5; color:#902525; margin:10px 0; }
+.price-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.price-actions .store-button { font-size:14px; padding:9px 12px; }
+.show-results { width:100%; margin-top:20px; }
