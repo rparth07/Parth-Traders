@@ -90,6 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onAddToCart({ productCard, product }: { productCard: HTMLDivElement, product: Product }) {
+    this.cartService.addToCart(product);
     const position = productCard.getBoundingClientRect();
     const actualTop = position.top + window.scrollY;
     const actualLeft = position.left + window.scrollX;
@@ -119,14 +120,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.renderer.removeChild(this.homeComponent.nativeElement, floatingCart);
       this.renderer.removeClass(this.homeComponent.nativeElement, 'MakeFloatingCart');
-      this.cartService.addToCart(product);
     }, 1100);
   }
 
   onAddToCartLarge({ productCard, product }: { productCard: HTMLDivElement, product: Product }) {
-    setTimeout(() => {
-      this.cartService.addToCart(product);
-    }, 1100);
+    this.cartService.addToCart(product);
   }
 
   fetchProducts(): void {

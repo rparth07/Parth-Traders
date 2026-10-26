@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private productService: ProductService, private cartService: CartService, private authService: AuthService, private router: Router) {
     this.selectedCategory = 'All Categories';
+    this.shouldDisplaySearchBox = this.router.url.includes('/user/home');
     productService.getCategories()
       .subscribe({next: categories => this.categories = ['All Categories', ...categories], error: () => {}});
     // console.log(this.categories);
@@ -31,13 +32,15 @@ export class HeaderComponent implements OnInit {
 
     router.events.subscribe((route) => {
       if (route instanceof NavigationEnd) {
-        this.shouldDisplaySearchBox = route.url.includes('user/home');
+        this.shouldDisplaySearchBox = route.urlAfterRedirects.includes('/user/home');
       }
     });
   }
 
   ngOnInit(): void {
   }
+
+  signOut() { this.authService.logout(); }
 
   redirectToCheckout() {
     this.router.navigate(['/user/checkout']);

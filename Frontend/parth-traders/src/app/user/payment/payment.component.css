@@ -1,3 +1,5 @@
 .payment-container {
     height: 50vh;
 }
+.payment-container { height:auto; min-height:50vh; padding:2rem 1rem; }
+.payment-button { width:min(100%,420px)!important; min-height:45px; }
