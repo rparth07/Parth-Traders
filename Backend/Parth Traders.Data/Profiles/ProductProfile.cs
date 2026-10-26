@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Domain.Entity.Admin;
 
@@ -10,9 +10,9 @@ namespace Parth_Traders.Data.Profiles
         {
             CreateMap<Product, ProductDataModel>()
                 .ForMember(dest => dest.SupplierId,
-                    opt => opt.MapFrom(src => src.Supplier.SupplierId))
+                    opt => opt.MapFrom(src => src.Supplier == null ? (long?)null : src.Supplier.SupplierId))
                 .ForMember(dest => dest.CategoryId,
-                    opt => opt.MapFrom(src => src.Category.CategoryId));
+                    opt => opt.MapFrom(src => src.Category == null ? (long?)null : src.Category.CategoryId));
 
             CreateMap<ProductDataModel, Product>()
                 .ForMember(dest => dest.Supplier,

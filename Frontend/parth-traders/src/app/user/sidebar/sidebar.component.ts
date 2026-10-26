@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { ProductType } from '../core/enums/ProductType';
 import { FilterCriteria } from '../core/models/FilterCriteria';
@@ -9,7 +10,8 @@ import { Options } from '@angular-slider/ngx-slider';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
+  private filterSubscription?: Subscription;
   categories: string[] = [];
   checkedCategories: { [key: string]: boolean } = {};
   animateX: { [key: string]: boolean } = {};
@@ -28,7 +30,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(private productService: ProductService) {
     productService.getCategories()
-      .subscribe(categories => this.categories = categories);
+      .subscribe({next: categories => this.categories = categories, error: () => {}});
     // console.log(this.categories);
     this.filterCriteria = {
       name: '',
@@ -46,10 +48,15 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filterSubscription = this.productService.productFilter$.subscribe(criteria => {
+      this.filterCriteria = {...criteria, categories: [...criteria.categories], priceRange: {...criteria.priceRange}, ratingRange: {...criteria.ratingRange}};
+      this.checkedCategories = Object.fromEntries(criteria.categories.map(category => [category, true]));
+    });
   }
+  ngOnDestroy() { this.filterSubscription?.unsubscribe(); }
 
   triggerProductFilterEvent() {
-    this.productService.productFilter$.next(this.filterCriteria);
+    this.productService.productFilter$.next({...this.filterCriteria, name: this.productService.productFilter$.value.name});
   }
 
   toggleCategory(event: Event, category: string): void {

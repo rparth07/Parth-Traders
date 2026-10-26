@@ -4,17 +4,17 @@
       <div class="footer_block align-items-center d-flex flex-column">
         <h5>HEAR IT FIRST</h5>
         <div role="form" lang="en-US" dir="ltr">
-          <form method="post" novalidate="novalidate" data-status="init">
+          <form (submit)="newsletterUnavailable($event)" method="post" novalidate="novalidate" data-status="init">
             <div class="sign1">
               <div class="s1">
                 <span data-name="signupemail"><input type="email" name="signupemail" value="" size="40"
-                    class="signup-email" aria-invalid="false" placeholder="Sign up for Emails" /></span>
+                    class="signup-email" aria-invalid="false" aria-label="Email for store updates" placeholder="Sign up for Emails" /></span>
               </div>
               <div class="s2">
                 <input type="submit" value=">" class="text-white border-dark" />
               </div>
             </div>
-          </form>
+          </form><p role="status">{{newsletterMessage}}</p>
         </div>
       </div>
     </div>
@@ -148,8 +148,8 @@
         </div>
         <div class="social">
           <h5>CONTACT US</h5>
-          <p>Email :- parthtraders2004&#64;gmail.com</p>
-          <p>Phone :- 011-42700400</p>
+          <p>Email: <a href="mailto:parthtraders2004@gmail.com">parthtraders2004&#64;gmail.com</a></p>
+          <p>Phone: <a href="tel:01142700400">011-42700400</a></p>
           <p>Mon-Fri, 10 AM - 4 PM</p>
         </div>
       </div>
@@ -158,7 +158,7 @@
       <div class="footer_bootm">
         <div class="row">
           <div class="col-7 col-xl-7 col-lg-7 col-md-7 col-sm-12 copyright">
-            <p>© 2022 Parthtraders.com All Rights Reserved</p>
+            <p>(c) 2022 Parthtraders.com All Rights Reserved</p>
           </div>
         </div>
       </div>

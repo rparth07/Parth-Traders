@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.Domain.Entity.User;
@@ -8,7 +8,7 @@ using Parth_Traders.Service.Services.User.UserInterface;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/customers"), Authorize]
+    [Route("API/admin/customers"), Authorize(Roles = "Administrator,Manager")]
     public class CustomerController : ControllerBase
     {
         public readonly ICustomerService _customerService;
@@ -40,7 +40,7 @@ namespace Parth_Traders.Controllers.Admin
                 }*/
 
         //TODO: 1.Admin API - for case where admin need to add list of customer.
-        //                    for this case admin will use below API. But need 
+        //                    for this case admin will use below API. But need
         //                    to change API route for below API.
         /*        [HttpPost, DisableRequestSizeLimit]
                 public IActionResult AddAllCustomers([FromForm] IFormFile file)

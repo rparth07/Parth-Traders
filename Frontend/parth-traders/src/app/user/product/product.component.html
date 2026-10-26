@@ -3,22 +3,21 @@
         <h4>{{ product.productName }}</h4>
         <div class="sku">PRODUCT SKU: <strong>{{ product.productSku }}</strong></div>
         <div class="price-big">
-            <span *ngIf="product.discount != 0">$ {{product.unitPrice}}</span>
-            ${{ product.unitPrice - product.discount }}
+            <span *ngIf="product.discount != 0">{{product.unitPrice | currency:'USD':'symbol':'1.2-2'}}</span>
+            {{ (product.unitPrice - product.discount) | currency:'USD':'symbol':'1.2-2' }}
         </div>
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
     </div>
     <div class="make3D flip180" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
         <div class="product-front" [class]="shouldSwitchToLargeGrid ? 'd-none': 'd-block'">
-            <img src="{{ product.image_paths[0] }}" alt="" />
+            <img src="{{ product.image_paths[0] }}" [alt]="product.productName" />
             <div class="image_overlay"></div>
-            <div class="add_to_cart" (click)="addToCart()">Add to cart</div>
-            <div class="view_gallery" (click)="flipCardToBack()">View gallery</div>
+
             <div class="stats">
                 <div class="stats-container">
-                    <span class="product_price">${{ product.unitPrice - product.discount }}</span>
+                    <span class="product_price">{{ (product.unitPrice - product.discount) | currency:'USD':'symbol':'1.2-2' }}</span>
                     <span class="product_name">{{ product.productName }}</span>
-                    <p>{{ product.categoryName }}</p>
+                    <p>{{ product.categoryName || 'Category unavailable' }}</p>
                 </div>
             </div>
         </div>
@@ -26,7 +25,7 @@
             <ngb-carousel *ngIf="product.image_paths">
                 <ng-template *ngFor="let image of product.image_paths" ngbSlide>
                     <div class="wrapper">
-                        <img [src]="image" alt="product image" />
+                        <img [src]="image" [alt]="product.productName" />
                     </div>
                 </ng-template>
             </ngb-carousel>
@@ -35,5 +34,10 @@
                 <div class="cx"></div>
             </div>
         </div>
+    </div>
+    <div class="product-actions" *ngIf="!shouldSwitchToLargeGrid">
+      <button type="button" (click)="addToCart()" [disabled]="product.unitsInStock <= 0">{{product.unitsInStock > 0 ? 'Add to cart' : 'Out of stock'}}</button>
+      <button type="button" (click)="flipCardToBack()">View gallery</button>
+      <button type="button" (click)="flipCardToFront()">Product details</button>
     </div>
 </div>

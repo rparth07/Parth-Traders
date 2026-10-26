@@ -257,3 +257,5 @@
 ::ng-deep .ngx-slider-bubble {
     display: none !important;
 }
+#sidebar { height: auto; min-height: 700px; }
+@media (max-width:800px) { #sidebar { width:100%; min-height:0; padding-bottom:1rem; } }

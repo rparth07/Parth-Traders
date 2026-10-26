@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../../shared/api-error';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, finalize } from 'rxjs';
 import { Customer, PaymentType } from './customer';
 import { CustomerService } from './customer.service';
 
@@ -20,9 +21,10 @@ export class CustomerComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  dataSource!: MatTableDataSource<Customer>;
+  dataSource = new MatTableDataSource<Customer>();
+  loadError = '';
   paymentType = PaymentType;
-  dataLength: number = 100;
+  dataLength: number = 0;
 
   columns = [
     {
@@ -75,6 +77,7 @@ export class CustomerComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
   }
 
   // addCsv(event: any) {
@@ -88,7 +91,7 @@ export class CustomerComponent implements OnInit {
   //         this.getCustomers();
   //       },
   //       error: (err: { error: string }) => {
-  //         this.showToaster(err.error);
+  //         this.showToaster(apiErrorMessage(err));
   //       },
   //     });
   //   }
@@ -97,6 +100,7 @@ export class CustomerComponent implements OnInit {
 
   getCustomers(): void {
     this.loadingSubject.next(true);
+    this.loadError = '';
     this.customerService
       .fetchCustomers()
       .pipe(
@@ -109,12 +113,13 @@ export class CustomerComponent implements OnInit {
           //need to find a way to show orders in the table
         )
       )
-      .subscribe((response: Customer[]) => {
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({next: (response: Customer[]) => {
         this.dataLength = response.length;
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
+      }, error: error => { this.loadError = apiErrorMessage(error, 'Unable to load customers. Try again.'); }});
   }
 
   deleteCustomer(customer: Customer) {

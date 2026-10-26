@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../../shared/api-error';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, fromEvent, map } from 'rxjs';
+import { BehaviorSubject, fromEvent, map, finalize } from 'rxjs';
 import { Category } from './category';
 import { CategoryService } from '../category/category.service';
 import { AddCategoryComponent } from './add-category/add-category.component';
@@ -21,8 +22,9 @@ export class CategoryComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  dataSource!: MatTableDataSource<Category>;
-  dataLength: number = 100;
+  dataSource = new MatTableDataSource<Category>();
+  loadError = '';
+  dataLength: number = 0;
 
   updatableCategory!: Category | null;
 
@@ -62,6 +64,7 @@ export class CategoryComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
   }
 
   addCsv(event: any) {
@@ -75,7 +78,7 @@ export class CategoryComponent implements OnInit {
           this.getCategories();
         },
         error: (err: { error: string }) => {
-          this.showToaster(err.error);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -84,6 +87,7 @@ export class CategoryComponent implements OnInit {
 
   getCategories(): void {
     this.loadingSubject.next(true);
+    this.loadError = '';
     this.categoryService
       .fetchCategories()
       .pipe(
@@ -96,12 +100,13 @@ export class CategoryComponent implements OnInit {
           //need to find a way to also show products in the table
         )
       )
-      .subscribe((response: Category[]) => {
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({next: (response: Category[]) => {
         this.dataLength = response.length;
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
+      }, error: error => { this.loadError = apiErrorMessage(error, 'Unable to load categories. Try again.'); }});
   }
 
   deleteCategory(category: Category) {

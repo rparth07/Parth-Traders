@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -50,7 +50,7 @@ namespace Parth_Traders.Extensions
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
                     ValidAudience = jwtSettings.GetSection("validAudience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("PARTHTRADERSSECRETNEWLOGINVALIDATIONKEY"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:signingKey"] ?? throw new InvalidOperationException("JWT signing key is not configured.")))
                 };
             });
         }

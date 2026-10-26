@@ -8,6 +8,7 @@
               <h3 class="panel-title">Profile</h3>
             </div>
             <div class="panel-body">
+              <p role="status">{{message}}</p>
               <form #form="ngForm">
                 <div class="form-group">
                   <label for="firstname">First Name:</label>
@@ -50,7 +51,7 @@
                     name="phonenumber"
                     type="tel"
                     placeholder="12345-67890"
-                    pattern="[0-9]{5}-[0-9]{5}"
+                    pattern="[0-9 -]{10,12}"
                     required
                     autofocus
                     [(ngModel)]="admin.phoneNumber"

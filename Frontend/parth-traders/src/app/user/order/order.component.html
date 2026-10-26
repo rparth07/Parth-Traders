@@ -1,8 +1,11 @@
+<p *ngIf="loadError" role="alert">{{loadError}} <button (click)="fetchOrders()">Try again</button></p>
+<p *ngIf="loading" role="status">Loading orders…</p>
+<p *ngIf="!loading && !loadError && orders.length === 0">You have no orders yet.</p>
 <div class="orders-list" *ngIf="orders.length > 0">
     <h2>Orders</h2>
 
     <div class="example-container mat-elevation-z8">
-        <mat-table #table [dataSource]="orders" matSort>
+        <mat-table #table [dataSource]="dataSource" matSort>
 
             <!-- Transaction ID Column -->
             <ng-container matColumnDef="transactionId">

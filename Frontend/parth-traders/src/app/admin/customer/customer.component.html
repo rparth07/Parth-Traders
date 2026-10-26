@@ -1,3 +1,5 @@
+<p *ngIf="loadError" role="alert">{{loadError}} <button type="button" (click)="getCustomers()">Try again</button></p>
+<p *ngIf="loading$ | async" role="status">Loading customers...</p>
 <div class="modal-container">
   <div class="row justify-content-around">
     <div class="col-7 col-md-10">
@@ -32,7 +34,7 @@
               </div>
             </div> -->
           </div>
-          <table mat-table [dataSource]="dataSource" matSort class="w-100 mt-2 white-arrow">
+          <div class="admin-table-scroll" role="region" aria-label="Customers table" tabindex="0"><table mat-table [dataSource]="dataSource" matSort class="w-100 mt-2 white-arrow">
             <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 {{ column.header }}
@@ -51,7 +53,7 @@
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
+          </table></div>
           <mat-paginator #paginator [length]="dataLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
             aria-label="Select page">
           </mat-paginator>

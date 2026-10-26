@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -16,11 +16,13 @@ namespace Parth_Traders.Data.Configuration
             builder.HasData(
             new IdentityRole
             {
+                Id = "parth-manager", ConcurrencyStamp = "parth-manager-v1",
                 Name = "Manager",
                 NormalizedName = "MANAGER"
             },
             new IdentityRole
             {
+                Id = "parth-administrator", ConcurrencyStamp = "parth-admin-v1",
                 Name = "Administrator",
                 NormalizedName = "ADMINISTRATOR"
             }

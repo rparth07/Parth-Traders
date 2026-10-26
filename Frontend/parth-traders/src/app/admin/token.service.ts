@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Customer } from './customer/customer';
 import { AdminDetails } from './profile/admin-details';
 
-const ACCESS_TOKEN = 'access_token';
-const REFRESH_TOKEN = 'refresh_token';
+const ACCESS_TOKEN = 'admin_access_token';
+const REFRESH_TOKEN = 'admin_refresh_token';
 const Admin_INFO = 'admin_info';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class TokenService {
 
   getAdmin(): AdminDetails | null {
     const adminInfo = localStorage.getItem(Admin_INFO);
-    return adminInfo ? JSON.parse(adminInfo) : null;
+    try { return adminInfo ? JSON.parse(adminInfo) : null; } catch { return null; }
   }
 
   removeAdmin(): void {

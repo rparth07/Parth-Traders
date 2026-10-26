@@ -3,6 +3,7 @@
         <app-shopping-cart></app-shopping-cart>
     </div>
     <h3>CATEGORIES</h3>
+    <p *ngIf="categories.length === 0" style="padding:0 2rem">Category details unavailable.</p>
     <div class="checklist categories">
         <ul>
             <li *ngFor="let category of categories">
@@ -20,7 +21,7 @@
     <h3>Product Types</h3>
     <div class="checklist product-types">
         <ul>
-            <li *ngFor="let type of productTypeKeys" (click)="setActiveProductType(type)"
+            <li *ngFor="let type of productTypeKeys" role="button" tabindex="0" (keydown.enter)="setActiveProductType(type)" (click)="setActiveProductType(type)"
                 [class.active]="type === filterCriteria.activeProductType">
                 <a class=""><span></span>{{type}}</a>
             </li>

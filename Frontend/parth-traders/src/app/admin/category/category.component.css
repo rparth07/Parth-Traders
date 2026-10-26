@@ -115,3 +115,6 @@ th {
   margin-top: 5px;
   margin-right: 0px;
 }
+
+.admin-table-scroll { overflow-x:auto; max-width:100%; }
+@media(max-width:800px) { .modal-container .col-7 { width:100%; } .modal-container .col-3 { width:100%; margin-bottom:1rem; } .modal-container .col-5 { width:100%; } }

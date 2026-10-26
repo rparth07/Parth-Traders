@@ -132,3 +132,22 @@ div.floating-cart.moveToCart {
   height: 100vh;
   overflow-y: auto;
 }
+.catalog-status { margin: 1.5rem 0; padding: 1.25rem; background: #f6f7f8; border: 1px solid #d9dde2; border-radius: 6px; color: #131921; }
+.catalog-status h2 { font-size: 1.25rem; }
+.catalog-status button { padding: .6rem 1rem; margin-right: 1rem; margin-bottom: .5rem; background: #131921; color: white; border-radius: 4px; }
+.home__row { min-width: 0; }
+.filter-toggle { display: none; }
+@media (max-width: 800px) {
+  .filter-toggle { display: block; margin: 1rem; padding: .5rem 1rem; }
+  .home__container > .d-flex { flex-direction: column; }
+  .sidebar-container { display: none; }
+  .filters-open .sidebar-container { display: block; }
+  .grid-selector { height: auto; padding: 1rem 0; min-height: 65px; }
+  #grid { display: flex; flex-wrap: wrap; justify-content: center; width: 100%; }
+}
+
+#grid-menu { width: auto; }
+.view-buttons { display: inline-flex; gap: .25rem; }
+.view-buttons button { border: 1px solid #69717a; background: white; padding: .2rem .5rem; color: #131921; }
+.view-buttons button[aria-pressed=true] { background: #131921; color: white; }
+@media (max-width:800px) { .grid-selector { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: space-between; } }

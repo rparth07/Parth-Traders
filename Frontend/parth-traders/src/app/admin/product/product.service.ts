@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { apiErrorMessage } from '../../shared/api-error';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -10,7 +12,7 @@ import { Product } from './product';
 export class ProductService {
   getUpdatedProducts = new Subject<string>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   addProductCsvFile(form: FormData) {
     return this.http.post(DomainConstants.URL + 'admin/products', form);
@@ -26,19 +28,19 @@ export class ProductService {
 
   updateProduct(oldProductName: string, newProduct: Product) {
     return this.http.post<Product>(
-      DomainConstants.URL + 'admin/products/' + oldProductName,
+      DomainConstants.URL + 'admin/products/' + encodeURIComponent(oldProductName),
       newProduct
     );
   }
 
   deleteProduct(productName: string) {
     this.http
-      .delete<Product>(DomainConstants.URL + 'admin/products/' + productName)
+      .delete<Product>(DomainConstants.URL + 'admin/products/' + encodeURIComponent(productName))
       .subscribe({
         next: (value) => {
           this.getUpdatedProducts.next('Updated products');
         },
-        error: (err) => console.log(err),
+        error: (err) => this.toastr.error(apiErrorMessage(err), 'Delete failed'),
       });
   }
 }

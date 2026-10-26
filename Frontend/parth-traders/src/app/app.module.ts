@@ -36,7 +36,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     AppRoutingModule,
     HttpClientModule,
     NgxUiLoaderModule,
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    NgxUiLoaderHttpModule.forRoot({ showForeground: false }),
     MatDialogModule,
     MatMenuModule,
     ToastrModule.forRoot(),

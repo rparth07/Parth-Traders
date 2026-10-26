@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Domain.Entity.Admin;
@@ -74,7 +74,8 @@ namespace Parth_Traders.Data.Repositories.Admin
         public void UpdateProduct(Product product)
         {
             //TODO:For now, admin can not update category, supplier and orderDetails
-            _context.Products.Update(_mapper.Map<ProductDataModel>(product));
+            var existing = _context.Products.Find(product.ProductId) ?? throw new InvalidOperationException("Product not found.");
+            _context.Entry(existing).CurrentValues.SetValues(_mapper.Map<ProductDataModel>(product));
 
             Save();
         }

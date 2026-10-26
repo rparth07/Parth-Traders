@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../../../shared/api-error';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,9 +21,9 @@ export class AddProductComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  productKeys(): Array<string> {
+  productKeys(): Array<keyof typeof ProductType> {
     var keys = Object.keys(this.productType);
-    return keys.slice(keys.length / 2);
+    return keys.slice(keys.length / 2) as Array<keyof typeof ProductType>;
   }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class AddProductComponent implements OnInit {
           this.productService.getUpdatedProducts.next('Updated products');
         },
         error: (err: { error: { errors: any } }) => {
-          this.showToaster(err.error.errors.productDto);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -46,14 +47,14 @@ export class AddProductComponent implements OnInit {
   updateProduct(productForm: NgForm, oldProduct: Product) {
     if (productForm.valid) {
       this.productService
-        .updateProduct(oldProduct?.productName, productForm.value)
+        .updateProduct(oldProduct?.productName, {...oldProduct, ...productForm.value})
         .subscribe({
           next: (value) => {
             this.closeModal();
             this.productService.getUpdatedProducts.next('Updated products');
           },
           error: (err: { error: { errors: any } }) => {
-            this.showToaster(err.error.errors.productDto);
+            this.showToaster(apiErrorMessage(err));
           },
         });
     }

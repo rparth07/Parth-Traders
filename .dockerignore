@@ -1,0 +1,13 @@
+**/bin
+**/obj
+**/node_modules
+.git
+.netlify
+.env*
+Frontend
+publish
+.vs
+**/appsettings.Local.json
+
+**/.vs
+**/Properties/PublishProfiles

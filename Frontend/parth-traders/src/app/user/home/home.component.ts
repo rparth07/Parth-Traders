@@ -1,6 +1,6 @@
-import { Component, ElementRef, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { ProductService } from '../services/product.service';
 import { Product } from '../core/models/Product';
@@ -17,7 +17,11 @@ import { CartService } from '../services/cart.service';
     ]),
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+  loadError = '';
+  filtersOpen = false;
+  fetching = false;
   products: Product[] = [];
   filterProducts: Product[] = [];
   shownProducts: Product[] = [];
@@ -28,25 +32,27 @@ export class HomeComponent implements OnInit {
   @ViewChild('home', { static: true }) homeComponent!: ElementRef;
 
   constructor(private renderer: Renderer2, private ngZone: NgZone, private productService: ProductService, private cartService: CartService) {
-    this.fetchProducts();
+
   }
 
   ngOnInit(): void {
-    this.productService.productFilter$.subscribe(filterCriteria => {
-      if (filterCriteria) {
-        this.filterProducts = this.products.filter(_ => {
-          // console.log('active: ' + filterCriteria.activeProductType, " and current: ", _.productType);
-          return (filterCriteria.name === '' || _.productName.trim().toLowerCase().includes(filterCriteria.name.trim().toLowerCase()))
-            && (filterCriteria.categories.length === 0 || filterCriteria.categories.findIndex(c => c === _.categoryName) > -1)
-            && (!filterCriteria.activeProductType || filterCriteria.activeProductType === _.productType)
-            && (!filterCriteria.priceRange.min || filterCriteria.priceRange.min <= _.unitPrice)
-            && (!filterCriteria.priceRange.max || filterCriteria.priceRange.max >= _.unitPrice)
-            && (!filterCriteria.ratingRange.min || filterCriteria.ratingRange.min <= _.productRating)
-            && (!filterCriteria.ratingRange.max || filterCriteria.ratingRange.max >= _.productRating)
-        });
-      }
-      this.refreshShownProduct();
-    });
+    this.subscriptions.add(this.productService.productFilter$.subscribe(() => this.applyFilters()));
+    this.fetchProducts();
+  }
+
+  ngOnDestroy() { this.subscriptions.unsubscribe(); }
+
+  applyFilters() {
+    const f = this.productService.productFilter$.value;
+    this.filterProducts = this.products.filter(p =>
+      (!f.name || p.productName.trim().toLowerCase().includes(f.name.trim().toLowerCase())) &&
+      (!f.categories.length || f.categories.includes(p.categoryName)) &&
+      (!f.activeProductType || f.activeProductType === p.productType) &&
+      (f.priceRange.min === null || (p.unitPrice - p.discount) >= f.priceRange.min) &&
+      (f.priceRange.max === null || (p.unitPrice - p.discount) <= f.priceRange.max) &&
+      (f.ratingRange.min === null || p.productRating >= f.ratingRange.min) &&
+      (f.ratingRange.max === null || p.productRating <= f.ratingRange.max));
+    this.refreshShownProduct();
   }
 
   refreshShownProduct() {
@@ -54,6 +60,7 @@ export class HomeComponent implements OnInit {
   }
 
   async onScroll() {
+    if (this.loading || this.shownProducts.length >= this.filterProducts.length) return;
     this.loading = true;
     try {
       await this.delay(1000);
@@ -123,14 +130,19 @@ export class HomeComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this.productService.getProducts()
-      .subscribe((next) => {
-        this.products = next;
-        // console.dir(this.products, { depth: null }); // Now you'll see the products in the console
-        this.filterProducts = this.products;
-        // console.log(this.filterProducts);
-        this.refreshShownProduct(); // Call this to refresh the shown products
-      });
+    if (this.fetching) return;
+    this.fetching = true;
+    this.loadError = '';
+    this.subscriptions.add(this.productService.getProducts().subscribe({
+      next: products => {
+        this.products = products;
+        this.fetching = false;
+        this.applyFilters();
+      },
+      error: () => {
+        this.fetching = false;
+        this.loadError = 'We cannot reach the product service. Please try again or contact Parth Traders for current products and prices.';
+      }
+    }));
   }
 }
-

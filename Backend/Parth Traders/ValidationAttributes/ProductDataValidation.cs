@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.Domain.Enums;
 using Parth_Traders.Dto.Admin;
 using System.ComponentModel.DataAnnotations;
 
@@ -64,10 +64,10 @@ namespace Parth_Traders.ValidationAttributes
                     , new[] { nameof(ProductDto) });
             }
 
-            if (product.UnitPrice != product.PiecesPerUnit * product.SinglePieceMRP)
+            if (product.Discount > product.UnitPrice)
             {
                 return new ValidationResult(
-                    "Validation Error : Unit price does not match with total price of all individual pieces in 1 unit."
+                    "Validation Error : Discount cannot exceed the unit price."
                     , new[] { nameof(ProductDto) });
             }
 
