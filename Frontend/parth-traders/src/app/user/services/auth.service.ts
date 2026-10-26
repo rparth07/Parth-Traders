@@ -40,7 +40,9 @@ export class AuthService {
       this.tokenService.saveToken(res.token);
       this.tokenService.saveCustomer(res.customer);
       this.customer = res.customer;
-      await this.router.navigate(['/user/home']);
+      const destination = this.redirectUrl.startsWith('/user/') && !this.redirectUrl.startsWith('/user/authenticate') ? this.redirectUrl : '/user/home';
+      this.redirectUrl = '';
+      await this.router.navigate([destination]);
       return { success: true };
     } catch (error) {
       return { success: false, message: error instanceof HttpErrorResponse && error.status === 401

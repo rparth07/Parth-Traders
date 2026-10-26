@@ -59,7 +59,7 @@ export class CustomerComponent implements OnInit {
     },
   ];
 
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'actions'];
 
   constructor(
     private modalService: NgbModal,
@@ -123,6 +123,7 @@ export class CustomerComponent implements OnInit {
   }
 
   deleteCustomer(customer: Customer) {
+    if (!window.confirm('Delete '+customer.userName+'? This removes the record permanently.')) return;
     this.customerService.deleteCustomer(customer.userName);
   }
 

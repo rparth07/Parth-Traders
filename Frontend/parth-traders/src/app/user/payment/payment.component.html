@@ -1,14 +1,18 @@
 <div class="align-items-center d-flex flex-column justify-content-center payment-container text-center gap-3">
-    <p role="note"><strong>Sandbox test checkout</strong> - no real charges. Use a PayPal sandbox buyer account.</p>
+    <h1>Sandbox payment</h1>
+    <p *ngIf="initializing" role="status">Preparing sandbox checkout…</p>
+    <p role="note">
+<strong>Sandbox test checkout</strong> - no real charges. Use a PayPal sandbox buyer account.</p>
     <div class="paypal-container">
-        <div class="amount">Total amount to pay: ${{amount}}</div>
+        <div class="amount">Total: {{amount | currency:'USD'}}</div>
     </div>
     <div class="info">
-        Please do not refresh the browser while the transaction is processing
+        Approve the sandbox payment in the PayPal window. If interrupted, use Check payment status before trying again.
     </div>
     <p *ngIf="paymentError" role="alert">{{paymentError}}</p>
     <button *ngIf="pendingId" type="button" [disabled]="processing" (click)="checkPayment()">{{processing ? 'Checking payment...' : 'Check payment status'}}</button>
     <button *ngIf="canRestart" type="button" [disabled]="processing" (click)="startNewCheckout()">Start a new sandbox checkout</button>
-    <div #paymentRef class="payment-button w-50"></div>
-    <button class="back bg-danger text-light border-0" (click)="cancel()">Cancel</button>
+    <div #paymentRef class="payment-button w-50">
+</div>
+    <button class="back bg-danger text-light border-0" (click)="cancel()">Back to cart</button>
 </div>

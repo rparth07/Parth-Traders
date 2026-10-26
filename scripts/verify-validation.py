@@ -23,6 +23,10 @@ for row in source:
  for field in ['UnitPrice','SinglePieceMRP','Discount','UnitsInStock','ProductRating']:
   key=field[0].lower()+field[1:];assert str(p[key])==str(row[field]) or float(p[key])==float(row[field]),field
 print('PASS 50 products match approved SQL prices, discounts, stock and ratings')
+manifest=json.loads(Path('Backend/Parth Traders/Recovery/product-categories.proposed.json').read_text())
+assert all(by_sku[r['productSku']]['categoryName']==r['categoryName'] for r in manifest)
+assert len(call('/API/admin/categories'))==9
+print('PASS all 50 owner-approved category assignments and nine categories')
 login=call('/api/authentication/login','POST',{'username':private['BootstrapAdmin__userName'],'password':private['BootstrapAdmin__password']});admin=login['token']
 assert not any(k in login['admin'] for k in ['passwordHash','securityStamp','concurrencyStamp']);print('PASS sanitized admin login')
 call('/API/admin/suppliers',expected=401);call('/API/admin/suppliers',token=admin);print('PASS anonymous admin access denied and admin read allowed')

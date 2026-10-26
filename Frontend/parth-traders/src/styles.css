@@ -1,61 +1,327 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/ngx-toastr/toastr.css";
-
-body::-webkit-scrollbar {
+body::-webkit-scrollbar  {
   width: 1em;
 }
-
-body::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track  {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb  {
   border: 5px solid transparent;
   border-radius: 100px;
   background-color: #0563bb;
   background-clip: content-box;
 }
-
 .cdk-global-overlay-wrapper,
-.cdk-overlay-container {
+.cdk-overlay-container  {
   z-index: 9999 !important;
 }
-
-.make3D:hover .carousel-control-prev-icon:after {
+.make3D:hover .carousel-control-prev-icon:after  {
   content: '<';
   font-size: 55px;
   color: #56aa96;
 }
-
-.make3D:hover .carousel-control-next-icon:after {
+.make3D:hover .carousel-control-next-icon:after  {
   content: '>';
   font-size: 55px;
   color: #56aa96;
 }
-
 .make3D:hover button.carousel-control-prev,
-.make3D:hover button.carousel-control-next {
+.make3D:hover button.carousel-control-next  {
   background-color: #fff;
   height: 100px;
   top: 40%;
 }
-
 .make3D:hover .carousel-control-prev-icon,
-.make3D:hover .carousel-control-next-icon {
+.make3D:hover .carousel-control-next-icon  {
   display: contents !important;
   background: none;
 }
-
-.carousel-indicators {
+.carousel-indicators  {
   display: none !important;
 }
-
 html,
-body {
+body  {
   height: 100%;
 }
-
-body {
+body  {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+:root {
+--store-ink:#131e2a;
+--store-muted:#526171;
+--store-line:#d5dde4;
+--store-bg:#f7f8fa;
+--store-gold:#e8ad43
+}
+* {
+box-sizing:border-box
+}
+html {
+scroll-behavior:smooth
+}
+button,input,select,textarea {
+font:inherit
+}
+button,a,input,select,textarea,summary {
+touch-action:manipulation
+}
+button:disabled {
+cursor:not-allowed;
+opacity:.6
+}
+a {
+text-underline-offset:3px
+}
+:focus-visible {
+outline:3px solid #b4740c!important;
+outline-offset:3px
+}
+::selection {
+background:#f7dcaa;
+color:#131e2a
+}
+input::placeholder,textarea::placeholder {
+color:#627080;
+opacity:1
+}
+.store-container {
+width:min(1440px,100%);
+margin-inline:auto;
+padding-inline:32px
+}
+.store-button {
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+min-height:44px;
+padding:11px 18px;
+border:1px solid var(--store-ink);
+border-radius:6px;
+background:var(--store-ink);
+color:#fff;
+text-decoration:none;
+font-weight:600;
+line-height:1.35;
+cursor:pointer
+}
+.store-button:hover {
+background:#293d50;
+color:white
+}
+.store-button.secondary {
+background:white;
+color:var(--store-ink)
+}
+.store-button.secondary:hover {
+background:#edf0f3
+}
+.store-notice {
+padding:20px;
+background:white;
+border:1px solid var(--store-line);
+border-radius:8px;
+margin:16px 0;
+color:var(--store-ink)
+}
+.store-notice h2 {
+font-size:20px
+}
+.store-notice.error {
+border-color:#ac3131;
+color:#842323
+}
+.sr-only {
+position:absolute!important;
+width:1px!important;
+height:1px!important;
+padding:0!important;
+margin:-1px!important;
+overflow:hidden!important;
+clip:rect(0,0,0,0)!important;
+white-space:nowrap!important;
+border:0!important
+}
+.home-content .modal-container {
+padding:24px 16px
+}
+.home-content .modal-container>.row>[class*=col-] {
+width:100%;
+max-width:1440px
+}
+.home-content .mat-mdc-card {
+border:1px solid var(--store-line);
+box-shadow:none;
+border-radius:10px
+}
+.home-content .admin-table-scroll {
+overflow:auto
+}
+.home-content .admin-table-scroll table {
+min-width:800px
+}
+.home-content .pushable {
+background:var(--store-ink)!important;
+box-shadow:none!important;
+border-radius:6px!important;
+transform:none!important
+}
+.home-content .pushable .front {
+background:transparent!important;
+box-shadow:none!important;
+transform:none!important;
+padding:10px 16px!important;
+font-size:14px!important;
+border-radius:6px!important
+}
+.home-content .row-actions {
+display:flex;
+gap:8px;
+white-space:nowrap
+}
+.home-content .row-actions button {
+min-height:40px;
+border:1px solid var(--store-line);
+background:white;
+color:var(--store-ink);
+border-radius:5px;
+padding:6px 10px
+}
+.home-content .row-actions button.danger {
+color:#922929
+}
+.home-content .search-box input {
+min-width:140px
+}
+.home-content .search-box button {
+background:var(--store-ink);
+color:white;
+border-radius:0 5px 5px 0
+}
+.modal-body {
+max-height:72vh;
+overflow:auto
+}
+.modal-footer button,.modal-body input,.modal-body select {
+min-height:44px
+}
+.home-content .admin-table-scroll td {
+overflow-wrap:anywhere
+}
+.home-content .mat-mdc-paginator {
+white-space:normal
+}
+@media(max-width:800px) {
+.store-container {
+padding-inline:18px
+}
+.home-content .modal-container {
+padding:16px 8px
+}
+.home-content .mat-mdc-card-content>.row {
+gap:16px;
+margin:0
+}
+.home-content .mat-mdc-card-content>.row>div {
+width:100%;
+padding:0
+}
+.home-content .mat-mdc-card-content {
+padding:16px
+}
+.home-content .search-box {
+width:100%
+}
+.home-content .search-box input {
+flex:1;
+min-width:0
+}
+.home-content .add-product,.home-content .add-category,.home-content .add-supplier,.home-content .add-customer {
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+}
+@media(prefers-reduced-motion:reduce) {
+html {
+scroll-behavior:auto
+}
+*,*::before,*::after {
+animation-duration:.01ms!important;
+animation-iteration-count:1!important;
+transition-duration:.01ms!important
+}
+}
+.home-content .modal-container {
+margin-top:0!important
+}
+.home-content .admin-table-scroll table {
+table-layout:auto!important;
+min-width:1280px
+}
+.home-content .admin-table-scroll th,.home-content .admin-table-scroll td {
+white-space:normal;
+word-break:normal;
+overflow-wrap:normal;
+text-align:left;
+padding:12px 16px!important
+}
+.home-content .admin-table-scroll .mat-column-productName {
+min-width:180px
+}
+.home-content .admin-table-scroll .mat-column-categoryName {
+min-width:180px
+}
+.home-content .admin-table-scroll .mat-column-productSku {
+min-width:130px;
+white-space:nowrap
+}
+.home-content .admin-table-scroll .mat-column-actions {
+min-width:165px;
+background:#fff
+}
+.home-content .mat-sort-header-container {
+justify-content:flex-start!important
+}
+.home-content .white-arrow .mat-sort-header-arrow {
+color:var(--store-muted)!important
+}
+.home-content .admin-table-scroll .mat-mdc-header-cell {
+background:#f1f4f6;
+font-weight:600
+}
+.home-content .mat-mdc-card-header {
+padding:20px 16px 12px
+}
+.home-content .mat-mdc-card-title {
+font-size:24px
+}
+.home-content .panel {
+background:white;
+border:1px solid var(--store-line);
+border-radius:10px;
+padding:24px;
+max-width:700px;
+margin:auto
+}
+.home-content .panel form {
+display:grid;
+gap:16px
+}
+.home-content .panel label {
+display:block;
+margin-bottom:6px
+}
+.home-content .panel input {
+min-height:46px
+}
+.modal-body [role=alert] {
+background:#fff0ef;
+color:#902525;
+padding:12px;
+border-radius:5px
+}
+
+.table-scroll-hint { font-size: 13px; color: var(--store-muted); margin: 16px 0 8px; }

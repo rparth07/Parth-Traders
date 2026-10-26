@@ -20,8 +20,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   productTypeKeys = Object.values(ProductType);
   filterCriteria: FilterCriteria;
 
-  minValue: number = 10;
-  maxValue: number = 5000;
+  minValue: number | null = null;
+  maxValue: number | null = null;
   sliderOptions: Options = {
     floor: 10,
     ceil: 10000,
@@ -50,6 +50,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.filterSubscription = this.productService.productFilter$.subscribe(criteria => {
       this.filterCriteria = {...criteria, categories: [...criteria.categories], priceRange: {...criteria.priceRange}, ratingRange: {...criteria.ratingRange}};
+      this.minValue = criteria.priceRange.min; this.maxValue = criteria.priceRange.max;
       this.checkedCategories = Object.fromEntries(criteria.categories.map(category => [category, true]));
     });
   }
@@ -60,7 +61,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   toggleCategory(event: Event, category: string): void {
-    event.preventDefault();
+    // Native checkboxes retain their default checked behavior.
     if (this.checkedCategories[category]) {
       this.animateY[category] = false;
       setTimeout(() => {
@@ -109,6 +110,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.filterCriteria.ratingRange.min = rating;
     this.triggerProductFilterEvent();
   }
+
+  resetFilters() { this.productService.resetFilters(); }
 
   clearRating() {
     this.filterCriteria.ratingRange.min = null;

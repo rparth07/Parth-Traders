@@ -10,6 +10,7 @@ import { AppSetting } from '../../shared/app-settings';
 @Component({ selector: 'app-payment', templateUrl: './payment.component.html', styleUrl: './payment.component.css' })
 export class PaymentComponent {
   amount = 0;
+  initializing=true;
   paymentError = '';
   processing = false;
   canRestart = false;
@@ -18,6 +19,8 @@ export class PaymentComponent {
   @ViewChild('paymentRef', { static: true }) paymentRef!: ElementRef;
   constructor(private router: Router, private orderService: OrderService, private cartService: CartService, private http: HttpClient, private auth: AuthService) { this.pendingId = sessionStorage.getItem(this.pendingKey) || ''; }
   async ngOnInit(): Promise<void> {
+    this.initializing=true;
+    try {
     if (!this.pendingId) {
       if (!this.cartService.getCartItems().length) { await this.router.navigate(['/user/home']); return; }
       this.orderService.initializeOrder();
@@ -56,11 +59,15 @@ export class PaymentComponent {
         onError: () => { this.paymentError = 'The sandbox payment could not be completed. Check its status before retrying.'; }
       }).render(this.paymentRef.nativeElement);
     } catch { this.paymentError = 'Payment service is unavailable. Return to checkout and try again later.'; }
+    } finally { this.initializing=false; }
   }
   async checkPayment() {
     if (!this.pendingId || this.processing) return;
     this.processing = true; this.paymentError = '';
     try {
+      const status = await firstValueFrom(this.http.get<any>(AppSetting.API_URL + 'api/payments/orders/' + encodeURIComponent(this.pendingId)));
+      if (status.transactionId) { await this.complete(status.transactionId); return; }
+      if (status.remoteStatus === 'CREATED') { this.canRestart=true; this.paymentError='This sandbox payment has not been approved. Return to your cart or start a new sandbox checkout.'; return; }
       const result = await firstValueFrom(this.http.post<{transactionId: string}>(AppSetting.API_URL + 'api/payments/orders/' + encodeURIComponent(this.pendingId) + '/capture', {}));
       await this.complete(result.transactionId);
     } catch { this.paymentError = 'Sandbox payment is not confirmed. Check again or contact Parth Traders before starting another payment.'; }

@@ -14,6 +14,8 @@ export class ProductService {
 
     constructor(private http: HttpClient) { }
 
+    resetFilters() { this.productFilter$.next({ name: '', categories: [], activeProductType: null, priceRange: {min: null, max: null}, ratingRange: {min: null, max: null} }); }
+
     getProducts() {
         return this.http.get<Product[]>(AppSetting.API_URL + 'API/admin/products')
             .pipe(
