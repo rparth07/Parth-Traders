@@ -137,3 +137,7 @@ justify-content:flex-end
 align-items:flex-start
 }
 }
+
+.results-heading { font-size:20px; margin:0 0 14px; scroll-margin-top:16px; }
+.applied-filters { padding:12px 14px; margin-bottom:16px; border:1px solid var(--store-line); border-radius:6px; background:#fff; font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
+.applied-filters .text-button { border:0; background:transparent; color:var(--store-ink); text-decoration:underline; padding:6px 8px; min-height:36px; }

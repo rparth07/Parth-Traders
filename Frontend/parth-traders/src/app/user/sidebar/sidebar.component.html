@@ -1,5 +1,22 @@
-<div class="filter-panel"><div class="filter-title"><h2>Filters</h2><button type="button" class="text-button" (click)="resetFilters()">Clear all</button></div>
-<fieldset *ngIf="categories.length"><legend>Category</legend><label *ngFor="let category of categories" class="filter-choice"><input type="checkbox" [checked]="isChecked(category)" (change)="toggleCategory($event,category)"><span>{{category}}</span></label></fieldset>
-<fieldset><legend>Product type</legend><label *ngFor="let type of productTypeKeys" class="filter-choice"><input type="checkbox" [checked]="type===filterCriteria.activeProductType" (change)="setActiveProductType(type)"><span>{{type}}</span></label></fieldset>
-<fieldset><legend>Price per unit (USD)</legend><div class="price-inputs"><label>Minimum<input type="number" min="0" step="0.01" [(ngModel)]="minValue" (ngModelChange)="filterByPrice()"></label><label>Maximum<input type="number" min="0" step="0.01" [(ngModel)]="maxValue" (ngModelChange)="filterByPrice()"></label></div><p *ngIf="minValue!==null&&maxValue!==null&&minValue>maxValue" role="status">Minimum must not exceed maximum.</p></fieldset>
-<fieldset><legend>Customer rating</legend><label *ngFor="let rating of [4,3,2,1]" class="filter-choice"><input type="radio" name="rating" [checked]="filterCriteria.ratingRange.min===rating" (change)="updateMinRating(rating)"><span>{{rating}} stars &amp; up</span></label><button type="button" class="text-button" (click)="clearRating()">Any rating</button></fieldset></div>
+<div class="filter-panel">
+  <div class="filter-title"><h2>Filters</h2><button type="button" class="text-button" (click)="resetFilters()">Clear all</button></div>
+  <fieldset *ngIf="categories.length"><legend>Category</legend><label *ngFor="let category of categories" class="filter-choice"><input type="checkbox" [checked]="isChecked(category)" (change)="toggleCategory($event,category)"><span>{{category}}</span></label></fieldset>
+  <fieldset><legend>Product type</legend><label *ngFor="let type of productTypeKeys" class="filter-choice"><input type="checkbox" [checked]="type===filterCriteria.activeProductType" (change)="setActiveProductType(type)"><span>{{type}}</span></label></fieldset>
+  <fieldset><legend>Price per unit (USD)</legend>
+    <form (ngSubmit)="applyPrice()" novalidate>
+      <div class="price-inputs"><label>Minimum<input name="minimum" type="number" min="0" step="0.01" [ngModel]="minValue" (ngModelChange)="updatePrice('min',$event)" [attr.aria-invalid]="!!priceError" aria-describedby="price-filter-error"></label><label>Maximum<input name="maximum" type="number" min="0" step="0.01" [ngModel]="maxValue" (ngModelChange)="updatePrice('max',$event)" [attr.aria-invalid]="!!priceError" aria-describedby="price-filter-error"></label></div>
+      <p id="price-filter-error" class="filter-error" role="alert" *ngIf="priceError">{{priceError}}</p>
+      <p class="filter-hint">Uses the discounted selling price.</p>
+      <p class="filter-match-count">{{matchingCount === null ? 'Loading results...' : matchingCount + ' matching products'}}</p>
+      <div class="price-actions"><button type="submit" class="store-button secondary">Apply price</button><button type="button" class="text-button" (click)="clearPrice()">Clear price</button></div>
+    </form>
+  </fieldset>
+  <fieldset><legend>Customer rating</legend>
+    <label for="minimum-rating" class="filter-hint">Minimum customer rating</label>
+    <select id="minimum-rating" [ngModel]="filterCriteria.ratingRange.min" (ngModelChange)="updateMinRating($event)"><option [ngValue]="null">Any rating</option><option *ngFor="let rating of ratingOptions" [ngValue]="rating">{{rating}} stars &amp; up</option></select>
+    <p class="filter-hint">Includes products rated at or above your selection.</p>
+    <p class="filter-match-count">{{matchingCount === null ? 'Loading results...' : matchingCount + ' matching products'}}</p>
+    <button *ngIf="filterCriteria.ratingRange.min!==null" type="button" class="text-button" (click)="clearRating()">Clear rating</button>
+  </fieldset>
+  <button type="button" class="store-button show-results" [disabled]="matchingCount===null" (click)="filtersApplied.emit()">Show {{matchingCount}} products</button>
+</div>

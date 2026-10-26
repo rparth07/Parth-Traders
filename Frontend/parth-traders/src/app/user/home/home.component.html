@@ -8,10 +8,12 @@
 </div>
   <div class="catalog-layout">
 <aside id="product-filters" [class.mobile-open]="filtersOpen" aria-label="Product filters">
-<app-sidebar>
+<app-sidebar (filtersApplied)="showFilterResults()">
 </app-sidebar>
 </aside>
   <div class="catalog-content">
+<h2 #resultsHeading tabindex="-1" class="results-heading">Product results</h2>
+<div class="applied-filters" *ngIf="activeFilters.length"><strong>Active filters:</strong> {{activeFilters.join("; ")}} <button type="button" class="text-button" (click)="resetFilters()">Clear filters</button></div>
     <p *ngIf="fetching" class="store-notice" role="status">Loading products… The store service may take up to 90 seconds to wake up.</p>
     <div *ngIf="loadError" class="store-notice" role="alert">
 <h2>Products could not be loaded</h2>
