@@ -1,3 +1,4 @@
+import { discountedUnitPrice } from '../../../shared/pricing';
 import { Component, Input } from '@angular/core';
 import { Order } from '../../core/models/Order';
 
@@ -7,5 +8,6 @@ import { Order } from '../../core/models/Order';
   styleUrl: './order-detail.component.css'
 })
 export class OrderDetailComponent {
+  discountedUnitPrice = discountedUnitPrice;
   @Input() order!: Order; // Receive the selected order
 }

@@ -64,10 +64,10 @@ namespace Parth_Traders.ValidationAttributes
                     , new[] { nameof(ProductDto) });
             }
 
-            if (product.Discount > product.UnitPrice)
+            if (product.Discount > 100)
             {
                 return new ValidationResult(
-                    "Validation Error : Discount cannot exceed the unit price."
+                    "Validation Error : Discount percentage cannot exceed 100."
                     , new[] { nameof(ProductDto) });
             }
 

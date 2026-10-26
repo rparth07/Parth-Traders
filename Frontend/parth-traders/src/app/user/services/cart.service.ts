@@ -1,3 +1,4 @@
+import { discountedUnitPrice } from '../../shared/pricing';
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../core/models/Product';
@@ -17,7 +18,7 @@ export class CartService {
       const saved = JSON.parse(sessionStorage.getItem('parth_cart') || '[]');
       if (Array.isArray(saved)) this.orderDetails = saved.filter(item => typeof item.productSku === 'string' && Number.isInteger(item.quantity) && item.quantity > 0 && Number.isFinite(item.price) && Number.isFinite(item.discount)).map(item => {
         const restored = Object.assign(Object.create(OrderDetail.prototype), item) as OrderDetail;
-        restored.totalPrice = Math.round(restored.quantity * (restored.price - restored.discount) * 100) / 100;
+        restored.totalPrice = Math.round(restored.quantity * discountedUnitPrice(restored.price, restored.discount) * 100) / 100;
         return restored;
       });
     } catch { this.orderDetails = []; }

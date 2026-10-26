@@ -24,6 +24,7 @@ public class PaymentController : ControllerBase
     private bool Configured => !string.IsNullOrWhiteSpace(config["PayPal:ClientId"]) && !string.IsNullOrWhiteSpace(config["PayPal:ClientSecret"]);
     public sealed record CartItem(string Sku, int Quantity);
     public sealed record PricedItem(string Sku, string Name, int Quantity, decimal Price, decimal Discount);
+    private static decimal NetPrice(decimal price, decimal percentage) => decimal.Round(price * (100m - percentage) / 100m, 2, MidpointRounding.AwayFromZero);
     private static string Money(decimal value) => value.ToString("0.00", CultureInfo.InvariantCulture);
     private async Task<string> AccessToken(CancellationToken ct)
     {
@@ -52,11 +53,11 @@ public class PaymentController : ControllerBase
         foreach (var item in cart)
         {
             var product = await db.Products.AsNoTracking().SingleOrDefaultAsync(p => p.ProductSku == item.Sku, ct);
-            if (product == null || product.UnitsInStock < item.Quantity || product.UnitPrice <= product.Discount)
+            if (product == null || product.UnitsInStock < item.Quantity || product.Discount < 0 || product.Discount > 100 || NetPrice(product.UnitPrice, product.Discount) <= 0)
                 return Conflict(new { message = "An item is unavailable or its stock changed. Review your cart." });
             items.Add(new(item.Sku, product.ProductName, item.Quantity, product.UnitPrice, product.Discount));
         }
-        var total = items.Sum(i => (i.Price - i.Discount) * i.Quantity);
+        var total = items.Sum(i => NetPrice(i.Price, i.Discount) * i.Quantity);
         var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         try
         {
@@ -65,7 +66,7 @@ public class PaymentController : ControllerBase
                 intent = "CAPTURE",
                 purchase_units = new[] { new { custom_id = customerId,
                     amount = new { currency_code = "USD", value = Money(total), breakdown = new { item_total = new { currency_code = "USD", value = Money(total) } } },
-                    items = items.Select(i => new { name = i.Name, sku = i.Sku, quantity = i.Quantity.ToString(CultureInfo.InvariantCulture), unit_amount = new { currency_code = "USD", value = Money(i.Price - i.Discount) } }).ToArray()
+                    items = items.Select(i => new { name = i.Name, sku = i.Sku, quantity = i.Quantity.ToString(CultureInfo.InvariantCulture), unit_amount = new { currency_code = "USD", value = Money(NetPrice(i.Price, i.Discount)) } }).ToArray()
                 } }, application_context = new { shipping_preference = "NO_SHIPPING" }
             }, Guid.NewGuid().ToString(), ct);
             var id = result.GetProperty("id").GetString()!;
@@ -99,6 +100,8 @@ public class PaymentController : ControllerBase
         if (draft == null || draft.CustomerId != User.FindFirstValue(ClaimTypes.NameIdentifier)) return NotFound();
         if (draft.OrderId != null) return Ok(new { transactionId = draft.TransactionId, orderId = draft.OrderId, mode = "sandbox" });
         var items = JsonSerializer.Deserialize<List<PricedItem>>(draft.ItemsJson)!;
+        if (items.Sum(i => NetPrice(i.Price, i.Discount) * i.Quantity) != draft.Total)
+            return Conflict(new { message = "Pricing was corrected. Cancel this checkout and start a new sandbox payment." });
         var details = new List<OrderDetailDataModel>();
         foreach (var item in items.OrderBy(i => i.Sku, StringComparer.Ordinal))
         {
@@ -106,7 +109,7 @@ public class PaymentController : ControllerBase
             if (product == null || product.UnitsInStock < item.Quantity || product.UnitPrice != item.Price || product.Discount != item.Discount)
                 return Conflict(new { message = "Stock or prices changed. No new payment was captured. Review your cart." });
             // Sandbox tests never consume business inventory.
-            details.Add(new() { ProductId = product.ProductId, Price = item.Price, Discount = item.Discount, Quantity = item.Quantity, TotalPrice = (item.Price - item.Discount) * item.Quantity });
+            details.Add(new() { ProductId = product.ProductId, Price = item.Price, Discount = item.Discount, Quantity = item.Quantity, TotalPrice = NetPrice(item.Price, item.Discount) * item.Quantity });
         }
         try
         {

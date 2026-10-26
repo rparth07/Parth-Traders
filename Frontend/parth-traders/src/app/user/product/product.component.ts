@@ -1,3 +1,4 @@
+import { discountedUnitPrice } from '../../shared/pricing';
 import { Component, Input, AfterViewInit, Renderer2, ViewChild, ElementRef, OnInit, OnDestroy, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { Product } from '../core/models/Product';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +11,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit, AfterViewInit, OnChanges {
+  discountedUnitPrice = discountedUnitPrice;
   @Input() product!: Product;
   productCard: HTMLDivElement | undefined;
   productImagePath: string;

@@ -65,12 +65,12 @@ export class ProductComponent implements OnInit {
     {
       columnDef: 'supplierName',
       header: 'Supplier',
-      cell: (element: Product) => `${element.supplierName}`,
+      cell: (element: Product) => element.supplierName || 'Unavailable',
     },
     {
       columnDef: 'categoryName',
       header: 'Category',
-      cell: (element: Product) => `${element.categoryName}`,
+      cell: (element: Product) => element.categoryName || 'Unavailable',
     },
     {
       columnDef: 'singlePieceMRP',
@@ -89,7 +89,7 @@ export class ProductComponent implements OnInit {
     },
     {
       columnDef: 'discount',
-      header: 'Discount',
+      header: 'Discount (%)',
       cell: (element: Product) => `${element.discount}`,
     },
     {

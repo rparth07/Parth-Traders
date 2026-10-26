@@ -4,7 +4,7 @@
         <div class="sku">PRODUCT SKU: <strong>{{ product.productSku }}</strong></div>
         <div class="price-big">
             <span *ngIf="product.discount != 0">{{product.unitPrice | currency:'USD':'symbol':'1.2-2'}}</span>
-            {{ (product.unitPrice - product.discount) | currency:'USD':'symbol':'1.2-2' }}
+            {{ discountedUnitPrice(product.unitPrice, product.discount) | currency:'USD':'symbol':'1.2-2' }}
         </div>
         <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
     </div>
@@ -15,7 +15,7 @@
 
             <div class="stats">
                 <div class="stats-container">
-                    <span class="product_price">{{ (product.unitPrice - product.discount) | currency:'USD':'symbol':'1.2-2' }}</span>
+                    <span class="product_price">{{ discountedUnitPrice(product.unitPrice, product.discount) | currency:'USD':'symbol':'1.2-2' }}</span>
                     <span class="product_name">{{ product.productName }}</span>
                     <p>{{ product.categoryName || 'Category unavailable' }}</p>
                 </div>

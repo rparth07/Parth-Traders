@@ -40,7 +40,10 @@ conf=call('/api/payments/config');assert conf['mode']=='sandbox';assert 'clientS
 if conf['enabled']:
  call('/api/payments/orders','POST',[],token,expected=400)
  order=call('/api/payments/orders','POST',[{'sku':products[0]['productSku'],'quantity':1}],token)
- assert Decimal(str(order['total']))==Decimal(str(products[0]['unitPrice']))-Decimal(str(products[0]['discount']));call('/api/payments/orders/'+order['id'],token=token)
- print('PASS sandbox OAuth and server-priced order creation (no capture)')
+ assert Decimal(str(order['total']))==(Decimal(str(products[0]['unitPrice']))*(100-Decimal(str(products[0]['discount'])))/100).quantize(Decimal('0.01'), rounding=__import__('decimal').ROUND_HALF_UP);call('/api/payments/orders/'+order['id'],token=token)
+ safety=next(p for p in products if p['productSku']=='SG-10007')
+ order=call('/api/payments/orders','POST',[{'sku':safety['productSku'],'quantity':2}],token)
+ assert Decimal(str(order['total']))==Decimal('25.58')
+ print('PASS sandbox OAuth and percentage-priced orders including 20% safety glasses (no capture)')
 Path('.netlify/validation-fixture.json').write_text(json.dumps({'email':email,'password':password,'userName':name}),encoding='utf-8')
 print('PASS validation fixture saved privately; no production business records changed')

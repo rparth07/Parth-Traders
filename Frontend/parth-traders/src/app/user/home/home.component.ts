@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, OnInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
+import { discountedUnitPrice } from '../../shared/pricing';
 
 import { ProductService } from '../services/product.service';
 import { Product } from '../core/models/Product';
@@ -48,8 +49,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       (!f.name || p.productName.trim().toLowerCase().includes(f.name.trim().toLowerCase())) &&
       (!f.categories.length || f.categories.includes(p.categoryName)) &&
       (!f.activeProductType || f.activeProductType === p.productType) &&
-      (f.priceRange.min === null || (p.unitPrice - p.discount) >= f.priceRange.min) &&
-      (f.priceRange.max === null || (p.unitPrice - p.discount) <= f.priceRange.max) &&
+      (f.priceRange.min === null || discountedUnitPrice(p.unitPrice, p.discount) >= f.priceRange.min) &&
+      (f.priceRange.max === null || discountedUnitPrice(p.unitPrice, p.discount) <= f.priceRange.max) &&
       (f.ratingRange.min === null || p.productRating >= f.ratingRange.min) &&
       (f.ratingRange.max === null || p.productRating <= f.ratingRange.max));
     this.refreshShownProduct();
