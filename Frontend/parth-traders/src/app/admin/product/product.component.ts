@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../../shared/api-error';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSort, Sort } from '@angular/material/sort';
-import { BehaviorSubject, delay, map, Observable, startWith, tap } from 'rxjs';
+import { BehaviorSubject, delay, map, Observable, startWith, tap, finalize } from 'rxjs';
 
 import { AddProductComponent } from './add-product/add-product.component';
 import { Product, ProductType } from './product';
@@ -23,9 +24,10 @@ export class ProductComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  dataSource!: MatTableDataSource<Product>;
+  dataSource = new MatTableDataSource<Product>();
+  loadError = '';
   productType = ProductType;
-  dataLength: number = 100;
+  dataLength: number = 0;
 
   updatableProduct!: Product | null;
 
@@ -115,6 +117,7 @@ export class ProductComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
   }
 
   addCsv(event: any) {
@@ -128,7 +131,7 @@ export class ProductComponent implements OnInit {
           this.getProducts();
         },
         error: (err: { error: string }) => {
-          this.showToaster(err.error);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -137,6 +140,7 @@ export class ProductComponent implements OnInit {
 
   getProducts(): void {
     this.loadingSubject.next(true);
+    this.loadError = '';
     this.productService
       .fetchProducts()
       .pipe(
@@ -147,12 +151,13 @@ export class ProductComponent implements OnInit {
           })
         )
       )
-      .subscribe((response: Product[]) => {
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({next: (response: Product[]) => {
         this.dataLength = response.length;
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
+      }, error: error => { this.loadError = apiErrorMessage(error, 'Unable to load products. Try again.'); }});
   }
 
   deleteProduct(product: Product) {

@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../../../shared/api-error';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +33,7 @@ export class AddCategoryComponent implements OnInit {
           this.categoryService.getUpdatedCategories.next('Updated categories');
         },
         error: (err: { error: { errors: any } }) => {
-          this.showToaster(err.error.errors.categoryDto);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -50,7 +51,7 @@ export class AddCategoryComponent implements OnInit {
             );
           },
           error: (err: { error: { errors: any } }) => {
-            this.showToaster(err.error.errors.categoryDto);
+            this.showToaster(apiErrorMessage(err));
           },
         });
     }

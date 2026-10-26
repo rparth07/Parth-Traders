@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.Domain.Enums;
 using Parth_Traders.Dto.User;
 using Parth_Traders.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
@@ -27,11 +27,9 @@ namespace Parth_Traders.Dto.Admin
 
         public double ProductRating { get; set; }
 
-        [Required]
-        public string SupplierName { get; set; }
+        public string? SupplierName { get; set; }
 
-        [Required]
-        public string CategoryName { get; set; }
+        public string? CategoryName { get; set; }
 
         public ICollection<OrderDetailDto> OrderDetails { get; set; }
 
@@ -39,13 +37,13 @@ namespace Parth_Traders.Dto.Admin
         public int PiecesPerUnit { get; set; }
 
         [Required]
-        public long SinglePieceMRP { get; set; }
+        public decimal SinglePieceMRP { get; set; }
 
         [Required]
-        public long UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
         [Required]
-        public long Discount { get; set; }
+        public decimal Discount { get; set; }
 
         [Required]
         public long UnitsInStock { get; set; }

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.User
 {
@@ -16,15 +16,15 @@ namespace Parth_Traders.Dto.User
         public string ProductSku { get; set; }
 
         [Required]
-        public long Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public long Quantity { get; set; }
 
         [Required]
-        public long Discount { get; set; }
+        public decimal Discount { get; set; }
 
         [Required]
-        public long TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

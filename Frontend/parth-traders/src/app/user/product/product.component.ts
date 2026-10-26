@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.productCard == undefined)
       return;
 
-    if (changes["shouldSwitchToLargeGrid"].currentValue === false) {
+    if (changes["shouldSwitchToLargeGrid"]?.currentValue === false) {
       this.flipCardToFront();
     } else {
       this.flipCardIfLargeGrid();

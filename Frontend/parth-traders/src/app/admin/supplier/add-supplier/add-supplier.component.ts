@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../../../shared/api-error';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,7 +32,7 @@ export class AddSupplierComponent implements OnInit {
           this.supplierService.getUpdatedSuppliers.next('Updated suppliers');
         },
         error: (err: { error: { errors: any } }) => {
-          this.showToaster(err.error.errors.supplierDto);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -47,7 +48,7 @@ export class AddSupplierComponent implements OnInit {
             this.supplierService.getUpdatedSuppliers.next('Updated suppliers');
           },
           error: (err: { error: { errors: any } }) => {
-            this.showToaster(err.error.errors.supplierDto);
+            this.showToaster(apiErrorMessage(err));
           },
         });
     }

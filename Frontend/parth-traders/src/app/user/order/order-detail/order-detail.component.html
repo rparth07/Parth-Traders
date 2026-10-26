@@ -11,7 +11,7 @@
         <!-- Price Column -->
         <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-            <mat-cell *matCellDef="let detail"> {{detail.price | currency}} </mat-cell>
+            <mat-cell *matCellDef="let detail"> {{(detail.price - detail.discount) | currency}} </mat-cell>
         </ng-container>
 
         <!-- Quantity Column -->
@@ -23,7 +23,7 @@
         <!-- Total Price Column -->
         <ng-container matColumnDef="totalPrice">
             <mat-header-cell *matHeaderCellDef> Total Price </mat-header-cell>
-            <mat-cell *matCellDef="let detail"> {{detail.quantity * detail.price | currency}} </mat-cell>
+            <mat-cell *matCellDef="let detail"> {{detail.quantity * (detail.price - detail.discount) | currency}} </mat-cell>
         </ng-container>
 
         <!-- Header and Row Definitions -->

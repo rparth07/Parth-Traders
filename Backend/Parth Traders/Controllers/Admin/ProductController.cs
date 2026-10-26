@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
@@ -27,10 +27,11 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost("add-product"), Authorize]
+        [HttpPost("add-product"), Authorize(Roles = "Administrator,Manager")]
         [Consumes("application/json")]
         public IActionResult AddProduct(ProductDto productForCreation)
         {
+            if (string.IsNullOrWhiteSpace(productForCreation.SupplierName) || string.IsNullOrWhiteSpace(productForCreation.CategoryName)) return BadRequest(new { message = "Choose an existing supplier and category for a new product." });
             var product = _mapper.Map<Product>(productForCreation);
 
             var productToAdd = _productHelperService.MapProductPropertiesToProduct(product);
@@ -45,7 +46,7 @@ namespace Parth_Traders.Controllers.Admin
                 productToReturn);
         }
 
-        [HttpPost, DisableRequestSizeLimit, Authorize]
+        [HttpPost, DisableRequestSizeLimit, Authorize(Roles = "Administrator,Manager")]
         public IActionResult AddAllProducts([FromForm] IFormFile file)
         {
             List<ParsedProduct> parsedProducts = new ParsedProduct().ParseData(file);
@@ -75,7 +76,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(products);
         }
 
-        [HttpPost("{productName}"), Authorize]
+        [HttpPost("{productName}"), Authorize(Roles = "Administrator,Manager")]
         [Consumes("application/json")]
         public IActionResult UpdateProduct(
             string productName,
@@ -88,7 +89,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(product);
         }
 
-        [HttpDelete("{productName}"), Authorize]
+        [HttpDelete("{productName}"), Authorize(Roles = "Administrator,Manager")]
         public IActionResult DeleteProduct(string productName)
         {
             _productService.DeleteProduct(productName);

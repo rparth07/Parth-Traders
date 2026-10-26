@@ -12,17 +12,17 @@ export class OrderDetail {
         this.price = product.unitPrice;
         this.discount = product.discount;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
+        this.totalPrice = Math.round(quantity * (this.price - this.discount) * 100) / 100;
     }
 
     incrementProductCount() {
         this.quantity += 1;
-        this.totalPrice += this.price;
+        this.totalPrice = Math.round(this.quantity * (this.price - this.discount) * 100) / 100;
     }
 
     decrementProductCountFrom() {
         this.quantity -= 1;
-        this.totalPrice -= this.price;
+        this.totalPrice = Math.round(this.quantity * (this.price - this.discount) * 100) / 100;
     }
 
     getProductQuantity() {

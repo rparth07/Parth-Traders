@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthenticateComponent implements OnInit {
   registering: boolean = false;
+  submitting = false;
 
   constructor(private authService: AuthService) { }
 
@@ -61,6 +62,7 @@ export class AuthenticateComponent implements OnInit {
   }
 
   handleLogin(): void {
+    if (this.submitting) return;
     this.clearErrors();
 
     const email = (document.getElementById("user") as HTMLInputElement | null)?.value;
@@ -89,16 +91,17 @@ export class AuthenticateComponent implements OnInit {
       localStorage.removeItem("rememberedEmail");
     }
 
+    this.submitting = true;
     // Perform login operation
     this.authService.loginApi(email!, password!).then(result => {
       if (result.success) {
-        alert("Logged in successfully");
+        // Navigation follows the successful response.
       } else {
         this.showError((document.getElementById("pass") as HTMLInputElement | null), result.message);
       }
     }).catch(error => {
       this.showError((document.getElementById("pass") as HTMLInputElement | null), "Login failed. Please try again.");
-    });
+    }).finally(() => this.submitting = false);
   }
 
   handleRegister(): void {
@@ -141,16 +144,19 @@ export class AuthenticateComponent implements OnInit {
       return;
     }
 
+    if (this.submitting) return;
+    this.submitting = true;
     // Perform register operation
     this.authService.registerApi(username!, phone!, address!, email!, password!).then(result => {
       if (result.success) {
-        alert("Registration successful");
+        this.registering = false;
+        alert("Registration successful. Please sign in.");
       } else {
         this.showError((document.getElementById("registerPass") as HTMLInputElement | null), result.message);
       }
     }).catch(error => {
       this.showError((document.getElementById("registerPass") as HTMLInputElement | null), "Registration failed. Please try again.");
-    });
+    }).finally(() => this.submitting = false);
   }
 
   handleForgotPassword(): void {
@@ -254,6 +260,7 @@ export class AuthenticateComponent implements OnInit {
     if (element) {
       const errorSpan = document.createElement("span");
       errorSpan.className = "error-message";
+      errorSpan.setAttribute("role", "alert");
       errorSpan.textContent = message;
       element.parentElement?.appendChild(errorSpan);
     }

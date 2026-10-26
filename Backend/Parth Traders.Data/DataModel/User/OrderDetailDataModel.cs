@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Data.DataModel.Admin;
+using Parth_Traders.Data.DataModel.Admin;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,15 +20,15 @@ namespace Parth_Traders.Data.DataModel.User
         public virtual ProductDataModel ProductData { get; set; }
 
         [Required]
-        public long Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public long Quantity { get; set; }
 
         [Required]
-        public long Discount { get; set; }
+        public decimal Discount { get; set; }
 
         [Required]
-        public long TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

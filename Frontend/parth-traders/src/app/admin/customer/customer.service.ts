@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { apiErrorMessage } from '../../shared/api-error';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -10,7 +12,7 @@ import { Customer } from './customer';
 export class CustomerService {
   getUpdatedCustomers = new Subject<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   addCustomerCsvFile(form: FormData) {
     return this.http.post(DomainConstants.URL + 'admin/customers', form);
@@ -26,19 +28,19 @@ export class CustomerService {
 
   updateCustomer(oldCustomerName: string, newCustomer: Customer) {
     return this.http.post<Customer>(
-      DomainConstants.URL + 'admin/customers/' + oldCustomerName,
+      DomainConstants.URL + 'admin/customers/' + encodeURIComponent(oldCustomerName),
       newCustomer
     );
   }
 
   deleteCustomer(customerName: string) {
     this.http
-      .delete<Customer>(DomainConstants.URL + 'admin/customers/' + customerName)
+      .delete<Customer>(DomainConstants.URL + 'admin/customers/' + encodeURIComponent(customerName))
       .subscribe({
         next: (value) => {
           this.getUpdatedCustomers.next('Updated customers');
         },
-        error: (err) => console.log(err),
+        error: (err) => this.toastr.error(apiErrorMessage(err), 'Delete failed'),
       });
   }
 }

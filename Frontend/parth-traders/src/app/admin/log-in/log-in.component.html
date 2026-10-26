@@ -1,6 +1,6 @@
 <div class="modal-container center">
   <div class="example-loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <p role="status">Signing in...</p><mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
   <div class="row justify-content-around">
     <div class="panel-heading">
@@ -8,14 +8,15 @@
     </div>
     <div class="col-5 col-md-5">
       <div class="panel-body">
-        <form #form="ngForm">
+        <form #form="ngForm" (ngSubmit)="login(form)">
+          <p *ngIf="loadError" role="alert">{{loadError}}</p>
           <div class="group">
-            <input class="form-control" placeholder="username" name="username" type="text" autofocus ngModel />
+            <input class="form-control" aria-label="Admin username" autocomplete="username" required placeholder="username" name="username" type="text" autofocus ngModel />
           </div>
           <div class="group">
-            <input class="form-control" placeholder="Password" name="password" type="password" value="" ngModel />
+            <input class="form-control" aria-label="Password" autocomplete="current-password" required placeholder="Password" name="password" type="password" value="" ngModel />
           </div>
-          <button class="btn btn-lg btn-primary btn-block" (click)="login(form)">
+          <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="isLoadingResults">
             Login
           </button>
         </form>

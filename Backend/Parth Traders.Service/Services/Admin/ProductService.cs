@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Domain.Entity.Admin;
+using Parth_Traders.Domain.Entity.Admin;
 using Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces;
 using Parth_Traders.Service.Filter;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
@@ -76,6 +76,8 @@ namespace Parth_Traders.Service.Admin
                                                 Product product)
         {
             product.ProductId = productFromRepo.ProductId;
+            product.SourceSupplierId = productFromRepo.SourceSupplierId;
+            product.SourceCategoryId = productFromRepo.SourceCategoryId;
             product.Category = productFromRepo.Category;
             product.Supplier = productFromRepo.Supplier;
             product.OrderDetails = productFromRepo.OrderDetails;

@@ -207,3 +207,18 @@
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 }
+.header > .w-41 { flex: 1; min-width: 0; }
+.header__search { min-width: 0; width: auto; }
+.header__searchInput { min-width: 0; width: 100%; }
+.header__nav { width: auto; flex-shrink: 0; }
+.header mat-form-field { width: 160px; flex-shrink: 0; }
+@media (max-width: 900px) {
+  .header { flex-wrap: wrap; gap: .5rem; padding: .5rem; }
+  .header > .w-16 { width: auto; }
+  .header__logo { margin: 0; }
+  .header h1 { margin: 0; }
+  .header > .w-41 { order: 3; flex-basis: 100%; }
+  .header__nav { margin-left: auto; }
+  .header__option { margin: 0 .4rem; }
+  .header mat-form-field { width: 135px; }
+}

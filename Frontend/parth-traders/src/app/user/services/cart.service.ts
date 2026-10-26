@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Product } from '../core/models/Product';
 import { OrderDetail } from '../core/models/OrderDetail';
 
@@ -7,11 +8,20 @@ import { OrderDetail } from '../core/models/OrderDetail';
 })
 export class CartService {
   private addToCartEvent = new EventEmitter();
-  private allProductCountEvent = new EventEmitter<number>();
+  private allProductCountEvent = new BehaviorSubject<number>(0);
 
   private orderDetails: OrderDetail[] = [];
 
   constructor() {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('parth_cart') || '[]');
+      if (Array.isArray(saved)) this.orderDetails = saved.filter(item => typeof item.productSku === 'string' && Number.isInteger(item.quantity) && item.quantity > 0 && Number.isFinite(item.price) && Number.isFinite(item.discount)).map(item => {
+        const restored = Object.assign(Object.create(OrderDetail.prototype), item) as OrderDetail;
+        restored.totalPrice = Math.round(restored.quantity * (restored.price - restored.discount) * 100) / 100;
+        return restored;
+      });
+    } catch { this.orderDetails = []; }
+    this.emitAllProductCountEvent();
   }
 
   public addToCart(product: Product) {
@@ -34,7 +44,7 @@ export class CartService {
   }
 
   public isCartEmpty(): Boolean {
-    return this.orderDetails.length > 0;
+    return this.orderDetails.length === 0;
   }
 
   private emitAddItemToCartEvent() {
@@ -66,7 +76,8 @@ export class CartService {
   }
 
   private emitAllProductCountEvent() {
-    this.allProductCountEvent.emit(this.orderDetails.reduce((acc, current) => acc + current.quantity, 0));
+    try { sessionStorage.setItem('parth_cart', JSON.stringify(this.orderDetails)); } catch {}
+    this.allProductCountEvent.next(this.orderDetails.reduce((acc, current) => acc + current.quantity, 0));
   }
 
   public getAllProductCountEvent() {

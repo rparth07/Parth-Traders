@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, catchError, map, of, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, of, throwError } from 'rxjs';
 import { Product } from '../core/models/Product';
 import { FilterCriteria } from '../core/models/FilterCriteria';
 import { convertIntToProductType, ProductType } from '../core/enums/ProductType';
@@ -10,7 +10,7 @@ import { AppSetting } from 'src/app/shared/app-settings';
     providedIn: 'root'
 })
 export class ProductService {
-    productFilter$ = new Subject<FilterCriteria>();
+    productFilter$ = new BehaviorSubject<FilterCriteria>({ name: '', categories: [], activeProductType: null, priceRange: { min: null, max: null }, ratingRange: { min: null, max: null } });
 
     constructor(private http: HttpClient) { }
 

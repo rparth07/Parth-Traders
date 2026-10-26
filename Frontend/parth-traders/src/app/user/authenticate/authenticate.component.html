@@ -4,12 +4,12 @@
             <span>Login</span>
         </div>
         <div class="input_box">
-            <input type="text" id="user" class="input-field" required>
+            <input type="text" id="user" autocomplete="username" class="input-field" required>
             <label for="user" class="label">Email</label>
             <i class="bx bx-user icon"></i>
         </div>
         <div class="input_box">
-            <input type="password" id="pass" class="input-field" required (input)="checkPasswordStrength($event)">
+            <input type="password" id="pass" autocomplete="current-password" (keydown.enter)="handleLogin()" class="input-field" required (input)="checkPasswordStrength($event)">
             <label for="pass" class="label">Password</label>
             <i class="bx bx-lock-alt icon" (click)="togglePasswordVisibility('pass', $event)"></i>
         </div>
@@ -25,7 +25,7 @@
             </div> -->
         </div>
         <div class="input_box">
-            <input type="submit" class="input-submit" value="Login" (click)="handleLogin()">
+            <input type="submit" class="input-submit" [disabled]="submitting" [value]="submitting ? 'Signing in…' : 'Login'" (click)="handleLogin()">
         </div>
         <div class="auth">
             <span>Don't have an account ? <a href="#" (click)="toggleAuthForms($event)">Register</a></span>
@@ -52,7 +52,7 @@
             <label for="registerEmail" class="label">Email</label>
         </div>
         <div class="input_box">
-            <input type="password" id="registerPass" class="input-field" required
+            <input type="password" id="registerPass" autocomplete="new-password" class="input-field" required
                 (input)="checkPasswordStrengthRegister($event)">
             <label for="registerPass" class="label">Password</label>
             <i class="bx bx-lock-alt icon" (click)="togglePasswordVisibility('registerPass', $event)"></i>
@@ -60,7 +60,7 @@
         <div id="passwordStrengthRegister" class="password-strength"></div>
 
         <div class="input_box">
-            <input type="submit" class="input-submit" value="Register" (click)="handleRegister()">
+            <input type="submit" class="input-submit" [disabled]="submitting" [value]="submitting ? 'Registering…' : 'Register'" (click)="handleRegister()">
         </div>
 
         <div class="auth">

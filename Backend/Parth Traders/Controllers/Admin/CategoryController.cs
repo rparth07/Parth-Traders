@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
@@ -25,7 +25,7 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost("add-category"), Authorize]
+        [HttpPost("add-category"), Authorize(Roles = "Administrator,Manager")]
         [Consumes("application/json")]
         public IActionResult AddCategory(CategoryDto categoryForCreation)
         {
@@ -41,7 +41,7 @@ namespace Parth_Traders.Controllers.Admin
                                       categoryToReturn);
         }
 
-        [HttpPost, DisableRequestSizeLimit, Authorize]
+        [HttpPost, DisableRequestSizeLimit, Authorize(Roles = "Administrator,Manager")]
         public IActionResult AddAllCategories([FromForm] IFormFile file)
         {
             List<ParsedCategory> parsedcategories = new ParsedCategory().ParseData(file);
@@ -68,7 +68,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(categories);
         }
 
-        [HttpPost("{categoryName}"), Authorize]
+        [HttpPost("{categoryName}"), Authorize(Roles = "Administrator,Manager")]
         [Consumes("application/json")]
         public IActionResult UpdateCategory(
             string categoryName,
@@ -81,7 +81,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(category);
         }
 
-        [HttpDelete("{categoryName}"), Authorize]
+        [HttpDelete("{categoryName}"), Authorize(Roles = "Administrator,Manager")]
         public IActionResult DeleteCategory(string categoryName)
         {
             _categoryService.DeleteCategory(categoryName);

@@ -1,11 +1,13 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Dto.User;
 using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Controllers.User
 {
+    [Authorize(Roles = "Administrator,Manager")]
     [ApiController]
     [Route("API/user/customers")]
     //[ApiExplorerSettings(GroupName = "v1")]

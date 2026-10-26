@@ -1,13 +1,13 @@
 <div class="header w-full header-upper py-2 h-auto flex justify-content-between">
   <div class="w-16">
     <h1><a href="/user/home">
-        <img class="header__logo" src="assets/images/parth-traders.png" />
+        <img class="header__logo" src="assets/images/parth-traders.png" alt="Parth Traders home" />
       </a></h1>
   </div>
   <div class="w-41">
     <div class="d-flex" *ngIf="shouldDisplaySearchBox">
       <mat-form-field>
-        <mat-select id="dropdown-button" (selectionChange)="searchProduct('clicked', searchInputRef.value)"
+        <mat-select aria-label="Product category" id="dropdown-button" (selectionChange)="searchProduct('clicked', searchInputRef.value)"
           [(ngModel)]="selectedCategory" name="category">
           <mat-option *ngFor=" let category of categories" [value]="category">
             {{category}}
@@ -16,9 +16,9 @@
       </mat-form-field>
       <div class="header__search justify-content-center w-41 relative">
         <input type="search" id="search-dropdown" #searchInputRef
-          (keydown)="searchProduct($event.key, searchInputRef.value)"
+          (keydown.enter)="searchProduct('Enter', searchInputRef.value)" (input)="searchProduct('input', searchInputRef.value)" aria-label="Search products"
           class="block border-none header__searchInput md:rounded-l-none outline-none p-06 text-md w-full z-20"
-          placeholder="Search for machine tools, buffs etc..." type="text" />
+          placeholder="Search for machine tools, buffs etc..." />
         <button (click)="searchProduct('clicked', searchInputRef.value)" type="submit"
           class="p-0 rounded-r-lg text-white border-0">
           <mat-icon class="header__searchIcon d-flex justify-content-center align-items-center" aria-hidden="false"
@@ -33,17 +33,17 @@
       <span class="header__optionLineOne">Welcome,</span>
       <span class="header__optionLineTwo">{{customerName}}</span>
     </div>
-    <div class="header__option" (click)="redirectToLogIn()" *ngIf="!isAuthenticated()">
+    <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToLogIn()" (click)="redirectToLogIn()" *ngIf="!isAuthenticated()">
       <span class="header__optionLineOne">Hello Guest</span>
       <span class="header__optionLineTwo">Sign In</span>
     </div>
 
-    <div class="header__option" (click)="redirectToPastOrders()">
+    <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToPastOrders()" (click)="redirectToPastOrders()">
       <span class="header__optionLineOne">Past</span>
       <span class="header__optionLineTwo">Orders</span>
     </div>
 
-    <div class="header__option" (click)="redirectToWIP()">
+    <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToWIP()" (click)="redirectToWIP()">
       <span class="header__optionLineOne">Your</span>
       <span class="header__optionLineTwo">Prime</span>
     </div>

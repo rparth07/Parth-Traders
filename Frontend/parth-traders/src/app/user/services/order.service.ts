@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class OrderService {
   private order!: Order;
+  private completedTransactionId = '';
 
   constructor(private authService: AuthService, private cartService: CartService, private http: HttpClient) {
   }
@@ -36,12 +37,12 @@ export class OrderService {
   }
 
   setTransactionId(transactionId: string) {
-    if (this.order)
-      this.order.transactionId = transactionId;
+    this.completedTransactionId = transactionId;
+    if (this.order) this.order.transactionId = transactionId;
   }
 
   getTransactionId(): string {
-    return this.order?.transactionId;
+    return this.completedTransactionId || this.order?.transactionId;
   }
 
   getOrders() {

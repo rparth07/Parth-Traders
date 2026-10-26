@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class LogInComponent implements OnInit {
   isLoadingResults = false;
+  loadError = '';
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -17,6 +18,10 @@ export class LogInComponent implements OnInit {
 
   //need to add errors in the form
   login(form: NgForm) {
+    if (this.isLoadingResults) return;
+    if (form.invalid) { this.loadError = 'Enter your username and password.'; return; }
+    this.loadError = '';
+    this.isLoadingResults = true;
     this.authService.login(form.value).subscribe({
       next: () => {
         this.isLoadingResults = false;
@@ -25,7 +30,7 @@ export class LogInComponent implements OnInit {
           .then((_) => console.log('You are secure now!'));
       },
       error: (err: any) => {
-        console.log(err);
+        this.loadError = 'Unable to sign in. Check your details or try again later.';
         this.isLoadingResults = false;
       },
     });

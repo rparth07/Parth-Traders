@@ -73,12 +73,6 @@ import { MatSortModule } from '@angular/material/sort';
     MatSortModule,
     MatButtonModule,
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ]
+
 })
 export class UserModule { }

@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   constructor(private productService: ProductService, private cartService: CartService, private authService: AuthService, private router: Router) {
     this.selectedCategory = 'All Categories';
     productService.getCategories()
-      .subscribe(categories => this.categories.push(...categories));
+      .subscribe({next: categories => this.categories = ['All Categories', ...categories], error: () => {}});
     // console.log(this.categories);
 
     this.cartService.getAllProductCountEvent().subscribe((orderItemsCount: number) => {
@@ -48,23 +48,14 @@ export class HeaderComponent implements OnInit {
   }
 
   searchProduct(key: string, searchValue: string) {
-    if (key === 'Backspace' && searchValue.length === 1)
-      searchValue = '';
 
     const filterCriteria = {
+      ...this.productService.productFilter$.value,
       name: searchValue,
       categories: this.selectedCategory === 'All Categories' ? [] : [this.selectedCategory],
-      activeProductType: null,
-      priceRange: {
-        min: null,
-        max: null
-      },
-      ratingRange: {
-        min: null,
-        max: null
-      }
+
     };
-    if (key === 'clicked' || key === 'Enter' || (key === 'Backspace' && searchValue === '')) {
+    if (key === 'clicked' || key === 'Enter' || (key === 'input' && searchValue === '')) {
       this.productService.productFilter$.next(filterCriteria);
     }
   }

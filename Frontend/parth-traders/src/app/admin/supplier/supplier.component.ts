@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../../shared/api-error';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, finalize } from 'rxjs';
 import { AddSupplierComponent } from './add-supplier/add-supplier.component';
 import { Supplier } from './supplier';
 import { SupplierService } from './supplier.service';
@@ -21,8 +22,9 @@ export class SupplierComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  dataSource!: MatTableDataSource<Supplier>;
-  dataLength: number = 100;
+  dataSource = new MatTableDataSource<Supplier>();
+  loadError = '';
+  dataLength: number = 0;
 
   updatableSupplier!: Supplier | null;
 
@@ -72,6 +74,7 @@ export class SupplierComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
   }
 
   addCsv(event: any) {
@@ -85,7 +88,7 @@ export class SupplierComponent implements OnInit {
           this.getSuppliers();
         },
         error: (err: { error: string }) => {
-          this.showToaster(err.error);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -94,6 +97,7 @@ export class SupplierComponent implements OnInit {
 
   getSuppliers(): void {
     this.loadingSubject.next(true);
+    this.loadError = '';
     this.supplierService
       .fetchSuppliers()
       .pipe(
@@ -105,12 +109,13 @@ export class SupplierComponent implements OnInit {
         )
         // need to find a way to display products in table
       )
-      .subscribe((response: Supplier[]) => {
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({next: (response: Supplier[]) => {
         this.dataLength = response.length;
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
+      }, error: error => { this.loadError = apiErrorMessage(error, 'Unable to load suppliers. Try again.'); }});
   }
 
   deleteSupplier(supplier: Supplier) {
