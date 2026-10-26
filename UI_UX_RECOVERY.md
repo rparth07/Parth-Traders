@@ -25,3 +25,5 @@ No real payment or customer message was sent. Sandbox buyer approval/capture is 
 
 ## Deployment
 The API and existing Netlify site remain the same verified projects. The new frontend artifact is .netlify/parth-traders-ui-ux-ready.zip (private values scanned out). Publication/live verification will be recorded after the existing-site upload.
+
+The API deployment `dep-dbfrso8m7kps73apo750` is live from `5c97bb5aabd258877b333435b27aea86fa2b9410`; post-deploy error-log query returned no entries. The current Netlify deploy remains `6adfb821e098ab678445705f` while the new ZIP awaits the owner upload. Final packaged build: `40be8f811924eca7`, `runtime.8bd32c637439ef6c.js`, `main.ff858696bfd0f667.js`, customer chunk `25.202a514e4bee8242.js`. Browser measurements were 1424px content at 1440px desktop and 374px at 390px mobile, without horizontal page overflow. Product categories/images, UTF-8 punctuation and skip-link focus were checked on the packaged build. The customer chunk is about 132KB, down from about 260KB before this UI pass.
