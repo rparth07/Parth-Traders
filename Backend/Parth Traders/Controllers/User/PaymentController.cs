@@ -79,7 +79,16 @@ public class PaymentController : ControllerBase
     {
         var draft = await db.PaymentDrafts.AsNoTracking().SingleOrDefaultAsync(d => d.PayPalOrderId == id, ct);
         if (draft == null || draft.CustomerId != User.FindFirstValue(ClaimTypes.NameIdentifier)) return NotFound();
-        return Ok(new { id, total = draft.Total, transactionId = draft.TransactionId, orderId = draft.OrderId, mode = "sandbox" });
+        string? remoteStatus = null;
+        if (draft.OrderId == null && Configured)
+        {
+            try {
+                var token = await AccessToken(ct);
+                var remote = await PayPal(HttpMethod.Get, "v2/checkout/orders/" + Uri.EscapeDataString(id), token, null, null, ct);
+                remoteStatus = remote.GetProperty("status").GetString();
+            } catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException) { return StatusCode(503, new { message = "Sandbox status is temporarily unavailable." }); }
+        }
+        return Ok(new { id, total = draft.Total, transactionId = draft.TransactionId, orderId = draft.OrderId, remoteStatus, mode = "sandbox" });
     }
     [HttpPost("orders/{id}/capture"), Authorize(Roles = "Customer")]
     public async Task<IActionResult> Capture(string id, CancellationToken ct)
@@ -96,7 +105,7 @@ public class PaymentController : ControllerBase
             var product = await db.Products.FromSqlInterpolated($"SELECT * FROM \"Products\" WHERE \"ProductSku\" = {item.Sku} FOR UPDATE").SingleOrDefaultAsync(ct);
             if (product == null || product.UnitsInStock < item.Quantity || product.UnitPrice != item.Price || product.Discount != item.Discount)
                 return Conflict(new { message = "Stock or prices changed. No new payment was captured. Review your cart." });
-            product.UnitsInStock -= item.Quantity;
+            // Sandbox tests never consume business inventory.
             details.Add(new() { ProductId = product.ProductId, Price = item.Price, Discount = item.Discount, Quantity = item.Quantity, TotalPrice = (item.Price - item.Discount) * item.Quantity });
         }
         try
@@ -112,7 +121,7 @@ public class PaymentController : ControllerBase
             if (capture.GetProperty("status").GetString() != "COMPLETED" || paidAmount.GetProperty("currency_code").GetString() != "USD" || decimal.Parse(paidAmount.GetProperty("value").GetString()!, CultureInfo.InvariantCulture) != draft.Total)
                 return BadRequest(new { message = "Payment is not complete. Contact Parth Traders before retrying." });
             var saved = new OrderDataModel { CustomerId = draft.CustomerId, TransactionId = capture.GetProperty("id").GetString()!, OrderDate = DateTime.UtcNow,
-                OrderStatus = OrderStatus.Pending, PaymentType = PaymentType.General, GrandTotal = draft.Total, OrderDetails = details };
+                OrderStatus = OrderStatus.Completed, IsSandbox = true, PaymentType = PaymentType.General, GrandTotal = draft.Total, OrderDetails = details };
             db.Orders.Add(saved); await db.SaveChangesAsync(ct); draft.TransactionId = saved.TransactionId; draft.OrderId = saved.OrderId;
             await db.SaveChangesAsync(ct); await transaction.CommitAsync(ct);
             return Ok(new { transactionId = saved.TransactionId, orderId = saved.OrderId, mode = "sandbox" });

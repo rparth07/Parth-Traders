@@ -2,6 +2,7 @@ import { Customer, PaymentType } from "./Customer";
 import { OrderDetail } from "./OrderDetail";
 
 export class Order {
+    isSandbox = false;
     transactionId: string;
     userName: string;
     orderDetails: OrderDetail[];

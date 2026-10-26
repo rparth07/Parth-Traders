@@ -6,6 +6,8 @@ namespace Parth_Traders.Domain.Entity.User
     {
         public long OrderId { get; set; }
 
+        public bool IsSandbox { get; set; }
+
         public string TransactionId { get; set; }
 
         public virtual Customer Customer { get; set; }

@@ -8,6 +8,7 @@
     </div>
     <p *ngIf="paymentError" role="alert">{{paymentError}}</p>
     <button *ngIf="pendingId" type="button" [disabled]="processing" (click)="checkPayment()">{{processing ? 'Checking payment...' : 'Check payment status'}}</button>
+    <button *ngIf="canRestart" type="button" [disabled]="processing" (click)="startNewCheckout()">Start a new sandbox checkout</button>
     <div #paymentRef class="payment-button w-50"></div>
     <button class="back bg-danger text-light border-0" (click)="cancel()">Cancel</button>
 </div>
