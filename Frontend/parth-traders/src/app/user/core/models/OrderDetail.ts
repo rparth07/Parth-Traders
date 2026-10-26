@@ -1,4 +1,5 @@
 import { Product } from "./Product";
+import { discountedUnitPrice } from "../../../shared/pricing";
 
 export class OrderDetail {
     productSku: string;
@@ -12,17 +13,17 @@ export class OrderDetail {
         this.price = product.unitPrice;
         this.discount = product.discount;
         this.quantity = quantity;
-        this.totalPrice = Math.round(quantity * (this.price - this.discount) * 100) / 100;
+        this.totalPrice = Math.round(quantity * discountedUnitPrice(this.price, this.discount) * 100) / 100;
     }
 
     incrementProductCount() {
         this.quantity += 1;
-        this.totalPrice = Math.round(this.quantity * (this.price - this.discount) * 100) / 100;
+        this.totalPrice = Math.round(this.quantity * discountedUnitPrice(this.price, this.discount) * 100) / 100;
     }
 
     decrementProductCountFrom() {
         this.quantity -= 1;
-        this.totalPrice = Math.round(this.quantity * (this.price - this.discount) * 100) / 100;
+        this.totalPrice = Math.round(this.quantity * discountedUnitPrice(this.price, this.discount) * 100) / 100;
     }
 
     getProductQuantity() {

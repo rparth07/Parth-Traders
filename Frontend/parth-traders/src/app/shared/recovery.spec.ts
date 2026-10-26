@@ -1,3 +1,4 @@
+import { discountedUnitPrice } from './pricing';
 import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -22,6 +23,10 @@ describe('Store recovery regressions', () => {
     ] }); http = TestBed.inject(HttpTestingController);
   });
   afterEach(() => { http.verify(); localStorage.clear(); });
+  it('applies percentage discounts and rounds unit prices', () => {
+    expect(discountedUnitPrice(15.99, 20)).toBe(12.79);
+    expect(discountedUnitPrice(0.05, 10)).toBe(0.05);
+  });
   it('awaits login response before reporting success', fakeAsync(() => {
     let result: any;
     TestBed.inject(AuthService).loginApi('fixture@example.invalid', 'test-only').then(value => result = value);
@@ -62,7 +67,7 @@ describe('Store recovery regressions', () => {
     const req = http.expectOne(AppSetting.API_URL + 'API/admin/products'); expect(req.request.headers.get('Authorization')).toBe('Bearer admin'); req.flush([]);
   });
   it('uses displayed discounted prices for every cart quantity', () => {
-    const cart = TestBed.inject(CartService); expect(cart.isCartEmpty()).toBeTrue(); cart.addToCart(product); expect(cart.getTotalOrderPrice()).toBeCloseTo(15.99, 2);
-    cart.addToCart(product); expect(cart.getTotalOrderPrice()).toBeCloseTo(31.98, 2); cart.decrementProductCountFrom(cart.getCartItems()[0]); expect(cart.getTotalOrderPrice()).toBeCloseTo(15.99, 2); const restored = new CartService(); expect(restored.getTotalOrderPrice()).toBeCloseTo(15.99, 2); restored.addToCart(product); expect(restored.getTotalOrderPrice()).toBeCloseTo(31.98, 2);
+    const cart = TestBed.inject(CartService); expect(cart.isCartEmpty()).toBeTrue(); cart.addToCart(product); expect(cart.getTotalOrderPrice()).toBeCloseTo(19.94, 2);
+    cart.addToCart(product); expect(cart.getTotalOrderPrice()).toBeCloseTo(39.88, 2); cart.decrementProductCountFrom(cart.getCartItems()[0]); expect(cart.getTotalOrderPrice()).toBeCloseTo(19.94, 2); const restored = new CartService(); expect(restored.getTotalOrderPrice()).toBeCloseTo(19.94, 2); restored.addToCart(product); expect(restored.getTotalOrderPrice()).toBeCloseTo(39.88, 2);
   });
 });

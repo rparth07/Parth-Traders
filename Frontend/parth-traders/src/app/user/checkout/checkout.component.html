@@ -29,7 +29,7 @@
                 <!-- <p class="js-product-desc">{{item.product.productDescription}}</p> -->
             </div>
             <div class="medium-2 columns text-right">
-                <p class="text--red js-product-costs">{{item.quantity}} x {{(item.price - item.discount) | currency:'USD':true}}
+                <p class="text--red js-product-costs">{{item.quantity}} x {{discountedUnitPrice(item.price, item.discount) | currency:'USD':true}}
                 </p>
             </div>
             <div class="medium-3 columns text-right">

@@ -1,3 +1,4 @@
+import { discountedUnitPrice } from '../../shared/pricing';
 import { Component, OnInit } from "@angular/core";
 import { CartService } from "../services/cart.service";
 import { OrderDetail } from "../core/models/OrderDetail";
@@ -9,6 +10,7 @@ import { OrderService } from "../services/order.service";
   templateUrl: "./checkout.component.html"
 })
 export class CheckoutComponent implements OnInit {
+  discountedUnitPrice = discountedUnitPrice;
   totalOrderPrice: number = 0;
   orderItems: OrderDetail[] = [];
 

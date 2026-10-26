@@ -50,8 +50,8 @@
         [ngModel]="product?.unitPrice" name="unitPrice" />
     </div>
     <div class="row mt-3">
-      <label for="discount" class="form-label">Discount</label>
-      <input type="number" class="form-control" id="discount" step="0.01" min="0" placeholder="e.g 50 Rs" required
+      <label for="discount" class="form-label">Discount (%)</label>
+      <input type="number" class="form-control" id="discount" step="0.01" min="0" max="100" placeholder="e.g 20%" required
         [ngModel]="product?.discount" name="discount" />
     </div>
     <div class="row mt-3">
