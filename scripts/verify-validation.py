@@ -2,8 +2,10 @@
 import json,urllib.request,urllib.error,uuid,secrets
 from decimal import Decimal
 from pathlib import Path
+import hashlib,urllib.parse
 base='http://127.0.0.1:5080'
 private=json.loads(Path('.netlify/migration-secrets.json').read_text(encoding='utf-8'))
+assert urllib.parse.urlsplit(private['DATABASE_URL']).hostname != urllib.parse.urlsplit(private['MIGRATION_DATABASE_URL']).hostname, 'Validation and production hosts must differ'
 def call(path,method='GET',body=None,token=None,expected=200):
  data=None if body is None else json.dumps(body).encode();headers={'Content-Type':'application/json'}
  if token:headers['Authorization']='Bearer '+token
@@ -12,7 +14,7 @@ def call(path,method='GET',body=None,token=None,expected=200):
  except urllib.error.HTTPError as e:status=e.code;raw=e.read()
  assert status==expected, path+' expected '+str(expected)+' got '+str(status)
  return json.loads(raw) if raw else None
-assert call('/health/ready')['status']=='ready';print('PASS database readiness')
+health=call('/health/ready');assert health['status']=='ready';expected=hashlib.sha256(urllib.parse.urlsplit(private['MIGRATION_DATABASE_URL']).hostname.replace('-pooler','').encode()).hexdigest();assert health['databaseFingerprint']==expected, 'API is not using the validation database';print('PASS verified validation database readiness')
 products=call('/API/admin/products');source=json.loads(Path('Backend/Parth Traders/Recovery/products-source.json').read_text(encoding='utf-8'))
 assert len(products)==50
 by_sku={p['productSku']:p for p in products}

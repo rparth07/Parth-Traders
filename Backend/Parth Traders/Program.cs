@@ -114,7 +114,7 @@ if (args.Contains("--migrate"))
 }
 app.MapGet("/health/live", () => Results.Ok(new { status = "alive" }));
 app.MapGet("/health/ready", async (ParthTradersContext db) => {
-    try { return await db.Database.CanConnectAsync() ? Results.Ok(new { status = "ready" }) : Results.StatusCode(503); }
+    try { return await db.Database.CanConnectAsync() ? Results.Ok(new { status = "ready", databaseFingerprint = DatabaseConnection.Fingerprint(databaseUrl) }) : Results.StatusCode(503); }
     catch { return Results.StatusCode(503); }
 });
 app.Run();
