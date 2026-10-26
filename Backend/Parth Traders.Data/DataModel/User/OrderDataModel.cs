@@ -9,6 +9,8 @@ namespace Parth_Traders.Data.DataModel.User
         [Key]
         public long OrderId { get; set; }
 
+        public bool IsSandbox { get; set; }
+
         public string TransactionId { get; set; }
 
         public string CustomerId { get; set; }

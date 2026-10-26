@@ -10,7 +10,7 @@
             <!-- Transaction ID Column -->
             <ng-container matColumnDef="transactionId">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </mat-header-cell>
-                <mat-cell *matCellDef="let order"> {{order.transactionId}} </mat-cell>
+                <mat-cell *matCellDef="let order"> {{order.transactionId}} <strong *ngIf="order.isSandbox">Sandbox test</strong> </mat-cell>
             </ng-container>
 
             <!-- Customer Name Column -->

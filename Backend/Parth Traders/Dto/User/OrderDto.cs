@@ -13,6 +13,8 @@ namespace Parth_Traders.Dto.User
 
         public long OrderId { get; set; }
 
+        public bool IsSandbox { get; set; }
+
         public string TransactionId { get; set; }
 
         [Required]

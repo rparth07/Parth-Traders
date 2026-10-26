@@ -52,9 +52,14 @@ Catalog, infinite scrolling, combined text/type/price/rating filters, gallery, c
 
 Contact email/phone links are operational. Most footer informational links intentionally lead to the pre-existing work-in-progress screen. Newsletter signup has no backend and now states that clearly instead of POSTing/reloading the app. Forgot-password delivery and the customer admin editor are not implemented; they must not claim success.
 
-Checkout is sandbox-only by construction and visibly labeled. The API calculates totals from stored decimal prices, persists a draft, checks customer ownership, validates PayPal capture amounts/currency, locks stock, and records a unique capture transaction. Repeat capture returns the saved result. No production PayPal endpoint is enabled. A real-money launch needs its own review/configuration and fulfillment policy.
+Checkout is sandbox-only by construction and visibly labeled. The API calculates totals from stored decimal prices, persists a draft, checks customer ownership, validates PayPal capture amounts/currency, checks stock under a lock and records a unique capture transaction. Sandbox orders are explicitly flagged and do not decrement business inventory. Repeat capture returns the saved result. No production PayPal endpoint is enabled. A real-money launch needs its own review/configuration and fulfillment policy.
 
 Existing nullable/compiler warnings remain. AutoMapper 13.0.1 carries GHSA-rvv3-g6hj-g44x; mapping depth is bounded to 16 and JSON input depth to 32 as mitigation. A patched major version requires a separate compatibility/licensing decision.
 
+## Configuration correction
+Both initially saved connection URLs pointed at the new production branch. This was caught before publication. The 50 recovered products were never edited; temporary CRUD fixtures were cleaned immediately. Four generated test accounts and four unpaid drafts were removed after creating the `prelaunch-fixture-backup` Neon branch, with an unchanged hash of all product data. The validation hostname was corrected and all integration checks were repeated on the separate branch. Readiness now includes a non-secret database fingerprint, and both validation scripts assert the connection is distinct from production and matches that fingerprint before mutations.
+
 ## Publication status
+Render service `srv-dbfqdmrl550s738u7b9g`: https://rparth07-parth-traders-api.onrender.com, source `codex/parth-traders-recovery`, Parth's workspace, Free plan, Singapore. The first Linux build exposed duplicate JSON Content inclusion; fixed to Content Update and verified in a fresh Release publish.
+
 Backend and frontend publication/live verification are pending. Update this section with confirmed service/deploy URLs and IDs after publication.
