@@ -1,35 +1,18 @@
-.row {
-    max-width: 75rem;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 4.9rem;
-    margin-bottom: 4.9rem;
-    padding: 3rem;
-    overflow: hidden;
+.confirmation {
+padding-block:56px;
+text-align:center;
+overflow-wrap:anywhere
 }
-
-.row::before,
-.row::after {
-    display: table;
-    content: ' ';
+.confirmation h1 {
+font-size:28px
 }
-
-.row::after {
-    clear: both;
+.confirmation p {
+line-height:1.7
 }
-
-.row.collapse>.column,
-.row.collapse>.columns {
-    padding-right: 0;
-    padding-left: 0;
-}
-
-.success {
-    background-color: #b4ffbc;
-    color: #000;
-}
-
-#timer {
-    font-size: 16px;
-    color: #333;
+.confirmation>div {
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+justify-content:center;
+margin-top:24px
 }

@@ -18,7 +18,7 @@ export class ConfirmationComponent implements OnInit {
     if (!this.transactionId)
       this.router.navigate(['/user/home']);
 
-    this.displayCountdown();
+    // Keep the receipt visible until the customer chooses where to go.
   }
 
   displayCountdown() {

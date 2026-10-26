@@ -109,6 +109,7 @@ if (args.Contains("--migrate"))
         .UseNpgsql(DatabaseConnection.Parse(migrationUrl)).Options);
     await migrationDb.Database.MigrateAsync();
     if (args.Contains("--import-products")) await Parth_Traders.Recovery.ProductRecovery.Import(migrationDb);
+    if (args.Contains("--apply-approved-categories")) await Parth_Traders.Recovery.ProductRecovery.ApplyApprovedCategories(migrationDb);
     await Parth_Traders.Recovery.ProductRecovery.BootstrapAdmin(scope.ServiceProvider, builder.Configuration);
     return;
 }

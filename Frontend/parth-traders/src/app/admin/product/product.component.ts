@@ -99,7 +99,7 @@ export class ProductComponent implements OnInit {
     },
   ];
 
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'actions'];
 
   constructor(
     private modalService: NgbModal,
@@ -161,6 +161,7 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
+    if (!window.confirm('Delete '+product.productName+'? This removes the record permanently.')) return;
     this.productService.deleteProduct(product.productName);
   }
 
@@ -168,7 +169,7 @@ export class ProductComponent implements OnInit {
     const modalRef = this.modalService.open(AddProductComponent, {
       modalDialogClass: 'modal-lg modal-dialog-centered',
       backdrop: 'static',
-      keyboard: false,
+      keyboard: true,
     });
 
     if (product) {

@@ -98,3 +98,4 @@ button {
     background-color: #d0f0fd;
     /* Light blue color to highlight */
 }
+:host{display:block;padding:28px 18px;max-width:1440px;margin:auto}.example-container{overflow:auto;box-shadow:none!important;border:1px solid var(--store-line)}mat-table{min-width:650px}.img-container img{max-width:260px;width:100%;height:auto}.orders-list{width:100%;max-width:none}.selected-order{background:#edf3f7}

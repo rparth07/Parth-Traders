@@ -1,3 +1,3 @@
-.wip-container img {
-    width: 50%;
-}
+.support-page { padding-block: 48px; max-width: 900px; }
+.support-page p { line-height: 1.8; }
+.support-page a:not(.store-button) { color: var(--store-ink); }

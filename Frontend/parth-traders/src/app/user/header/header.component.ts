@@ -11,6 +11,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   selectedCategory: string;
+  searchText = '';
   totalOrderItems: number = 0;
   customerName: string = '';
   shouldDisplaySearchBox: boolean = true;
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productService.productFilter$.subscribe(f => { this.searchText = f.name; this.selectedCategory = f.categories.length === 1 ? f.categories[0] : 'All Categories'; });
   }
 
   signOut() { this.authService.logout(); }

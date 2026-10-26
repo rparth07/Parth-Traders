@@ -3,6 +3,8 @@ import { discountedUnitPrice } from "../../../shared/pricing";
 
 export class OrderDetail {
     productSku: string;
+    productName?: string;
+    unitsInStock?: number;
     price: number;
     quantity: number;
     discount: number;
@@ -10,6 +12,8 @@ export class OrderDetail {
 
     constructor(product: Product, quantity: number, totalPrice: number) {
         this.productSku = product.productSku;
+        this.productName = product.productName;
+        this.unitsInStock = product.unitsInStock;
         this.price = product.unitPrice;
         this.discount = product.discount;
         this.quantity = quantity;

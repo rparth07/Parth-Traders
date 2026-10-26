@@ -1,7 +1,11 @@
-<ng-container *ngIf="!isAuthenticationPage">
-    <app-header></app-header>
-</ng-container>
-<router-outlet></router-outlet>
-<ng-container *ngIf="!isAuthenticationPage">
-    <app-footer></app-footer>
-</ng-container>
+<div class="store-shell">
+<a class="store-skip-link" href="#store-main" (click)="$event.preventDefault(); mainContent.focus()">Skip to main content</a>
+<app-header *ngIf="!isAuthenticationPage">
+</app-header>
+<main #mainContent id="store-main" tabindex="-1">
+<router-outlet>
+</router-outlet>
+</main>
+<app-footer *ngIf="!isAuthenticationPage">
+</app-footer>
+</div>

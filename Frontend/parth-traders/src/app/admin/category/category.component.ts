@@ -46,7 +46,7 @@ export class CategoryComponent implements OnInit {
     },
   ];
 
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'actions'];
 
   constructor(
     private modalService: NgbModal,
@@ -110,6 +110,7 @@ export class CategoryComponent implements OnInit {
   }
 
   deleteCategory(category: Category) {
+    if (!window.confirm('Delete '+category.categoryName+'? This removes the record permanently.')) return;
     this.categoryService.deleteCategory(category.categoryName);
   }
 
@@ -117,7 +118,7 @@ export class CategoryComponent implements OnInit {
     const modalRef = this.modalService.open(AddCategoryComponent, {
       modalDialogClass: 'modal-lg modal-dialog-centered',
       backdrop: 'static',
-      keyboard: false,
+      keyboard: true,
     });
 
     if (category) {

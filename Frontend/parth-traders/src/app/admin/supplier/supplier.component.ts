@@ -56,7 +56,7 @@ export class SupplierComponent implements OnInit {
     },
   ];
 
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'actions'];
 
   constructor(
     private modalService: NgbModal,
@@ -119,6 +119,7 @@ export class SupplierComponent implements OnInit {
   }
 
   deleteSupplier(supplier: Supplier) {
+    if (!window.confirm('Delete '+supplier.supplierName+'? This removes the record permanently.')) return;
     this.supplierService.deleteSupplier(supplier.supplierName);
   }
 
@@ -126,7 +127,7 @@ export class SupplierComponent implements OnInit {
     const modalRef = this.modalService.open(AddSupplierComponent, {
       modalDialogClass: 'modal-lg modal-dialog-centered',
       backdrop: 'static',
-      keyboard: false,
+      keyboard: true,
     });
 
     if (supplier) {

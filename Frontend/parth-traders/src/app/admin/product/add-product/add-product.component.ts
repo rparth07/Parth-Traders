@@ -12,6 +12,8 @@ import { ProductService } from '../product.service';
   styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent implements OnInit {
+  saving=false;
+  saveError='';
   @Input() product!: Product | null;
   productType = ProductType;
 
@@ -30,11 +32,13 @@ export class AddProductComponent implements OnInit {
   }
 
   addProduct(form: NgForm) {
+    if (this.saving) return;
     if (form.valid) {
+      this.saving=true; this.saveError='';
       var product = <Product>form.value;
       this.productService.addProduct(product).subscribe({
         next: (value: any) => {
-          this.closeModal();
+          this.saving=false; this.closeModal();
           this.productService.getUpdatedProducts.next('Updated products');
         },
         error: (err: { error: { errors: any } }) => {
@@ -45,12 +49,14 @@ export class AddProductComponent implements OnInit {
   }
 
   updateProduct(productForm: NgForm, oldProduct: Product) {
+    if (this.saving) return;
     if (productForm.valid) {
+      this.saving=true; this.saveError='';
       this.productService
         .updateProduct(oldProduct?.productName, {...oldProduct, ...productForm.value})
         .subscribe({
           next: (value) => {
-            this.closeModal();
+            this.saving=false; this.closeModal();
             this.productService.getUpdatedProducts.next('Updated products');
           },
           error: (err: { error: { errors: any } }) => {
@@ -65,6 +71,6 @@ export class AddProductComponent implements OnInit {
   }
 
   showToaster(errorMsg: string) {
-    this.toastr.error(errorMsg, 'Error');
+    this.saving=false; this.saveError=errorMsg; this.toastr.error(errorMsg, 'Save failed');
   }
 }

@@ -2,6 +2,7 @@
   <h2 class="mt-2">{{ product ? "Update" : "Add" }} Product</h2>
 </div>
 <div class="modal-body">
+<p *ngIf="saveError" role="alert">{{saveError}}</p>
   <form class="form-design ps-4 pe-4 pb-3" #form="ngForm">
     <div class="row mt-3">
       <label for="product-name" class="form-label">Name</label>
@@ -41,12 +42,12 @@
     </div>
     <div class="row mt-3">
       <label for="single-piece-MRP" class="form-label">Single piece MRP</label>
-      <input type="number" class="form-control" id="single-piece-MRP" step="0.01" min="0" placeholder="e.g 200 Rs" required
+      <input type="number" class="form-control" id="single-piece-MRP" step="0.01" min="0" placeholder="e.g 200.00 USD" required
         [ngModel]="product?.singlePieceMRP" name="singlePieceMRP" />
     </div>
     <div class="row mt-3">
       <label for="unit-price" class="form-label">Unit price</label>
-      <input type="number" class="form-control" id="unit-price" step="0.01" min="0" placeholder="e.g 5000 Rs" required
+      <input type="number" class="form-control" id="unit-price" step="0.01" min="0" placeholder="e.g 5000.00 USD" required
         [ngModel]="product?.unitPrice" name="unitPrice" />
     </div>
     <div class="row mt-3">
@@ -64,11 +65,11 @@
 
 <div class="modal-footer">
   <div>
-    <button class="btn btn-primary text-light me-1" [disabled]="!form.valid"
+    <button class="btn btn-primary text-light me-1" [disabled]="!form.valid || saving"
       (click)="product ? updateProduct(form, product) : addProduct(form)">
       {{ product ? "Update" : "Add" }}
     </button>
-    <button type="reset" class="btn btn-danger cancel-button text-light ms-1" id="cancel" (click)="closeModal()">
+    <button type="reset" class="btn btn-danger cancel-button text-light ms-1" id="cancel" [disabled]="saving" (click)="closeModal()">
       Cancel
     </button>
   </div>

@@ -1,41 +1,53 @@
-<div class="home" #home [class.filters-open]="filtersOpen">
-  <button class="filter-toggle" type="button" (click)="filtersOpen = !filtersOpen" [attr.aria-expanded]="filtersOpen">{{filtersOpen ? 'Hide filters' : 'Show filters'}}</button>
-  <div class="home__container">
-    <div class="d-flex">
-      <div class="sidebar-container" *ngIf="!isLargeGrid" [@fadeInOut] width="300">
-        <app-sidebar></app-sidebar>
-      </div>
-      <div class="home__row w-100">
-        <div class="product-list-container">
-          <div class="catalog-status" *ngIf="fetching" role="status">Loading products. The store service may take up to 90 seconds to wake up.</div>
-          <div class="catalog-status" *ngIf="loadError" role="alert">
-            <h2>Products are temporarily unavailable</h2>
-            <p>{{loadError}}</p>
-            <button type="button" (click)="fetchProducts()">Try again</button>
-            <a href="mailto:parthtraders2004@gmail.com">Contact Parth Traders</a>
-          </div>
-          <p class="catalog-status" *ngIf="!fetching && !loadError && filterProducts.length === 0" role="status">No products match your search. Try another search or filter.</p>
-          <div *ngIf="!fetching && !loadError" id="grid-selector" class="grid-selector">
-            <div id="grid-menu">
-              View:
-              <span class="view-buttons">
-                <button type="button" (click)="switchToSmallGrid()" [attr.aria-pressed]="!isLargeGrid">Grid</button>
-                <button type="button" (click)="switchToLargeGrid()" [attr.aria-pressed]="isLargeGrid">Details</button>
-              </span>
-            </div>
-            Showing {{shownProducts.length > 0 ? 1 : 0}}-{{shownProducts.length}} of
-            {{filterProducts.length}} results
-          </div>
-          <div id="grid" infinite-scroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
-            <app-product *ngFor="let product of shownProducts" [product]="product"
-              (addToCartEvent)="onAddToCart($event)" (addToCartLargeEvent)="onAddToCartLarge($event)"
-              [shouldSwitchToLargeGrid]="isLargeGrid"></app-product>
-            <div *ngIf="loading" class="loading-indicator d-flex justify-content-center">
-              <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<section class="catalog store-container">
+  <div class="catalog-heading">
+<div>
+<h1>Products</h1>
+<p>Browse tools, equipment and workwear.</p>
+</div>
+<button type="button" class="store-button secondary filter-toggle" (click)="filtersOpen=!filtersOpen" [attr.aria-expanded]="filtersOpen" aria-controls="product-filters">{{filtersOpen?'Hide filters':'Show filters'}}</button>
+</div>
+  <div class="catalog-layout">
+<aside id="product-filters" [class.mobile-open]="filtersOpen" aria-label="Product filters">
+<app-sidebar>
+</app-sidebar>
+</aside>
+  <div class="catalog-content">
+    <p *ngIf="fetching" class="store-notice" role="status">Loading products… The store service may take up to 90 seconds to wake up.</p>
+    <div *ngIf="loadError" class="store-notice" role="alert">
+<h2>Products could not be loaded</h2>
+<p>{{loadError}}</p>
+<button class="store-button" type="button" (click)="fetchProducts()">Try again</button>
+</div>
+    <div class="catalog-toolbar" *ngIf="!fetching&&!loadError">
+<p role="status">Showing {{shownProducts.length}} of {{filterProducts.length}} products</p>
+<div>
+<label for="product-sort">Sort by</label>
+<select id="product-sort" [(ngModel)]="sortOrder" (ngModelChange)="applyFilters()">
+<option value="default">Default order</option>
+<option value="name">Name A–Z</option>
+<option value="price-asc">Price: low to high</option>
+<option value="price-desc">Price: high to low</option>
+<option value="rating">Highest rated</option>
+</select>
+</div>
+<div class="view-buttons" aria-label="Product view">
+<button type="button" (click)="switchToSmallGrid()" [attr.aria-pressed]="!isLargeGrid">Grid</button>
+<button type="button" (click)="switchToLargeGrid()" [attr.aria-pressed]="isLargeGrid">Details</button>
+</div>
+</div>
+    <p class="cart-feedback" role="status" aria-live="polite">{{cartMessage}}</p>
+    <div *ngIf="!fetching&&!loadError&&filterProducts.length===0" class="store-notice">
+<h2>No matching products</h2>
+<p>Try another search or clear your filters.</p>
+<button type="button" class="store-button secondary" (click)="resetFilters()">Clear all filters</button>
+</div>
+    <div class="product-grid" [class.details-view]="isLargeGrid">
+<app-product *ngFor="let product of shownProducts" [product]="product" [shouldSwitchToLargeGrid]="isLargeGrid" (addToCartEvent)="onAddToCart($event)">
+</app-product>
+</div>
+    <div class="load-more" *ngIf="shownProducts.length<filterProducts.length">
+<button type="button" class="store-button secondary" (click)="onScroll()">Show more products</button>
+</div>
   </div>
 </div>
+</section>

@@ -23,6 +23,18 @@ describe('Store recovery regressions', () => {
     ] }); http = TestBed.inject(HttpTestingController);
   });
   afterEach(() => { http.verify(); localStorage.clear(); });
+  it('caps cart quantities at available stock and refreshes source prices', () => {
+    const cart=TestBed.inject(CartService); const limited={...product,unitsInStock:1};
+    expect(cart.addToCart(limited)).toBeTrue(); expect(cart.addToCart(limited)).toBeFalse();
+    cart.incrementProductCountOf(cart.getCartItems()[0]); expect(cart.getCartItems()[0].quantity).toBe(1);
+    cart.refreshProducts([{...limited,unitPrice:10,discount:20}]); expect(cart.getTotalOrderPrice()).toBe(8);
+  });
+  it('sorts filtered products by the actual selling price and resets all filters', () => {
+    const service=TestBed.inject(ProductService); const home=new HomeComponent({} as any,{} as any,service,TestBed.inject(CartService));home.ngOnInit();
+    http.expectOne(AppSetting.API_URL+'API/admin/products').flush([product,{...product,productSku:'SECOND',productName:'Safety glasses',unitPrice:15.99,discount:20}]);
+    home.sortOrder='price-asc';home.applyFilters();expect(home.shownProducts[0].productSku).toBe('SECOND');
+    service.productFilter$.next({...service.productFilter$.value,name:'missing'});expect(home.shownProducts.length).toBe(0);home.resetFilters();expect(home.shownProducts.length).toBe(2);home.ngOnDestroy();
+  });
   it('applies percentage discounts and rounds unit prices', () => {
     expect(discountedUnitPrice(15.99, 20)).toBe(12.79);
     expect(discountedUnitPrice(0.05, 10)).toBe(0.05);

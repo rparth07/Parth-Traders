@@ -1,59 +1,8 @@
-<div class="header w-full header-upper py-2 h-auto flex justify-content-between">
-  <div class="w-16">
-    <h1><a href="/user/home">
-        <img class="header__logo" src="assets/images/parth-traders.png" alt="Parth Traders home" />
-      </a></h1>
-  </div>
-  <div class="w-41">
-    <div class="d-flex" *ngIf="shouldDisplaySearchBox">
-      <mat-form-field>
-        <mat-select aria-label="Product category" id="dropdown-button" (selectionChange)="searchProduct('clicked', searchInputRef.value)"
-          [(ngModel)]="selectedCategory" name="category">
-          <mat-option *ngFor=" let category of categories" [value]="category">
-            {{category}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="header__search justify-content-center w-41 relative">
-        <input type="search" id="search-dropdown" #searchInputRef
-          (keydown.enter)="searchProduct('Enter', searchInputRef.value)" (input)="searchProduct('input', searchInputRef.value)" aria-label="Search products"
-          class="block border-none header__searchInput md:rounded-l-none outline-none p-06 text-md w-full z-20"
-          placeholder="Search for machine tools, buffs etc..." />
-        <button (click)="searchProduct('clicked', searchInputRef.value)" type="submit"
-          class="p-0 rounded-r-lg text-white border-0">
-          <mat-icon class="header__searchIcon d-flex justify-content-center align-items-center" aria-hidden="false"
-            aria-label="search icon" fontIcon="search"></mat-icon>
-          <span class="sr-only">Search</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="d-flex header__nav">
-    <div class="header__option" *ngIf="isAuthenticated()">
-      <span class="header__optionLineOne">Welcome,</span>
-      <span class="header__optionLineTwo" [attr.title]="customerName">{{customerName}}</span>
-      <button type="button" class="sign-out" (click)="signOut()">Sign out</button>
-    </div>
-    <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToLogIn()" (click)="redirectToLogIn()" *ngIf="!isAuthenticated()">
-      <span class="header__optionLineOne">Hello Guest</span>
-      <span class="header__optionLineTwo">Sign In</span>
-    </div>
-
-    <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToPastOrders()" (click)="redirectToPastOrders()">
-      <span class="header__optionLineOne">Past</span>
-      <span class="header__optionLineTwo">Orders</span>
-    </div>
-
-    <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToWIP()" (click)="redirectToWIP()">
-      <span class="header__optionLineOne">Your</span>
-      <span class="header__optionLineTwo">Prime</span>
-    </div>
-
-    <div class="header__optionBasket">
-      <button type="button" aria-label="Shopping cart" (click)="redirectToCheckout()" class="d-flex align-items-center text-white border-0 bg-transparent">
-        <mat-icon aria-hidden="false" aria-label="shopping basket icon" fontIcon="shopping_basket"></mat-icon>
-        <span class="header__optionLineTwo header__basketCount"> {{totalOrderItems}} </span>
-      </button>
-    </div>
-  </div>
-</div>
+<header class="store-header"><div class="store-container header-layout">
+  <a class="brand" routerLink="/user/home" aria-label="Parth Traders home"><img src="assets/images/parth-traders.png" alt="Parth Traders" width="138" height="58"></a>
+  <form class="store-search" *ngIf="shouldDisplaySearchBox" (ngSubmit)="searchProduct('clicked',searchText)" role="search">
+    <label class="sr-only" for="search-category">Product category</label><select id="search-category" name="category" [(ngModel)]="selectedCategory" (ngModelChange)="searchProduct('clicked',searchText)"><option *ngFor="let category of categories" [value]="category">{{category}}</option></select>
+    <label class="sr-only" for="search-products">Search products</label><input id="search-products" name="search" type="search" [(ngModel)]="searchText" (input)="searchProduct('input',searchText)" placeholder="Search products or SKU"><button type="submit" aria-label="Search products"><mat-icon aria-hidden="true">search</mat-icon></button>
+  </form>
+  <nav aria-label="Customer navigation"><ng-container *ngIf="isAuthenticated();else guest"><span class="customer-name" [title]="customerName">{{customerName}}</span><button type="button" (click)="signOut()">Sign out</button></ng-container><ng-template #guest><a routerLink="/user/authenticate">Sign in</a></ng-template><a routerLink="/user/orders">My orders</a><a class="cart-link" routerLink="/user/checkout" [attr.aria-label]="'Shopping cart, ' + totalOrderItems + ' items'"><mat-icon aria-hidden="true">shopping_basket</mat-icon><span>Cart ({{totalOrderItems}})</span></a></nav>
+</div></header>
