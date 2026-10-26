@@ -78,3 +78,5 @@ Remaining business setup: recover supplier/category master data and any old cust
 
 ## UI/UX and category follow-up
 See UI_UX_RECOVERY.md and CATEGORY_REVIEW.md for the owner-approved 50 category assignments, complete customer/admin UI fixes, verification and remaining limits. The older notes about missing categories and unfinished footer actions are superseded by this follow-up; supplier and historical account/order recovery are still unavailable.
+
+The completed UI/category follow-up is live on Netlify deploy `6adfbf6b414cf09358c62a95`; see UI_UX_RECOVERY.md for final live verification.
