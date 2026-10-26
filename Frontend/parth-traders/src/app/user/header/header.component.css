@@ -222,3 +222,7 @@
   .header__option { margin: 0 .4rem; }
   .header mat-form-field { width: 135px; }
 }
+
+.sign-out { background:transparent; color:white; border:0; padding:0; text-align:left; font-size:12px; text-decoration:underline; }
+.header__optionLineTwo { max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+@media(max-width:900px) { .header__optionLineTwo { max-width:80px; } }

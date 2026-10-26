@@ -31,7 +31,8 @@
   <div class="d-flex header__nav">
     <div class="header__option" *ngIf="isAuthenticated()">
       <span class="header__optionLineOne">Welcome,</span>
-      <span class="header__optionLineTwo">{{customerName}}</span>
+      <span class="header__optionLineTwo" [attr.title]="customerName">{{customerName}}</span>
+      <button type="button" class="sign-out" (click)="signOut()">Sign out</button>
     </div>
     <div class="header__option" role="button" tabindex="0" (keydown.enter)="redirectToLogIn()" (click)="redirectToLogIn()" *ngIf="!isAuthenticated()">
       <span class="header__optionLineOne">Hello Guest</span>
@@ -49,10 +50,10 @@
     </div>
 
     <div class="header__optionBasket">
-      <div (click)="redirectToCheckout()" class="d-flex align-items-center text-white">
+      <button type="button" aria-label="Shopping cart" (click)="redirectToCheckout()" class="d-flex align-items-center text-white border-0 bg-transparent">
         <mat-icon aria-hidden="false" aria-label="shopping basket icon" fontIcon="shopping_basket"></mat-icon>
         <span class="header__optionLineTwo header__basketCount"> {{totalOrderItems}} </span>
-      </div>
+      </button>
     </div>
   </div>
 </div>

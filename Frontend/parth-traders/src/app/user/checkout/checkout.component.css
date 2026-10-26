@@ -5956,3 +5956,4 @@ screen and (min-width: 75em) {
 }
 
 /*# sourceMappingURL=foundation.css.map */
+hr { box-sizing:border-box; width:100%; max-width:100%; padding:0; }
