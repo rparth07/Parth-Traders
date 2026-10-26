@@ -1,7 +1,9 @@
 """Create/update/delete ONLY named synthetic fixtures on the isolated local validation API."""
 import json,urllib.request,urllib.error,urllib.parse,uuid
 from pathlib import Path
+import hashlib,urllib.parse
 base='http://127.0.0.1:5080';private=json.loads(Path('.netlify/migration-secrets.json').read_text(encoding='utf-8'))
+assert urllib.parse.urlsplit(private['DATABASE_URL']).hostname != urllib.parse.urlsplit(private['MIGRATION_DATABASE_URL']).hostname, 'Validation and production hosts must differ'
 def call(path,method='GET',body=None,token=None,expected=200):
  data=None if body is None else json.dumps(body).encode();headers={'Content-Type':'application/json'}
  if token:headers['Authorization']='Bearer '+token
@@ -10,6 +12,7 @@ def call(path,method='GET',body=None,token=None,expected=200):
  except urllib.error.HTTPError as e:status=e.code;raw=e.read()
  assert status==expected,path+' expected '+str(expected)+' got '+str(status)
  return json.loads(raw) if raw else None
+health=call('/health/ready');assert health['databaseFingerprint']==hashlib.sha256(urllib.parse.urlsplit(private['MIGRATION_DATABASE_URL']).hostname.replace('-pooler','').encode()).hexdigest(), 'Wrong database target'
 admin=call('/api/authentication/login','POST',{'username':private['BootstrapAdmin__userName'],'password':private['BootstrapAdmin__password']})['token']
 ident=uuid.uuid4().hex[:8];category='Validation category '+ident;supplier='Validation supplier '+ident;product='Validation product & '+ident
 created=[];before=call('/API/admin/products')

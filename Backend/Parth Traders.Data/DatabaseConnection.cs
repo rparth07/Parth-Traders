@@ -2,6 +2,11 @@ using Npgsql;
 namespace Parth_Traders.Data;
 public static class DatabaseConnection
 {
+    public static string Fingerprint(string value)
+    {
+        var host = new NpgsqlConnectionStringBuilder(Parse(value)).Host!.Replace("-pooler", "");
+        return Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(host))).ToLowerInvariant();
+    }
     public static string Parse(string value)
     {
         if (!value.StartsWith("postgres://") && !value.StartsWith("postgresql://")) return value;
