@@ -325,3 +325,8 @@ border-radius:5px
 }
 
 .table-scroll-hint { font-size: 13px; color: var(--store-muted); margin: 16px 0 8px; }
+
+.home-content .admin-table-scroll table { min-width:640px; }
+.home-content .admin-table-scroll[aria-label="Products table"] table { min-width:1360px; }
+.home-content .admin-table-scroll[aria-label="Suppliers table"] table,.home-content .admin-table-scroll[aria-label="Customers table"] table { min-width:1000px; }
+.home-content .admin-table-scroll .mat-column-categoryDescription { min-width:220px; max-width:65ch; overflow-wrap:anywhere; }

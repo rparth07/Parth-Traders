@@ -55,7 +55,7 @@ export class ProductComponent implements OnInit {
     {
       columnDef: 'productType',
       header: 'Type',
-      cell: (element: Product) => `${this.productType[element.productType]}`,
+      cell: (element: Product) => this.productType[element.productType]?.split('_').join(' ') || 'Unspecified',
     },
     // {
     //   columnDef: 'productDescription',
@@ -74,7 +74,7 @@ export class ProductComponent implements OnInit {
     },
     {
       columnDef: 'singlePieceMRP',
-      header: 'Single Piece MRP',
+      header: 'Single piece MRP (USD)',
       cell: (element: Product) => `${element.singlePieceMRP}`,
     },
     {
@@ -84,7 +84,7 @@ export class ProductComponent implements OnInit {
     },
     {
       columnDef: 'unitPrice',
-      header: 'Unit Price',
+      header: 'Base unit price (USD)',
       cell: (element: Product) => `${element.unitPrice}`,
     },
     {
@@ -94,7 +94,7 @@ export class ProductComponent implements OnInit {
     },
     {
       columnDef: 'unitsInStock',
-      header: 'Stocks(Units)',
+      header: 'Stock (units)',
       cell: (element: Product) => `${element.unitsInStock}`,
     },
   ];

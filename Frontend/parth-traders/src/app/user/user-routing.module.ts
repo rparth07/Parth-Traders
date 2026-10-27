@@ -24,7 +24,6 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutComponent,
-    canActivate: [AuthGuardService],
   },
   {
     path: 'payment',

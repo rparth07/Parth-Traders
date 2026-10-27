@@ -46,7 +46,7 @@ describe('Actual price and rating controls', () => {
   it('filters immediately from real numeric input events, including discounted boundary prices',fakeAsync(()=>{
     enter('maximum','20');expect(home.filterProducts.map(p=>p.productSku)).toEqual(['CONTROL-CHEAP','CONTROL-SALE']);
     enter('minimum','20');expect(home.filterProducts.map(p=>p.productSku)).toEqual(['CONTROL-SALE']);
-    expect(fixture.nativeElement.textContent).toContain('1 matching products');
+    expect(fixture.nativeElement.textContent).toContain('1 matching product');
     expect(home.activeFilters).toContain('Minimum price: $20.00');
   }));
   it('uses numeric rating values and combines them with the price range',fakeAsync(()=>{
