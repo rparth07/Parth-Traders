@@ -8,7 +8,7 @@ namespace Parth_Traders.CsvParserModel
     public class ParsedCustomer
     {
         [Index(0)]
-        public string CustomerName { get; set; }
+        public string UserName { get; set; }
 
         [Index(1)]
         public string CustomerEmail { get; set; }

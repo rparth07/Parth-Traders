@@ -41,7 +41,7 @@ export class TokenService {
 
   getCustomer(): Customer | null {
     const customerInfo = localStorage.getItem(CUSTOMER_INFO);
-    return customerInfo ? JSON.parse(customerInfo) : null;
+    try { return customerInfo ? JSON.parse(customerInfo) : null; } catch { return null; }
   }
 
   removeCustomer(): void {

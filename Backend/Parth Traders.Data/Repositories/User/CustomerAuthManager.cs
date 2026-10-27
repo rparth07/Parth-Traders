@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -38,15 +38,14 @@ namespace Parth_Traders.Data.Repositories.User
             var customerAuth = _mapper.Map<CustomerForAuthDataModel>(customer);
             _customer = await _customerManager.FindByEmailAsync(customerAuth.Email);
 
-            return (_customer != null 
+            return (_customer != null
                 && await _customerManager
                 .CheckPasswordAsync(_customer, customerAuth.Password));
         }
 
-        private static SigningCredentials GetSigningCredentials()
+        private SigningCredentials GetSigningCredentials()
         {
-            var key =
-           Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+            var key = Encoding.UTF8.GetBytes(_configuration["JwtSettings:signingKey"] ?? throw new InvalidOperationException("JWT signing key is not configured."));
             var secret = new SymmetricSecurityKey(key);
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
@@ -54,6 +53,8 @@ namespace Parth_Traders.Data.Repositories.User
         {
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, _customer.Id),
+                new Claim(ClaimTypes.Role, "Customer"),
                 new Claim(ClaimTypes.Name, _customer.UserName)
             };
             return claims;
@@ -67,7 +68,7 @@ namespace Parth_Traders.Data.Repositories.User
             issuer: jwtSettings.GetSection("validIssuer").Value,
             audience: jwtSettings.GetSection("validAudience").Value,
             claims: claims,
-            expires: DateTime.Now
+            expires: DateTime.UtcNow
                 .AddMinutes(Convert.ToDouble(jwtSettings.GetSection("expires").Value)),
             signingCredentials: signingCredentials
             );

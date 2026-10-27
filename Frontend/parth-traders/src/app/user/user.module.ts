@@ -20,6 +20,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { PaymentComponent } from './payment/payment.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { WIPComponent } from './wip/wip.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
+import { OrderComponent } from './order/order.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -30,7 +43,13 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
     ShoppingCartComponent,
     ProductComponent,
     SidebarComponent,
-    AuthenticateComponent
+    AuthenticateComponent,
+    CheckoutComponent,
+    PaymentComponent,
+    ConfirmationComponent,
+    WIPComponent,
+    OrderComponent,
+    OrderDetailComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +67,12 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
     MatFormFieldModule,
     MatOptionModule,
     MatInputModule,
+    NgxPayPalModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
   ],
+
 })
 export class UserModule { }

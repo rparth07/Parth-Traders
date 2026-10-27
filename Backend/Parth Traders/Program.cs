@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using NLog;
 using Parth_Traders.Data;
 using Parth_Traders.Data.DataModel.Admin;
 using Parth_Traders.Data.DataModel.User;
@@ -17,11 +17,8 @@ using Parth_Traders.Service.Services.Admin;
 using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 using Parth_Traders.Service.Services.User;
 using Parth_Traders.Service.Services.User.UserInterface;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
-
-LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
 builder.Services.ConfigureLoggerService();
@@ -31,9 +28,10 @@ builder.Services.AddControllers()
     {
         setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         setupAction.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        setupAction.SerializerSettings.MaxDepth = 32;
     });
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(config => config.Internal().ForAllMaps((_, map) => map.MaxDepth(16)), AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -63,9 +61,7 @@ builder.Services.AddScoped<ICustomerAuthManager, CustomerAuthManager>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSwagger();
-builder.Services.AddDbContext<ParthTradersContext>();
 
-builder.Services.AddIdentityCore<AdminDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
 builder.Services.AddIdentityCore<CustomerDataModel>().AddEntityFrameworkStores<ParthTradersContext>();
 
 builder.Services.AddIdentity<AdminDataModel, IdentityRole>()
@@ -82,28 +78,44 @@ builder.Services.AddMvc(options =>
     options.Filters.Add(new UserFriendlyExceptionFilterAttribute());
 });
 
+var databaseUrl = builder.Configuration["DATABASE_URL"];
+if (string.IsNullOrWhiteSpace(databaseUrl)) throw new InvalidOperationException("DATABASE_URL is required.");
+var signingKey = builder.Configuration["JwtSettings:signingKey"];
+if (string.IsNullOrWhiteSpace(signingKey) || signingKey.Length < 32) throw new InvalidOperationException("A private JWT signing key of at least 32 characters is required.");
+builder.Services.AddDbContext<ParthTradersContext>(options => options.UseNpgsql(DatabaseConnection.Parse(databaseUrl)));
+var origins = (builder.Configuration["AllowedOrigin"] ?? "https://rparth07-parth-traders.netlify.app").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod()));
+var port = builder.Configuration["PORT"];
+if (!string.IsNullOrEmpty(port)) builder.WebHost.UseUrls("http://0.0.0.0:" + port);
 var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseCors(builder =>
-{
-    // Need to refactor as this - .WithOrigins("https://localhost:4200")
-    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-});
-
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseSwagger();
-app.UseSwaggerUI(s =>
+//app.UseSwagger();
+/*app.UseSwaggerUI(s =>
 {
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Parth Traders API v1");
     s.SwaggerEndpoint("/swagger/v2/swagger.json", "Parth Traders API v2");
-});
+});*/
 
+if (args.Contains("--migrate"))
+{
+    using var scope = app.Services.CreateScope();
+    var migrationUrl = builder.Configuration["MIGRATION_DATABASE_URL"] ?? databaseUrl;
+    using var migrationDb = new ParthTradersContext(new DbContextOptionsBuilder<ParthTradersContext>()
+        .UseNpgsql(DatabaseConnection.Parse(migrationUrl)).Options);
+    await migrationDb.Database.MigrateAsync();
+    if (args.Contains("--import-products")) await Parth_Traders.Recovery.ProductRecovery.Import(migrationDb);
+    if (args.Contains("--apply-approved-categories")) await Parth_Traders.Recovery.ProductRecovery.ApplyApprovedCategories(migrationDb);
+    await Parth_Traders.Recovery.ProductRecovery.BootstrapAdmin(scope.ServiceProvider, builder.Configuration);
+    return;
+}
+app.MapGet("/health/live", () => Results.Ok(new { status = "alive" }));
+app.MapGet("/health/ready", async (ParthTradersContext db) => {
+    try { return await db.Database.CanConnectAsync() ? Results.Ok(new { status = "ready", databaseFingerprint = DatabaseConnection.Fingerprint(databaseUrl) }) : Results.StatusCode(503); }
+    catch { return Results.StatusCode(503); }
+});
 app.Run();

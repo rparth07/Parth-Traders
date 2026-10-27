@@ -1,0 +1,302 @@
+[
+  {
+    "productSku": "HDH-10001",
+    "productName": "Heavy-Duty Hammer",
+    "sourceCategoryId": 30032,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "EW-10002",
+    "productName": "Ergonomic Wrench",
+    "sourceCategoryId": 30033,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "MHS-10003",
+    "productName": "Multi-Head Screwdriver",
+    "sourceCategoryId": 30034,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "PC-10004",
+    "productName": "Precision Caliper",
+    "sourceCategoryId": 30035,
+    "categoryName": "Measuring & Layout"
+  },
+  {
+    "productSku": "WG-10005",
+    "productName": "Heavy-Duty Work Gloves",
+    "sourceCategoryId": 30036,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "MT-10006",
+    "productName": "Compact Multi-Tool",
+    "sourceCategoryId": 30037,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "SG-10007",
+    "productName": "Safety Glasses",
+    "sourceCategoryId": 30038,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "CD-10008",
+    "productName": "Cordless Drill",
+    "sourceCategoryId": 30039,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "AS-10009",
+    "productName": "Adjustable Spanner",
+    "sourceCategoryId": 30040,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "TM-10010",
+    "productName": "Industrial Tape Measure",
+    "sourceCategoryId": 30041,
+    "categoryName": "Measuring & Layout"
+  },
+  {
+    "productSku": "HL-10011",
+    "productName": "Heavy-Duty Ladder",
+    "sourceCategoryId": 30042,
+    "categoryName": "Access Equipment"
+  },
+  {
+    "productSku": "PL-10012",
+    "productName": "High-Precision Level",
+    "sourceCategoryId": 30043,
+    "categoryName": "Measuring & Layout"
+  },
+  {
+    "productSku": "ES-10013",
+    "productName": "Electric Saw",
+    "sourceCategoryId": 30044,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "ISH-10014",
+    "productName": "Industrial Safety Helmet",
+    "sourceCategoryId": 30045,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "HEC-10015",
+    "productName": "Heavy-Duty Extension Cord",
+    "sourceCategoryId": 30046,
+    "categoryName": "Electrical & Lighting"
+  },
+  {
+    "productSku": "HID-10016",
+    "productName": "High-Performance Impact Driver",
+    "sourceCategoryId": 30047,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "LDM-10017",
+    "productName": "Laser Distance Meter",
+    "sourceCategoryId": 30048,
+    "categoryName": "Measuring & Layout"
+  },
+  {
+    "productSku": "AVWB-10018",
+    "productName": "Anti-Vibration Work Boots",
+    "sourceCategoryId": 30049,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "CAG-10019",
+    "productName": "Cordless Angle Grinder",
+    "sourceCategoryId": 30050,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "HTB-10020",
+    "productName": "Heavy-Duty Tool Belt",
+    "sourceCategoryId": 30051,
+    "categoryName": "Tool Storage"
+  },
+  {
+    "productSku": "HPF-10021",
+    "productName": "High-Powered Flashlight",
+    "sourceCategoryId": 30052,
+    "categoryName": "Electrical & Lighting"
+  },
+  {
+    "productSku": "EWC-10022",
+    "productName": "Ergonomic Work Chair",
+    "sourceCategoryId": 30053,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "HTC-10023",
+    "productName": "High-Tensile Chain",
+    "sourceCategoryId": 30054,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "IAC-10024",
+    "productName": "Industrial Air Compressor",
+    "sourceCategoryId": 30055,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "HWA-10025",
+    "productName": "Heavy-Duty Work Apron",
+    "sourceCategoryId": 30056,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "DR-10026",
+    "productName": "Dustproof Respirator",
+    "sourceCategoryId": 30057,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "ENG-10027",
+    "productName": "Electric Nail Gun",
+    "sourceCategoryId": 30058,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "HSTB-10028",
+    "productName": "Heavy-Duty Steel Toolbox",
+    "sourceCategoryId": 30059,
+    "categoryName": "Tool Storage"
+  },
+  {
+    "productSku": "CCS-10029",
+    "productName": "Cordless Circular Saw",
+    "sourceCategoryId": 30044,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "HTR-10030",
+    "productName": "High-Torque Ratchet",
+    "sourceCategoryId": 30060,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "WWJ-10031",
+    "productName": "Waterproof Work Jacket",
+    "sourceCategoryId": 30061,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "ETB-10032",
+    "productName": "Ergonomic Tool Backpack",
+    "sourceCategoryId": 30062,
+    "categoryName": "Tool Storage"
+  },
+  {
+    "productSku": "CHG-10033",
+    "productName": "Cordless Heat Gun",
+    "sourceCategoryId": 30063,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "EPS-10034",
+    "productName": "Electric Paint Sprayer",
+    "sourceCategoryId": 30064,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "PMT-10035",
+    "productName": "Precision Measuring Tape",
+    "sourceCategoryId": 30041,
+    "categoryName": "Measuring & Layout"
+  },
+  {
+    "productSku": "HDS-10036",
+    "productName": "Heavy-Duty Scaffold",
+    "sourceCategoryId": 30065,
+    "categoryName": "Access Equipment"
+  },
+  {
+    "productSku": "PCS-10037",
+    "productName": "Professional Clamps Set",
+    "sourceCategoryId": 30066,
+    "categoryName": "Hand Tools"
+  },
+  {
+    "productSku": "IWM-10038",
+    "productName": "Industrial Welding Machine",
+    "sourceCategoryId": 30067,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "CLB-10039",
+    "productName": "Cordless Leaf Blower",
+    "sourceCategoryId": 30068,
+    "categoryName": "Garden Tools"
+  },
+  {
+    "productSku": "DFM-10040",
+    "productName": "Durable Floor Mats",
+    "sourceCategoryId": 30069,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "AWB-10041",
+    "productName": "Adjustable Workbench",
+    "sourceCategoryId": 30070,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "HDC-10042",
+    "productName": "Heavy-Duty Chainsaw",
+    "sourceCategoryId": 30071,
+    "categoryName": "Garden Tools"
+  },
+  {
+    "productSku": "ES-10043",
+    "productName": "Electric Sander",
+    "sourceCategoryId": 30072,
+    "categoryName": "Power Tools"
+  },
+  {
+    "productSku": "HEP-10044",
+    "productName": "Heavy-Duty Ear Protectors",
+    "sourceCategoryId": 30073,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "WSB-10045",
+    "productName": "Waterproof Safety Boots",
+    "sourceCategoryId": 30049,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "CHT-10046",
+    "productName": "Cordless Hedge Trimmer",
+    "sourceCategoryId": 30074,
+    "categoryName": "Garden Tools"
+  },
+  {
+    "productSku": "HPLL-10047",
+    "productName": "High-Precision Laser Level",
+    "sourceCategoryId": 30075,
+    "categoryName": "Measuring & Layout"
+  },
+  {
+    "productSku": "IVC-10048",
+    "productName": "Industrial Vacuum Cleaner",
+    "sourceCategoryId": 30076,
+    "categoryName": "Workshop Equipment"
+  },
+  {
+    "productSku": "HPWG-10049",
+    "productName": "High-Performance Welding Gloves",
+    "sourceCategoryId": 30077,
+    "categoryName": "Safety & Workwear"
+  },
+  {
+    "productSku": "ISH-10050",
+    "productName": "Industrial Safety Harness",
+    "sourceCategoryId": 30078,
+    "categoryName": "Safety & Workwear"
+  }
+]

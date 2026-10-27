@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Domain.Entity.Admin;
+using Parth_Traders.Domain.Entity.Admin;
 
 namespace Parth_Traders.Domain.Entity.User
 {
@@ -10,14 +10,12 @@ namespace Parth_Traders.Domain.Entity.User
 
         public virtual Product Product { get; set; }
 
-        public long PricePerPiece { get; set; }
+        public decimal Price { get; set; }
 
-        public long QuantityPurchased { get; set; }
+        public long Quantity { get; set; }
 
-        public long Discount { get; set; }
+        public decimal Discount { get; set; }
 
-        public long Total { get; set; }
-
-        public DateTime BillDate { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

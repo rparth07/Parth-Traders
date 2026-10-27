@@ -1,15 +1,21 @@
-﻿using Parth_Traders.Domain.Entity.User;
+using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.Enums;
 
 namespace Parth_Traders.Domain.Entity.Admin
 {
     public class Product
     {
+        public long? SourceSupplierId { get; set; }
+        public long? SourceCategoryId { get; set; }
         public Product()
         {
             OrderDetails = new List<OrderDetail>();
         }
         public long ProductId { get; set; }
+
+        public string ProductSku { get; set; }
+
+        public double ProductRating { get; set; }
 
         public string ProductName { get; set; }
 
@@ -25,11 +31,11 @@ namespace Parth_Traders.Domain.Entity.Admin
 
         public int PiecesPerUnit { get; set; }
 
-        public long UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
-        public long SinglePieceMRP { get; set; }
+        public decimal SinglePieceMRP { get; set; }
 
-        public long Discount { get; set; }
+        public decimal Discount { get; set; }
 
         public long UnitsInStock { get; set; }
     }

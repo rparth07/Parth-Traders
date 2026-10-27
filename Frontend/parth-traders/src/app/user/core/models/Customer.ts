@@ -11,7 +11,6 @@ export class Customer {
     customerAddress: string;
     paymentType: PaymentType;
     orders: Order[];
-    passwordHash: string;
 
     constructor(
         id: number,
@@ -23,8 +22,7 @@ export class Customer {
         token: string,
         customerAddress: string,
         paymentType: PaymentType,
-        orders: Order[],
-        passwordHash: string) {
+        orders: Order[]) {
         this.id = id;
         this.userName = userName;
         this.email = email;
@@ -35,7 +33,6 @@ export class Customer {
         this.customerAddress = customerAddress;
         this.paymentType = paymentType;
         this.orders = orders;
-        this.passwordHash = passwordHash;
     }
 }
 

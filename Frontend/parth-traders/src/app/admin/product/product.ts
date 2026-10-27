@@ -1,8 +1,10 @@
 export interface Product {
   position: number;
+  productSku: string;
   productName: string;
   productType: ProductType;
   productDescription: string;
+  productRating: number;
   supplierName: string;
   categoryName: string;
   piecesPerUnit: number;

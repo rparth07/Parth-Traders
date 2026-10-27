@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.User
 {
@@ -6,7 +6,6 @@ namespace Parth_Traders.Dto.User
     {
         public OrderDetailDto()
         {
-            BillDate = DateTime.Now;
         }
 
         public long OrderDetailId { get; set; }
@@ -14,24 +13,18 @@ namespace Parth_Traders.Dto.User
         public long OrderId { get; set; }
 
         [Required]
-        public string CustomerName { get; set; }
+        public string ProductSku { get; set; }
 
         [Required]
-        public string ProductName { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
-        public long PricePerPiece { get; set; }
+        public long Quantity { get; set; }
 
         [Required]
-        public long QuantityPurchased { get; set; }
+        public decimal Discount { get; set; }
 
         [Required]
-        public long Discount { get; set; }
-
-        [Required]
-        public long Total { get; set; }
-
-        [Required]
-        public DateTime BillDate { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

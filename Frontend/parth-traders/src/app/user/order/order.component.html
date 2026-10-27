@@ -1,0 +1,56 @@
+<p *ngIf="loadError" role="alert">{{loadError}} <button (click)="fetchOrders()">Try again</button></p>
+<p *ngIf="loading" role="status">Loading orders…</p>
+
+<div class="orders-list" *ngIf="orders.length > 0">
+    <h2>Orders</h2>
+
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+            <!-- Transaction ID Column -->
+            <ng-container matColumnDef="transactionId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.transactionId}} <strong *ngIf="order.isSandbox">Sandbox test</strong> </mat-cell>
+            </ng-container>
+
+            <!-- Customer Name Column -->
+            <ng-container matColumnDef="userName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.userName}} </mat-cell>
+            </ng-container>
+
+            <!-- Grand Total Column -->
+            <ng-container matColumnDef="grandTotal">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.grandTotal | currency}} </mat-cell>
+            </ng-container>
+
+            <!-- Action Column (for details) -->
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                <mat-cell *matCellDef="let order">
+                    <button mat-raised-button color="primary" (click)="onSelectOrder(order)">View Details</button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Header and Row Definitions -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{'selected-order': selectedOrder?.transactionId === row.transactionId}">
+            </mat-row>
+        </mat-table>
+    </div>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10,25,50]" aria-label="Orders per page"></mat-paginator>
+
+    <!-- Display selected order details -->
+    <app-order-detail *ngIf="selectedOrder" [order]="selectedOrder"></app-order-detail>
+</div>
+
+<div class="text-center h-100" *ngIf="!loading && !loadError && orders.length === 0">
+    <div class="columns img-container text-center">
+        <img src="assets/images/empty-cart.jpg" alt="empty cart">
+    </div>
+    <div class="small-10 columns small-centered text-center">
+        <a class="p-3 yellow button expanded large" routerLink="/user/home">No orders yet — browse products</a>
+    </div>
+</div>

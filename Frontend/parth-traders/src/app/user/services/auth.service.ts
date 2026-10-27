@@ -1,12 +1,13 @@
+import { normalizeRegistrationPhone, registrationFailure, RegistrationResult } from '../../shared/registration-validation';
 import { Injectable } from '@angular/core';
 import { Customer } from '../core/models/Customer';
-import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
+import { catchError, firstValueFrom, Observable, Subject, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenService } from './token.service';
+import { AppSetting } from 'src/app/shared/app-settings';
 
-const API_URL = 'https://localhost:5031/';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,83 +35,55 @@ export class AuthService {
       email: email,
       password: password,
     };
-    let isLoginSuccessful = false;
-    this.http.post<any>(API_URL + 'api/user/authentication/login', body)
-      .subscribe({
-        next: (res) => {
-          this.tokenService.saveToken(res.token);
-          this.tokenService.saveRefreshToken(res.refresh_token);
-          this.tokenService.saveCustomer(res.customer);
-          this.customer = res.customer;
-          this.customer!.token = res.token;
-          this.router
-            .navigate(['/user/home'])
-            .then((_) => console.log('You are secure now!'));
-
-          isLoginSuccessful = true;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-
-    if (isLoginSuccessful) {
+    try {
+      const res = await firstValueFrom(this.http.post<any>(AppSetting.API_URL + 'api/user/authentication/login', body));
+      if (!res.token || !res.customer) throw new Error('Invalid login response');
+      this.tokenService.saveToken(res.token);
+      this.tokenService.saveCustomer(res.customer);
+      this.customer = res.customer;
+      const destination = this.redirectUrl.startsWith('/user/') && !this.redirectUrl.startsWith('/user/authenticate') ? this.redirectUrl : '/user/home';
+      this.redirectUrl = '';
+      await this.router.navigate([destination]);
       return { success: true };
+    } catch (error) {
+      return { success: false, message: error instanceof HttpErrorResponse && error.status === 401
+        ? 'Email or password is incorrect.' : 'Unable to sign in. Please try again or contact Parth Traders.' };
     }
-    return { success: false };
   }
 
-  async registerApi(username: string, email: string, password: string): Promise<any> {
-    // Replace with actual API call
-    this.removeAllTokens();
-
-    const body: { userName: string, email: string, password: string } = {
-      userName: username,
-      email: email,
-      password: password,
-    };
-
-    return this.http.post<any>(API_URL + 'api/user/authentication', body)
-      .subscribe({
-        next: () => {
-          catchError(AuthService.handleError)
-        },
-        error: catchError(AuthService.handleError),
-      });
+  async registerApi(username: string, phone: string, address: string, email: string, password: string): Promise<RegistrationResult> {
+    try {
+      await firstValueFrom(this.http.post(AppSetting.API_URL + 'api/user/authentication/signup', {
+        userName: username.trim(), phoneNumber: normalizeRegistrationPhone(phone) || phone.trim(), customerAddress: address.trim(), email: email.trim(), password
+      }));
+      return { success: true };
+    } catch (error) {
+      return registrationFailure(error);
+    }
   }
 
   async forgotPasswordApi(email: string): Promise<any> {
-    // Replace with actual API call
-
-    const body: { email: string } = {
-      email: email,
-    };
-
-    return this.http.post<any>(API_URL + 'api/user/forgot-password', body)
-      .subscribe({
-        next: () => {
-          catchError(AuthService.handleError)
-        },
-        error: catchError(AuthService.handleError),
-      });
+    // The backend does not implement a password reset endpoint.
+    return { success: false, message: 'Online password reset is unavailable. Contact Parth Traders for account help.' };
   }
 
   isAuthenticated(): boolean {
     const token = this.tokenService.getToken();
 
-    return !this.jwtHelper.isTokenExpired(token as string);
+    try { return !!token && !!this.tokenService.getCustomer() && !this.jwtHelper.isTokenExpired(token); } catch { return false; }
   }
 
   updateProfile(customer: Customer): Observable<any> {
     return this.http
       .post<any>(
-        API_URL + 'api/authentication/customer-details/' + customer.id,
+        AppSetting.API_URL + 'api/user/authentication/customer-details/' + customer.id,
         customer
       )
       .pipe(
         tap((res) => {
-          this.tokenService.saveToken(res.token);
-          this.tokenService.saveRefreshToken(res.refresh_token);
+          if (res.token) this.tokenService.saveToken(res.token);
+          if (res.refresh_token) this.tokenService.saveRefreshToken(res.refresh_token);
+          this.tokenService.saveCustomer(res.customer);
           this.customer = res.customer;
         }),
         catchError(AuthService.handleError)
@@ -126,7 +99,7 @@ export class AuthService {
       refreshData.refresh_token
     );
 
-    return this.http.post<any>(API_URL + 'api/authentication/login', body).pipe(
+    return this.http.post<any>(AppSetting.API_URL + 'api/authentication/login', body).pipe(
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
@@ -156,23 +129,13 @@ export class AuthService {
   }
 
   removeAllTokens() {
+    this.customer = null;
     this.tokenService.removeCustomer();
     this.tokenService.removeToken();
     this.tokenService.removeRefreshToken();
   }
 
   private static handleError(error: HttpErrorResponse): any {
-    console.log('error = ', error);
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      );
-    }
-
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
+    return throwError(() => error);
   }
 }

@@ -1,79 +1,22 @@
-<div id="sidebar">
-    <div class="cart-container">
-        <app-shopping-cart></app-shopping-cart>
-    </div>
-    <h3>CATEGORIES</h3>
-    <div class="checklist categories">
-        <ul>
-            <li *ngFor="let category of categories">
-                <a href="#" (click)="toggleCategory($event, category)" [class.checked]="isChecked(category)">
-                    <span>
-                        <span class="x" [class.animate]="isAnimateX(category)"></span>
-                        <span class="y" [class.animate]="isAnimateY(category)"></span>
-                    </span>
-                    {{ category }}
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <h3>Product Types</h3>
-    <div class="checklist product-types">
-        <ul>
-            <li *ngFor="let type of productTypeKeys" (click)="setActiveProductType(type)"
-                [class.active]="type === filterCriteria.activeProductType">
-                <a class=""><span></span>{{type}}</a>
-            </li>
-        </ul>
-    </div>
-
-    <h3>PRICE RANGE</h3>
-    <div class="custom-slider">
-        <div class="price-range">₹{{minValue}}-₹{{maxValue}}</div>
-        <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="sliderOptions"
-            (valueChange)="filterByPrice()"></ngx-slider>
-    </div>
-
-    <h3>Review</h3>
-    <div class="ratings">
-        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==4"
-            (click)="updateMinRating(4)">
-            <ngb-rating [max]="4" [rate]="4" [readonly]="true">
-                <ng-template let-fill="fill">
-                    <span class="star">&#9733;</span>
-                </ng-template>
-            </ngb-rating> and up
-        </div>
-
-        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==3"
-            (click)="updateMinRating(3)">
-            <ngb-rating [max]="3" [rate]="3" [readonly]="true">
-                <ng-template let-fill="fill">
-                    <span class="star">&#9733;</span>
-                </ng-template>
-            </ngb-rating> and up
-        </div>
-
-        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==2"
-            (click)="updateMinRating(2)">
-            <ngb-rating [max]="2" [rate]="2" [readonly]="true">
-                <ng-template let-fill="fill">
-                    <span class="star">&#9733;</span>
-                </ng-template>
-            </ngb-rating> and up
-        </div>
-
-        <div class="rating-container" [class.active]="this.filterCriteria.ratingRange.min==1"
-            (click)="updateMinRating(1)">
-            <ngb-rating [max]="1" [rate]="1" [readonly]="true">
-                <ng-template let-fill="fill">
-                    <span class="star">&#9733;</span>
-                </ng-template>
-            </ngb-rating> and up
-        </div>
-
-        <div class="clear-rating">
-            <a (click)="clearRating()">clear</a>
-        </div>
-    </div>
+<div class="filter-panel">
+  <div class="filter-title"><h2>Filters</h2><button type="button" class="text-button" (click)="resetFilters()">Clear all</button></div>
+  <fieldset *ngIf="categories.length"><legend>Category</legend><label *ngFor="let category of categories" class="filter-choice"><input type="checkbox" [checked]="isChecked(category)" (change)="toggleCategory($event,category)"><span>{{category}}</span></label></fieldset>
+  <fieldset><legend>Product type</legend><label *ngFor="let type of productTypeKeys" class="filter-choice"><input type="checkbox" [checked]="type===filterCriteria.activeProductType" (change)="setActiveProductType(type)"><span>{{type}}</span></label></fieldset>
+  <fieldset><legend>Price per unit (USD)</legend>
+    <form (ngSubmit)="applyPrice()" novalidate>
+      <div class="price-inputs"><label>Minimum<input name="minimum" type="number" min="0" step="0.01" [ngModel]="minValue" (ngModelChange)="updatePrice('min',$event)" [attr.aria-invalid]="!!priceError" aria-describedby="price-filter-error"></label><label>Maximum<input name="maximum" type="number" min="0" step="0.01" [ngModel]="maxValue" (ngModelChange)="updatePrice('max',$event)" [attr.aria-invalid]="!!priceError" aria-describedby="price-filter-error"></label></div>
+      <p id="price-filter-error" class="filter-error" role="alert" *ngIf="priceError">{{priceError}}</p>
+      <p class="filter-hint">Uses the discounted selling price.</p>
+      <p class="filter-match-count">{{matchingCount === null ? 'Loading results...' : matchingCount + (matchingCount === 1 ? ' matching product' : ' matching products')}}</p>
+      <div class="price-actions"><button type="submit" class="store-button secondary">Apply price</button><button type="button" class="text-button" (click)="clearPrice()">Clear price</button></div>
+    </form>
+  </fieldset>
+  <fieldset><legend>Customer rating</legend>
+    <label for="minimum-rating" class="filter-hint">Minimum customer rating</label>
+    <select id="minimum-rating" [ngModel]="filterCriteria.ratingRange.min" (ngModelChange)="updateMinRating($event)"><option [ngValue]="null">Any rating</option><option *ngFor="let rating of ratingOptions" [ngValue]="rating">{{rating}} stars &amp; up</option></select>
+    <p class="filter-hint">Includes products rated at or above your selection.</p>
+    <p class="filter-match-count">{{matchingCount === null ? 'Loading results...' : matchingCount + (matchingCount === 1 ? ' matching product' : ' matching products')}}</p>
+    <button *ngIf="filterCriteria.ratingRange.min!==null" type="button" class="text-button" (click)="clearRating()">Clear rating</button>
+  </fieldset>
+  <button type="button" class="store-button show-results" [disabled]="matchingCount===null" (click)="filtersApplied.emit()">{{matchingCount === null ? 'Loading products...' : 'Show ' + matchingCount + (matchingCount === 1 ? ' product' : ' products')}}</button>
 </div>

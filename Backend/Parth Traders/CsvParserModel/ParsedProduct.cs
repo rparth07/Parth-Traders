@@ -1,4 +1,4 @@
-﻿using CsvHelper.Configuration.Attributes;
+using CsvHelper.Configuration.Attributes;
 using Parth_Traders.Domain.Enums;
 
 namespace Parth_Traders.CsvParserModel
@@ -9,30 +9,33 @@ namespace Parth_Traders.CsvParserModel
         public string ProductName { get; set; }
 
         [Index(1)]
-        public ProductType ProductType { get; set; }
+        public string ProductSku { get; set; }
 
         [Index(2)]
-        public string ProductDescription { get; set; }
+        public ProductType ProductType { get; set; }
 
         [Index(3)]
-        public string SupplierName { get; set; }
+        public string ProductDescription { get; set; }
 
         [Index(4)]
-        public string CategoryName { get; set; }
+        public string SupplierName { get; set; }
 
         [Index(5)]
-        public int PiecesPerUnit { get; set; }
+        public string CategoryName { get; set; }
 
         [Index(6)]
-        public long UnitPrice { get; set; }
+        public int PiecesPerUnit { get; set; }
 
         [Index(7)]
-        public long SinglePieceMRP { get; set; }
+        public decimal UnitPrice { get; set; }
 
         [Index(8)]
-        public long Discount { get; set; }
+        public decimal SinglePieceMRP { get; set; }
 
         [Index(9)]
+        public decimal Discount { get; set; }
+
+        [Index(10)]
         public long UnitsInStock { get; set; }
 
     }

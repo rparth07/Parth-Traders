@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Parth_Traders.Dto.User
@@ -13,8 +13,12 @@ namespace Parth_Traders.Dto.User
 
         public long OrderId { get; set; }
 
+        public bool IsSandbox { get; set; }
+
+        public string TransactionId { get; set; }
+
         [Required]
-        public string CustomerName { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         public ICollection<OrderDetailDto> OrderDetails { get; set; }
@@ -26,7 +30,7 @@ namespace Parth_Traders.Dto.User
         public DateTime OrderDate { get; set; }
 
         [Required]
-        public long GrandTotal { get; set; }
+        public decimal GrandTotal { get; set; }
 
         [Required]
         public OrderStatus OrderStatus { get; set; }

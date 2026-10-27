@@ -6,6 +6,7 @@ namespace Parth_Traders.Domain.RepositoryInterfaces.AdminInterfaces
     {
         void AddProduct(Product productToAdd);
         void AddAllProducts(List<Product> productsToAdd);
+        Product GetProductBySku(string productSku);
         Product GetProductByName(string productName);
         List<Product> GetAllProducts();
         void UpdateProduct(Product product);

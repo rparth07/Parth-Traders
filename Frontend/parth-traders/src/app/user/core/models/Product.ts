@@ -1,16 +1,18 @@
 import { ProductType } from "../enums/ProductType"
 
 export interface Product {
-    id: number,
+    productId: number,
+    productSku: string,
     productName: string,
     productDescription: string;
-    productType: ProductType
-    category: string,
-    price: number,
+    productRating: number,
+    productType: ProductType | number,
+    categoryName: string,
+    supplierName: string,
+    piecesPerUnit: number,
+    singlePieceMRP: number,
+    unitPrice: number,
     discount: number,
     unitsInStock: number,
-    sku: string,
-    rating: number,
-    sizes: string[],
     image_paths: string[]
 }

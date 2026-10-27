@@ -1,5 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Domain.Enums;
 using Parth_Traders.Dto.User;
@@ -7,6 +8,7 @@ using Parth_Traders.Service.Services.User.UserInterface;
 
 namespace Parth_Traders.Controllers.User
 {
+    [Authorize(Roles = "Customer")]
     [ApiController]
     [Route("API/orders")]
     public class OrderController : ControllerBase
@@ -31,55 +33,53 @@ namespace Parth_Traders.Controllers.User
         [Consumes("application/json")]
         public IActionResult AddOrder(OrderDto orderForCreation)
         {
-            var order = _mapper.Map<Order>(orderForCreation);
-
-            var orderToAdd = _orderHelperService.MapOrderPropertiesToOrder(order);
-
-            Order addedOrder = _orderService.AddOrder(orderToAdd);
-
-            OrderDto orderToReturn = _mapper.Map<OrderDto>(addedOrder);
-
-            return Ok(orderToReturn);
+            return StatusCode(409, new { message = "Use the server-verified PayPal checkout endpoint." });
         }
 
-        [HttpGet("{customerName}/{orderId}", Name = "GetOrder")]
-        public IActionResult GetOrder(string customerName, long orderId)
+        [HttpGet("{userName}/{orderId}", Name = "GetOrder")]
+        public IActionResult GetOrder(string userName, long orderId)
         {
+            if (User.Identity?.Name != userName) return Forbid();
             OrderDto orderFromRepo = _mapper.Map<OrderDto>(_orderService.GetOrderById(orderId));
+            if (orderFromRepo.UserName != userName) return Forbid();
             return Ok(orderFromRepo);
         }
 
-        [HttpGet("{customerName}/latest")]
-        public IActionResult GetLatestOrderForCustomer(string customerName)
+        [HttpGet("{userName}/latest")]
+        public IActionResult GetLatestOrderForCustomer(string userName)
         {
+            if (User.Identity?.Name != userName) return Forbid();
             var order = _mapper.Map<OrderDto>(_orderService
-                .GetLatestOrderForCustomer(customerName));
+                .GetLatestOrderForCustomer(userName));
 
             return Ok(order);
         }
 
-        [HttpGet("{customerName}")]
-        public IActionResult GetAllOrdersForCustomer(string customerName)
+        [HttpGet("{userName}")]
+        public IActionResult GetAllOrdersForCustomer(string userName)
         {
+            if (User.Identity?.Name != userName) return Forbid();
             var orders = _mapper.Map<List<OrderDto>>(_orderService
-                .GetAllOrdersForCustomer(customerName));
+                .GetAllOrdersForCustomer(userName));
 
             return Ok(orders);
         }
 
-        [HttpGet("{customerName}/status/{orderStatus}")]
-        public IActionResult GetAllOrdersForCustomerWithStatus(string customerName,
+        [HttpGet("{userName}/status/{orderStatus}")]
+        public IActionResult GetAllOrdersForCustomerWithStatus(string userName,
                                                                OrderStatus orderStatus)
         {
+            if (User.Identity?.Name != userName) return Forbid();
             var orders = _mapper.Map<List<OrderDto>>(_orderService
-                .GetAllOrdersForCustomerWithStatus(customerName, orderStatus));
+                .GetAllOrdersForCustomerWithStatus(userName, orderStatus));
 
             return Ok(orders);
         }
 
-        [HttpDelete("{customerName}/{orderId}")]
-        public IActionResult DeleteOrder(long orderId)
+        [HttpDelete("{userName}/{orderId}")]
+        public IActionResult DeleteOrder(string userName, long orderId)
         {
+            if (User.Identity?.Name != userName || _orderService.GetOrderById(orderId).Customer.UserName != userName) return Forbid();
             _orderService.CancelOrder(orderId);
             return NoContent();
         }

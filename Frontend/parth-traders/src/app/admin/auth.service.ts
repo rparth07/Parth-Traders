@@ -9,31 +9,20 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, Subject, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { TokenService } from './token.service';
-import decode from 'jwt-decode';
 import { AdminDetails } from './profile/admin-details';
 
-const API_URL = 'https://localhost:5031/';
+import { AppSetting } from '../shared/app-settings';
+const API_URL = AppSetting.API_URL;
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   redirectUrl = '';
-  admin!: AdminDetails;
+  admin: AdminDetails | null;
   adminName = new Subject<string>();
 
   private static handleError(error: HttpErrorResponse): any {
-    console.log('error = ', error);
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      );
-    }
-
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
+    return throwError(() => error);
   }
 
   constructor(
@@ -41,13 +30,15 @@ export class AuthService {
     private router: Router,
     private jwtHelper: JwtHelperService,
     private tokenService: TokenService
-  ) { }
+  ) {
+    this.admin = tokenService.getAdmin();
+  }
 
   //reactor this method to first validate the token and then calculate the expiration date later
   isAuthenticated(): boolean {
     const token = this.tokenService.getToken();
 
-    return !this.jwtHelper.isTokenExpired(token as string);
+    try { return !!token && !!this.tokenService.getAdmin() && !this.jwtHelper.isTokenExpired(token); } catch { return false; }
   }
 
   updateProfile(admin: AdminDetails): Observable<any> {
@@ -58,10 +49,11 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          this.tokenService.saveToken(res.token);
-          this.tokenService.saveRefreshToken(res.refresh_token);
+          if (res.token) this.tokenService.saveToken(res.token);
+          if (res.refresh_token) this.tokenService.saveRefreshToken(res.refresh_token);
+          this.tokenService.saveAdmin(res.admin);
           this.admin = res.admin;
-          this.adminName.next(this.admin.userName);
+          this.adminName.next(this.admin!.userName);
         }),
         catchError(AuthService.handleError)
       );
@@ -79,8 +71,9 @@ export class AuthService {
       tap((res) => {
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refresh_token);
+        this.tokenService.saveAdmin(res.admin);
         this.admin = res.admin;
-        this.adminName.next(this.admin.userName);
+        this.adminName.next(this.admin!.userName);
       }),
       catchError(AuthService.handleError)
     );

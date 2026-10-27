@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../../shared/api-error';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, finalize } from 'rxjs';
 import { Customer, PaymentType } from './customer';
 import { CustomerService } from './customer.service';
 
@@ -20,11 +21,10 @@ export class CustomerComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  dataSource!: MatTableDataSource<Customer>;
+  dataSource = new MatTableDataSource<Customer>();
+  loadError = '';
   paymentType = PaymentType;
-  dataLength: number = 100;
-
-  updatableCustomer!: Customer | null;
+  dataLength: number = 0;
 
   columns = [
     {
@@ -33,24 +33,19 @@ export class CustomerComponent implements OnInit {
       cell: (element: Customer) => `${element.position}`,
     },
     {
-      columnDef: 'customerName',
+      columnDef: 'userName',
       header: 'Name',
-      cell: (element: Customer) => `${element.customerName}`,
+      cell: (element: Customer) => `${element.userName}`,
     },
     {
-      columnDef: 'createdDate',
-      header: 'Created Date',
-      cell: (element: Customer) => `${element.createdDate}`,
-    },
-    {
-      columnDef: 'customerEmail',
+      columnDef: 'email',
       header: 'Email',
-      cell: (element: Customer) => `${element.customerEmail}`,
+      cell: (element: Customer) => `${element.email}`,
     },
     {
-      columnDef: 'customerPhoneNumber',
+      columnDef: 'phoneNumber',
       header: 'Phone Number',
-      cell: (element: Customer) => `${element.customerPhoneNumber}`,
+      cell: (element: Customer) => `${element.phoneNumber}`,
     },
     {
       columnDef: 'customerAddress',
@@ -64,7 +59,7 @@ export class CustomerComponent implements OnInit {
     },
   ];
 
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'actions'];
 
   constructor(
     private modalService: NgbModal,
@@ -82,28 +77,30 @@ export class CustomerComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
   }
 
-  addCsv(event: any) {
-    event.preventDefault();
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      this.customerService.addCustomerCsvFile(formData).subscribe({
-        next: (value) => {
-          this.getCustomers();
-        },
-        error: (err: { error: string }) => {
-          this.showToaster(err.error);
-        },
-      });
-    }
-    event.target.value = '';
-  }
+  // addCsv(event: any) {
+  //   event.preventDefault();
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  //     this.customerService.addCustomerCsvFile(formData).subscribe({
+  //       next: (value) => {
+  //         this.getCustomers();
+  //       },
+  //       error: (err: { error: string }) => {
+  //         this.showToaster(apiErrorMessage(err));
+  //       },
+  //     });
+  //   }
+  //   event.target.value = '';
+  // }
 
   getCustomers(): void {
     this.loadingSubject.next(true);
+    this.loadError = '';
     this.customerService
       .fetchCustomers()
       .pipe(
@@ -112,24 +109,26 @@ export class CustomerComponent implements OnInit {
             customers.map((customer: Customer, index: number) => {
               customer.position = index + 1;
               return customer;
-            })
+            }),
           //need to find a way to show orders in the table
         )
       )
-      .subscribe((response: Customer[]) => {
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({next: (response: Customer[]) => {
         this.dataLength = response.length;
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
+      }, error: error => { this.loadError = apiErrorMessage(error, 'Unable to load customers. Try again.'); }});
   }
 
   deleteCustomer(customer: Customer) {
-    this.customerService.deleteCustomer(customer.customerName);
+    if (!window.confirm('Delete '+customer.userName+'? This removes the record permanently.')) return;
+    this.customerService.deleteCustomer(customer.userName);
   }
 
   openUpdateCustomerModal(customer?: Customer) {
-    console.log(customer);
+    console.log('coming soon!');
   }
 
   showToaster(errorMsg: string) {

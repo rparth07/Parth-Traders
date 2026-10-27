@@ -363,3 +363,8 @@ MigrationBackup/
 FodyWeavers.xsd
 
 Backend/Parth Traders/internal_logs/internallog.txt
+
+# Local hosting authentication and site links
+.netlify/
+.env
+.env.*

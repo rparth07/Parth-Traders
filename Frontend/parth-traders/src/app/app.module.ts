@@ -13,6 +13,11 @@ import { AuthInterceptor } from './admin/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -31,7 +36,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     AppRoutingModule,
     HttpClientModule,
     NgxUiLoaderModule,
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    NgxUiLoaderHttpModule.forRoot({ showForeground: false }),
     MatDialogModule,
     MatMenuModule,
     ToastrModule.forRoot(),
@@ -39,6 +44,10 @@ const JWT_Module_Options: JwtModuleOptions = {
     CommonModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
   ],
   providers: [
     {
@@ -46,6 +55,7 @@ const JWT_Module_Options: JwtModuleOptions = {
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

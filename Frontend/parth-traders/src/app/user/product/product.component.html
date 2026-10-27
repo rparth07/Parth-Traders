@@ -1,53 +1,20 @@
-<div class="product" [id]="'product_' + product.id" #productElement [class.large]="shouldSwitchToLargeGrid">
-    <div class="info-large" [class]="shouldSwitchToLargeGrid ? 'd-block': 'd-none'">
-        <h4>{{ product.productName }}</h4>
-        <div class="sku">PRODUCT SKU: <strong>{{ product.sku }}</strong></div>
-        <div class="price-big">
-            <span *ngIf="product.discount != 0">$ {{product.price}}</span>
-            ${{ product.price - product.discount }}
-        </div>
-        <h3>SIZE</h3>
-        <div class="sizes">
-            <span class="ms-1" [class.selected-product-size]="selectedProductSize == productSize"
-                *ngFor="let productSize of product.sizes" (click)="updateProductSize(productSize)">
-                {{ productSize }}
-            </span>
-        </div>
-        <button class="add-cart-large" (click)="addCartLarge()">Add To Cart</button>
+<article class="product-card" [class.list-view]="shouldSwitchToLargeGrid" [attr.aria-label]="product.productName">
+  <div class="product-media">
+    <a *ngIf="!imageFailed" class="product-image-link" [href]="product.image_paths[imageIndex]" target="_blank" rel="noopener" [attr.aria-label]="'View full-size image of '+product.productName+' (opens new tab)'">    <img [src]="product.image_paths[imageIndex]" [alt]="product.productName + ' — image ' + (imageIndex + 1)" loading="lazy" width="320" height="240" (error)="imageFailed = true"><span class="image-zoom-hint">View full size</span></a>
+    <p *ngIf="imageFailed" role="status">Image unavailable</p>
+    <div class="gallery-controls" *ngIf="product.image_paths.length > 1">
+      <button type="button" (click)="changeImage(-1)" [attr.aria-label]="'Previous image of ' + product.productName">Previous</button>
+      <span aria-live="polite">{{imageIndex + 1}} / {{product.image_paths.length}}</span>
+      <button type="button" (click)="changeImage(1)" [attr.aria-label]="'Next image of ' + product.productName">Next</button>
     </div>
-    <div class="make3D flip180" (mouseenter)="liftCard()" (mouseleave)="dropCard()">
-        <div class="product-front" [class]="shouldSwitchToLargeGrid ? 'd-none': 'd-block'">
-            <img src="{{ product.image_paths[0] }}" alt="" />
-            <div class="image_overlay"></div>
-            <div class="add_to_cart" (click)="addToCart()">Add to cart</div>
-            <div class="view_gallery" (click)="flipCardToBack()">View gallery</div>
-            <div class="stats">
-                <div class="stats-container">
-                    <span class="product_price">${{ product.price - product.discount }}</span>
-                    <span class="product_name">{{ product.productType }}</span>
-                    <p>{{ product.category }}</p>
-                    <div class="product-options sizes">
-                        <strong>SIZES</strong><br>
-                        <span class="ms-1" [class.selected-product-size]="selectedProductSize == productSize"
-                            *ngFor="let productSize of product.sizes" (click)="updateProductSize(productSize)">
-                            {{ productSize }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product-back" [class.d-block]="shouldSwitchToLargeGrid">
-            <ngb-carousel *ngIf="product.image_paths">
-                <ng-template *ngFor="let image of product.image_paths" ngbSlide>
-                    <div class="wrapper">
-                        <img [src]="image" alt="product image" />
-                    </div>
-                </ng-template>
-            </ngb-carousel>
-            <div class="flip-back" (click)="flipCardToFront()">
-                <div class="cy"></div>
-                <div class="cx"></div>
-            </div>
-        </div>
-    </div>
-</div>
+  </div>
+  <div class="product-info">
+    <p class="product-category">{{product.categoryName || product.productType}}</p>
+    <h3>{{product.productName}}</h3>
+    <p class="product-rating">{{product.productRating | number:'1.1-1'}} / 5 rating</p>
+    <div class="product-price"><strong>{{discountedUnitPrice(product.unitPrice,product.discount) | currency:'USD'}}</strong><del *ngIf="product.discount > 0">{{product.unitPrice | currency:'USD'}}</del><span *ngIf="product.discount > 0">{{product.discount}}% off</span></div>
+    <p class="product-stock">{{product.unitsInStock > 0 ? 'In stock' : 'Out of stock'}}</p>
+    <details [open]="shouldSwitchToLargeGrid"><summary>Product details</summary><p>{{product.productDescription}}</p><dl><dt>SKU</dt><dd>{{product.productSku}}</dd><dt>Pieces per unit</dt><dd>{{product.piecesPerUnit}}</dd><dt>Product type</dt><dd>{{product.productType}}</dd></dl></details>
+    <button class="store-button" type="button" (click)="addToCart()" [disabled]="product.unitsInStock <= 0" [attr.aria-label]="'Add ' + product.productName + ' to cart'">{{product.unitsInStock > 0 ? 'Add to cart' : 'Out of stock'}}</button>
+  </div>
+</article>

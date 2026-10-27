@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { apiErrorMessage } from '../../shared/api-error';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -10,13 +12,10 @@ import { Supplier } from './supplier';
 export class SupplierService {
   getUpdatedSuppliers = new Subject<string>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   addSupplierCsvFile(form: FormData) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
-    });
-    return this.http.post(DomainConstants.URL + 'admin/suppliers', form, { headers });
+    return this.http.post(DomainConstants.URL + 'admin/suppliers', form);
   }
 
   fetchSuppliers() {
@@ -24,24 +23,24 @@ export class SupplierService {
   }
 
   addSupplier(supplier: Supplier): any {
-    return this.http.post(DomainConstants.URL + 'admin/suppliers', supplier);
+    return this.http.post(DomainConstants.URL + 'admin/suppliers/add-supplier', supplier);
   }
 
   updateSupplier(oldSupplierName: string, newSupplier: Supplier) {
     return this.http.post<Supplier>(
-      DomainConstants.URL + 'admin/suppliers/' + oldSupplierName,
+      DomainConstants.URL + 'admin/suppliers/' + encodeURIComponent(oldSupplierName),
       newSupplier
     );
   }
 
   deleteSupplier(supplierName: string) {
     this.http
-      .delete<Supplier>(DomainConstants.URL + 'admin/suppliers/' + supplierName)
+      .delete<Supplier>(DomainConstants.URL + 'admin/suppliers/' + encodeURIComponent(supplierName))
       .subscribe({
         next: (value) => {
           this.getUpdatedSuppliers.next('Updated suppliers');
         },
-        error: (err) => console.log(err),
+        error: (err) => this.toastr.error(apiErrorMessage(err), 'Delete failed'),
       });
   }
 }

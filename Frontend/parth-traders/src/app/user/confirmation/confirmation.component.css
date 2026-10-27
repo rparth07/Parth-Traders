@@ -1,0 +1,18 @@
+.confirmation {
+padding-block:56px;
+text-align:center;
+overflow-wrap:anywhere
+}
+.confirmation h1 {
+font-size:28px
+}
+.confirmation p {
+line-height:1.7
+}
+.confirmation>div {
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+justify-content:center;
+margin-top:24px
+}

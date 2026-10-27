@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
@@ -10,7 +10,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/suppliers"), Authorize]
+    [Route("API/admin/suppliers"), Authorize(Roles = "Administrator,Manager")]
     public class SupplierController : ControllerBase
     {
         public readonly ISupplierService _supplierService;
@@ -42,9 +42,8 @@ namespace Parth_Traders.Controllers.Admin
         }
 
         [HttpPost, DisableRequestSizeLimit]
-        public IActionResult AddAllSuppliers()
+        public IActionResult AddAllSuppliers([FromForm] IFormFile file)
         {
-            IFormFile? file = Request.Form.Files[0];
             List<ParsedSupplier> parsedsuppliers = new ParsedSupplier().ParseData(file);
 
             var suppliersToAdd = _mapper.Map<List<Supplier>>(parsedsuppliers);

@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../../../shared/api-error';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +12,8 @@ import { SupplierService } from '../supplier.service';
   styleUrls: ['./add-supplier.component.css'],
 })
 export class AddSupplierComponent implements OnInit {
+  saving=false;
+  saveError='';
   @Input() supplier!: Supplier | null;
 
   constructor(
@@ -23,31 +26,35 @@ export class AddSupplierComponent implements OnInit {
   }
 
   addSupplier(form: NgForm) {
+    if (this.saving) return;
     if (form.valid) {
+      this.saving=true; this.saveError='';
       var supplier = <Supplier>form.value;
       this.supplierService.addSupplier(supplier).subscribe({
         next: (value: any) => {
-          this.closeModal();
+          this.saving=false; this.closeModal();
           this.supplierService.getUpdatedSuppliers.next('Updated suppliers');
         },
         error: (err: { error: { errors: any } }) => {
-          this.showToaster(err.error.errors.supplierDto);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
   }
 
   updateSupplier(supplierForm: NgForm, oldSupplier: Supplier) {
+    if (this.saving) return;
     if (supplierForm.valid) {
+      this.saving=true; this.saveError='';
       this.supplierService
         .updateSupplier(oldSupplier?.supplierName, supplierForm.value)
         .subscribe({
           next: (value) => {
-            this.closeModal();
+            this.saving=false; this.closeModal();
             this.supplierService.getUpdatedSuppliers.next('Updated suppliers');
           },
           error: (err: { error: { errors: any } }) => {
-            this.showToaster(err.error.errors.supplierDto);
+            this.showToaster(apiErrorMessage(err));
           },
         });
     }
@@ -58,6 +65,6 @@ export class AddSupplierComponent implements OnInit {
   }
 
   showToaster(errorMsg: string) {
-    this.toastr.error(errorMsg, 'Error');
+    this.saving=false; this.saveError=errorMsg; this.toastr.error(errorMsg, 'Save failed');
   }
 }

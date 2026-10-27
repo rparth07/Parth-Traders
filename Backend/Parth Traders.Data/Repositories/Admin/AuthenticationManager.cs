@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -17,8 +17,8 @@ namespace Parth_Traders.Data.Repositories.Admin
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private AdminDataModel _admin;
-        public AuthenticationManager(UserManager<AdminDataModel> adminManager, 
-                                     IConfiguration configuration, 
+        public AuthenticationManager(UserManager<AdminDataModel> adminManager,
+                                     IConfiguration configuration,
                                      IMapper mapper)
         {
             _adminManager = adminManager;
@@ -45,7 +45,7 @@ namespace Parth_Traders.Data.Repositories.Admin
         private SigningCredentials GetSigningCredentials()
         {
             var key =
-           Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+           Encoding.UTF8.GetBytes(_configuration["JwtSettings:signingKey"] ?? throw new InvalidOperationException("JWT signing key is not configured."));
             var secret = new SymmetricSecurityKey(key);
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
@@ -53,6 +53,8 @@ namespace Parth_Traders.Data.Repositories.Admin
         {
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, _admin.Id),
+                new Claim(ClaimTypes.Role, "Administrator"),
                 new Claim(ClaimTypes.Name, _admin.UserName)
             };
             var roles = await _adminManager.GetRolesAsync(_admin);
@@ -71,7 +73,7 @@ namespace Parth_Traders.Data.Repositories.Admin
             issuer: jwtSettings.GetSection("validIssuer").Value,
             audience: jwtSettings.GetSection("validAudience").Value,
             claims: claims,
-            expires: DateTime.Now
+            expires: DateTime.UtcNow
                 .AddMinutes(Convert.ToDouble(jwtSettings.GetSection("expires").Value)),
             signingCredentials: signingCredentials
             );

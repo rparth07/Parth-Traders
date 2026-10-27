@@ -1,77 +1,23 @@
-<div class="wrapper">
-    <div class="auth-box" *ngIf="!registering">
-        <div class="auth-header">
-            <span>Login</span>
-        </div>
-        <div class="input_box">
-            <input type="text" id="user" class="input-field" required>
-            <label for="user" class="label">Email</label>
-            <i class="bx bx-user icon"></i>
-        </div>
-        <div class="input_box">
-            <input type="password" id="pass" class="input-field" required (input)="checkPasswordStrength($event)">
-            <label for="pass" class="label">Password</label>
-            <i class="bx bx-lock-alt icon" (click)="togglePasswordVisibility('pass', $event)"></i>
-        </div>
-        <div id="passwordStrength" class="password-strength"></div>
-
-        <div class="remember-forgot">
-            <div class="remember-me">
-                <input type="checkbox" id="remember">
-                <label for="remember"> Remember me </label>
-            </div>
-            <div class="forgot">
-                <a href="#" (click)="openModal('forgotPasswordModal', $event)">Forgot password ?</a>
-            </div>
-        </div>
-        <div class="input_box">
-            <input type="submit" class="input-submit" value="Login" (click)="handleLogin()">
-        </div>
-        <div class="auth">
-            <span>Don't have an account ? <a href="#" (click)="toggleAuthForms($event)">Register</a></span>
-        </div>
-    </div>
-    <div class="auth-box" *ngIf="registering">
-        <div class="auth-header">
-            <span>Register</span>
-        </div>
-        <div class="input_box">
-            <input type="text" id="registerUser" class="input-field" required>
-            <label for="registerUser" class="label">Username</label>
-        </div>
-        <div class="input_box">
-            <input type="email" id="registerEmail" class="input-field" required>
-            <label for="registerEmail" class="label">Email</label>
-        </div>
-        <div class="input_box">
-            <input type="password" id="registerPass" class="input-field" required
-                (input)="checkPasswordStrengthRegister($event)">
-            <label for="registerPass" class="label">Password</label>
-            <i class="bx bx-lock-alt icon" (click)="togglePasswordVisibility('registerPass', $event)"></i>
-        </div>
-        <div id="passwordStrengthRegister" class="password-strength"></div>
-
-        <div class="input_box">
-            <input type="submit" class="input-submit" value="Register" (click)="handleRegister()">
-        </div>
-
-        <div class="auth">
-            <span>Already have an account ? <a href="#" (click)="toggleAuthForms($event)">Login</a></span>
-        </div>
-    </div>
-</div>
-<div id="forgotPasswordModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-content-header">
-            <span class="close" (click)="closeModal('forgotPasswordModal')">&times;</span>
-            <h2>Forgot Password</h2>
-        </div>
-        <div class="input_box">
-            <input type="email" id="forgotEmail" class="input-field" required>
-            <label for="forgotEmail" class="label">Email</label>
-        </div>
-        <div class="input_box">
-            <input type="submit" class="input-submit" value="Reset Password" (click)="handleForgotPassword()">
-        </div>
-    </div>
-</div>
+<section class="auth-page"><a class="auth-brand" routerLink="/user/home"><img src="assets/images/parth-traders.png" alt="Parth Traders home" width="160" height="70"></a><div class="auth-panel" #authPanel><h1>{{registering?'Create an account':'Sign in'}}</h1><p>{{registering?'Save your details and keep track of your orders.':'Welcome back to Parth Traders.'}}</p><div *ngIf="error" #errorSummary role="alert" tabindex="-1" aria-labelledby="account-error-heading" class="auth-error"><h2 id="account-error-heading">{{errorLinks.length ? 'Check your details' : 'Unable to continue'}}</h2><p>{{error}}</p><ul *ngIf="errorLinks.length"><li *ngFor="let link of errorLinks"><a [attr.href]="'#'+link.id" (click)="focusErrorField(link.id,$event)">{{link.label}}: {{link.message}}</a></li></ul></div><div *ngIf="success" role="status" class="auth-success">{{success}}</div>
+<form *ngIf="!registering" #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm)" novalidate><label for="login-email">Email address</label><input id="login-email" name="email" type="email" email required autocomplete="username" [(ngModel)]="login.email" (ngModelChange)="clearLoginError('email')" #email="ngModel" [attr.aria-invalid]="loginErrors.email?.length ? 'true' : null" aria-describedby="login-email-errors"><div id="login-email-errors" class="field-error"><p *ngFor="let message of loginErrors.email">{{message}}</p></div><label for="login-password">Password</label><div class="password-field"><input id="login-password" name="password" [type]="showPassword?'text':'password'" required autocomplete="current-password" [(ngModel)]="login.password" (ngModelChange)="clearLoginError('password')" [attr.aria-invalid]="loginErrors.password?.length ? 'true' : null" aria-describedby="login-password-errors"><button type="button" (click)="showPassword=!showPassword" [attr.aria-pressed]="showPassword">{{showPassword?'Hide':'Show'}} password</button></div><div id="login-password-errors" class="field-error"><p *ngFor="let message of loginErrors.password">{{message}}</p></div><label class="remember"><input name="remember" type="checkbox" [(ngModel)]="remember">Remember my email on this device</label><button type="submit" class="store-button" [disabled]="submitting">{{submitting?'Signing in…':'Sign in'}}</button></form>
+<form *ngIf="registering" #registerForm="ngForm" #registrationFields (ngSubmit)="handleRegister(registerForm)" novalidate>
+<label for="register-name">Username</label>
+<input type="text" id="register-name" name="username" required minlength="2" maxlength="100" autocomplete="nickname" [(ngModel)]="registration.username" (ngModelChange)="clearRegistrationError('username')" [attr.aria-invalid]="registrationErrors.username?.length ? 'true' : null" aria-describedby="username-hint username-errors">
+<p id="username-hint" class="hint">Use 2-100 letters, numbers, dots, underscores, &#64;, + or hyphens. No spaces.</p>
+<div id="username-errors" class="field-error"><p *ngFor="let message of registrationErrors.username">{{message}}</p></div>
+<label for="register-phone">Phone number</label>
+<input type="tel" id="register-phone" name="phone" required maxlength="32" autocomplete="tel" [(ngModel)]="registration.phone" (ngModelChange)="clearRegistrationError('phone')" [attr.aria-invalid]="registrationErrors.phone?.length ? 'true' : null" aria-describedby="phone-hint phone-errors">
+<p id="phone-hint" class="hint">Enter a 10-digit local number, or + and your country code. Spaces, hyphens and parentheses are accepted.</p>
+<div id="phone-errors" class="field-error"><p *ngFor="let message of registrationErrors.phone">{{message}}</p></div>
+<label for="register-address">Address</label>
+<textarea id="register-address" name="address" required maxlength="500" autocomplete="street-address" [(ngModel)]="registration.address" (ngModelChange)="clearRegistrationError('address')" [attr.aria-invalid]="registrationErrors.address?.length ? 'true' : null" aria-describedby="address-errors"></textarea>
+<div id="address-errors" class="field-error"><p *ngFor="let message of registrationErrors.address">{{message}}</p></div>
+<label for="register-email">Email address</label>
+<input type="email" id="register-email" name="email" email required maxlength="254" autocomplete="email" [(ngModel)]="registration.email" (ngModelChange)="clearRegistrationError('email')" [attr.aria-invalid]="registrationErrors.email?.length ? 'true' : null" aria-describedby="email-errors">
+<div id="email-errors" class="field-error"><p *ngFor="let message of registrationErrors.email">{{message}}</p></div>
+<label for="register-password">Password</label>
+<div class="password-field"><input id="register-password" name="password" required minlength="10" pattern="(?=.*[0-9]).+" autocomplete="new-password" [(ngModel)]="registration.password" (ngModelChange)="clearRegistrationError('password')" [attr.aria-invalid]="registrationErrors.password?.length ? 'true' : null" aria-describedby="password-hint password-errors" [type]="showPassword?'text':'password'"><button type="button" (click)="showPassword=!showPassword" [attr.aria-pressed]="showPassword">{{showPassword?'Hide':'Show'}} password</button></div>
+<p id="password-hint" class="hint">Use at least 10 characters, including at least one number.</p>
+<div id="password-errors" class="field-error"><p *ngFor="let message of registrationErrors.password">{{message}}</p></div>
+<button type="submit" class="store-button" [disabled]="submitting">{{submitting?'Creating account...':'Create account'}}</button></form>
+<div class="auth-switch">{{registering?'Already have an account?':'New to Parth Traders?'}} <button type="button" [disabled]="submitting" (click)="toggleAuthForms()">{{registering?'Sign in':'Create an account'}}</button></div><p class="account-help">Need account help? <a href="mailto:parthtraders2004@gmail.com">Contact Parth Traders</a>.</p><a class="back-to-store" routerLink="/user/home">Back to products</a></div></section>

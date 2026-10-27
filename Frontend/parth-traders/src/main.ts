@@ -9,4 +9,7 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+  .catch(() => {
+    const message = document.querySelector('app-root p');
+    if (message) message.textContent = 'The store could not start. Reload this page or contact Parth Traders.';
+  });

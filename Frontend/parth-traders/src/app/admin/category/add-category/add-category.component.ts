@@ -1,3 +1,4 @@
+import { apiErrorMessage } from '../../../shared/api-error';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,46 +12,52 @@ import { CategoryService } from '../category.service';
   styleUrls: ['./add-category.component.css'],
 })
 export class AddCategoryComponent implements OnInit {
+  saving=false;
+  saveError='';
   @Input() category!: Category | null;
 
   constructor(
     private categoryService: CategoryService,
     private activeModal: NgbActiveModal,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.category);
+    // console.log(this.category);
   }
 
   addCategory(form: NgForm) {
+    if (this.saving) return;
     if (form.valid) {
+      this.saving=true; this.saveError='';
       var category = <Category>form.value;
       this.categoryService.addCategory(category).subscribe({
         next: (value: any) => {
-          this.closeModal();
+          this.saving=false; this.closeModal();
           this.categoryService.getUpdatedCategories.next('Updated categories');
         },
         error: (err: { error: { errors: any } }) => {
-          this.showToaster(err.error.errors.categoryDto);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
   }
 
   updateCategory(categoryForm: NgForm, oldCategory: Category) {
+    if (this.saving) return;
     if (categoryForm.valid) {
+      this.saving=true; this.saveError='';
       this.categoryService
         .updateCategory(oldCategory?.categoryName, categoryForm.value)
         .subscribe({
           next: (value) => {
-            this.closeModal();
+            this.saving=false; this.closeModal();
             this.categoryService.getUpdatedCategories.next(
               'Updated categories'
             );
           },
           error: (err: { error: { errors: any } }) => {
-            this.showToaster(err.error.errors.categoryDto);
+            this.showToaster(apiErrorMessage(err));
           },
         });
     }
@@ -61,6 +68,6 @@ export class AddCategoryComponent implements OnInit {
   }
 
   showToaster(errorMsg: string) {
-    this.toastr.error(errorMsg, 'Error');
+    this.saving=false; this.saveError=errorMsg; this.toastr.error(errorMsg, 'Save failed');
   }
 }

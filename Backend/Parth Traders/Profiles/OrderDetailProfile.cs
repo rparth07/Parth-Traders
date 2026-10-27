@@ -2,25 +2,21 @@
 using Parth_Traders.Domain.Entity.User;
 using Parth_Traders.Dto.User;
 
-namespace Parth_Traders.Data.Profiles
+namespace Parth_Traders.Profiles
 {
     public class OrderDetailProfile : Profile
     {
         public OrderDetailProfile()
         {
             CreateMap<OrderDetailDto, OrderDetail>()
-                .ForPath(dest => dest.Order.Customer.CustomerName,
-                    opt => opt.MapFrom(src => src.CustomerName))
-                .ForPath(dest => dest.Product.ProductName,
-                    opt => opt.MapFrom(src => src.ProductName));
+                .ForPath(dest => dest.Product.ProductSku,
+                    opt => opt.MapFrom(src => src.ProductSku));
 
             CreateMap<OrderDetail, OrderDetailDto>()
-                .ForMember(dest => dest.ProductName,
-                    opt => opt.MapFrom(src => src.Product.ProductName))
+                .ForMember(dest => dest.ProductSku,
+                    opt => opt.MapFrom(src => src.Product.ProductSku))
                 .ForMember(dest => dest.OrderId,
-                    opt => opt.MapFrom(src => src.Order.OrderId))
-                .ForMember(dest => dest.CustomerName,
-                    opt => opt.MapFrom(src => src.Order.Customer.CustomerName));
+                    opt => opt.MapFrom(src => src.Order.OrderId));
         }
     }
 }

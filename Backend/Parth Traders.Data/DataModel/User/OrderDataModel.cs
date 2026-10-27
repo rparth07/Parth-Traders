@@ -1,4 +1,4 @@
-﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,9 +9,13 @@ namespace Parth_Traders.Data.DataModel.User
         [Key]
         public long OrderId { get; set; }
 
-        public long CustomerId { get; set; }
+        public bool IsSandbox { get; set; }
+
+        public string TransactionId { get; set; }
+
+        public string CustomerId { get; set; }
         [Required]
-        [ForeignKey("Id")]
+        [ForeignKey("CustomerId")]
         public virtual CustomerDataModel CustomerData { get; set; }
 
         [Required]
@@ -24,7 +28,7 @@ namespace Parth_Traders.Data.DataModel.User
         public DateTime OrderDate { get; set; }
 
         [Required]
-        public long GrandTotal { get; set; }
+        public decimal GrandTotal { get; set; }
 
         [Required]
         public OrderStatus OrderStatus { get; set; }

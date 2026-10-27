@@ -1,0 +1,7 @@
+[build]
+  base = "Frontend/parth-traders"
+  command = "npm run build"
+  publish = "dist/parth-traders"
+
+[build.environment]
+  NODE_VERSION = "20"

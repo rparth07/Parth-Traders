@@ -1,10 +1,14 @@
-﻿using Parth_Traders.Domain.Enums;
+using Parth_Traders.Domain.Enums;
 
 namespace Parth_Traders.Domain.Entity.User
 {
     public class Order
     {
         public long OrderId { get; set; }
+
+        public bool IsSandbox { get; set; }
+
+        public string TransactionId { get; set; }
 
         public virtual Customer Customer { get; set; }
 
@@ -14,7 +18,7 @@ namespace Parth_Traders.Domain.Entity.User
 
         public DateTime OrderDate { get; set; }
 
-        public long GrandTotal { get; set; }
+        public decimal GrandTotal { get; set; }
 
         public OrderStatus OrderStatus { get; set; }
     }

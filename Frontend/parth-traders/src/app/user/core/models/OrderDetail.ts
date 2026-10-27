@@ -1,31 +1,40 @@
-import { Order } from "./Order";
 import { Product } from "./Product";
-
+import { discountedUnitPrice } from "../../../shared/pricing";
 
 export class OrderDetail {
-    product: Product;
-    productSize: string;
+    productSku: string;
+    productName?: string;
+    unitsInStock?: number;
+    price: number;
     quantity: number;
+    discount: number;
     totalPrice: number;
 
-    constructor(product: Product, productSize: string, quantity: number, totalPrice: number) {
-        this.product = product;
-        this.productSize = productSize;
+    constructor(product: Product, quantity: number, totalPrice: number) {
+        this.productSku = product.productSku;
+        this.productName = product.productName;
+        this.unitsInStock = product.unitsInStock;
+        this.price = product.unitPrice;
+        this.discount = product.discount;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
+        this.totalPrice = Math.round(quantity * discountedUnitPrice(this.price, this.discount) * 100) / 100;
     }
 
     incrementProductCount() {
         this.quantity += 1;
-        this.totalPrice += this.product.price;
+        this.totalPrice = Math.round(this.quantity * discountedUnitPrice(this.price, this.discount) * 100) / 100;
     }
 
     decrementProductCountFrom() {
         this.quantity -= 1;
-        this.totalPrice -= this.product.price;
+        this.totalPrice = Math.round(this.quantity * discountedUnitPrice(this.price, this.discount) * 100) / 100;
     }
 
     getProductQuantity() {
         return this.quantity;
+    }
+
+    getTotalPrice() {
+        return this.totalPrice;
     }
 }

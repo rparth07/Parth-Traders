@@ -1,0 +1,28 @@
+:host {
+display:block
+}
+.store-shell {
+display:flex;
+flex-direction:column;
+min-height:100vh;
+background:var(--store-bg);
+color:var(--store-ink)
+}
+main {
+flex:1;
+min-width:0
+}
+.store-skip-link {
+position:fixed;
+top:8px;
+left:8px;
+transform:translateY(-180%);
+z-index:10000;
+background:white;
+padding:12px 20px;
+color:var(--store-ink);
+border:2px solid var(--store-ink)
+}
+.store-skip-link:focus {
+transform:none
+}

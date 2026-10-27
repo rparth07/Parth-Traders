@@ -22,11 +22,11 @@ namespace Parth_Traders.Service.Services.User
 
         public Order MapOrderPropertiesToOrder(Order order)
         {
-            order.Customer = _customerRepository.GetCustomerByName(order.Customer.CustomerName);
+            order.Customer = _customerRepository.GetCustomerByUserName(order.Customer.UserName);
 
             order.OrderDetails.ForEach(_ =>
             {
-                _.Product = _productRepository.GetProductByName(_.Product.ProductName);
+                _.Product = _productRepository.GetProductBySku(_.Product.ProductSku);
             });
 
             return order;

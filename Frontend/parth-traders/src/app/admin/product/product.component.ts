@@ -1,10 +1,11 @@
+import { apiErrorMessage } from '../../shared/api-error';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSort, Sort } from '@angular/material/sort';
-import { BehaviorSubject, delay, map, Observable, startWith, tap } from 'rxjs';
+import { BehaviorSubject, delay, map, Observable, startWith, tap, finalize } from 'rxjs';
 
 import { AddProductComponent } from './add-product/add-product.component';
 import { Product, ProductType } from './product';
@@ -23,9 +24,10 @@ export class ProductComponent implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  dataSource!: MatTableDataSource<Product>;
+  dataSource = new MatTableDataSource<Product>();
+  loadError = '';
   productType = ProductType;
-  dataLength: number = 100;
+  dataLength: number = 0;
 
   updatableProduct!: Product | null;
 
@@ -41,28 +43,38 @@ export class ProductComponent implements OnInit {
       cell: (element: Product) => `${element.productName}`,
     },
     {
-      columnDef: 'productType',
-      header: 'Type',
-      cell: (element: Product) => `${this.productType[element.productType]}`,
+      columnDef: 'productSku',
+      header: 'SKU',
+      cell: (element: Product) => `${element.productSku}`,
     },
     {
-      columnDef: 'productDescription',
-      header: 'Description',
-      cell: (element: Product) => `${element.productDescription}`,
+      columnDef: 'productRating',
+      header: 'Rating',
+      cell: (element: Product) => `${element.productRating}`,
     },
+    {
+      columnDef: 'productType',
+      header: 'Type',
+      cell: (element: Product) => this.productType[element.productType]?.split('_').join(' ') || 'Unspecified',
+    },
+    // {
+    //   columnDef: 'productDescription',
+    //   header: 'Description',
+    //   cell: (element: Product) => `${element.productDescription}`,
+    // },
     {
       columnDef: 'supplierName',
       header: 'Supplier',
-      cell: (element: Product) => `${element.supplierName}`,
+      cell: (element: Product) => element.supplierName || 'Unavailable',
     },
     {
       columnDef: 'categoryName',
       header: 'Category',
-      cell: (element: Product) => `${element.categoryName}`,
+      cell: (element: Product) => element.categoryName || 'Unavailable',
     },
     {
       columnDef: 'singlePieceMRP',
-      header: 'Single Piece MRP',
+      header: 'Single piece MRP (USD)',
       cell: (element: Product) => `${element.singlePieceMRP}`,
     },
     {
@@ -72,22 +84,22 @@ export class ProductComponent implements OnInit {
     },
     {
       columnDef: 'unitPrice',
-      header: 'Unit Price',
+      header: 'Base unit price (USD)',
       cell: (element: Product) => `${element.unitPrice}`,
     },
     {
       columnDef: 'discount',
-      header: 'Discount',
+      header: 'Discount (%)',
       cell: (element: Product) => `${element.discount}`,
     },
     {
       columnDef: 'unitsInStock',
-      header: 'Stocks(Units)',
+      header: 'Stock (units)',
       cell: (element: Product) => `${element.unitsInStock}`,
     },
   ];
 
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'actions'];
 
   constructor(
     private modalService: NgbModal,
@@ -105,6 +117,7 @@ export class ProductComponent implements OnInit {
 
   applyFilter(filter: { searchValue: string }) {
     this.dataSource.filter = filter.searchValue.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
   }
 
   addCsv(event: any) {
@@ -118,7 +131,7 @@ export class ProductComponent implements OnInit {
           this.getProducts();
         },
         error: (err: { error: string }) => {
-          this.showToaster(err.error);
+          this.showToaster(apiErrorMessage(err));
         },
       });
     }
@@ -127,6 +140,7 @@ export class ProductComponent implements OnInit {
 
   getProducts(): void {
     this.loadingSubject.next(true);
+    this.loadError = '';
     this.productService
       .fetchProducts()
       .pipe(
@@ -137,15 +151,17 @@ export class ProductComponent implements OnInit {
           })
         )
       )
-      .subscribe((response: Product[]) => {
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({next: (response: Product[]) => {
         this.dataLength = response.length;
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
+      }, error: error => { this.loadError = apiErrorMessage(error, 'Unable to load products. Try again.'); }});
   }
 
   deleteProduct(product: Product) {
+    if (!window.confirm('Delete '+product.productName+'? This removes the record permanently.')) return;
     this.productService.deleteProduct(product.productName);
   }
 
@@ -153,7 +169,7 @@ export class ProductComponent implements OnInit {
     const modalRef = this.modalService.open(AddProductComponent, {
       modalDialogClass: 'modal-lg modal-dialog-centered',
       backdrop: 'static',
-      keyboard: false,
+      keyboard: true,
     });
 
     if (product) {

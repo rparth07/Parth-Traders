@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parth_Traders.CsvParserModel;
@@ -10,7 +10,7 @@ using Parth_Traders.Service.Services.Admin.AdminInterfaces;
 namespace Parth_Traders.Controllers.Admin
 {
     [ApiController]
-    [Route("API/admin/products"), Authorize]
+    [Route("API/admin/products")]
     //[ApiExplorerSettings(GroupName = "v2")]
     public class ProductController : ControllerBase
     {
@@ -27,10 +27,11 @@ namespace Parth_Traders.Controllers.Admin
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpPost("add-product")]
+        [HttpPost("add-product"), Authorize(Roles = "Administrator,Manager")]
         [Consumes("application/json")]
         public IActionResult AddProduct(ProductDto productForCreation)
         {
+            if (string.IsNullOrWhiteSpace(productForCreation.SupplierName) || string.IsNullOrWhiteSpace(productForCreation.CategoryName)) return BadRequest(new { message = "Choose an existing supplier and category for a new product." });
             var product = _mapper.Map<Product>(productForCreation);
 
             var productToAdd = _productHelperService.MapProductPropertiesToProduct(product);
@@ -45,10 +46,9 @@ namespace Parth_Traders.Controllers.Admin
                 productToReturn);
         }
 
-        [HttpPost, DisableRequestSizeLimit]
-        public IActionResult AddAllProducts()
+        [HttpPost, DisableRequestSizeLimit, Authorize(Roles = "Administrator,Manager")]
+        public IActionResult AddAllProducts([FromForm] IFormFile file)
         {
-            IFormFile? file = Request.Form.Files[0];
             List<ParsedProduct> parsedProducts = new ParsedProduct().ParseData(file);
 
             List<Product> productsToAdd = parsedProducts.Select(parsedProduct =>
@@ -76,7 +76,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(products);
         }
 
-        [HttpPost("{productName}")]
+        [HttpPost("{productName}"), Authorize(Roles = "Administrator,Manager")]
         [Consumes("application/json")]
         public IActionResult UpdateProduct(
             string productName,
@@ -89,7 +89,7 @@ namespace Parth_Traders.Controllers.Admin
             return Ok(product);
         }
 
-        [HttpDelete("{productName}")]
+        [HttpDelete("{productName}"), Authorize(Roles = "Administrator,Manager")]
         public IActionResult DeleteProduct(string productName)
         {
             _productService.DeleteProduct(productName);

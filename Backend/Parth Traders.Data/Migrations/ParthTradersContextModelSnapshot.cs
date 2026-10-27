@@ -51,15 +51,15 @@ namespace Parth_Traders.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c617cb89-6dba-4e65-a646-c311a8c29b8b",
-                            ConcurrencyStamp = "8a2a9a39-a9d3-4299-ab0e-68683e854805",
+                            Id = "c0b2294b-6e24-4e40-9d33-e13eb1bfd891",
+                            ConcurrencyStamp = "2f0650bc-571f-457a-9f25-4904c5c1f36b",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "f532dcf0-64d9-40f3-adad-1307506f73b3",
-                            ConcurrencyStamp = "5646f8c9-4f4b-4e75-85c8-baa35377614a",
+                            Id = "8f72fba8-51f1-4316-b54a-f73e62d4a2d9",
+                            ConcurrencyStamp = "d5b020c1-ad65-4a8d-bacc-2781761178e0",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -293,6 +293,13 @@ namespace Parth_Traders.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<double>("ProductRating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProductSku")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("ProductType")
                         .HasColumnType("int");
 
@@ -313,6 +320,9 @@ namespace Parth_Traders.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ProductName")
+                        .IsUnique();
+
+                    b.HasIndex("ProductSku")
                         .IsUnique();
 
                     b.HasIndex("SupplierId");
@@ -433,15 +443,12 @@ namespace Parth_Traders.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"), 1L, 1);
 
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("GrandTotal")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -452,9 +459,13 @@ namespace Parth_Traders.Data.Migrations
                     b.Property<int>("PaymentType")
                         .HasColumnType("int");
 
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("OrderId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -467,25 +478,22 @@ namespace Parth_Traders.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderDetailId"), 1L, 1);
 
-                    b.Property<DateTime>("BillDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<long>("Discount")
                         .HasColumnType("bigint");
 
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PricePerPiece")
+                    b.Property<long>("Price")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("QuantityPurchased")
+                    b.Property<long>("Quantity")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Total")
+                    b.Property<long>("TotalPrice")
                         .HasColumnType("bigint");
 
                     b.HasKey("OrderDetailId");
@@ -571,7 +579,7 @@ namespace Parth_Traders.Data.Migrations
                 {
                     b.HasOne("Parth_Traders.Data.DataModel.User.CustomerDataModel", "CustomerData")
                         .WithMany("Orders")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
