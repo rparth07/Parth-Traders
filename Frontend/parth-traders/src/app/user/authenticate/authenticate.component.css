@@ -132,3 +132,8 @@ font-size:26px
 
 .auth-panel [aria-invalid="true"] { border-color:#a22a2a !important; }
 .field-error p { font-size:14px; line-height:1.5; margin:6px 0 12px; }
+
+.auth-error h2 { font-size:18px; margin:0 0 8px; }
+.auth-error p { margin:0 0 8px; }
+.auth-error ul { margin:0; padding-left:20px; }
+.auth-error a { color:#842323; display:inline-block; padding-block:6px; text-underline-offset:3px; overflow-wrap:anywhere; }

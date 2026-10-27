@@ -17,7 +17,7 @@
     <div class="row mt-3">
       <label for="product-type" class="form-label">Product Type</label>
       <select class="form-control" id="product-type" [ngModel]="product?.productType ?? 0" name="productType" required>
-        <option *ngFor="let type of productKeys()" [ngValue]="productType[type]">{{type}}</option>
+        <option *ngFor="let type of productKeys()" [ngValue]="productType[type]">{{type.split('_').join(' ')}}</option>
       </select>
     </div>
     <div class="row mt-3">
@@ -41,12 +41,12 @@
         [ngModel]="product?.piecesPerUnit" name="piecesPerUnit" />
     </div>
     <div class="row mt-3">
-      <label for="single-piece-MRP" class="form-label">Single piece MRP</label>
+      <label for="single-piece-MRP" class="form-label">Single piece MRP (USD)</label>
       <input type="number" class="form-control" id="single-piece-MRP" step="0.01" min="0" placeholder="e.g 200.00 USD" required
         [ngModel]="product?.singlePieceMRP" name="singlePieceMRP" />
     </div>
     <div class="row mt-3">
-      <label for="unit-price" class="form-label">Unit price</label>
+      <label for="unit-price" class="form-label">Base unit price (USD)</label>
       <input type="number" class="form-control" id="unit-price" step="0.01" min="0" placeholder="e.g 5000.00 USD" required
         [ngModel]="product?.unitPrice" name="unitPrice" />
     </div>
@@ -56,7 +56,7 @@
         [ngModel]="product?.discount" name="discount" />
     </div>
     <div class="row mt-3">
-      <label for="units-in-stock" class="form-label">Units in stocks</label>
+      <label for="units-in-stock" class="form-label">Stock (units)</label>
       <input type="number" class="form-control" id="units-in-stock" placeholder="e.g 50" required
         [ngModel]="product?.unitsInStock" name="unitsInStock" />
     </div>

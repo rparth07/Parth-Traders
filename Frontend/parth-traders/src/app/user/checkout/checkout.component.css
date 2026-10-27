@@ -161,3 +161,8 @@ font-size:14px
 gap:8px
 }
 }
+
+.cart-feedback { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:14px 18px; margin-bottom:20px; background:#edf6f0; color:#185539; border-radius:6px; line-height:1.6; }
+.undo-button { border:0; background:transparent; text-decoration:underline; color:inherit; font-weight:600; min-height:44px; padding:8px; }
+
+.guest-note { font-size:14px; color:var(--store-muted); line-height:1.6; }

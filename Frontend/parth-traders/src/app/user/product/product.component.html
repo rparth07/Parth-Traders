@@ -1,6 +1,6 @@
 <article class="product-card" [class.list-view]="shouldSwitchToLargeGrid" [attr.aria-label]="product.productName">
   <div class="product-media">
-    <img *ngIf="!imageFailed" [src]="product.image_paths[imageIndex]" [alt]="product.productName + ' — image ' + (imageIndex + 1)" loading="lazy" width="320" height="240" (error)="imageFailed = true">
+    <a *ngIf="!imageFailed" class="product-image-link" [href]="product.image_paths[imageIndex]" target="_blank" rel="noopener" [attr.aria-label]="'View full-size image of '+product.productName+' (opens new tab)'">    <img [src]="product.image_paths[imageIndex]" [alt]="product.productName + ' — image ' + (imageIndex + 1)" loading="lazy" width="320" height="240" (error)="imageFailed = true"><span class="image-zoom-hint">View full size</span></a>
     <p *ngIf="imageFailed" role="status">Image unavailable</p>
     <div class="gallery-controls" *ngIf="product.image_paths.length > 1">
       <button type="button" (click)="changeImage(-1)" [attr.aria-label]="'Previous image of ' + product.productName">Previous</button>

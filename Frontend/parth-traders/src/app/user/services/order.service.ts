@@ -16,6 +16,8 @@ export class OrderService {
   constructor(private authService: AuthService, private cartService: CartService, private http: HttpClient) {
   }
 
+  isCustomerSignedIn(): boolean { return this.authService.isAuthenticated(); }
+
   initializeOrder() {
     this.completedTransactionId = '';
     this.order = new Order(this.authService.getCustomer(), this.cartService.getCartItems());

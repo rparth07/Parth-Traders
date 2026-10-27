@@ -21,7 +21,7 @@
 <button class="store-button" type="button" (click)="fetchProducts()">Try again</button>
 </div>
     <div class="catalog-toolbar" *ngIf="!fetching&&!loadError">
-<p role="status">Showing {{shownProducts.length}} of {{filterProducts.length}} products</p>
+<p role="status">Showing {{shownProducts.length}} of {{filterProducts.length}} {{filterProducts.length === 1 ? 'product' : 'products'}}</p>
 <div>
 <label for="product-sort">Sort by</label>
 <select id="product-sort" [(ngModel)]="sortOrder" (ngModelChange)="applyFilters()">

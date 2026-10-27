@@ -38,9 +38,16 @@ export class CartService {
     return true;
   }
 
-  removeFromCartAt(index: number) {
-    this.orderDetails.splice(index, 1);
+  removeFromCartAt(index: number): OrderDetail | undefined {
+    if (index < 0 || index >= this.orderDetails.length) return undefined;
+    const [removed] = this.orderDetails.splice(index, 1);
     this.emitAllProductCountEvent();
+    return removed;
+  }
+  restoreCartItem(item: OrderDetail, index: number): boolean {
+    if (this.orderDetails.some(current => current.productSku === item.productSku)) return false;
+    this.orderDetails.splice(Math.max(0,Math.min(index,this.orderDetails.length)),0,item);
+    this.emitAllProductCountEvent(); return true;
   }
 
   refreshProducts(products: Product[]) {
@@ -71,6 +78,7 @@ export class CartService {
 
   public decrementProductCountFrom(orderDetail: OrderDetail) {
     const index = this.orderDetails.findIndex(_ => _.productSku == orderDetail.productSku);
+    if (index < 0) return;
     if (this.orderDetails[index].getProductQuantity() == 1) {
       this.orderDetails.splice(index, 1);
     } else {

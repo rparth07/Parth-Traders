@@ -131,3 +131,9 @@ border-top:1px solid var(--store-line)
 height:190px
 }
 }
+
+.product-image-link { position:relative; display:block; color:var(--store-ink); }
+.product-image-link img { width:100%; height:210px; object-fit:contain; display:block; }
+.image-zoom-hint { position:absolute; right:0; bottom:0; background:#fff; color:var(--store-muted); border:1px solid var(--store-line); border-radius:4px; padding:5px 8px; font-size:12px; }
+.gallery-controls button { min-height:44px; }
+@media(max-width:600px) { .product-image-link img { height:190px; } }
