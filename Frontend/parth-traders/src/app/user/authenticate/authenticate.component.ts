@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { RegistrationField, RegistrationFieldErrors, validateRegistration } from '../../shared/registration-validation';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 @Component({ selector: 'app-authenticate', templateUrl: './authenticate.component.html', styleUrl: './authenticate.component.css' })
@@ -8,12 +9,14 @@ export class AuthenticateComponent {
     showPassword = false;
     error = '';
     success = '';
+    registrationErrors: RegistrationFieldErrors = {};
+    @ViewChild('registrationFields') registrationFields?: ElementRef<HTMLFormElement>;
     remember = !!localStorage.getItem('rememberedEmail');
     login = { email: localStorage.getItem('rememberedEmail') || '', password: '' };
     registration = { username: '', phone: '', address: '', email: '', password: '' };
     constructor(private auth: AuthService) { }
     toggleAuthForms() { if (this.submitting)
-        return; this.registering = !this.registering; this.error = ''; this.success = ''; this.showPassword = false; }
+        return; this.registering = !this.registering; this.error = ''; this.success = ''; this.registrationErrors = {}; this.showPassword = false; }
     async handleLogin(form: NgForm) {
         if (this.submitting)
             return;
@@ -42,8 +45,10 @@ export class AuthenticateComponent {
     async handleRegister(form: NgForm) {
         if (this.submitting)
             return;
-        if (form.invalid) {
-            this.error = 'Check the required fields and password requirements below.';
+        this.registrationErrors = validateRegistration(this.registration);
+        if (form.invalid || Object.keys(this.registrationErrors).length) {
+            this.error = 'Please correct the highlighted fields.';
+            this.focusRegistrationError();
             return;
         }
         this.error = '';
@@ -55,11 +60,15 @@ export class AuthenticateComponent {
                 this.login.email = r.email;
                 this.registering = false;
                 this.registration.password = '';
+                this.registrationErrors = {};
                 this.success = 'Your account has been created. Sign in to continue.';
                 this.showPassword = false;
             }
-            else
-                this.error = result.message;
+            else {
+                this.error = result.message || 'Account creation was not completed.';
+                this.registrationErrors = result.fieldErrors || {};
+                this.focusRegistrationError();
+            }
         }
         catch {
             this.error = 'Account creation could not be completed. Please try again.';
@@ -67,5 +76,12 @@ export class AuthenticateComponent {
         finally {
             this.submitting = false;
         }
+    }
+    clearRegistrationError(field: RegistrationField) {
+        delete this.registrationErrors[field];
+        if (!Object.keys(this.registrationErrors).length) this.error = '';
+    }
+    private focusRegistrationError() {
+        setTimeout(() => this.registrationFields?.nativeElement.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(), 0);
     }
 }
