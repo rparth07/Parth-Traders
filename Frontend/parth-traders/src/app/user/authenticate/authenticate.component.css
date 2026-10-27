@@ -129,3 +129,6 @@ padding-top:20px
 font-size:26px
 }
 }
+
+.auth-panel [aria-invalid="true"] { border-color:#a22a2a !important; }
+.field-error p { font-size:14px; line-height:1.5; margin:6px 0 12px; }

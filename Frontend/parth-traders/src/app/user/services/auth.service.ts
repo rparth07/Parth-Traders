@@ -1,3 +1,4 @@
+import { normalizeRegistrationPhone, registrationFailure, RegistrationResult } from '../../shared/registration-validation';
 import { Injectable } from '@angular/core';
 import { Customer } from '../core/models/Customer';
 import { catchError, firstValueFrom, Observable, Subject, tap, throwError } from 'rxjs';
@@ -50,14 +51,14 @@ export class AuthService {
     }
   }
 
-  async registerApi(username: string, phone: string, address: string, email: string, password: string): Promise<any> {
+  async registerApi(username: string, phone: string, address: string, email: string, password: string): Promise<RegistrationResult> {
     try {
       await firstValueFrom(this.http.post(AppSetting.API_URL + 'api/user/authentication/signup', {
-        userName: username, phoneNumber: phone, customerAddress: address, email, password
+        userName: username.trim(), phoneNumber: normalizeRegistrationPhone(phone) || phone.trim(), customerAddress: address.trim(), email: email.trim(), password
       }));
       return { success: true };
-    } catch {
-      return { success: false, message: 'Registration could not be completed. Check your details and try again.' };
+    } catch (error) {
+      return registrationFailure(error);
     }
   }
 
